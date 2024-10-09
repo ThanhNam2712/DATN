@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -69,3 +70,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 # DuAnTotNghiep
 Website bán thời trang Nam Ae Botique
 >>>>>>> df95dae4e7c98edf4d23c5d12f3e1925a1e911f0
+=======
+# DATN
+Website bán thời trang Nam Ae Botique
+>>>>>>> 6deeff0622f6a8a31f39404f003b56fdc485b8d0
