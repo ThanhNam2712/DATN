@@ -2,7 +2,6 @@
 
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Category::class)->constrained();
             $table->foreignIdFor(Brand::class)->constrained();
-            $table->foreignIdFor(Tag::class)->constrained();
             $table->string('name');
             $table->string('image');
             $table->text('description');
