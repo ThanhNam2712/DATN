@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Admin\StatisticController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,19 +16,50 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+//Route::get('/admin/dashboard', function () {
+//    return view('admin.layouts.master'); // Chỉ định view cho trang dashboard
+//});
+//Route::prefix('admin/categories')->name('admin.categories.')->group(function () {
+//    Route::get('/', [CategoryController::class, 'index'])->name('index');
+//    Route::get('/create', [CategoryController::class, 'create'])->name('create');
+//    Route::post('/store', [CategoryController::class, 'store'])->name('store'); // Removed {id}
+//    Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
+//    Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
+//    Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+//});
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/admin/dashboard', function () {
-    return view('admin.layouts.master'); // Chỉ định view cho trang dashboard
-});
-Route::prefix('admin/categories')->name('admin.categories.')->group(function () {
-    Route::get('/', [CategoryController::class, 'index'])->name('index');
-    Route::get('/create', [CategoryController::class, 'create'])->name('create');
-    Route::post('/store', [CategoryController::class, 'store'])->name('store'); // Removed {id}
-    Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
-    Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
-});
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.'
+], function (){
+    Route::group([
+        'prefix' => 'statistic',
+        'as' => 'statistic.',
+    ], function () {
+        Route::get('/', [StatisticController::class, 'index'])->name('index');
+    });
 
+    Route::group([
+        'prefix' => 'color',
+        'as' => 'color.'
+    ], function (){
+        Route::get('/', [ColorController::class, 'index'])->name('index');
+        Route::get('delete/{id}', [ColorController::class, 'destroy'])->name('destroy');
+        Route::post('create', [ColorController::class, 'create'])->name('create');
+        Route::put('update', [ColorController::class, 'update'])->name('update');
+    });
+
+    Route::group([
+        'prefix' => 'size',
+        'as' => 'size.'
+    ], function (){
+        Route::get('/', [SizeController::class, 'index'])->name('index');
+        Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('destroy');
+        Route::post('create', [SizeController::class, 'create'])->name('create');
+        Route::put('update', [SizeController::class, 'update'])->name('update');
+    });
+});

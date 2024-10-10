@@ -9,13 +9,18 @@
     <meta content="Minimal Admin & Dashboard Template" name="description">
     <meta content="StarCode Kh" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
-    <script src="{{ asset('assets/js/layout.js') }}"></script>
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <!-- Layout config Js -->
+    <script src="../assets/js/layout.js"></script>
+    <!-- Icons CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css" integrity="sha512-OQDNdI5rpnZ0BRhhJc+btbbtnxaj+LdQFeh0V9/igiEPDiWE2fG+ZsXl0JEH+bjXKPJ3zcXqNyP4/F/NegVdZg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{ asset('assets/css/page.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/starcode2.css') }}">
-    <script src="{{ asset('assets/libs/%40popperjs/core/umd/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/common.js') }}"></script>
+    <!-- StarCode CSS -->
+    <link rel="stylesheet" href="../assets/css/page.css">
+    <link rel="stylesheet" href="../assets/css/starcode2.css">
+    <script src="../assets/libs/%40popperjs/core/umd/popper.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
 
 </head>
 
