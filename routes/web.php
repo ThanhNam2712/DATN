@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
+use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,5 +62,15 @@ Route::group([
         Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('destroy');
         Route::post('create', [SizeController::class, 'create'])->name('create');
         Route::put('update', [SizeController::class, 'update'])->name('update');
+    });
+
+    Route::group([
+        'prefix' => 'tag',
+        'as' => 'tag.'
+    ], function(){
+        Route::get('/', [TagController::class, 'index'])->name('index');
+        Route::get('delete/{id}', [TagController::class, 'destroy'])->name('destroy');
+        Route::post('create', [TagController::class, 'create'])->name('create');
+        Route::put('update', [TagController::class, 'update'])->name('update');
     });
 });
