@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\brandController;
 use App\Http\Controllers\admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,7 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
+
+Route::resource('admin/brands', BrandController::class);
+
 

@@ -11,7 +11,6 @@ class Product extends Model
     protected $fillable = [
         'category_id',
         'brand_id',
-        'tag_id',
         'name',
         'image',
         'description',
@@ -22,23 +21,32 @@ class Product extends Model
         'is_show_home',
         'is_active',
     ];
-    public function Reviews(){
+    public function Reviews()
+    {
         return $this->hasMany(Review::class);
     }
-    public function Wishlists(){
+    public function Wishlists()
+    {
         return $this->hasMany(Wishlist::class);
     }
-    public function Galleries(){
+    public function Galleries()
+    {
         return $this->hasMany(Gallery::class);
     }
-    public function Brand(){
+    public function Brand()
+    {
         return $this->hasOne(Brand::class);
     }
-    public function Sizes(){
+    public function Sizes()
+    {
         return $this->belongsToMany(ProductSize::class);
-    }public function Colors(){
+    }
+    public function Colors()
+    {
         return $this->belongsToMany(ProductColor::class);
-    }public function Tags(){
+    }
+    public function Tags()
+    {
         return $this->belongsToMany(Tag::class);
     }
 }

@@ -26,8 +26,8 @@ return new class extends Migration
             $table->boolean('is_new');
             $table->boolean('is_show_home');
             $table->boolean('is_active');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
