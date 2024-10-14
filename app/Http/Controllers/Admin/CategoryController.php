@@ -13,6 +13,11 @@ class CategoryController extends Controller
         $categories = Category::all();
         return view('admin.category.index', compact('categories'));
     }
+    public function getCategories()//call api cho front
+    {
+        $categories = Category::all();
+        return response()->json($categories);
+    }
     public function create()
     {
         return view('admin.category.create');
@@ -20,7 +25,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name', 
+            'name' => 'required|string|max:255|unique:categories,name',
             'image' => 'nullable|max:2048',
         ]);
 
