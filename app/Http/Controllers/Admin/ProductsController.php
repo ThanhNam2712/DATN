@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Gallery;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
@@ -50,7 +51,7 @@ class ProductsController extends Controller
         $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
         if ($request->hasFile('image')){
-            $data['image'] = Common::uploadFile($request->file('image'), 'admin/img/category');
+            $data['image'] = Common::uploadFile($request->file('image'), 'admin/img/products');
         }
 
         $product = Product::create($data);

@@ -39,6 +39,11 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function variant()
+    {
+        return $this->hasMany(ProductVariant::class, 'product_id');
+    }
     public function Sizes(){
         return $this->belongsToMany(ProductSize::class);
     }public function Colors(){
