@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\Client\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,5 +29,14 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
+Route::prefix('account')->as('account.')->group(function () {
+    // Route đăng ký
+    Route::get('show-register', [RegisterController::class, 'showForm'])->name('showForm');
+    Route::post('register', [RegisterController::class, 'register'])->name('register');
+    // Route đăng nhập
 
+
+    // Các route cần phải đăng nhập mới dùng được
+
+});
 
