@@ -13,5 +13,9 @@ class Shiper extends Model
         'phone',
         'email',
     ];
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
 }
