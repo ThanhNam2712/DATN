@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
@@ -73,6 +74,16 @@ Route::group([
         Route::get('delete/{id}', [TagController::class, 'destroy'])->name('destroy');
         Route::post('create', [TagController::class, 'create'])->name('create');
         Route::put('update', [TagController::class, 'update'])->name('update');
+    });
+
+    Route::group([
+        'prefix' => 'product_tag',
+        'as' => 'product_tag.'
+    ], function(){
+        Route::get('/', [ProductTagController::class, 'index'])->name('index');
+        Route::delete('delete/{id}', [ProductTagController::class, 'destroy'])->name('destroy');
+        Route::post('create', [ProductTagController::class, 'create'])->name('create');
+        Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
     });
 
     Route::group([
