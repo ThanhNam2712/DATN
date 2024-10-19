@@ -13,6 +13,7 @@ use App\Models\ProductVariant;
 use App\Models\Tag;
 use App\Utilities\Common;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -86,7 +87,12 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::find($id);
+        $category = Category::all();
+        $brand = Brand::all();
+        $color = ProductColor::all();
+        $size = ProductSize::all();
+        return view('admin.products.update', compact('product', 'category', 'brand', 'color', 'size'));
     }
 
     /**
@@ -94,7 +100,41 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::find($id);
+        $data = $request->all();
+        $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
+        $data['is_sale'] = $request->has('is_sale') ? 1 : 0;
+        $data['is_new'] = $request->has('is_new') ? 1 : 0;
+        $data['is_show_home'] = $request->has('is_show_home') ? 1 : 0;
+        $data['is_active'] = $request->has('is_active') ? 1 : 0;
+
+        if($request->hasFile('image')){
+            $data['image'] = Common::uploadFile($request->file('image'), 'admin/img/products');
+
+            $file_old = $request->input('file_old');
+            if ($file_old && Storage::disk('public')->exists($file_old)){
+                Storage::disk('public')->delete($file_old);
+            }
+        }else{
+            $data['image'] = $product->image;
+        }
+
+        $product->update($data);
+
+        foreach($request->variants as $variant){
+            $product_variant = ProductVariant::find($variant['id']);
+            $product_variant->update([
+            'product_id' => $product->id,
+            'product_color_id' => $variant['product_color_id'],
+            'product_size_id' => $variant['product_size_id'],
+            'price_sale' => $variant['price_sale'],
+            'price' => $variant['price'],
+            'quantity' => $variant['quantity'],
+            ]);
+        }
+        return redirect()->back()->with([
+            'message' => 'Update Products Success'
+        ]);
     }
 
     /**

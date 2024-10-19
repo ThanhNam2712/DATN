@@ -43,11 +43,4 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class, 'product_id');
     }
-    public function Sizes(){
-        return $this->belongsToMany(ProductSize::class);
-    }public function Colors(){
-        return $this->belongsToMany(ProductColor::class);
-    }public function tags(){
-        return $this->belongsTo(Tag::class, 'tag_id');
-    }
 }
