@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Client\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,8 @@ Route::prefix('account')->as('account.')->group(function () {
     // Route đăng ký
     Route::get('show-register', [RegisterController::class, 'showForm'])->name('showForm');
     Route::post('register', [RegisterController::class, 'register'])->name('register');
+    Route::get('show-login', [LoginController::class, 'showFormLogin'])->name('showFormLogin');
+    Route::post('login', [LoginController::class, 'login'])->name('login');
     // Route đăng nhập
 
 
