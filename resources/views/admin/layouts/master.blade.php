@@ -9,13 +9,18 @@
     <meta content="Minimal Admin & Dashboard Template" name="description">
     <meta content="StarCode Kh" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
-    <script src="{{ asset('assets/js/layout.js') }}"></script>
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <!-- Layout config Js -->
+    <script src="../assets/js/layout.js"></script>
+    <!-- Icons CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css" integrity="sha512-OQDNdI5rpnZ0BRhhJc+btbbtnxaj+LdQFeh0V9/igiEPDiWE2fG+ZsXl0JEH+bjXKPJ3zcXqNyP4/F/NegVdZg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{ asset('assets/css/page.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/starcode2.css') }}">
-    <script src="{{ asset('assets/libs/%40popperjs/core/umd/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/common.js') }}"></script>
+    <!-- StarCode CSS -->
+    <link rel="stylesheet" href="../assets/css/page.css">
+    <link rel="stylesheet" href="../assets/css/starcode2.css">
+    <script src="../assets/libs/%40popperjs/core/umd/popper.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
 
 </head>
 
@@ -363,6 +368,10 @@
         <button type="button" id="reset-layout" class="w-full transition-all duration-200 ease-linear text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100">Reset</button>
         <a href="#!" class="w-full text-white transition-all duration-200 ease-linear bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100">Buy Now</a>
     </div>
+    @php
+        $color = \App\Models\ProductColor::all();
+        $size = \App\Models\ProductSize::all();
+    @endphp
 </div>
 <script src="../assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
 <script src="../assets/libs/%40popperjs/core/umd/popper.min.js"></script>
@@ -385,7 +394,56 @@
 <script src="../assets/js/pages/form-input-spine.init.js"></script>
 <!-- App js -->
 <script src="../assets/js/app.js"></script>
+<script>
+    let variantIndex = 1;
+    function addVariant(){
+        const variantTemplate = `
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
+                                    {{-- Products variants --}}
+        <div class="xl:col-span-4">
+            <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
+            <input type="number" name="variants[${variantIndex}][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="$0.00" required="">
+        </div>
 
+        <div class="xl:col-span-4">
+            <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Discounts</label>
+            <input type="number" name="variants[${variantIndex}][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="0%" required="">
+        </div>
+
+        <div class="xl:col-span-4">
+            <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Quantity</label>
+            <input type="number" id="qualityInput" name="variants[${variantIndex}][quantity]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Quantity" required="">
+        </div>
+
+{{-- color--}}
+        <div class="xl:col-span-4">
+            <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Color</label>
+            <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[${variantIndex}][product_color_id]" id="categorySelect">
+                <option value="">Select Color</option>
+                @foreach($color as $list)
+                        <option value="{{ $list->id }}">{{ $list->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+    <!--end col-->
+{{-- size --}}
+        <div class="xl:col-span-4">
+            <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Size</label>
+            <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[${variantIndex}][product_size_id]" id="categorySelect">
+                <option value="">Select Size</option>
+                    @foreach($size as $list)
+                            <option value="{{ $list->id }}">{{ $list->name }}</option>
+                    @endforeach
+            </select>
+        </div>
+        <!--end col-->
+</div>
+`;
+        document.getElementById('variants').insertAdjacentHTML('beforeend', variantTemplate);
+        variantIndex++;
+    }
+</script>
 </body>
 
 </html>
