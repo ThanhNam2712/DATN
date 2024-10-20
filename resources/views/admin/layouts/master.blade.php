@@ -3,6 +3,7 @@
 
 <head>
     <base href="/">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
     <title>Ecommerce | StarCode - Admin & Dashboard Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -394,6 +395,7 @@
 <!-- App js -->
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/cart/quantity.js"></script>
+<script src="../assets/js/cart/cartAddCart.js"></script>
 <script>
     let variantIndex = 1;
     function addVariant(){

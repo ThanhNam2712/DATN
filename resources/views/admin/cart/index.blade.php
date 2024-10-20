@@ -19,7 +19,7 @@
                     </ul>
                 </div>
                 <div class="grid grid-cols-1 2xl:grid-cols-12 gap-x-5 ">
-                    <div class="2xl:col-span-9">
+                    <div class="2xl:col-span-12">
                         <div class="flex flex-wrap items-center gap-2">
                             <p class="grow">Showing all <b>7,410</b> items results</p>
                             <div class="flex gap-2 shrink-0 items-cente">
@@ -49,7 +49,7 @@
                         <div class="flex items-center gap-3 mt-3">
                             <span class="px-2.5 py-0.5 text-sm font-medium rounded-full border bg-slate-100 border-slate-300 text-slate-500 inline-flex items-center dark:bg-zink-800 dark:border-zink-500 dark:text-zink-200">High to Low <a href="#!" class="transition text-slate-500 dark:text-zink-200 hover:text-slate-600 dark:hover:text-zink-100"><i data-lucide="x" class="w-3 h-3 ltr:ml-1 rtl:mr-1"></i></a></span>
                             <span class="px-2.5 py-0.5 text-sm font-medium rounded-full border bg-slate-100 border-slate-300 text-slate-500 inline-flex items-center dark:bg-zink-800 dark:border-zink-500 dark:text-zink-200">New <a href="#!" class="transition text-slate-500 dark:text-zink-200 hover:text-slate-600 dark:hover:text-zink-100"><i data-lucide="x" class="w-3 h-3 ltr:ml-1 rtl:mr-1"></i></a></span>
-                            <a href="#!" class="px-2.5 py-0.5 text-sm font-medium rounded border bg-transparent border-transparent text-slate-500 transition hover:bg-slate-200 dark:bg-zink-800 dark:hover:bg-zink-600 dark:text-zink-200">All Clear</a>
+                            <a href="../admin/cart/cart_detail" class="px-2.5 py-0.5 text-sm font-medium rounded border bg-transparent border-transparent text-slate-500 transition hover:bg-slate-200 dark:bg-zink-800 dark:hover:bg-zink-600 dark:text-zink-200">Cart Detail</a>
                         </div>
 
                         <div class="grid grid-cols-4 mt-5 md:grid-cols-5 [&.gridView]:grid-cols-5 xl:grid-cols-4 group [&.gridView]:xl:grid-cols-4 gap-x-5" id="cardGridView">
@@ -76,12 +76,12 @@
                                     </div>
 
                                     <div class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
-                                        <button type="button" data-modal-target="addToCart" class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i> <span class="align-middle">Add to Cart</span></button>
+                                        <button type="button" data-modal-target="addToCart{{ $key }}" class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i> <span class="align-middle">Add to Cart</span></button>
                                     </div>
                                 </div>
                             </div>
                                 <!--end col & card-->
-                                <div id="addToCart" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
+                                <div id="addToCart{{ $key }}" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
                                     <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600" style="width: 45rem">
                                         <div class="flex items-center justify-between p-4 border-b dark:border-zink-500">
                                             <h5 class="text-16">Search Products Add To Cart</h5>
@@ -89,7 +89,7 @@
                                                 <input type="text" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search for ..." autocomplete="off">
                                                 <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
                                             </div>
-                                            <button data-modal-close="addToCart" id="addToCart" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="w-5 h-5"></i></button>
+                                            <button data-modal-close="addToCart{{ $key }}" id="addToCart{{ $key }}" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="w-5 h-5"></i></button>
                                         </div>
                                         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
                                             <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
@@ -100,7 +100,9 @@
                                                                 <img src="{{ Storage::url($list->image) }}" alt="" class="block mx-auto h-44">
                                                             </div>
                                                         </div>
-                                                        <div class="card-body">
+                                                        <form action="../admin/cart/create" method="post">
+                                                            @csrf
+                                                            <div class="card-body">
                                                             <div class="mt-6">
                                                                 <h5 class="mb-2">${{ $list->variant->first()->price_sale }} <small class="font-normal line-through">${{ $list->variant->first()->price }}</small></h5>
                                                                 <h6 class="mb-1 text-15">{{ $list->name }}</h6>
@@ -108,9 +110,9 @@
                                                             </div>
                                                             <div class="xl:col-span-6 mt-3">
                                                                 <div class="inline-flex text-center input-step">
-                                                                    <button type="button" class="border size-9 leading-[15px] bg-white dark:bg-zink-700 dark:border-zink-500 ltr:rounded-l rtl:rounded-r transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block size-4"></i></button>
-                                                                    <input type="number" id="numberCart" class="w-12 text-center ltr:pl-2 rtl:pr-2 h-9 border-y product-quantity dark:bg-zink-700 focus:shadow-none dark:border-zink-500" value="1" min="1" max="{{ $list->variant->first()->quantity }}" readonly="">
-                                                                    <button type="button" onclick="increase()" class="transition-all duration-200 ease-linear bg-white border dark:bg-zink-700 dark:border-zink-500 ltr:rounded-r rtl:rounded-l size-9 border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block size-4"></i></button>
+                                                                    <button type="button" onclick="decrease('{{ $key }}')" class="border size-9 leading-[15px] bg-white dark:bg-zink-700 dark:border-zink-500 ltr:rounded-l rtl:rounded-r transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block size-4"></i></button>
+                                                                    <input type="number" id="numberCart-{{ $key }}" name="quantity" class="w-12 text-center ltr:pl-2 rtl:pr-2 h-9 border-y product-quantity dark:bg-zink-700 focus:shadow-none dark:border-zink-500" value="1" min="1" max="{{ $list->variant->first()->quantity }}" readonly="">
+                                                                    <button type="button" onclick="increase('{{ $key }}')" class="transition-all duration-200 ease-linear bg-white border dark:bg-zink-700 dark:border-zink-500 ltr:rounded-r rtl:rounded-l size-9 border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block size-4"></i></button>
                                                                 </div>
                                                             </div>
                                                             <h6 class="mt-3 mb-2 text-15">Colors</h6>
@@ -132,10 +134,13 @@
                                                                 @endforeach
                                                             </div>
                                                             <div class="flex gap-2 mt-4">
+                                                                <input type="hidden" name="product_id" value="{{ $list->id }}">
+                                                                <input type="hidden" name="product_variant_id" value="{{ $list->variant->first() }}">
                                                                 <button type="button" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">Create Products</button>
-                                                                <button type="button" class="w-full text-white bg-purple-500 border-purple-500 btn hover:text-white hover:bg-purple-600 hover:border-purple-600 focus:text-white focus:bg-purple-600 focus:border-purple-600 focus:ring focus:ring-purple-100 active:text-white active:bg-purple-600 active:border-purple-600 active:ring active:ring-purple-100 dark:ring-purple-400/10">Draft</button>
+                                                                <button type="submit" class="w-full text-white bg-purple-500 border-purple-500 btn hover:text-white hover:bg-purple-600 hover:border-purple-600 focus:text-white focus:bg-purple-600 focus:border-purple-600 focus:ring focus:ring-purple-100 active:text-white active:bg-purple-600 active:border-purple-600 active:ring active:ring-purple-100 dark:ring-purple-400/10">Add To Cart</button>
                                                             </div>
                                                         </div>
+                                                        </form>
                                                     </div><!--end card-->
                                                 </div>
                                             </div>
