@@ -44,14 +44,14 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function variant()
+    public function variants()
     {
         return $this->hasMany(ProductVariant::class, 'product_id');
     }
-    public function variants()
-    {
-        return $this->belongsToMany(ProductVariant::class, 'product_variants', 'product_id', 'variant_id');
-    }
+    // public function variants()
+    // {
+    //     return $this->belongsToMany(ProductVariant::class, 'product_variants', 'product_id', 'variant_id');
+    // }
 
     public function sizes()
     {
@@ -63,6 +63,6 @@ class Product extends Model
     }
     public function tags()
     {
-        return $this->belongsTo(Tag::class, 'tag_id');
+        return $this->belongsToMany(Tag::class);
     }
 }

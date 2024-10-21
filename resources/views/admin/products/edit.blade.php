@@ -60,10 +60,10 @@
                                     </div><!--end col-->
                                     <div class="xl:col-span-4">
                                         <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Tag</label>
-                                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="tag_id" id="categorySelect">
+                                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="tags[]"  id="tags" multiple>
                                             <option value="">Select Tag</option>
                                             @foreach($tag as $id => $name)
-                                                <option @selected($product->tag_id == $id)
+                                                <option  @selected(in_array($id,$productTags))
                                                  value="{{ $id }}">{{ $name }}</option>
                                             @endforeach
                                         </select>
@@ -159,53 +159,55 @@
                                 <h6 class="mb-4 text-30 mt-5 mb-5" style="text-align: center">Products Variants</h6>
 
                                 <div id="variants">
-                                    
-                                    @foreach($product->variant as $list)
-                                    <div id="variants" >
+                                    @foreach($product->variants as $index => $list)
+                                    <div id="variant-{{ $index }}">
                                         <div style="margin-top: 38px" class="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                             {{-- Products variants --}}
+                                            @if(isset($list->id))
+                                            <input type="hidden" name="variants[{{ $index }}][id]" value="{{ $list->id }}">
+                                            @endif
+                                
                                             <div class="xl:col-span-4">
                                                 <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
-                                                <input type="number" name="variants[0][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $list->price }}" required="">
+                                                <input type="number" name="variants[{{ $index ?? variants[0]}}][price]" id="productPrice" class="form-input ..." value="{{ $list->price }}" required="">
                                             </div>
-    
+                                
                                             <div class="xl:col-span-4">
                                                 <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Discounts</label>
-                                                <input type="number" name="variants[0][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $list->price_sale }}" required="">
+                                                <input type="number" name="variants[{{ $index ?? variants[0] }}][price_sale]" id="productDiscounts" class="form-input ..." value="{{ $list->price_sale }}" required="">
                                             </div>
-    
+                                
                                             <div class="xl:col-span-4">
                                                 <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Quantity</label>
-                                                <input type="number" id="qualityInput" name="variants[0][quantity]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $list->quantity }}" required="">
+                                                <input type="number" id="qualityInput" name="variants[{{ $index ?? variants[0] }}][quantity]" class="form-input ..." value="{{ $list->quantity }}" required="">
                                             </div>
-    
-                                            {{-- color--}}
+                                
+                                            {{-- color --}}
                                             <div class="xl:col-span-4">
                                                 <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Color</label>
-                                                <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[0][product_color_id]" id="categorySelect">
+                                                <select class="form-input ..." name="variants[{{ $index ?? variants[0] }}][product_color_id]" id="categorySelect">
                                                     <option value="">Select Color</option>
                                                     @foreach($color as $listColor)
                                                         <option value="{{ $listColor->id }}" {{ $listColor->id == $list->product_color_id ? 'selected' : ''}}>{{ $listColor->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
-    
-                                            <!--end col-->
+                                
                                             {{-- size --}}
                                             <div class="xl:col-span-4">
                                                 <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Size</label>
-                                                <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[0][product_size_id]" id="categorySelect">
+                                                <select class="form-input ..." name="variants[{{ $index ?? variants[0] }}][product_size_id]" id="categorySelect">
                                                     <option value="">Select Size</option>
                                                     @foreach($size as $listSize)
                                                         <option value="{{ $listSize->id }}" {{ $listSize->id == $list->product_size_id ? 'selected' : ''}}>{{ $listSize->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <!--end col-->
                                         </div>
                                     </div>
-                                @endforeach
+                                    @endforeach
                                 </div>
+                               
                                 <div class="flex justify-end gap-2 mt-4">
                                     <button type="reset" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Reset</button>
                                     <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Create Product</button>

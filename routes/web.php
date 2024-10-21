@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\brandController;
+use App\Http\Controllers\Admin\AuthenController;
+use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
@@ -39,10 +42,23 @@ Route::resource('admin/brands', BrandController::class);
 
 
 //-----------------------------------------------------------------
+//
+Route::group([
+    'prefix' => 'login',
+    'as' => 'login.'
+], function (){
+    Route::get('login', [AuthenController::class, 'login'])->name('login');
+    Route::get('logout', [AuthenController::class, 'logout'])->name('logout');
+    Route::post('login', [AuthenController::class, 'loginPost'])->name('loginPost');
+    Route::get('resister', [AuthenController::class, 'resister'])->name('resister');
+    Route::post('resister', [AuthenController::class, 'postResister'])->name('postResister');
+});
+
 
 Route::group([
     'prefix' => 'admin',
-    'as' => 'admin.'
+    'as' => 'admin.',
+    'middleware' => 'checkAdmin'
 ], function (){
     Route::group([
         'prefix' => 'statistic',
@@ -51,6 +67,7 @@ Route::group([
         Route::get('/', [StatisticController::class, 'index'])->name('index');
     });
 
+    // Color Product
     Route::group([
         'prefix' => 'color',
         'as' => 'color.'
@@ -61,6 +78,7 @@ Route::group([
         Route::put('update', [ColorController::class, 'update'])->name('update');
     });
 
+    // Size Product
     Route::group([
         'prefix' => 'size',
         'as' => 'size.'
@@ -71,6 +89,7 @@ Route::group([
         Route::put('update', [SizeController::class, 'update'])->name('update');
     });
 
+    // Tag Product
     Route::group([
         'prefix' => 'tag',
         'as' => 'tag.'
@@ -81,6 +100,18 @@ Route::group([
         Route::put('update', [TagController::class, 'update'])->name('update');
     });
 
+    // Product Tag
+    Route::group([
+        'prefix' => 'product_tag',
+        'as' => 'product_tag.'
+    ], function(){
+        Route::get('/', [ProductTagController::class, 'index'])->name('index');
+        Route::delete('delete/{id}', [ProductTagController::class, 'destroy'])->name('destroy');
+        Route::post('create', [ProductTagController::class, 'create'])->name('create');
+        Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
+    });
+
+    // Product
     Route::group([
         'prefix' => 'products',
         'as' => 'products.'
@@ -91,5 +122,13 @@ Route::group([
         Route::get('edit/{id}', [ProductsController::class, 'edit'])->name('edit');
         Route::put('/{id}', [ProductsController::class, 'update'])->name('update');
         Route::delete('destroy/{id}', [ProductsController::class, 'destroy'])->name('destroy');
+    });
+
+    // Cart
+    Route::group([
+        'prefix' => 'cart',
+        'as' => 'cart.'
+    ], function (){
+        Route::get('/', [CartController::class, 'index'])->name('index');
     });
 });

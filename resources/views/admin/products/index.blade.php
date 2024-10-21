@@ -55,7 +55,8 @@
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Product Name</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Category</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">Brand</th>
-                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort revenue" data-sort="revenue">Tags</th>
+                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Tags</th>
+                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort revenue" data-sort="revenue">Show Home</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">Trending</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort status" data-sort="status">Show Home</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Actions</th>
@@ -84,9 +85,19 @@
                                                 </span>
                                             </td>
                                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 category">
-                                                <span class="category px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-slate-100 border-slate-200 text-slate-500 dark:bg-slate-500/20 dark:border-slate-500/20 dark:text-zink-200">
-                                                   {{--  {{ $list->tags->name }}  --}}
-                                                </span>
+                                                
+                                                    @foreach ($list->tags as $tag)
+                                                    <span class="category px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-slate-100 border-slate-200 text-slate-500 dark:bg-slate-500/20 dark:border-slate-500/20 dark:text-zink-200"> 
+                                                        <ul >{{$tag->name}}</ul>
+                                                    </span>
+                                                @endforeach
+                                                
+                                            </td>
+                                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 revenue">
+                                                <div class="relative inline-block w-10 align-middle transition duration-200 ease-in ltr:mr-2 rtl:ml-2">
+                                                    <input type="checkbox" name="is_show_home" {{ $list->is_show_home == 1 ? 'checked' : ''}} class="absolute block size-5 transition duration-300 ease-linear border-2 border-slate-200 dark:border-zink-500 rounded-full appearance-none cursor-pointer bg-white/80 dark:bg-zink-600 peer/published checked:bg-white dark:checked:bg-white ltr:checked:right-0 rtl:checked:left-0 checked:bg-none checked:border-yellow-500 dark:checked:border-yellow-500 arrow-none after:absolute after:text-slate-500 dark:after:text-zink-200 after:content-['\eb99'] after:text-xs after:inset-0 after:flex after:items-center after:justify-center after:font-remix after:leading-none checked:after:text-yellow-500 dark:checked:after:text-yellow-500 checked:after:content-['\eb7b']" disabled>
+                                                    <label for="yellowIconSwitch" class="block h-5 overflow-hidden duration-300 ease-linear border rounded-full cursor-pointer cursor-pointertransition border-slate-200 dark:border-zink-500 bg-slate-200 dark:bg-zink-600 peer-checked/published:bg-yellow-500 peer-checked/published:border-yellow-500"></label>
+                                                </div>
                                             </td>
                                             {{--                                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 category">--}}
                                             {{--                                                @foreach($list->variant as $key)--}}
