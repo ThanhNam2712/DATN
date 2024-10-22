@@ -130,5 +130,9 @@ Route::group([
         'as' => 'cart.'
     ], function (){
         Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::post('create', [CartController::class, 'create'])->name('create');
+        Route::get('cart_detail', [CartController::class, 'detail'])->name('detail');
+        Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
+        Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
     });
 });
