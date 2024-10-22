@@ -10,8 +10,10 @@ use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Client\LoginController; // Từ nhánh main
+use App\Http\Controllers\admin\UserController; // Từ nhánh hieudv
+use App\Http\Controllers\Client\RegisterController;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,13 +34,30 @@ Route::get('/admin/dashboard', function () {
 Route::prefix('admin/categories')->name('admin.categories.')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('index');
     Route::get('/create', [CategoryController::class, 'create'])->name('create');
-    Route::post('/store', [CategoryController::class, 'store'])->name('store'); // Removed {id}
+    Route::post('/store', [CategoryController::class, 'store'])->name('store');
     Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
     Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
 // --------------------------Dũng----------------------------------
 Route::resource('admin/brands', BrandController::class);
+Route::prefix('admin/users')->name('admin.users.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+
+});
+Route::prefix('account')->as('account.')->group(function () {
+    // Route đăng ký
+    Route::get('show-register', [RegisterController::class, 'showForm'])->name('showForm');
+    Route::post('register', [RegisterController::class, 'register'])->name('register');
+    Route::get('show-login', [LoginController::class, 'showFormLogin'])->name('showFormLogin');
+    Route::post('login', [LoginController::class, 'login'])->name('login');
+    // Route đăng nhập
+
+
+    // Các route cần phải đăng nhập mới dùng được
+
+});
 
 
 //-----------------------------------------------------------------
@@ -58,7 +77,7 @@ Route::group([
 Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
-    // 'middleware' => 'checkAdmin'
+    'middleware' => 'checkAdmin'
 ], function (){
     Route::group([
         'prefix' => 'statistic',

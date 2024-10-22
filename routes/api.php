@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\brandController;
 use App\Http\Controllers\Api\ProductsColorController;
 use App\Http\Controllers\Api\ProductsController;
 use App\Http\Controllers\Api\ProductsSizeController;
+use App\Http\Controllers\admin\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -66,3 +67,4 @@ Route::group([
     });
 });
 Route::apiResource('admin/brands', brandController::class);
+Route::get('/categories', [CategoryController::class, 'getCategories']);

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Category::class)->constrained();
             $table->foreignIdFor(Brand::class)->constrained();
-            $table->string('name');
+            $table->string('name')->unique();;
             $table->string('image');
             $table->text('description');
             $table->text('content');
