@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\Client\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,10 +25,14 @@ Route::get('/admin/dashboard', function () {
 Route::prefix('admin/categories')->name('admin.categories.')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('index');
     Route::get('/create', [CategoryController::class, 'create'])->name('create');
-    Route::post('/store', [CategoryController::class, 'store'])->name('store'); // Chỉnh sửa đây
+    Route::post('/store', [CategoryController::class, 'store'])->name('store');
     Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
     Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+});
+Route::prefix('admin/users')->name('admin.users.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
 });
 Route::prefix('account')->as('account.')->group(function () {
     // Route đăng ký
