@@ -33,6 +33,7 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
 Route::prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+
 });
 Route::prefix('account')->as('account.')->group(function () {
     // Route đăng ký
