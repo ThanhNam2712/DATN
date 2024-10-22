@@ -63,6 +63,7 @@
                                                 <option value="{{ $list->id }}">{{ $list->name }}</option>
                                             @endforeach
                                         </select>
+                                        
                                     </div><!--end col-->
                                     {{-- active --}}
                                     <div class="xl:col-span-4">
