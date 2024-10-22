@@ -159,7 +159,7 @@
                                 <h6 class="mb-4 text-30 mt-5 mb-5" style="text-align: center">Products Variants</h6>
 
                                 <div id="variants">
-                                    @foreach($product->variants as $index => $list)
+                                    @foreach($product->variant as $index => $list)
                                     <div id="variant-{{ $index }}">
                                         <div style="margin-top: 38px" class="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                             {{-- Products variants --}}

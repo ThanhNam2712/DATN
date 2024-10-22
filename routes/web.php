@@ -58,7 +58,7 @@ Route::group([
 Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
-    'middleware' => 'checkAdmin'
+    // 'middleware' => 'checkAdmin'
 ], function (){
     Route::group([
         'prefix' => 'statistic',
