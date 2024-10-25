@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\SizeController;
@@ -113,5 +114,18 @@ Route::group([
         Route::get('cart_detail', [CartController::class, 'detail'])->name('detail');
         Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
         Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+    });
+
+    // Coupon
+    Route::group([
+        'prefix' => 'coupon',
+        'as' => 'coupon.'
+    ], function (){
+        Route::get('/', [CouponController::class, 'index'])->name('index');
+        Route::get('create', [CouponController::class, 'create'])->name('create');
+        Route::post('create', [CouponController::class, 'store'])->name('store');
+        Route::get('update/{id}', [CouponController::class, 'update'])->name('update');
+        Route::put('update/{id}', [CouponController::class, 'edit'])->name('edit');
+        Route::delete('delete/{id}', [CouponController::class, 'delete'])->name('delete');
     });
 });
