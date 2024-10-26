@@ -19,4 +19,14 @@ class ProductVariant extends Model
     public function Cart_Item(){
         return $this->hasMany(CartItem::class);
     }
+
+    public function color()
+    {
+        return $this->belongsTo(ProductColor::class, 'product_color_id');
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(ProductSize::class, 'product_size_id');
+    }
 }

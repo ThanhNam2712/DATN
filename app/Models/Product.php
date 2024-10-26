@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'category_id',
         'brand_id',
-        'tag_id',
         'name',
         'image',
         'description',
@@ -32,13 +32,15 @@ class Product extends Model
         return $this->hasMany(Gallery::class);
     }
     public function Brand(){
-        return $this->hasOne(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
-    public function Sizes(){
-        return $this->belongsToMany(ProductSize::class);
-    }public function Colors(){
-        return $this->belongsToMany(ProductColor::class);
-    }public function Tags(){
-        return $this->belongsToMany(Tag::class);
+
+    public function category(){
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function variant()
+    {
+        return $this->hasMany(ProductVariant::class, 'product_id');
     }
 }
