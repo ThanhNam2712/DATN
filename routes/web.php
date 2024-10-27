@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\SizeController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\LoginController; // Từ nhánh main
 use App\Http\Controllers\admin\UserController; // Từ nhánh hieudv
 use App\Http\Controllers\Client\RegisterController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -153,5 +155,15 @@ Route::group([
         Route::get('cart_detail', [CartController::class, 'detail'])->name('detail');
         Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
         Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+    });
+    Route::group([
+        'prefix' => 'order',
+        'as' => 'order.'
+    ], function (){
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::post('create', [OrderController::class, 'create'])->name('create');
+        Route::get('list', [OrderController::class, 'listOrders'])->name('list');
+        // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
+        // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
     });
 });
