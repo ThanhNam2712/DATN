@@ -13,6 +13,8 @@ class Coupon extends Model
         'discount_type',
         'discount_value',
         'expiration_date',
+        'start_end',
+        'user_id',
         'minimum_order_amount',
     ];
 }
