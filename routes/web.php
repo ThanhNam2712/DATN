@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\RegisterController;
+use App\Http\Controllers\Client\UserEditController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductsController;
@@ -32,7 +33,25 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
 });
 Route::prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [UserController::class, 'update'])->name('update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+});
+
+Route::middleware(['auth'])->group(function () {
+    //thông tin tk
+    Route::get('/user/account', [UserEditController::class, 'index'])->name('auth.user.account');
+    //sửa tk
+    Route::get('/user/edit', [UserEditController::class, 'editProfile'])->name('auth.user.edit');
+    Route::put('/user/update', [UserEditController::class, 'updateProfile'])->name('auth.user.update');
+    //tạo địa chỉ
+    Route::get('/user/create', [UserEditController::class, 'addAddresses'])->name('auth.address.create');
+    Route::post('/user/store', [UserEditController::class, 'storeAddAddress'])->name('auth.address.store');
+    //sửa địa chỉ
+    Route::get('/user/account/edit/{id}', [UserEditController::class, 'editAddress'])->name('auth.address.edit');
+    Route::put('/user/address/update/{id}', [UserEditController::class, 'updateAddress'])->name('auth.address.update');
+    //xoá địa chỉ
+    Route::delete('/user/destroy/{id}', [UserEditController::class, 'destroy'])->name('auth.address.destroy');
 });
 
 Route::group([

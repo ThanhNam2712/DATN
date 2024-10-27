@@ -21,10 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-<<<<<<< HEAD
-=======
         'role_id',
->>>>>>> origin/cdtuan
+        'sdt',
+        'status',
     ];
 
     public function role()
@@ -66,12 +65,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class);
     }
-    public function Addresses()
+    public function addresses()
     {
         return $this->hasMany(Address::class);
-    }public function role()
-    {
-        return $this->belongsTo(Role::class);
     }
-
 }
