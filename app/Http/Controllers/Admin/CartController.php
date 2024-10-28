@@ -67,6 +67,8 @@ class CartController extends Controller
             // nếu chưa có thì sẽ tạo cart item mới, với dữ liệu người dùng nhập
             CartItem::create([
                 'cart_id' => $cart->id,
+                'color_id' => $cart->id,
+                'size_id' => $cart->id,
                 'product_id' => $product,
                 'product_variant_id' => $product_variant->id,
                 'quantity' => $request->quantity,
