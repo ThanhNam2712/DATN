@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\SizeController;
@@ -128,4 +129,15 @@ Route::group([
         Route::put('update/{id}', [CouponController::class, 'edit'])->name('edit');
         Route::delete('delete/{id}', [CouponController::class, 'delete'])->name('delete');
     });
+
+    Route::group([
+        'prefix' => 'order',
+        'as' => 'order.'
+    ], function (){
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::post('create', [OrderController::class, 'create'])->name('create');
+        Route::get('list', [OrderController::class, 'listOrders'])->name('list');
+        Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
+    });
+
 });
