@@ -36,7 +36,7 @@ class CartController extends Controller
         $id_user = Auth::id();
 
         // Kiểm Tra người dùng đã có giỏ hàng chưa
-        $cart = Cart::where('user_id' , $id_user)->first();
+        $cart = Cart::where('user_id', $id_user)->first();
         // lấy id của product
         $product = $request->product_id;
 
@@ -44,7 +44,7 @@ class CartController extends Controller
         $product_variant = ProductVariant::where('product_id', $product)->first();
 
         // kiểm tra nếu người dùng chưa có giỏ hàng thì thêm
-        if (!$cart){
+        if (!$cart) {
             $cart = Cart::create([
                 'user_id' => $id_user,
                 'total_amuont' => 0,
@@ -59,16 +59,16 @@ class CartController extends Controller
             ->first();
 
         // nếu trong giỏ hàng đã có cart item sẽ công thêm số lượng người dùng chọn
-        if ($cart_item){
+        if ($cart_item) {
             $cart_item->update([
                 'quantity' => $cart_item->quantity + $request->quantity
             ]);
-        }else{
+        } else {
             // nếu chưa có thì sẽ tạo cart item mới, với dữ liệu người dùng nhập
             CartItem::create([
                 'cart_id' => $cart->id,
-                'color_id' => $cart->id,
-                'size_id' => $cart->id,
+                'color_id' => $request->color_id,
+                'size_id' => $request->size_id,
                 'product_id' => $product,
                 'product_variant_id' => $product_variant->id,
                 'quantity' => $request->quantity,
@@ -126,7 +126,7 @@ class CartController extends Controller
 
     public function deleteCart(Request $request, $id)
     {
-        if ($request->ajax()){
+        if ($request->ajax()) {
             $cartDetail = CartItem::find($id);
             $cartID = $cartDetail->cart_id;
             $cart = Cart::find($cartID);
@@ -134,7 +134,7 @@ class CartController extends Controller
 
             $sumQuantity = $cartDetail->sum('quantity');
             $remainingCartItems = $cart->cartDetail;
-            $newTotalAmount = $remainingCartItems->sum(function ($cartItem){
+            $newTotalAmount = $remainingCartItems->sum(function ($cartItem) {
                 return $cartItem->quantity * $cartItem->product_variant->price_sale;
             });
 
