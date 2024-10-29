@@ -100,7 +100,7 @@
                                                                 <img src="{{ Storage::url($list->image) }}" alt="" class="block mx-auto h-44">
                                                             </div>
                                                         </div>
-                                                        <form action="../admin/cart/create" method="post">
+                                                        <form action="{{route('admin.cart.create')}}" method="post">
                                                             @csrf
                                                             <div class="card-body">
                                                             <div class="mt-6">

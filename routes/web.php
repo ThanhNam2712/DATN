@@ -1,6 +1,6 @@
 <?php
 
-// use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -15,9 +15,6 @@ use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\Client\LoginController; // Từ nhánh main
-use App\Http\Controllers\admin\UserController; // Từ nhánh hieudv
-use App\Http\Controllers\Client\RegisterController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +33,7 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
 // --------------------------Dũng----------------------------------
-// Route::resource('admin/brands', BrandController::class);
+Route::resource('admin/brands', BrandController::class);
 Route::prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');

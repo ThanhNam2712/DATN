@@ -42,6 +42,7 @@ class CartController extends Controller
 
         // lấy biến thể của product
         $product_variant = ProductVariant::where('product_id', $product)->first();
+        // dd($request->size_id,$request->color_id,$product,$request->quantity);
 
         // kiểm tra nếu người dùng chưa có giỏ hàng thì thêm
         if (!$cart) {
