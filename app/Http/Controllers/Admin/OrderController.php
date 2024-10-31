@@ -75,9 +75,6 @@ class OrderController extends Controller
     }
 
 
-    
-
-
     public function coupon(Request $request)
     {
         $couponCode = $request->input('coupon');
