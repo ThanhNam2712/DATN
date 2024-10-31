@@ -76,16 +76,16 @@
                                                @method('DELETE')
                                                <button type="submit" onclick="return confirm('Do you want to delete this product tag')" class="flex items-center justify-center size-[37.5px] p-0 text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20 remove-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" class="lucide lucide-trash-2 w-4 h-4"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg></button>
                                            </form>
-                                           <button data-modal-target="updateProductTagModal" type="button" class="flex ms-3 items-center justify-center size-[37.5px] p-0 text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20 remove-button"><i data-lucide="file-edit" style="text-align: center" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i></button>
+                                           <button data-modal-target="updateProductTagModal{{ $key }}" type="button" class="flex ms-3 items-center justify-center size-[37.5px] p-0 text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20 remove-button"><i data-lucide="file-edit" style="text-align: center" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i></button>
                                         </td>
                                     </tr>
 
                                     {{-- Update Product Tag --}}
-                                    <div id="updateProductTagModal" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
+                                    <div id="updateProductTagModal{{ $key }}" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
                                         <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
                                             <div class="flex items-center justify-between p-4 border-b dark:border-zink-300/20">
                                                 <h5 class="text-16">Update Product Tag</h5>
-                                                <button data-modal-close="updateProductTagModal" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+                                                <button data-modal-close="updateProductTagModal{{ $key }}" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
                                             </div>
                                             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
                                                 <form action="../admin/product_tag/update/{{ $list->id }}" method="post">
@@ -106,7 +106,7 @@
                                                         <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="tag_id" id="categorySelect">
                                                             <option value="">Select Tags</option>
                                                             @foreach($tag as $listTag)
-                                                                <option value="{{ $listTag->id }}" {{ $listTag->id == $list->product_id ?  'selected' : ''}}>{{ $listTag->name }}</option>
+                                                                <option value="{{ $listTag->id }}" {{ $listTag->id == $list->tag_id ?  'selected' : ''}}>{{ $listTag->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div><!--end col-->

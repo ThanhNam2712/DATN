@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -73,4 +74,48 @@ class OrderController extends Controller
         
     }
 
+
+    
+
+
+    public function coupon(Request $request)
+    {
+        $couponCode = $request->input('coupon');
+
+        $cart = Cart::where('user_id', Auth::id())
+            ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
+            ->first();
+
+        $coupon = Coupon::where('code', $couponCode)
+                        ->where('start_end', '<=', now())
+                        ->where('expiration_date', '>=', now())
+                        ->first();
+
+        if (!$coupon){
+            return response()->json([
+               'error' => 'Thằng ranh này nhập không đúng mã voucher'
+            ]);
+        }
+
+        $discount = 0;
+        $total = $cart->total_amuont;
+
+        if ($total > $coupon->minimum_order_amount) {
+            if ($coupon->discount_type == 'Phần Trăm') {
+                $discount = $total * ($coupon->discount_value / 100);
+            } elseif ($coupon->discount_type == 'Giá Tiền') {
+                $discount = $coupon->discount_value;
+            }
+        } else {
+            return response()->json([
+                'error' => 'Thằng ranh con này đơn hàng không đủ điều kiện'
+            ]);
+        }
+        $final_total = $total - $discount;
+        return response()->json([
+            'success' => true,
+            'discount' => $discount,
+            'final_total' => $final_total,
+        ]);
+    }
 }

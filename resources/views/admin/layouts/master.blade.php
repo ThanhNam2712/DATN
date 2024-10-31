@@ -397,6 +397,7 @@
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/cart/quantity.js"></script>
 <script src="../assets/js/cart/cartAddCart.js"></script>
+<script src="../assets/js/order/coupon.js"></script>
 <script>
     let variantIndex = 1;
     function addVariant(){
