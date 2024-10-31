@@ -54,6 +54,8 @@ class AuthenController extends Controller
         $data = $request->all();
         $data['password'] = Hash::make($request->password);
         $data['role_id'] = $roles->id;
+        $data['sdt'] = " ";
+        $data['status'] = " ";
 
         User::create($data);
 

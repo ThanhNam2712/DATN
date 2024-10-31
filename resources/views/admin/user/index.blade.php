@@ -64,7 +64,7 @@ Danh mục sản phẩm
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="phone-number">Số điện thoại</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="status">Chức vụ</th>
+                                            data-sort="status">Vai trò</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Hành động</th>
                                     </tr>
                                 </thead>
@@ -143,7 +143,12 @@ Danh mục sản phẩm
                                                                 Xóa
                                                             </button>
                                                         </form>
-
+                                                        <a href="{{ route('admin.users.edit', $user->id) }}"
+                                                            class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200">
+                                                             <i data-lucide="edit"
+                                                                class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                             Sửa
+                                                         </a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -156,6 +161,66 @@ Danh mục sản phẩm
 
 
                             </table>
+                            <div id="editUserModal" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
+                                <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+                                    <div class="flex items-center justify-between p-4 border-b dark:border-zink-300/20">
+                                        <h5 class="text-16">Edit User</h5>
+                                        <button data-modal-close="editUserModal" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+                                    </div>
+                                    <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
+                                        <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT') <!-- Thêm phương thức PUT để cập nhật -->
+
+                                            <div class="mb-3">
+                                                <label for="userId" class="inline-block mb-2 text-base font-medium">User ID</label>
+                                                <input type="text" id="userId" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" disabled="" value="{{ $user->id }}" required="">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Joining Date</label>
+                                                <input type="text" id="joiningDateInput" name="joining_date" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" value="{{ $user->joining_date }}" placeholder="Select date" data-provider="flatpickr" data-date-format="d M, Y">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="userNameInput" class="inline-block mb-2 text-base font-medium">Name</label>
+                                                <input type="text" id="userNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Enter name" value="{{ $user->name }}" required="">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="emailInput" class="inline-block mb-2 text-base font-medium">Email</label>
+                                                <input type="email" id="emailInput" name="email" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Enter email" value="{{ $user->email }}" required="">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Phone Number</label>
+                                                <input type="text" id="phoneNumberInput" name="phone" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="12345 67890" value="{{ $user->phone }}" required="">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="statusSelect" class="inline-block mb-2 text-base font-medium">Status</label>
+                                                <select class="form-input border-slate-300 focus:outline-none focus:border-custom-500" name="status" id="statusSelect" required>
+                                                    <option value="">Select Status</option>
+                                                    <option value="Verified" {{ $user->status == 'Verified' ? 'selected' : '' }}>Verified</option>
+                                                    <option value="Waiting" {{ $user->status == 'Waiting' ? 'selected' : '' }}>Waiting</option>
+                                                    <option value="Rejected" {{ $user->status == 'Rejected' ? 'selected' : '' }}>Rejected</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="locationInput" class="inline-block mb-2 text-base font-medium">Location</label>
+                                                <input type="text" id="locationInput" name="location" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Location" value="{{ $user->location }}" required="">
+                                            </div>
+
+                                            <div class="flex justify-end gap-2 mt-4">
+                                                <button type="reset" data-modal-close="editUserModal" class="text-red-500 transition-all duration-200 ease-linear bg-white border-white btn hover:text-red-600 focus:text-red-600 active:text-red-600 dark:bg-zink-500 dark:border-zink-500">Cancel</button>
+                                                <button type="submit" class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Update User</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="noresult" style="display: none">
                                 <div class="py-6 text-center">
                                     <i data-lucide="search"

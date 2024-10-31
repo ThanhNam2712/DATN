@@ -22,7 +22,9 @@ class User extends Authenticatable
         'email',
         'sdt',
         'password',
-        'role_id',  
+        'role_id',
+        'sdt',
+        'status',
     ];
 
    
@@ -62,14 +64,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class);
     }
-    public function Addresses()
+    public function addresses()
     {
         return $this->hasMany(Address::class);
     }
     public function role()
-    {
-        return $this->belongsTo(Roles::class, 'role_id');
-    }
-  
-
+{
+    return $this->belongsTo(Role::class);
+}
 }
