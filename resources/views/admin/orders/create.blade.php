@@ -35,43 +35,77 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 class="mb-4 text-15">Shipping Information</h6>
-                        <form action="#!">
+                        <form action="{{ route('admin.order.create') }}" method="POST">
+                            @csrf
                             <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-12">
+                                
+                                <!-- First Name -->
                                 <div class="xl:col-span-4">
                                     <label for="firstNameInput" class="inline-block mb-2 text-base font-medium">First Name</label>
-                                    <input type="text" id="firstNameInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter First Name">
-                                </div><!--end col-->
+                                    <input type="text" id="firstNameInput" name="first_name" value="{{ $user->name }}" class="form-input" placeholder="Enter First Name">
+                                </div>
+                
+                                <!-- Phone Number -->
                                 <div class="xl:col-span-4">
                                     <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Phone Number</label>
-                                    <input type="text" id="phoneNumberInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="(012) 345 678 9010">
-                                </div><!--end col-->
+                                    <input type="text" id="phoneNumberInput" name="phone" value="{{ $user->sdt ?? 'Chưa có thông tin' }}" class="form-input" placeholder="(012) 345 678 9010">
+                                </div>
+                
+                                <!-- Email Address -->
                                 <div class="xl:col-span-4">
                                     <label for="emailAddressInput" class="inline-block mb-2 text-base font-medium">Email Address</label>
-                                    <input type="email" id="emailAddressInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter email">
-                                </div><!--end col-->
-                                <div class="xl:col-span-12">
-                                    <label for="streetAddressInput" class="inline-block mb-2 text-base font-medium">Street Address</label>
-                                    <input type="text" id="streetAddressInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Street address">
-                                </div><!--end col-->
-                                <div class="xl:col-span-12">
-                                    <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Town/City</label>
-                                    <input type="text" id="townCityInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Town/City">
-                                </div><!--end col-->
-                                <div class="xl:col-span-4">
-                                    <label for="stateInput" class="inline-block mb-2 text-base font-medium">State</label>
-                                    <input type="text" id="stateInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="State">
-                                </div><!--end col-->
-                                <div class="xl:col-span-4">
-                                    <label for="countryInput" class="inline-block mb-2 text-base font-medium">Country</label>
-                                    <select id="countryInput" name="countryInput" data-choices="" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                                      
-                                    </select>
-                                </div><!--end col-->
-                                <div class="xl:col-span-4">
-                                    <label for="zipcodeInput" class="inline-block mb-2 text-base font-medium">ZipCode</label>
-                                    <input type="text" id="zipcodeInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="ZipCode">
-                                </div><!--end col-->
+                                    <input type="email" id="emailAddressInput" name="email" value="{{ $user->email }}" class="form-input" placeholder="Enter email">
+                                </div>
+                
+                                <!-- Address Information (Optional) -->
+                                @if($address->isNotEmpty())
+                                    @foreach ($address as $item)
+                                        <div class="xl:col-span-12">
+                                            <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
+                                            <input type="text" id="provinceInput" name="Province" value="{{ $item->Province }}" class="form-input" placeholder="Enter Province">
+                                        </div>
+                
+                                        <div class="xl:col-span-12">
+                                            <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
+                                            <input type="text" id="townCityInput" name="district" value="{{ $item->district }}" class="form-input" placeholder="Enter District">
+                                        </div>
+                
+                                        <div class="xl:col-span-6">
+                                            <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
+                                            <input type="text" id="neighborhoodInput" name="Neighborhood" value="{{ $item->Neighborhood }}" class="form-input" placeholder="Enter Neighborhood">
+                                        </div>
+                
+                                        <div class="xl:col-span-6">
+                                            <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
+                                            <input type="text" id="apartmentInput" name="Apartment" value="{{ $item->Apartment }}" class="form-input" placeholder="Enter Apartment">
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <!-- Form for adding new address -->
+                                    <div class="xl:col-span-12">
+                                        <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
+                                        <input type="text" id="provinceInput" name="Province" class="form-input" placeholder="Enter Province">
+                                    </div>
+                
+                                    <div class="xl:col-span-12">
+                                        <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
+                                        <input type="text" id="townCityInput" name="district" class="form-input" placeholder="Enter District">
+                                    </div>
+                
+                                    <div class="xl:col-span-6">
+                                        <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
+                                        <input type="text" id="neighborhoodInput" name="Neighborhood" class="form-input" placeholder="Enter Neighborhood">
+                                    </div>
+                
+                                    <div class="xl:col-span-6">
+                                        <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
+                                        <input type="text" id="apartmentInput" name="Apartment" class="form-input" placeholder="Enter Apartment">
+                                    </div>
+                                @endif
                             </div><!--end grid-->
+                
+                            <!-- Save Button -->
+                            <button type="submit" class="btn btn-primary mt-4">Save Address</button>
                         </form>
                     </div>
                 </div><!--end card-->
@@ -227,14 +261,14 @@
                             
                         </div>
                         {{--  sản phẩm -----------------------------------------------------------  --}}
-                        <div class="mt-4">
+                        {{--  <div class="mt-4">
                             <form action="{{ route('admin.order.create') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
                                     Place Order
                                 </button>
                             </form>
-                        </div>
+                        </div>  --}}
                     </div>
                 </div>
                 <h6 class="mb-4 underline text-16">Additional Service</h6>
