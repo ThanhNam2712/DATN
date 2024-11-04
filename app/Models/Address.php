@@ -13,7 +13,8 @@ class Address extends Model
         'Province',
         'district',
         'Neighborhood',
-        'Apartment'
+        'Apartment',
+        'status',
     ];
     public function User(){
         return $this->belongsTo(User::class);

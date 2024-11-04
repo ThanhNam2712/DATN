@@ -2,7 +2,6 @@
 
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Category::class)->constrained();
             $table->foreignIdFor(Brand::class)->constrained();
-            $table->foreignIdFor(Tag::class)->constrained();
-            $table->string('name');
+            $table->string('name')->unique();;
             $table->string('image');
             $table->text('description');
             $table->text('content');
@@ -28,8 +26,8 @@ return new class extends Migration
             $table->boolean('is_new');
             $table->boolean('is_show_home');
             $table->boolean('is_active');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

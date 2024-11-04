@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('cart_items', function (Blueprint $table) {
+            //
+            $table->bigInteger('size_id')->unique();
+            $table->bigInteger('color_id')->unique();
         });
     }
 
@@ -21,8 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropSoftDeletes();
+        Schema::table('cart_items', function (Blueprint $table) {
+            //
         });
     }
 };

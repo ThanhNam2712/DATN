@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Api\ProductsColorController;
 use App\Http\Controllers\Api\ProductsController;
 use App\Http\Controllers\Api\ProductsSizeController;
@@ -85,3 +87,5 @@ Route::group([
         Route::get('/{id}', [ProductsController::class, 'variant'])->name('variant');
     });
 });
+Route::apiResource('admin/brands', BrandController::class);
+Route::get('/categories', [CategoryController::class, 'getCategories']);
