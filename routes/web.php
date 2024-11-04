@@ -1,6 +1,8 @@
 <?php
 
+
 use App\Http\Controllers\Admin\AuthenController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\LoginController;
@@ -9,16 +11,16 @@ use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\Client\UserEditController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
-
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('client.master');
 });
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
@@ -31,6 +33,8 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
+// --------------------------Dũng----------------------------------
+Route::resource('admin/brands', BrandController::class);
 Route::prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
@@ -76,49 +80,49 @@ Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
     'middleware' => 'checkAdmin'
-], function (){
+], function () {
     Route::group(['prefix' => 'statistic', 'as' => 'statistic.'], function () {
         Route::get('/', [StatisticController::class, 'index'])->name('index');
     });
 
-    Route::group(['prefix' => 'color', 'as' => 'color.'], function (){
+    Route::group(['prefix' => 'color', 'as' => 'color.'], function () {
         Route::get('/', [ColorController::class, 'index'])->name('index');
         Route::get('delete/{id}', [ColorController::class, 'destroy'])->name('destroy');
         Route::post('create', [ColorController::class, 'create'])->name('create');
         Route::put('update', [ColorController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'size', 'as' => 'size.'], function (){
+    Route::group(['prefix' => 'size', 'as' => 'size.'], function () {
         Route::get('/', [SizeController::class, 'index'])->name('index');
         Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('destroy');
         Route::post('create', [SizeController::class, 'create'])->name('create');
         Route::put('update', [SizeController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'tag', 'as' => 'tag.'], function(){
+    Route::group(['prefix' => 'tag', 'as' => 'tag.'], function () {
         Route::get('/', [TagController::class, 'index'])->name('index');
         Route::get('delete/{id}', [TagController::class, 'destroy'])->name('destroy');
         Route::post('create', [TagController::class, 'create'])->name('create');
         Route::put('update', [TagController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'product_tag', 'as' => 'product_tag.'], function(){
+    Route::group(['prefix' => 'product_tag', 'as' => 'product_tag.'], function () {
         Route::get('/', [ProductTagController::class, 'index'])->name('index');
         Route::delete('delete/{id}', [ProductTagController::class, 'destroy'])->name('destroy');
         Route::post('create', [ProductTagController::class, 'create'])->name('create');
         Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'products', 'as' => 'products.'], function (){
+    Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
         Route::get('/', [ProductsController::class, 'index'])->name('index');
         Route::get('create', [ProductsController::class, 'create'])->name('create');
         Route::post('create', [ProductsController::class, 'store'])->name('store');
-        Route::get('update/{id}', [ProductsController::class, 'edit'])->name('edit');
-        Route::put('update/{id}', [ProductsController::class, 'update'])->name('update');
+        Route::get('edit/{id}', [ProductsController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [ProductsController::class, 'update'])->name('update');
         Route::delete('destroy/{id}', [ProductsController::class, 'destroy'])->name('destroy');
     });
 
-    Route::group(['prefix' => 'cart', 'as' => 'cart.'], function (){
+    Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('create', [CartController::class, 'create'])->name('create');
         Route::get('cart_detail', [CartController::class, 'detail'])->name('detail');
@@ -126,7 +130,11 @@ Route::group([
         Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
     });
 
-    Route::group(['prefix' => 'coupon', 'as' => 'coupon.'], function (){
+    // Coupon
+    Route::group([
+        'prefix' => 'coupon',
+        'as' => 'coupon.'
+    ], function () {
         Route::get('/', [CouponController::class, 'index'])->name('index');
         Route::get('create', [CouponController::class, 'create'])->name('create');
         Route::post('create', [CouponController::class, 'store'])->name('store');
@@ -134,4 +142,17 @@ Route::group([
         Route::put('update/{id}', [CouponController::class, 'edit'])->name('edit');
         Route::delete('delete/{id}', [CouponController::class, 'delete'])->name('delete');
     });
+
+    Route::group([
+        'prefix' => 'order',
+        'as' => 'order.'
+    ], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::post('create', [OrderController::class, 'create'])->name('create');
+        Route::get('list', [OrderController::class, 'listOrders'])->name('list');
+        Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
+        // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
+        // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+    });
+
 });

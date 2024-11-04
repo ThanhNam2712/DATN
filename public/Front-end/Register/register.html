@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Đăng Ký</h2>
+        <form id="registerForm">
+            <div class="input-group">
+                <label for="name">Tên:</label>
+                <input type="text" id="name" placeholder="Vui lòng nhập tên" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" placeholder="Vui lòng nhập email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Mật khẩu:</label>
+                <input type="password" id="password" placeholder="Vui lòng nhập mật khẩu" required>
+            </div>
+            <div class="input-group">
+                <label for="confirmPassword">Xác nhận mật khẩu:</label>
+                <input type="password" id="confirmPassword" placeholder="Vui lòng nhập lại mật khẩu" required>
+            </div>
+            <button type="submit" id="submitBtn">Đăng Ký</button>
+        </form>
+        <div id="message"></div>
+    </div>
+    <script src="register.js"></script>
+</body>
+</html>

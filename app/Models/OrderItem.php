@@ -21,6 +21,6 @@ class OrderItem extends Model
         return $this->belongsTo(Payment::class);
     }
     public function product_variants(){
-        return $this->belongsTo(ProductVariant::class);
+        return $this->belongsTo(ProductVariant::class, 'product_variant_id');
     }
 }

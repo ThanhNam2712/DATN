@@ -22,25 +22,47 @@ class Product extends Model
         'is_show_home',
         'is_active',
     ];
-    public function Reviews(){
+    public function Reviews()
+    {
         return $this->hasMany(Review::class);
     }
-    public function Wishlists(){
+    public function Wishlists()
+    {
         return $this->hasMany(Wishlist::class);
     }
-    public function Galleries(){
+    public function Galleries()
+    {
         return $this->hasMany(Gallery::class);
     }
-    public function Brand(){
+    public function brand()
+    {
         return $this->belongsTo(Brand::class, 'brand_id');
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function variant()
     {
         return $this->hasMany(ProductVariant::class, 'product_id');
+    }
+    // public function variants()
+    // {
+    //     return $this->belongsToMany(ProductVariant::class, 'product_variants', 'product_id', 'variant_id');
+    // }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(ProductSize::class);
+    }
+    public function colors()
+    {
+        return $this->belongsToMany(ProductColor::class);
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

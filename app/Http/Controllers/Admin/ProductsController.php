@@ -13,6 +13,7 @@ use App\Models\ProductVariant;
 use App\Models\Tag;
 use App\Utilities\Common;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
@@ -22,7 +23,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $product = Product::all();
+        $product = Product::with('tags')->latest('id')->get();
+        
         return view('admin.products.index', compact('product'));
     }
 
@@ -51,7 +53,7 @@ class ProductsController extends Controller
         $data['is_show_home'] = $request->has('is_show_home') ? 1 : 0;
         $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $data['image'] = Common::uploadFile($request->file('image'), 'admin/img/products');
         }
 
@@ -59,16 +61,18 @@ class ProductsController extends Controller
 
         $id_product = $product->id;
 
-        foreach($request->variants as $variant){
-        ProductVariant::create([
-            'product_id' => $id_product,
-            'product_color_id' => $variant['product_color_id'],
-            'product_size_id' => $variant['product_size_id'],
-            'price_sale' => $variant['price_sale'],
-            'price' => $variant['price'],
-            'quantity' => $variant['quantity'],
-        ]);
+        foreach ($request->variants as $variant) {
+            ProductVariant::create([
+                'product_id' => $id_product,
+                'product_color_id' => $variant['product_color_id'],
+                'product_size_id' => $variant['product_size_id'],
+                'price_sale' => $variant['price_sale'],
+                'price' => $variant['price'],
+                'quantity' => $variant['quantity'],
+            ]);
         }
+        $product->tags()->attach($request->tags);
+
         return redirect('admin/products/')->with([
             'message' => 'Create Products Success'
         ]);
@@ -88,11 +92,16 @@ class ProductsController extends Controller
     public function edit(string $id)
     {
         $product = Product::find($id);
-        $category = Category::all();
-        $brand = Brand::all();
+        $category = Category::query()->pluck('name', 'id')->all();
+        $brand = Brand::query()->pluck('name', 'id')->all();
+        $productTags = $product->tags->pluck('id')->all();
+        $tag = Tag::query()->pluck('name', 'id')->all();
         $color = ProductColor::all();
         $size = ProductSize::all();
-        return view('admin.products.update', compact('product', 'category', 'brand', 'color', 'size'));
+        return view(
+            'admin.products.edit',
+            compact('product', 'category', 'brand', 'tag', 'color', 'size','productTags')
+        );
     }
 
     /**
@@ -100,42 +109,63 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $product = Product::find($id);
-        $data = $request->all();
-        $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
-        $data['is_sale'] = $request->has('is_sale') ? 1 : 0;
-        $data['is_new'] = $request->has('is_new') ? 1 : 0;
-        $data['is_show_home'] = $request->has('is_show_home') ? 1 : 0;
-        $data['is_active'] = $request->has('is_active') ? 1 : 0;
+        //
+        try {
+            DB::transaction(function () use ($request, $id) {
+                // Update product details
+                $product = Product::find($id);
+                $data = $request->all();
 
-        if($request->hasFile('image')){
-            $data['image'] = Common::uploadFile($request->file('image'), 'admin/img/products');
+                $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
+                $data['is_sale'] = $request->has('is_sale') ? 1 : 0;
+                $data['is_new'] = $request->has('is_new') ? 1 : 0;
+                $data['is_show_home'] = $request->has('is_show_home') ? 1 : 0;
+                $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
-            $file_old = $request->input('file_old');
-            if ($file_old && Storage::disk('public')->exists($file_old)){
-                Storage::disk('public')->delete($file_old);
-            }
-        }else{
-            $data['image'] = $product->image;
+                if ($request->hasFile('image')) {
+                    $data['image'] = Common::uploadFile($request->file('image'), 'admin/img/products');
+                }
+
+                $product->update($data);
+
+                $id_product = $product->id;
+                // dd($id_product);
+                foreach ($request->variants as $variantData) {
+                    // dd($request->variants);
+                    if (isset($variantData['id'])) {
+                        // Nếu có ID, đây là biến thể cũ cần cập nhật
+                        $variant = ProductVariant::find($variantData['id']);
+                            // Cập nhật thông tin biến thể
+                            $variant->update([
+                                'price' => $variantData['price'],
+                                'price_sale' => $variantData['price_sale'],
+                                'quantity' => $variantData['quantity'],
+                                'product_color_id' => $variantData['product_color_id'],
+                                'product_size_id' => $variantData['product_size_id'],
+                            ]); 
+                    } else {
+                        // Nếu không có ID, đây là biến thể mới cần thêm
+                        ProductVariant::create([
+                            'product_id' => $id_product,
+                            'product_color_id' => $variantData['product_color_id'],
+                            'product_size_id' => $variantData['product_size_id'],
+                            'price_sale' => $variantData['price_sale'],
+                            'price' => $variantData['price'],
+                            'quantity' => $variantData['quantity'],
+                        ]);
+                    }
+                }
+                $product->tags()->sync($request->tags);
+
+            });
+
+            return back()->with('success', 'Product updated successfully');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return back()->with('error', $th->getMessage());
         }
-
-        $product->update($data);
-
-        foreach($request->variants as $variant){
-            $product_variant = ProductVariant::find($variant['id']);
-            $product_variant->update([
-            'product_id' => $product->id,
-            'product_color_id' => $variant['product_color_id'],
-            'product_size_id' => $variant['product_size_id'],
-            'price_sale' => $variant['price_sale'],
-            'price' => $variant['price'],
-            'quantity' => $variant['quantity'],
-            ]);
-        }
-        return redirect()->back()->with([
-            'message' => 'Update Products Success'
-        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.

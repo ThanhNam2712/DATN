@@ -100,7 +100,7 @@
                                                                 <img src="{{ Storage::url($list->image) }}" alt="" class="block mx-auto h-44">
                                                             </div>
                                                         </div>
-                                                        <form action="../admin/cart/create" method="post">
+                                                        <form action="{{route('admin.cart.create')}}" method="post">
                                                             @csrf
                                                             <div class="card-body">
                                                             <div class="mt-6">
@@ -119,7 +119,8 @@
                                                             <div class="flex flex-wrap items-center gap-2">
                                                                 @foreach($list->variant as $keyColor => $color)
                                                                     <div>
-                                                                        <input id="selectColorPre{{ $keyColor }}" class="inline-block align-middle border rounded-full appearance-none cursor-pointer size-5 {{ $colorClasses[$color->color->name]  ?? '' }} border-sky-500 checked:{{ $colorClasses[$color->color->name]  ?? '' }} checked:border-sky-500 disabled:opacity-75 disabled:cursor-default" type="checkbox" value="{{ $color->color->id }}" name="selectColorPre">
+                                                                        <input id="selectColorPre{{ $keyColor }}" class="inline-block align-middle border rounded-full appearance-none cursor-pointer size-5 {{ $colorClasses[$color->color->name]  ?? '' }} border-sky-500 checked:{{ $colorClasses[$color->color->name]  ?? '' }} checked:border-sky-500 disabled:opacity-75 disabled:cursor-default" type="checkbox" value="{{ $color->color->id }}"
+                                                                         name="color_id">
                                                                     </div>
                                                                 @endforeach
                                                             </div>
@@ -128,7 +129,8 @@
                                                             <div class="flex flex-wrap items-center gap-2">
                                                                 @foreach($list->variant as $keySize => $size)
                                                                     <div>
-                                                                        <input id="selectSizePre{{ $size->size->name }}" class="hidden peer" type="checkbox" value="{{ $size->size->id }}" name="selectSizePre">
+                                                                        <input id="selectSizePre{{ $size->size->name }}" class="hidden peer" type="checkbox" value="{{ $size->size->id }}" 
+                                                                        name="size_id">
                                                                         <label for="selectSizePre{{ $size->size->name }}" class="flex items-center justify-center text-xs border rounded-md cursor-pointer size-8 border-slate-200 dark:border-zink-500 peer-checked:bg-custom-50 dark:peer-checked:bg-custom-500/20 peer-checked:border-custom-300 dark:peer-checked:border-custom-700 peer-disabled:bg-slate-50 dark:peer-disabled:bg-slate-500/15 peer-disabled:border-slate-100 dark:peer-disabled:border-slate-800 peer-disabled:cursor-default peer-disabled:text-slate-500 dark:peer-disabled:text-zink-200">{{ $size->size->name }}</label>
                                                                     </div>
                                                                 @endforeach
