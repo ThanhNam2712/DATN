@@ -63,4 +63,25 @@ Route::group([
     ], function (){
         Route::get('/', [ProductsController::class, 'index'])->name('index');
     });
+
+    Route::group([
+        'prefix' => 'cart',
+        'as' => 'cart.'
+    ], function (){
+        Route::get('/{id}', [ProductsController::class, 'cart'])->name('cart');
+    });
+
+    Route::group([
+        'prefix' => 'coupon',
+        'as' => 'coupon.'
+    ], function (){
+        Route::get('/', [ProductsController::class, 'coupon'])->name('coupon');
+    });
+
+    Route::group([
+        'prefix' => 'variant',
+        'as' => 'variant.'
+    ], function (){
+        Route::get('/{id}', [ProductsController::class, 'variant'])->name('variant');
+    });
 });

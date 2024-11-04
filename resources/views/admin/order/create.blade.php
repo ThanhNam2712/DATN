@@ -220,12 +220,12 @@
                                             Total Amount (USD)
                                         </td>
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">${{ $cart->total_amuont}}</td>
-                                        <input type="hidden" class="order_total_amount" value="{{ $cart->total_amuont }}">
+
                                     </tr>
 
                                     </tbody>
                                 </table>
-
+                                <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $cart->total_amuont }}">
                             </div>
                             {{--  sản phẩm -----------------------------------------------------------  --}}
                             <div class="mt-4">
