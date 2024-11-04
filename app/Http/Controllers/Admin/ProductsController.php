@@ -21,10 +21,21 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function home()
+    {
+        $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
+        $trends = Product::with(['tags', 'variant'])
+            ->where('is_trending', 1) // Lọc những sản phẩm đang trending
+            ->orderBy('id', 'desc') // Sắp xếp theo ID (hoặc theo cột khác nếu cần)
+            ->limit(4) // Giới hạn chỉ lấy 4 sản phẩm
+            ->get();
+        // dd($trends);
+        return view('client.home', compact('products','trends'));
+    }
     public function index()
     {
         $product = Product::with('tags')->latest('id')->get();
-        
+
         return view('admin.products.index', compact('product'));
     }
 
@@ -100,7 +111,7 @@ class ProductsController extends Controller
         $size = ProductSize::all();
         return view(
             'admin.products.edit',
-            compact('product', 'category', 'brand', 'tag', 'color', 'size','productTags')
+            compact('product', 'category', 'brand', 'tag', 'color', 'size', 'productTags')
         );
     }
 
@@ -135,14 +146,14 @@ class ProductsController extends Controller
                     if (isset($variantData['id'])) {
                         // Nếu có ID, đây là biến thể cũ cần cập nhật
                         $variant = ProductVariant::find($variantData['id']);
-                            // Cập nhật thông tin biến thể
-                            $variant->update([
-                                'price' => $variantData['price'],
-                                'price_sale' => $variantData['price_sale'],
-                                'quantity' => $variantData['quantity'],
-                                'product_color_id' => $variantData['product_color_id'],
-                                'product_size_id' => $variantData['product_size_id'],
-                            ]); 
+                        // Cập nhật thông tin biến thể
+                        $variant->update([
+                            'price' => $variantData['price'],
+                            'price_sale' => $variantData['price_sale'],
+                            'quantity' => $variantData['quantity'],
+                            'product_color_id' => $variantData['product_color_id'],
+                            'product_size_id' => $variantData['product_size_id'],
+                        ]);
                     } else {
                         // Nếu không có ID, đây là biến thể mới cần thêm
                         ProductVariant::create([
@@ -156,7 +167,6 @@ class ProductsController extends Controller
                     }
                 }
                 $product->tags()->sync($request->tags);
-
             });
 
             return back()->with('success', 'Product updated successfully');
