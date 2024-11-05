@@ -260,12 +260,13 @@
 
                                     </tbody>
                                 </table>
-                                <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $cart->total_amuont }}">
+
                             </div>
                             {{--  sản phẩm -----------------------------------------------------------  --}}
                             <div class="mt-4">
                                 <form action="{{ route('admin.order.create') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
                                     <button type="submit" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
                                         Place Order
                                     </button>
