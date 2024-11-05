@@ -16,12 +16,11 @@ class ColorController extends Controller
 
     public function create(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:product_colors,name'
+        ]);
+
         $data = $request->all();
-        if (ProductColor::where('name', $data['name'])->exists()){
-            return redirect()->back()->with([
-                'message' => 'Color Exists In Table'
-            ]);
-        }
         ProductColor::create($data);
         return redirect()->back()->with([
             'message' => 'Create Color Success'

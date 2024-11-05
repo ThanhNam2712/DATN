@@ -43,9 +43,9 @@ Danh mục sản phẩm
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{$brand->id}}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 email">{{$brand->name}}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 phone"> 
-                                @if ($brand->image && \Storage::exists($brand->image))
-                                <img src="{{\Storage::url($brand->image)}}" width="100px" alt="">
-                                @endif
+                                
+                                <img src="{{ Storage::url($brand->image) }}" width="100px" alt="">
+                                
                             </td>                          
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                 <div class="flex gap-2">

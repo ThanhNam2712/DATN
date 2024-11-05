@@ -24,7 +24,7 @@ class ProductsController extends Controller
     public function index()
     {
         $product = Product::with('tags')->latest('id')->get();
-        
+
         return view('admin.products.index', compact('product'));
     }
 
@@ -46,6 +46,19 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|max:255',
+            'category_id' => 'required',
+            'brand_id' => 'required',
+            'image' => 'required|image',
+            'description' => 'required|max:255',
+            'content' => 'required|max:255',
+            'product_color_id' => 'required',
+            'product_size_id' => 'required',
+            'price_sale' => 'required|integer',
+            'price' => 'required|integer',
+            'quantity' => 'required|integer',
+        ]);
         $data = $request->all();
         $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
         $data['is_sale'] = $request->has('is_sale') ? 1 : 0;
@@ -142,7 +155,7 @@ class ProductsController extends Controller
                                 'quantity' => $variantData['quantity'],
                                 'product_color_id' => $variantData['product_color_id'],
                                 'product_size_id' => $variantData['product_size_id'],
-                            ]); 
+                            ]);
                     } else {
                         // Nếu không có ID, đây là biến thể mới cần thêm
                         ProductVariant::create([
