@@ -29,13 +29,24 @@
                                     {{-- Product creare --}}
                                     <div class="xl:col-span-6">
                                         <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Product Title</label>
-                                        <input type="text" id="productNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" required="">
+                                        <input type="text" id="productNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
                                         <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
+                                        @error('name')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                              
+                                            </div>
+                                        @enderror
                                     </div><!--end col-->
                                     <div class="xl:col-span-6">
                                         <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Product Description</label>
-                                        <input type="text" id="productNameInput" name="description" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" required="">
+                                        <input type="text" id="productNameInput" name="description" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
                                         <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
+                                        @error('description')
+                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">{{ $message }}</span>
+                                        </div>
+                                        @enderror
                                     </div><!--end col-->
                                     <div class="xl:col-span-4">
                                         <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Brand</label>
@@ -45,6 +56,11 @@
                                                 <option value="{{ $list->id }}">{{ $list->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('brand_id')
+                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">{{ $message }}</span>
+                                        </div>
+                                        @enderror
                                     </div><!--end col-->
                                     <div class="xl:col-span-4">
                                         <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Category</label>
@@ -54,16 +70,11 @@
                                                 <option value="{{ $list->id }}">{{ $list->name }}</option>
                                             @endforeach
                                         </select>
-                                    </div><!--end col-->
-                                    <div class="xl:col-span-4">
-                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Tags</label>
-                                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="tags[]" id="tags" multiple>
-                                            <option value="">Select tag</option>
-                                            @foreach($tag as $list)
-                                                <option value="{{ $list->id }}">{{ $list->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        
+                                        @error('category_id')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
+                                        @enderror
                                     </div><!--end col-->
                                     {{-- active --}}
                                     <div class="xl:col-span-4">
@@ -141,12 +152,22 @@
                                             </div>
 
                                         </div>
+                                        @error('image')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
+                                        @enderror
                                     </div>
                                     <div class="lg:col-span-2 xl:col-span-12">
                                         <div>
                                             <label for="productDescription" class="inline-block mb-2 text-base font-medium">Content</label>
                                             <textarea name="content" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Enter Description" rows="5"></textarea>
                                         </div>
+                                        @error('content')
+                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">{{ $message }}</span>
+                                        </div>
+                                        @enderror
                                     </div>
                                     {{-- End Product creare --}}
                                 </div><!--end grid-->
@@ -156,17 +177,32 @@
                                     {{-- Products variants --}}
                                         <div class="xl:col-span-4">
                                             <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
-                                            <input type="number" name="variants[0][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="$0.00" required="">
+                                            <input type="number" name="variants[0][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="$0.00">
+                                            @error('price')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
+                                            @enderror
                                         </div>
 
                                         <div class="xl:col-span-4">
                                             <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Discounts</label>
-                                            <input type="number" name="variants[0][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="0%" required="">
+                                            <input type="number" name="variants[0][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="0%">
+                                            @error('price_sale')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
+                                            @enderror
                                         </div>
 
                                         <div class="xl:col-span-4">
                                             <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Quantity</label>
-                                            <input type="number" id="qualityInput" name="variants[0][quantity]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Quantity" required="">
+                                            <input type="number" id="qualityInput" name="variants[0][quantity]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Quantity">
+                                            @error('quantity')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
+                                            @enderror
                                         </div>
 
                                         {{-- color--}}
@@ -178,6 +214,11 @@
                                                     <option value="{{ $list->id }}">{{ $list->name }}</option>
                                                 @endforeach
                                             </select>
+                                            @error('product_color_id')
+                                                <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                    <span class="font-bold">{{ $message }}</span>
+                                                </div>
+                                            @enderror
                                         </div>
 
                                         <!--end col-->
@@ -190,6 +231,11 @@
                                                 <option value="{{ $list->id }}">{{ $list->name }}</option>
                                             @endforeach
                                         </select>
+                                            @error('product_size_id')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
+                                            @enderror
                                     </div>
                                         <!--end col-->
                                 </div>
