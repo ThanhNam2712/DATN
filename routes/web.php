@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Client\ForgotPasswordController;
+use App\Http\Controllers\Client\ResetPasswordController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\RegisterController;
@@ -24,10 +26,9 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/', [ProductsController::class, 'home'])->name('home');
 
-///////////////////////////////////////////////////////////////
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
-    
+
 });
 Route::prefix('admin/categories')->name('admin.categories.')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('index');
@@ -78,6 +79,11 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::post('register', [RegisterController::class, 'register'])->name('register');
     Route::get('show-login', [LoginController::class, 'showFormLogin'])->name('showFormLogin');
     Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
 Route::group([

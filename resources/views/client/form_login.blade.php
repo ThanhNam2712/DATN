@@ -3,7 +3,9 @@
 @section('register')
 register
 @endsection
+
 @section('body')
+
         <div class="relative">
             <div class="absolute hidden opacity-50 ltr:-left-16 rtl:-right-16 -top-10 md:block">
                 <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 125 316" width="125" height="316">
@@ -49,31 +51,37 @@ register
                 <div class="!px-10 !py-12 card-body">
                     <div class="mt-8 text-center">
                         <h4 class="mb-1 text-custom-500 dark:text-custom-500">Đăng Nhập</h4>
-                        {{-- <p class="text-slate-500 dark:text-zink-200">Get your free starcode account now</p> --}}
                     </div>
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul >
-                            @foreach ($errors->all() as $error)
-                                <li style="color: red;">{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                     <form action="{{ route('account.login') }}" method="POST" class="mt-10" id="registerForm">
                         @csrf
+
                         <div class="mb-3">
                             <label for="email-field" class="inline-block mb-2 text-base font-medium">Email</label>
-                            <input type="text" name="email" id="email-field" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Email">
+                            <input type="text" name="email" id="email-field" value="{{ old('email') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Email">
+                            @if ($errors->has('email'))
+                                <div style="color: red;" class="mt-1">
+                                    {{ $errors->first('email') }}
+                                </div>
+                            @endif
                         </div>
+
 
                         <div class="mb-3">
                             <label for="password" class="inline-block mb-2 text-base font-medium">Mật khẩu</label>
-                            <input type="password" name="password"  id="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Mật khẩu">
+                            <input type="password" name="password" id="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Mật khẩu">
+                            @if ($errors->has('password'))
+                                <div style="color: red;" class="mt-1">
+                                    {{ $errors->first('password') }}
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="text-right">
+                            <a href="{{ route('account.password.request') }}" class="text-sm text-custom-500 hover:underline">Quên mật khẩu?</a>
                         </div>
 
                         <div class="mt-10">
-                            <button type="submit" class="w-full text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Sign In</button>
+                            <button type="submit" class="w-full text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Đăng Nhập</button>
                         </div>
 
                         <div class="relative text-center my-9 before:absolute before:top-3 before:left-0 before:right-0 before:border-t before:border-t-slate-200 dark:before:border-t-zink-500">
@@ -89,9 +97,11 @@ register
                         <div class="mt-10 text-center">
                             <p class="mb-0 text-slate-500 dark:text-zink-200">Bạn chưa có tài khoản ? <a href="{{ route("account.showForm") }}" class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">Đăng ký</a> </p>
                         </div>
+
+
                     </form>
+
                 </div>
             </div>
         </div>
 @endsection
-
