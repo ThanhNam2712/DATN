@@ -64,7 +64,7 @@
 
 <style>
   .dropdown-menu {
-    display: none; /* Ẩn menu mặc định */
+    display: none; 
   }
 </style>
 
