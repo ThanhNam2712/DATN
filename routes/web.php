@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('client.home');
 // });
 Route::get('/', [ProductsController::class, 'home'])->name('home');
+Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
 
 ///////////////////////////////////////////////////////////////
 Route::get('/admin/dashboard', function () {

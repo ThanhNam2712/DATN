@@ -15,22 +15,19 @@
     <!-- Main Banner -->
     @yield('Banner')
     <!-- Hot Products Section -->
+     @yield('Main')
     @yield('Hot_Product')
     <br>
     <!-- New Products Section -->
     @yield('New_Product')
     <!-- Store Section -->
-    <!-- <section class="store">
-        @include('client.partials.shop')
-
-    </section> -->
-    
     <!-- Footer -->
     <footer>
         @include('client.partials.footer')
     </footer>
 
     <script src="/Front-end/Home/Home.js"></script>
+
 </body>
 
 </html>

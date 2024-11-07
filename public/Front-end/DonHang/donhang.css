@@ -1,0 +1,140 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+
+header .logo a img {
+    height: 40px;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    position: relative;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+
+header nav ul li a:hover {
+    background-color: #575757;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+}
+
+footer .footer-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+footer .footer-item {
+    width: 30%;
+}
+
+footer .footer-item h5 {
+    margin-bottom: 10px;
+}
+
+footer .footer-item ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer .footer-item ul li {
+    margin: 5px 0;
+}
+
+footer .footer-item ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+footer .footer-item ul li a:hover {
+    text-decoration: underline;
+}
+
+footer .payment-icons img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.status.pending {
+    background-color: #f39c12;
+}
+
+.status.confirmed {
+    background-color: #27ae60;
+}
+
+.status.cancelled {
+    background-color: #e74c3c;
+}
+
+/* Style cho các thẻ a thay thế button */
+a.btn-action {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+a.btn-action:hover {
+    background-color: #2980b9;
+}
+
+a.btn-action:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}

@@ -30,8 +30,9 @@ class ProductsController extends Controller
             ->limit(4) // Giới hạn chỉ lấy 4 sản phẩm
             ->get();
         // dd($trends);
-        return view('client.home', compact('products','trends'));
+        return view('client.home', compact('products', 'trends'));
     }
+
     public function index()
     {
         $product = Product::with('tags')->latest('id')->get();
@@ -94,7 +95,17 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
+        $product = Product::with(['tags', 'variant'])
+            ->where('id', $id) // Lọc sản Phẩm THeo ID
+            ->get();
+        $trends = Product::with(['tags', 'variant'])
+            ->where('is_trending', 1) // Lọc những sản phẩm đang trending
+            ->orderBy('id', 'desc') // Sắp xếp theo ID (hoặc theo cột khác nếu cần)
+            ->limit(4) // Giới hạn chỉ lấy 4 sản phẩm
+            ->get();
+        // dd($product);
+        return view('client.detail', compact('products', 'trends', 'product'));
     }
 
     /**
