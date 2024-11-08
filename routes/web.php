@@ -20,11 +20,16 @@ use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('client.master');
-});
+// Route::get('/', function () {
+//     return view('client.home');
+// });
+Route::get('/', [ProductsController::class, 'home'])->name('home');
+Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
+
+///////////////////////////////////////////////////////////////
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
+    
 });
 Route::prefix('admin/categories')->name('admin.categories.')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('index');
