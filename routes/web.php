@@ -107,14 +107,20 @@ Route::group([
         Route::put('update', [TagController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'product_tag', 'as' => 'product_tag.'], function () {
+    Route::group(
+        ['prefix' => 'product_tag',
+            'as' => 'product_tag.'
+        ], function () {
         Route::get('/', [ProductTagController::class, 'index'])->name('index');
         Route::delete('delete/{id}', [ProductTagController::class, 'destroy'])->name('destroy');
         Route::post('create', [ProductTagController::class, 'create'])->name('create');
         Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
+    Route::group([
+        'prefix' => 'products',
+        'as' => 'products.'
+    ], function () {
         Route::get('/', [ProductsController::class, 'index'])->name('index');
         Route::get('create', [ProductsController::class, 'create'])->name('create');
         Route::post('create', [ProductsController::class, 'store'])->name('store');
@@ -123,7 +129,10 @@ Route::group([
         Route::delete('destroy/{id}', [ProductsController::class, 'destroy'])->name('destroy');
     });
 
-    Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
+    Route::group([
+        'prefix' => 'cart',
+        'as' => 'cart.'
+    ], function () {
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('create', [CartController::class, 'create'])->name('create');
         Route::get('cart_detail', [CartController::class, 'detail'])->name('detail');
