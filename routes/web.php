@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProductTagController;
+use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
@@ -148,6 +149,7 @@ Route::group([
         Route::delete('delete/{id}', [CouponController::class, 'delete'])->name('delete');
     });
 
+    // order
     Route::group([
         'prefix' => 'order',
         'as' => 'order.'
@@ -160,4 +162,13 @@ Route::group([
         // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
     });
 
+    // reviews
+
+    Route::group([
+        'prefix' => 'review',
+        'as' => 'review.'
+    ], function (){
+        Route::get('/{id}', [ReviewsController::class, 'index']);
+        Route::post('post', [ReviewsController::class, 'postReview'])->name('postReview');
+    });
 });

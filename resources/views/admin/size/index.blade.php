@@ -26,6 +26,11 @@
                                     <span class="font-bold">{{ session('message') }}</span>
                                 </div>
                             @endif
+                            @error('name')
+                                <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                    <span class="font-bold">{{ $message }}</span>
+                                </div>
+                            @enderror
                             <div class="flex items-center">
                                 <h6 class="text-15 grow">Users List</h6>
                                 <div class="shrink-0">
@@ -71,7 +76,7 @@
                     <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                         <div class="xl:col-span-12">
                             <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Create Size</label>
-                            <input type="text" id="productNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Name Size" required="">
+                            <input type="text" id="productNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Name Size">
                         </div><!--end col-->
                     </div>
                     <div class="flex justify-end gap-2 mt-4">

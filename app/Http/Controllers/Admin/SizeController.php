@@ -16,6 +16,9 @@ class SizeController extends Controller
 
     public function create(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:product_sizes,name'
+        ]);
         $data = $request->all();
         if (ProductSize::where('name', $data['name'])->exists()){
             return redirect()->back()->with([

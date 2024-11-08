@@ -62,7 +62,7 @@ class OrderController extends Controller
                 // Tạo đơn hàng
                 $order = Order::create([
                     'user_id' => auth()->id(),
-                    'total_amount' => $totalAmount,
+                    'total_amount' => $request->total_amount,
                     'status' => 0, // 0: chưa giao hàng
                     'payment_status' => 0, // 0: chưa thanh toán
                 ]);

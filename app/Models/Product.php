@@ -48,6 +48,12 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class, 'product_id');
     }
+
+    public function review()
+    {
+        return $this->hasMany(Review::class, 'product_id');
+    }
+
     // public function variants()
     // {
     //     return $this->belongsToMany(ProductVariant::class, 'product_variants', 'product_id', 'variant_id');

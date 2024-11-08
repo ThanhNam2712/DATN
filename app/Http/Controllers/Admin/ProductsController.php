@@ -58,6 +58,19 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|max:255',
+            'category_id' => 'required',
+            'brand_id' => 'required',
+            'image' => 'required|image',
+            'description' => 'required|max:255',
+            'content' => 'required|max:255',
+            'product_color_id' => 'required',
+            'product_size_id' => 'required',
+            'price_sale' => 'required|integer',
+            'price' => 'required|integer',
+            'quantity' => 'required|integer',
+        ]);
         $data = $request->all();
         $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
         $data['is_sale'] = $request->has('is_sale') ? 1 : 0;
@@ -134,8 +147,23 @@ class ProductsController extends Controller
         //
         try {
             DB::transaction(function () use ($request, $id) {
+             
+                // dd( $request->validate());
                 // Update product details
-                $product = Product::find($id);
+                $product = Product::find($id);   
+                $request->validate([
+                    'name' => 'required|max:255',
+                    'category_id' => 'required',
+                    'brand_id' => 'required',
+                    // 'image' => 'required|image',
+                    'description' => 'required|max:255',
+                    'content' => 'required|max:255',
+                    // 'product_color_id' => 'required',
+                    // 'product_size_id' => 'required',
+                    // 'price_sale' => 'required|integer',
+                    // 'price' => 'required|integer',
+                    // 'quantity' => 'required|integer',
+                ]);
                 $data = $request->all();
 
                 $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
