@@ -1,0 +1,190 @@
+.payment-container {
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Payment Summary */
+.payment-summary {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.payment-info .info-item {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.info-item .label {
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+/* Note */
+.payment-note {
+    color: #f25c5c;
+    font-size: 15px;
+    margin: 15px 0;
+    font-style: italic;
+}
+
+/* Title */
+h2 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #0b48f1;
+    padding-bottom: 8px;
+}
+
+.product-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.product, .price {
+    color: #080808;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.product:hover, .price:hover {
+    text-decoration: underline;
+}
+
+
+/* Additional Info and Total */
+.additional-info,
+.total {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.label {
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.value {
+    color: #4f4f50;
+    font-size: 16px;
+}
+
+.total .label,
+.total .value {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Payment Address */
+.payment-address {
+    padding: 15px;
+    background-color: #f0f4ff;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.payment-address p {
+    margin: 5px 0;
+}
+
+
+
+.payment-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.name {
+    color: #0b48f1;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.name:hover {
+    text-decoration: none; 
+}
+
+/* Order Progress Bar */
+.order-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: 30px auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* Background line across all steps */
+.order-progress::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    z-index: 0;
+    transform: translateY(-50%);
+}
+
+/* Completed progress line */
+.order-progress::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 50%; /* Adjust this width based on progress */
+    height: 2px;
+    background-color: #2cd8ff;
+    z-index: 1;
+    transform: translateY(-50%);
+}
+.order-progress .step i {
+    color: #2cd8ff; 
+}
+
+
+/* Individual Step */
+.step {
+    text-align: center;
+    flex: 1;
+    color: #ccc;
+    position: relative;
+    z-index: 2; /* Make sure icons are above the line */
+}
+
+.step .fas {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.step p {
+    font-size: 14px;
+    color: #999;
+}
+
+/* Completed step styling */
+.completed {
+    color: #2cd8ff;
+}
+
+.completed .fas {
+    color: #2cf1ff;
+}
+
+.completed p {
+    font-weight: bold;
+    color: #2cf1ff;
+}

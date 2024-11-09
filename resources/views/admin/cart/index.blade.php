@@ -125,14 +125,15 @@
                                                                 @endforeach
                                                             </div>
 
-                                                            <h6 class="mt-3 mb-2 text-15">Colors</h6>
+                                                            <h6 class="mt-3 mb-2 text-15">Size</h6>
                                                             <div class="flex flex-wrap items-center gap-2">
                                                                 @foreach($list->variant as $keySize => $size)
-                                                                    <div>
-                                                                        <input id="selectSizePre{{ $size->size->name }}" class="hidden peer" type="checkbox" value="{{ $size->size->id }}" 
-                                                                        name="size_id">
-                                                                        <label for="selectSizePre{{ $size->size->name }}" class="flex items-center justify-center text-xs border rounded-md cursor-pointer size-8 border-slate-200 dark:border-zink-500 peer-checked:bg-custom-50 dark:peer-checked:bg-custom-500/20 peer-checked:border-custom-300 dark:peer-checked:border-custom-700 peer-disabled:bg-slate-50 dark:peer-disabled:bg-slate-500/15 peer-disabled:border-slate-100 dark:peer-disabled:border-slate-800 peer-disabled:cursor-default peer-disabled:text-slate-500 dark:peer-disabled:text-zink-200">{{ $size->size->name }}</label>
-                                                                    </div>
+                                                                <div>
+                                                                    <input id="select{{ $key }}{{ $size->size->name }}" style="display: none;" class="size-products" type="checkbox" value="{{ $size->size->id }}" name="size_id">
+                                                                    <label for="select{{ $key }}{{ $size->size->name }}" class="selectSize flex items-center justify-center text-xs border rounded-md cursor-pointer size-10 border-slate-200 dark:border-zink-500 peer-checked:bg-custom-50 dark:peer-checked:bg-custom-500/20 peer-checked:border-custom-300 dark:peer-checked:border-custom-700 peer-disabled:bg-slate-50 dark:peer-disabled:bg-slate-500/15 peer-disabled:border-slate-100 dark:peer-disabled:border-slate-800 peer-disabled:cursor-default peer-disabled:text-slate-500 dark:peer-disabled:text-zink-200">
+                                                                    {{ $size->size->name }}
+                                                                    </label>
+                                                                </div>
                                                                 @endforeach
                                                             </div>
                                                             <div class="flex gap-2 mt-4">

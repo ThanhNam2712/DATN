@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css" integrity="sha512-OQDNdI5rpnZ0BRhhJc+btbbtnxaj+LdQFeh0V9/igiEPDiWE2fG+ZsXl0JEH+bjXKPJ3zcXqNyP4/F/NegVdZg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- StarCode CSS -->
     <link rel="stylesheet" href="../assets/css/page.css">
+    <link rel="stylesheet" href="../assets/css/color.css">
     <link rel="stylesheet" href="../assets/css/starcode2.css">
     <script src="../assets/libs/%40popperjs/core/umd/popper.min.js"></script>
     <script src="../assets/js/common.js"></script>
@@ -447,6 +448,41 @@
         document.getElementById('variants').insertAdjacentHTML('beforeend', variantTemplate);
         variantIndex++;
     }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Lấy tất cả các checkbox có name bắt đầu bằng "nameSizeee"
+    document.querySelectorAll('input[name^="size_id"]').forEach((checkbox) => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                const productKey = this.name.replace('size_id', '');
+                document.querySelectorAll(`input[name="size_id${productKey}"]`).forEach((otherCheckbox) => {
+                    if (otherCheckbox !== this) {
+                        otherCheckbox.checked = false;
+
+                        document.querySelector(`label[for="${otherCheckbox.id}"]`).classList.remove('activess');
+                    }
+                });
+
+                document.querySelector(`label[for="${this.id}"]`).classList.add('activess');
+            }
+        });
+    });
+
+
+    document.querySelectorAll('label[for^="select"]').forEach((label) => {
+        label.addEventListener('click', function() {
+            // Bỏ class 'activess' khỏi tất cả các label khác
+            document.querySelectorAll('label[for^="select"]').forEach((otherLabel) => {
+                otherLabel.classList.remove('activess');
+            });
+
+            this.classList.add('activess');
+        });
+    });
+});
+
 </script>
 </body>
 

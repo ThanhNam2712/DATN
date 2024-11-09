@@ -26,8 +26,8 @@ class OrderController extends Controller
         $address = $user->addresses;
 
         // dd($address);
-
-        return view('admin.orders.create', compact('cart', 'user', 'address'));
+        // return view('client.order');
+        return view('client.order', compact('cart', 'user', 'address'));
     }
     public function create(Request $request)
     {
