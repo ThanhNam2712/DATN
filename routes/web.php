@@ -166,6 +166,7 @@ Route::group([
         Route::get('/', [OrderController::class, 'index'])->name('index');
         Route::post('create', [OrderController::class, 'create'])->name('create');
         Route::get('list', [OrderController::class, 'listOrders'])->name('list');
+        Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
         Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
         
         // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');

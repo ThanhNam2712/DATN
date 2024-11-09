@@ -1,5 +1,6 @@
 @extends('client.master')
 @section('Main')
+<link rel="stylesheet" href="/Front-end/ThanhToan/pay.css">
 <div class="container">
     <div class="checkout-form">
         <div class="left-section">

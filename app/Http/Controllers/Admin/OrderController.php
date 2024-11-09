@@ -87,7 +87,8 @@ class OrderController extends Controller
                 $cart->cartDetail()->delete();
                 $cart->delete();
 
-                return response()->json(['message' => 'Đơn hàng được tạo thành công!', 'order' => $order]);
+                return redirect()->route('admin.order.show', ['id' => $order->id])
+                ->with('success', 'Đơn hàng được tạo thành công!');
             });
 
         } catch (\Throwable $th) {
@@ -100,8 +101,17 @@ class OrderController extends Controller
     {
         $orders = auth()->user()->Orders()->with('Order_Items.product_variants')->get();
         // dd($orders);
-        return view('admin.orders.list', compact('orders'));
+        return view('client.list', compact('orders'));
 
+    }
+    public function show($id)
+    {
+        $order = Order::where('user_id', auth()->id())
+            ->with(['Order_Items.product_variants', 'user'])
+            ->findOrFail($id);
+            $user = auth()->user();
+            $address = $user->addresses;
+        return view('client.chitietorder', compact('order','user', 'address'));
     }
 
 
