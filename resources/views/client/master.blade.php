@@ -13,27 +13,21 @@
         @include('client.partials.header')
     </header>
     <!-- Main Banner -->
-    <section class="banner">
-        @include('client.partials.banner')
-    </section>
+    @yield('Banner')
+    <!-- Hot Products Section -->
+     @yield('Main')
+    @yield('Hot_Product')
+    <br>
     <!-- New Products Section -->
-    <section class="new-products">
-        @include('client.partials.new_product')
-    </section>
+    @yield('New_Product')
     <!-- Store Section -->
-    <section class="store">
-        @include('client.partials.shop')
-
-    </section>
-    <section class="new-products">
-        @include('client.partials.hot_product')
-    </section>
     <!-- Footer -->
     <footer>
         @include('client.partials.footer')
     </footer>
 
     <script src="/Front-end/Home/Home.js"></script>
+
 </body>
 
 </html>

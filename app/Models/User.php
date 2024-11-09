@@ -27,13 +27,13 @@ class User extends Authenticatable
         'status',
     ];
 
-   
+
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-   
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -67,6 +67,11 @@ class User extends Authenticatable
     public function addresses()
     {
         return $this->hasMany(Address::class);
+    }
+
+    public function address()
+    {
+        return $this->hasOne(Address::class, 'user_id');
     }
     public function role()
 {

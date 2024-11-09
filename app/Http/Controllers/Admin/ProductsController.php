@@ -21,6 +21,18 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function home()
+    {
+        $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
+        $trends = Product::with(['tags', 'variant'])
+            ->where('is_trending', 1) // Lọc những sản phẩm đang trending
+            ->orderBy('id', 'desc') // Sắp xếp theo ID (hoặc theo cột khác nếu cần)
+            ->limit(4) // Giới hạn chỉ lấy 4 sản phẩm
+            ->get();
+        // dd($trends);
+        return view('client.home', compact('products', 'trends'));
+    }
+
     public function index()
     {
         $product = Product::with('tags')->latest('id')->get();
@@ -35,10 +47,9 @@ class ProductsController extends Controller
     {
         $category = Category::all();
         $brand = Brand::all();
-        $tag = Tag::all();
         $color = ProductColor::all();
         $size = ProductSize::all();
-        return view('admin.products.create', compact('category', 'brand', 'tag', 'color', 'size'));
+        return view('admin.products.create', compact('category', 'brand', 'color', 'size'));
     }
 
     /**
@@ -53,11 +64,6 @@ class ProductsController extends Controller
             'image' => 'required|image',
             'description' => 'required|max:255',
             'content' => 'required|max:255',
-            'product_color_id' => 'required',
-            'product_size_id' => 'required',
-            'price_sale' => 'required|integer',
-            'price' => 'required|integer',
-            'quantity' => 'required|integer',
         ]);
         $data = $request->all();
         $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
@@ -96,7 +102,15 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
+        $product = Product::find($id);
+        $trends = Product::with(['tags', 'variant'])
+            ->where('is_trending', 1) // Lọc những sản phẩm đang trending
+            ->orderBy('id', 'desc') // Sắp xếp theo ID (hoặc theo cột khác nếu cần)
+            ->limit(4) // Giới hạn chỉ lấy 4 sản phẩm
+            ->get();
+        // dd($product);
+        return view('client.detail', compact('products', 'trends', 'product'));
     }
 
     /**
@@ -125,10 +139,10 @@ class ProductsController extends Controller
         //
         try {
             DB::transaction(function () use ($request, $id) {
-             
+
                 // dd( $request->validate());
                 // Update product details
-                $product = Product::find($id);   
+                $product = Product::find($id);
                 $request->validate([
                     'name' => 'required|max:255',
                     'category_id' => 'required',
@@ -184,7 +198,6 @@ class ProductsController extends Controller
                     }
                 }
                 $product->tags()->sync($request->tags);
-
             });
 
             return back()->with('success', 'Product updated successfully');

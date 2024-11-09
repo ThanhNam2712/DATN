@@ -1,32 +1,35 @@
-<h3>Sản Phẩm Nổi Bật</h3>
-  <hr>
-  <div class="product-grid">
-    <!-- Sản phẩm 1 -->
-    <div class="product">
-      <div class="product-image">
-        <img src="/Front-end/Home/anh/7.1.jpg" alt="Áo Polo Gc đen" />
+
+  <section class="new-products">
+    <h3>Sản Phẩm Nổi Bật</h3>
+    <hr>
+    <div class="product-container">
+      <!-- Product 1 -->
+      @foreach ( $trends as $list )
+      <a href="detail/{{$list->id}}">
+      <div class="product-card">
+        <div class="product-image" id="product-image-1">
+          <img src="{{Storage::url($list->image)}}" alt="">
+        </div>
+        <div class="product-details">
+          <p class="product-name">{{$list->name}}</p>
+
+          <div class="price">
+            <span class="old-price">{{$list->variant->first()->price}}</span>
+            <span class="new-price">{{$list->variant->first()->price_sale}}</span>
+          </div>
+          <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+        </div>
+        <div class="icons">
+          <button class="cart-icon">
+            <a href="/Front-end/ChiTietSp/chitiet.html"><img src="/Front-end/anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+          </button>
+        </div>
       </div>
-      <h4>Áo Polo Dc đen</h4>
-      <p class="price">1.500.000₫</p>
+      </a>
+      @endforeach
+
     </div>
-    <div class="product">
-      <div class="product-image">
-        <img src="/Front-end/Home/anh/8.1.jpg" alt="Áo Polo Gc đen" />
-      </div>
-      <h4>Áo Polo Gc trắng</h4>
-      <p class="price">1.450.000₫</p>
-    </div>
-    <div class="product">
-      <div class="product-image">
-        <img src="/Front-end/Home/anh/9.1.jpg" alt="Áo Polo Gc đen" />
-      </div>
-      <h4>Áo Polo BBR thời trang</h4>
-      <p class="price">1.050.000₫</p>
-    </div>
-    <div class="product">
-      <div class="product-image">
-        <img src="/Front-end/Home/anh/10.1.jpg" alt="Áo Polo Gc đen" />
-      </div>
-      <h4>Áo Polo Gc kẻ tay</h4>
-      <p class="price">1.200.000₫</p>
-    </div>
+
+  </section>
