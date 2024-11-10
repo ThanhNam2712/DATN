@@ -12,7 +12,7 @@ class Cart extends Model
         'user_id',
         'total_amuont'
     ];
-    public function User(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
     public function cartDetail(){

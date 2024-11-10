@@ -7,7 +7,7 @@ function updateCart(cartDetail, quantity){
 
     $.ajax({
         type: "post",
-        url: 'admin/cart/update/' + cartDetail,
+        url: 'client/cart/update/' + cartDetail,
         data: {
             cartDetail: cartDetail,
             quantity: quantity,
@@ -32,7 +32,7 @@ function updateCart(cartDetail, quantity){
 function deleteCart(cartDetail){
     $.ajax({
         type: "get",
-        url: 'admin/cart/delete/' + cartDetail,
+        url: 'client/cart/delete/' + cartDetail,
         data: {
             cartDetail: cartDetail,
         },

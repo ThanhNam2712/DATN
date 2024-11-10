@@ -35,3 +35,60 @@ document.addEventListener("DOMContentLoaded", () => {
   // Đặt vị trí khởi động để hiển thị ba slide đầu tiên
   bannerContainer.style.transform = `translateX(0%)`; // Đặt slide đầu tiên
 });
+// Thêm sản phẩm vào giỏ hàng
+function addToCart(productName, productPrice) {
+  const cart = document.getElementById("cart");
+  const cartItems = document.getElementById("cart-items");
+}
+
+// Xem chi tiết sản phẩm
+function viewProduct(productName) {
+  alert(`Bạn đang xem chi tiết sản phẩm: ${productName}`);
+}
+// Fetch dữ liệu từ db.json
+fetch("../../db.json")
+  .then((response) => response.json())
+  .then((data) => {
+    // Lấy danh sách sản phẩm từ JSON
+    const products = data.products;
+
+    // Duyệt qua từng sản phẩm và thêm vào giao diện
+    products.forEach((product, index) => {
+      // Tạo đường dẫn ảnh
+      const imagePath = "../anh/" + product.image;
+
+      // Cập nhật phần tử HTML với ảnh và thông tin sản phẩm
+      document.getElementById(`product-image-${index + 1}`).innerHTML = `
+                <img src="${imagePath}" alt="${product.name}">
+            `;
+      document.getElementById(`product-details-${index + 1}`).innerHTML = `
+                <h4>${product.name}</h4>
+                <p class="price">${product.price}₫</p>
+                <h4>${product.description}</h4>
+            `;
+    });
+  })
+  .catch((error) => console.error("Error fetching product data:", error));
+  function searchProduct() {
+    // Lấy từ khóa tìm kiếm từ input
+    const keyword = document.getElementById("searchInput").value.toLowerCase();
+  
+    // Lấy danh sách sản phẩm
+    const products = document.querySelectorAll(".product-card");
+    
+    // Duyệt qua từng sản phẩm và kiểm tra tên sản phẩm
+    products.forEach(product => {
+      const productName = product.querySelector(".product-details").textContent.toLowerCase();
+  
+      // Hiển thị hoặc ẩn sản phẩm tùy vào kết quả tìm kiếm
+      if (productName.includes(keyword)) {
+        product.style.display = "block"; // Hiển thị sản phẩm
+      } else {
+        product.style.display = "none"; // Ẩn sản phẩm
+      }
+    });
+  
+    // Ngăn không cho form reload trang
+    return false;
+  }
+  

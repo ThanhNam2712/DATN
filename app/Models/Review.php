@@ -14,10 +14,10 @@ class Review extends Model
         'rating',
         'comment',
     ];
-    public function User(){
-        return $this->belongsTo(User::class);
-    } 
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
     public function Product(){
         return $this->belongsTo(Product::class);
-    } 
+    }
 }

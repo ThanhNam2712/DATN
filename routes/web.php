@@ -1,12 +1,13 @@
 <?php
-
-
 use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\ResetPasswordController;
+use App\Http\Controllers\Client\ClientCartController;
+use App\Http\Controllers\Client\ClientOrderController;
+use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\RegisterController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProductTagController;
+use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
@@ -24,11 +26,43 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('client.home');
 // });
-Route::get('/', [ProductsController::class, 'home'])->name('home');
 
+Route::group([
+    'prefix' => 'client',
+    'as' => 'client.'
+], function (){
+
+    Route::group([
+        'prefix' => 'home',
+        'as' => 'home.'
+    ], function (){
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
+        Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+    });
+
+    Route::group([
+        'prefix' => 'cart',
+        'as' => 'cart.'
+    ], function (){
+        Route::get('/', [ClientCartController::class, 'index'])->name('index');
+        Route::post('add', [ClientCartController::class, 'add'])->name('add');
+        Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
+        Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
+    });
+
+    Route::group([
+        'prefix' => 'order',
+        'as' => 'order.',
+    ], function (){
+        Route::get('/', [ClientOrderController::class, 'index'])->name('index');
+        Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
+        Route::post('create', [ClientOrderController::class, 'create'])->name('create');
+        Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
+    });
+});
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
-
 });
 Route::prefix('admin/categories')->name('admin.categories.')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('index');
@@ -91,7 +125,10 @@ Route::group([
     'as' => 'admin.',
     'middleware' => 'checkAdmin'
 ], function () {
-    Route::group(['prefix' => 'statistic', 'as' => 'statistic.'], function () {
+    Route::group([
+        'prefix' => 'statistic',
+        'as' => 'statistic.'
+    ], function () {
         Route::get('/', [StatisticController::class, 'index'])->name('index');
     });
 
@@ -116,14 +153,20 @@ Route::group([
         Route::put('update', [TagController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'product_tag', 'as' => 'product_tag.'], function () {
+    Route::group(
+        ['prefix' => 'product_tag',
+            'as' => 'product_tag.'
+        ], function () {
         Route::get('/', [ProductTagController::class, 'index'])->name('index');
         Route::delete('delete/{id}', [ProductTagController::class, 'destroy'])->name('destroy');
         Route::post('create', [ProductTagController::class, 'create'])->name('create');
         Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
+    Route::group([
+        'prefix' => 'products',
+        'as' => 'products.'
+    ], function () {
         Route::get('/', [ProductsController::class, 'index'])->name('index');
         Route::get('create', [ProductsController::class, 'create'])->name('create');
         Route::post('create', [ProductsController::class, 'store'])->name('store');
@@ -132,7 +175,10 @@ Route::group([
         Route::delete('destroy/{id}', [ProductsController::class, 'destroy'])->name('destroy');
     });
 
-    Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
+    Route::group([
+        'prefix' => 'cart',
+        'as' => 'cart.'
+    ], function () {
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('create', [CartController::class, 'create'])->name('create');
         Route::get('cart_detail', [CartController::class, 'detail'])->name('detail');
@@ -153,6 +199,7 @@ Route::group([
         Route::delete('delete/{id}', [CouponController::class, 'delete'])->name('delete');
     });
 
+    // order
     Route::group([
         'prefix' => 'order',
         'as' => 'order.'
@@ -165,4 +212,13 @@ Route::group([
         // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
     });
 
+    // reviews
+
+    Route::group([
+        'prefix' => 'review',
+        'as' => 'review.'
+    ], function (){
+        Route::get('/{id}', [ReviewsController::class, 'index']);
+        Route::post('post', [ReviewsController::class, 'postReview'])->name('postReview');
+    });
 });
