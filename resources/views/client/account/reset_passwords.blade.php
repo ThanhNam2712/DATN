@@ -3,13 +3,12 @@
 @section('title', 'Đặt lại mật khẩu')
 
 @section('body')
-<div class="grid grid-cols-1 gap-x-5 xl:grid-cols-3">
+<div class="">
     <div class="card">
         <div class="card-body">
             <h2 class="text-lg font-semibold mb-4">Đặt lại mật khẩu</h2>
             <form method="POST" action="{{ route('account.password.update') }}">
                 @csrf
-                <!-- Token ẩn để xác thực yêu cầu -->
                 <input type="hidden" name="token" value="{{ $token }}">
 
                 <div class="mb-3">

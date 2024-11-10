@@ -22,13 +22,14 @@ class RegisterController extends Controller
             'password' => 'required|min:4|max:100',
         ]);
         $password = Hash::make($data['password']);
-        $role = DB::table('roles')->where('name', 'client')->first();
+        $role = DB::table('roles')->where('name', 'User')->first();
         $user = DB::table('users')->insertGetId([
             'email' => $data['email'],
             'name' => $data['name'],
             'password' => $password,
             'sdt' => '',
             'role_id' => $role->id,
+            'status' => 'active',  
         ]);
         if ($user) {
             Auth::loginUsingId($user);
