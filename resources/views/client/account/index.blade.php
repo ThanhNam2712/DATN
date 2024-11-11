@@ -4,9 +4,7 @@
     Thông Tin Tài Khoản
 @endsection
 @section('Banner')
-<section class="banner">
-        @include('client.partials.banner')
-    </section>
+
 @endsection
 @section('body')
 <div class="container">

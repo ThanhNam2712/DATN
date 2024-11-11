@@ -32,7 +32,7 @@
     <!-- Phần người dùng -->
     <div class="dropdown user-menu">
       <a href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="/Front-end/Home/anh/user.jpg" alt="User" style="width: 30px; height: 30px;">
+        <img src="/Front-end/anh/user.jpg" alt="User" style="width: 30px; height: 30px;">
       </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
         @auth
@@ -57,7 +57,7 @@
 
     <!-- Phần giỏ hàng -->
     <a href="#" class="ms-3">
-      <img src="/Front-end/Home/anh/cart.jpg" alt="Cart" style="width: 30px; height: 30px;">
+      <img src="/Front-end/Home/cart.jpg" alt="Cart" style="width: 30px; height: 30px;">
     </a>
   </div>
 
