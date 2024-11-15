@@ -5,9 +5,7 @@
   </div>
   <nav>
     <ul>
-      <li><a href="Home.html">Trang chủ</a></li>
-      <li><a href="../gioithieu/gioithieu.html">Giới thiệu</a></li>
-      <li><a href="../lienhe/lienhe.html">Liên hệ</a></li>
+      <li><a href="/">Trang chủ</a></li>
       <li class="dropdown">
         <a href="#">Bộ sưu tập</a>
         <ul class="dropdown-menu">
@@ -17,8 +15,8 @@
           <li><a href="../danhmuc/somi/somi.html"> Áo sơ mi</a></li>
         </ul>
       </li>
-      <li><a href="gioithieu.html">Giới thiệu</a></li>
-      <li><a href="lienhe.html">Liên hệ</a></li>
+      <li><a href="{{ route('gioithieu')}}">Giới thiệu</a></li>
+      <li><a href="{{ route('lienhe')}}">Liên hệ</a></li>
     </ul>
   </nav>
   <div class="header-icons d-flex align-items-center">
@@ -36,6 +34,7 @@
       </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
         @auth
+        
           <li class="dropdown-item-text">Xin chào, {{ Auth::user()->name }}!</li>
           <li><hr class="dropdown-divider"></li>
           @if(Auth::user()->role->name === 'Admin')
@@ -56,9 +55,11 @@
     </div>
 
     <!-- Phần giỏ hàng -->
-    <a href="#" class="ms-3">
-      <img src="/Front-end/Home/cart.jpg" alt="Cart" style="width: 30px; height: 30px;">
-    </a>
+    <a href="../DonHang/donhang.html" style="display: flex; align-items: center; justify-content: center; padding-left:10px">
+        <svg width="24" height="24" fill="#007bff" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 18c-1.104 0-2 .897-2 2s.896 2 2 2 2-.897 2-2-.896-2-2-2zm10 0c-1.104 0-2 .897-2 2s.896 2 2 2 2-.897 2-2-.896-2-2-2zM7 6h13c.553 0 1 .447 1 1s-.447 1-1 1h-1.333l-1.085 4.86c-.168.754-.855 1.285-1.625 1.285h-5.358c-.77 0-1.457-.531-1.625-1.285L5.333 8H4C3.447 8 3 7.553 3 7s.447-1 1-1h3c.48 0 .897.34.98.807L7 6zm0 0z"/>
+        </svg>
+      </a>
   </div>
 
   <style>

@@ -160,31 +160,65 @@ body {
   transform: scale(1.2);
 }
 
-/* Quantity Section */
+/* Căn chỉnh và tạo khoảng cách giữa các phần tử */
 .quantity-input {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 5px;
+  background-color: #f8f8f8;
+  width: 150px;
+  transition: all 0.3s ease-in-out;
 }
 
-.quantity-input input {
-  width: 40px;
-  text-align: center;
+.quantity-input:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.quantity-input button {
-  font-size: 20px; /* Tăng kích thước chữ của nút */
-  padding: 7px 10px; /* Tăng kích thước của nút */
-  border: 1px solid #ccc;
-  border-radius: 60px;
+/* Cải thiện style cho button */
+.minus-btn, .plus-btn {
   background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  color: #333;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.quantity-input button:hover {
-  background-color: #ddd;
+.minus-btn:hover, .plus-btn:hover {
+  background-color: #ff7f50;
+  transform: scale(1.1);
 }
+
+.minus-btn:focus, .plus-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 127, 80, 0.4);
+}
+
+/* Cải thiện style cho input */
+#quantity {
+  text-align: center;
+  width: 50px;
+  height: 30px;
+  border: none;
+  background-color: #fff;
+  font-size: 16px;
+  color: #333;
+  border-radius: 4px;
+  margin: 0 5px;
+  transition: all 0.2s ease;
+}
+
+#quantity:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4);
+}
+
 .product-actions{
   margin-top: 20px;
 }
@@ -386,4 +420,71 @@ body {
 
 .description p:first-child {
   font-weight: bold;
+}
+
+.review-section {
+  max-width: 900px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+.review-form label {
+  display: block;
+  margin-top: 10px;
+}
+
+.review-stars {
+  text-align: left;
+  margin-left: 0;
+  display: flex;
+  justify-content: flex-start;
+  gap: 2px;
+ 
+}
+
+.review-stars input {
+  display: none;
+}
+
+.review-stars label {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+
+.review-stars input:checked ~ label,
+.review-stars label:hover,
+.review-stars label:hover ~ label {
+  color: #e88e0e;
+}
+
+
+textarea, input[type="text"], input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.submit-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #000000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #27ae60;
 }

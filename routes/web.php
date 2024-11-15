@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('client.home');
 // });
 Route::get('/', [ProductsController::class, 'home'])->name('home');
+Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
+Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
 Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
 // Route::group([
 //     'prefix' => 'client',
