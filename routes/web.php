@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Client\ClientCartController;
 use App\Http\Controllers\Client\ClientOrderController;
 use App\Http\Controllers\Client\HomeController;
@@ -38,7 +39,7 @@ Route::group([
         'as' => 'home.'
     ], function (){
         Route::get('/', [HomeController::class, 'index'])->name('home');
-        Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
+        Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
     });
 
@@ -116,6 +117,7 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::post('register', [RegisterController::class, 'register'])->name('register');
     Route::get('show-login', [LoginController::class, 'showFormLogin'])->name('showFormLogin');
     Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
 Route::group([
@@ -130,21 +132,30 @@ Route::group([
         Route::get('/', [StatisticController::class, 'index'])->name('index');
     });
 
-    Route::group(['prefix' => 'color', 'as' => 'color.'], function () {
+    Route::group([
+        'prefix' => 'color',
+        'as' => 'color.'
+    ], function () {
         Route::get('/', [ColorController::class, 'index'])->name('index');
         Route::get('delete/{id}', [ColorController::class, 'destroy'])->name('destroy');
         Route::post('create', [ColorController::class, 'create'])->name('create');
         Route::put('update', [ColorController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'size', 'as' => 'size.'], function () {
+    Route::group(
+        ['prefix' => 'size',
+            'as' => 'size.'
+        ], function () {
         Route::get('/', [SizeController::class, 'index'])->name('index');
         Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('destroy');
         Route::post('create', [SizeController::class, 'create'])->name('create');
         Route::put('update', [SizeController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'tag', 'as' => 'tag.'], function () {
+    Route::group(
+        ['prefix' => 'tag',
+            'as' => 'tag.'
+        ], function () {
         Route::get('/', [TagController::class, 'index'])->name('index');
         Route::get('delete/{id}', [TagController::class, 'destroy'])->name('destroy');
         Route::post('create', [TagController::class, 'create'])->name('create');
@@ -166,11 +177,22 @@ Route::group([
         'as' => 'products.'
     ], function () {
         Route::get('/', [ProductsController::class, 'index'])->name('index');
+        Route::get('show/{id}', [ProductsController::class, 'show'])->name('show');
         Route::get('create', [ProductsController::class, 'create'])->name('create');
         Route::post('create', [ProductsController::class, 'store'])->name('store');
         Route::get('edit/{id}', [ProductsController::class, 'edit'])->name('edit');
         Route::put('/{id}', [ProductsController::class, 'update'])->name('update');
         Route::delete('destroy/{id}', [ProductsController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group([
+        'prefix' => 'gallery',
+        'as' => 'gallery.',
+    ], function (){
+        Route::get('/product/{id}', [GalleryController::class, 'index'])->name('index');
+        Route::get('/product/{id}/create/{idVariant}', [GalleryController::class, 'create'])->name('create');
+        Route::post('/product/{id}/create/', [GalleryController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [GalleryController::class, 'update'])->name('update');
     });
 
     Route::group([
@@ -203,6 +225,7 @@ Route::group([
         'as' => 'order.'
     ], function () {
         Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('detail/{id}', [OrderController::class, 'detail'])->name('detail');
         Route::post('create', [OrderController::class, 'create'])->name('create');
         Route::get('list', [OrderController::class, 'listOrders'])->name('list');
         Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');

@@ -60,7 +60,7 @@ class ClientOrderController extends Controller
         $total = $order->total_amount;
         $cart->cartDetail()->delete();
         $this->updateTotal($cart->id, 0);
-//        $this->sendMail($order, $total);
+        $this->sendMail($order, $total);
         return view('client.order.confirm');
     }
     private function sendMail($order, $total){
@@ -84,11 +84,12 @@ class ClientOrderController extends Controller
         $coupon = Coupon::where('code', $couponCode)
             ->where('start_end', '<=', now())
             ->where('expiration_date', '>=', now())
+            ->where('number', '>', 0)
             ->first();
 
         if (!$coupon) {
             return response()->json([
-                'error' => 'Thằng ranh này nhập không đúng mã voucher'
+                'error' => 'coupon không hợp lệ'
             ]);
         }
 
@@ -103,10 +104,11 @@ class ClientOrderController extends Controller
             }
         } else {
             return response()->json([
-                'error' => 'Thằng ranh con này đơn hàng không đủ điều kiện'
+                'error' => 'coupon không hợp lệ'
             ]);
         }
         $final_total = $total - $discount;
+        $coupon->decrement('number', 1);
         return response()->json([
             'success' => true,
             'discount' => $discount,

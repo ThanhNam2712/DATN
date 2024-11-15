@@ -9,11 +9,11 @@ class Gallery extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'product_id',
+        'variant_id',
         'file_path',
     ];
-    public function Product(){
-        return $this->belongsTo(Product::class);
+    public function variant(){
+        return $this->belongsTo(ProductVariant::class, 'variant_id');
     }
 }
 

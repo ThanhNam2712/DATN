@@ -18,17 +18,16 @@ class OrderController extends Controller
     //
     public function index()
     {
-        $cart = Cart::where('user_id', Auth::id())
-            ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
-            ->first();
-        $totalAmount = 0;
-        $user = auth()->user();
-        $address = $user->addresses;
-
-        // dd($address);
-
-        return view('admin.orders.create', compact('cart', 'user', 'address'));
+        $order = Order::all();
+        return view('admin.orders.index', compact('order'));
     }
+
+    public function detail($id)
+    {
+        $order = Order::find($id);
+        return view('admin.orders.detail', compact('order'));
+    }
+
     public function create(Request $request)
     {
         try {
