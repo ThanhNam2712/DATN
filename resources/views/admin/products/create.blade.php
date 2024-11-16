@@ -23,7 +23,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4 text-15">Create Product</h6>
-                            <form action="../admin/products/create" method="post" enctype="multipart/form-data">
+                            <form action="../admin/products/create" method="post" id="form-product" enctype="multipart/form-data">
                                 @csrf
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     {{-- Product creare --}}
@@ -34,7 +34,6 @@
                                         @error('name')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
-                                              
                                             </div>
                                         @enderror
                                     </div><!--end col-->
@@ -43,9 +42,9 @@
                                         <input type="text" id="productNameInput" name="description" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
                                         <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
                                         @error('description')
-                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-                                            <span class="font-bold">{{ $message }}</span>
-                                        </div>
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
                                         @enderror
                                     </div><!--end col-->
                                     <div class="xl:col-span-4">

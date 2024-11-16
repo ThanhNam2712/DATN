@@ -45,7 +45,7 @@
                     <img src="{{ Storage::url($list->image) }}" style="mix-blend-mode: darken" alt="" class="mx-auto h-52">
                     <div class="mt-3">
                         <p class="mb-3"><i data-lucide="star" class="inline-block text-yellow-500 align-middle size-4 ltr:mr-1 rtl:ml-1"></i> (4.8)</p>
-                        <h5><a href="../client/home/detail/{{ $list->id }}">{{ $list->name }}</a></h5>
+                        <h5><a href="../client/home/detail/{{ $list->id }}/color/{{ $list->firstVariant }}">{{ $list->name }}</a></h5>
 
                         <div class="flex items-center gap-3 mt-3">
                             <h6 class="text-16 grow">${{ $list->variant->first()->price_sale }}</h6>

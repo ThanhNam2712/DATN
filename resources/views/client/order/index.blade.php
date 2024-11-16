@@ -113,53 +113,6 @@
                         <div class="card-body">
                             <h6 class="mb-4 text-15">Delivery</h6>
 
-                            <div class="grid grid-cols-1 gap-5 xl:grid-cols-2">
-                                <div class="flex items-center gap-3">
-                                    <input id="deliveryOption1" class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer" type="radio" name="deliveryChoose" value="express-delivery" checked="">
-                                    <label for="deliveryOption1" class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">
-                                    <span class="shrink-0">
-                                        <img src="assets/images/delivery-1.png" alt="" class="h-12">
-                                    </span>
-                                        <span class="grow">
-                                        <span class="block mb-1 font-semibold text-15">Express Delivery</span>
-                                        <span class="text-slate-500 dark:text-zink-200">Expected delivery: 01 Nov, Wednesday</span>
-                                    </span>
-                                        <span class="shrink-0">
-                                        <span class="block text-lg font-semibold">$11.99</span>
-                                    </span>
-                                    </label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input id="deliveryOption2" class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer" type="radio" name="deliveryChoose" value="express-delivery">
-                                    <label for="deliveryOption2" class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">
-                                    <span class="shrink-0">
-                                        <img src="assets/images/delivery-2.png" alt="" class="h-12">
-                                    </span>
-                                        <span class="grow">
-                                        <span class="block mb-1 font-semibold text-15">Air Logistic Delivery</span>
-                                        <span class="text-slate-500 dark:text-zink-200">Expected delivery: 06 Nov, Monday</span>
-                                    </span>
-                                        <span class="shrink-0">
-                                        <span class="block text-lg font-semibold">$5</span>
-                                    </span>
-                                    </label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input id="deliveryOption3" class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer" type="radio" name="deliveryChoose" value="express-delivery">
-                                    <label for="deliveryOption3" class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">
-                                    <span class="shrink-0">
-                                        <img src="assets/images/delivery-3.png" alt="" class="h-12">
-                                    </span>
-                                        <span class="grow">
-                                        <span class="block mb-1 font-semibold text-15">Free Delivery</span>
-                                        <span class="text-slate-500 dark:text-zink-200">Expected delivery: 11 Nov, Saturday</span>
-                                    </span>
-                                        <span class="shrink-0">
-                                        <span class="block text-lg font-semibold">$0</span>
-                                    </span>
-                                    </label>
-                                </div>
-                            </div>
                         </div>
                     </div><!--end card-->
 
@@ -265,6 +218,38 @@
                             <div class="mt-4">
                                 <form action="{{ route('client.order.create') }}" method="POST">
                                     @csrf
+
+                                        <div class="flex items-center gap-3">
+                                            <input id="deliveryOption1" class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer" type="radio" name="payments" value="Thanh Toán Khi Nhận Hàng">
+                                            <label for="deliveryOption1" class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">
+                                                <span class="shrink-0">
+                                                    <img src="assets/images/delivery-1.png" alt="" class="h-12">
+                                                </span>
+                                                <span class="grow">
+                                                    <span class="block mb-1 font-semibold text-15">Express Delivery</span>
+                                                    <span class="text-slate-500 dark:text-zink-200">Expected delivery: 01 Nov, Wednesday</span>
+                                                </span>
+                                                <span class="shrink-0">
+                                                    <span class="block text-lg font-semibold">$11.99</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="mt-4 flex items-center gap-3">
+                                            <input id="deliveryOption2" class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer" type="radio" name="payments" value="Thẻ Tín Dụng">
+                                            <label for="deliveryOption2" class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">
+                                        <span class="shrink-0">
+                                            <img src="assets/images/delivery-2.png" alt="" class="h-12">
+                                        </span>
+                                                <span class="grow">
+                                            <span class="block mb-1 font-semibold text-15">Air Logistic Delivery</span>
+                                            <span class="text-slate-500 dark:text-zink-200">Expected delivery: 06 Nov, Monday</span>
+                                        </span>
+                                                <span class="shrink-0">
+                                            <span class="block text-lg font-semibold">$5</span>
+                                        </span>
+                                            </label>
+                                        </div>
+
                                     <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
                                     <button type="submit" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
                                         Place Order
