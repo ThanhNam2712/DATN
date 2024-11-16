@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Client\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -127,6 +128,10 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::get('verify/{user}', [VerifyEmailController::class, 'verify'])
+        ->name('verify.email')
+        ->middleware('signed');
+        Route::get('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('resendVerification');
 
 });
 
