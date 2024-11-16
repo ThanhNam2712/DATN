@@ -23,7 +23,7 @@
     <script src="../assets/js/common.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
             crossorigin="anonymous"></script>
-           
+
 </head>
 
 <body class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
@@ -399,8 +399,24 @@
 <script src="../assets/js/cart/quantity.js"></script>
 <script src="../assets/js/cart/cartAddCart.js"></script>
 <script src="../assets/js/order/coupon.js"></script>
+<script src="../assets/js/image.js"></script>
 <script>
     let variantIndex = 1;
+    document.getElementById('form-product').addEventListener('submit', function(e) {
+        // Iterate through all the variants before submitting
+        const priceInputs = document.querySelectorAll(`input[name^="variants"][name$="[price]"]`);
+        const priceSaleInputs = document.querySelectorAll(`input[name^="variants"][name$="[price_sale]"]`);
+
+        priceInputs.forEach((priceInput, index) => {
+            const priceSaleInput = priceSaleInputs[index];
+
+            if (parseFloat(priceSaleInput.value) > parseFloat(priceInput.value)) {
+                e.preventDefault();
+                alert("Giá tiền giảm không được lớn hơn giá tiền gốc.");
+                return;
+            }
+        });
+    });
     function addVariant(){
         const variantTemplate = `
             <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
@@ -484,6 +500,20 @@
 });
 
 </script>
+<script>
+    document.getElementById('form-coupon').addEventListener('submit', function(e) {
+        // Lấy giá trị ngày bắt đầu và ngày kết thúc từ input
+        const dateStart = new Date(document.getElementById('dateCouponSt').value);
+        const dateEnd = new Date(document.getElementById('dateCouponEn').value);
+
+        // Kiểm tra điều kiện ngày bắt đầu phải nhỏ hơn ngày kết thúc
+        if (dateStart >= dateEnd) {
+            e.preventDefault(); // Ngăn form gửi đi nếu điều kiện không thỏa mãn
+            alert('Ngày bắt đầu không được lớn hơn ngày kết thúc');
+        }
+    });
+</script>
+
 </body>
 
 </html>

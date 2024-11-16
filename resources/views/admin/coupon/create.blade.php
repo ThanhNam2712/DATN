@@ -27,30 +27,53 @@
                                     <span class="font-bold">{{ session('message') }}</span>
                                 </div>
                             @endif
-                            <form action="../admin/coupon/create" method="post">
+                            <form action="../admin/coupon/create" method="post" id="form-coupon">
                             @csrf
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     {{-- Product creare --}}
                                     <div class="xl:col-span-12">
                                         <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Coupon Name</label>
-                                        <input type="text" id="productNameInput" name="code" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" required="">
+                                        <input type="text" id="productNameInput" name="code" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title">
                                         <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
+                                        @error('code')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
+                                        @enderror
                                     </div><!--end col-->
 
+                                    <div class="xl:col-span-4">
+                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Discount Type</label>
+                                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="discount_type" id="categorySelect">
+                                            <option value="">Select Discount Type</option>
+                                            <option value="Phần Trăm">Phần Trăm</option>
+                                            <option value="Giá Tiền">Giá Tiền</option>
+                                        </select>
+                                        @error('discount_type')
+                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">{{ $message }}</span>
+                                        </div>
+                                        @enderror
+                                    </div><!--end col-->
 
                                     <div class="xl:col-span-4">
-                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Discount Type</label>
-                                        <input type="text" name="discount_type" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Sale" required="">
-                                    </div>
-
-                                    <div class="xl:col-span-4">
-                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Discount Type</label>
-                                        <input type="number" name="discount_value" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder=" < 100" required="">
+                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Discount Value</label>
+                                        <input type="number" max="50" min="1" name="discount_value" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder=" < 100">
+                                        @error('discount_value')
+                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">{{ $message }}</span>
+                                        </div>
+                                        @enderror
                                     </div>
 
                                     <div class="xl:col-span-4">
                                         <label for="productPrice" class="inline-block mb-2 text-base font-medium">Minimum amount</label>
-                                        <input type="number" name="minimum_order_amount" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Minimum amount" required="">
+                                        <input type="number" name="minimum_order_amount" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Minimum amount">
+                                        @error('minimum_order_amount')
+                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">{{ $message }}</span>
+                                        </div>
+                                        @enderror
                                     </div>
 
                                     <div class="xl:col-span-4">
@@ -64,13 +87,33 @@
                                     </div><!--end col-->
 
                                     <div class="xl:col-span-4">
-                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Date Start</label>
-                                        <input type="date" name="start_end" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" >
+                                        <label for="dateCouponSt" class="inline-block mb-2 text-base font-medium">Date Start</label>
+                                        <input type="date" name="start_end" id="dateCouponSt" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" >
+                                        @error('start_end')
+                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">{{ $message }}</span>
+                                        </div>
+                                        @enderror
                                     </div>
 
                                     <div class="xl:col-span-4">
-                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Date End</label>
-                                        <input type="date" name="expiration_date" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                        <label for="dateCouponEn" class="inline-block mb-2 text-base font-medium">Date End</label>
+                                        <input type="date" name="expiration_date" id="dateCouponEn" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                        @error('expiration_date')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="xl:col-span-4">
+                                        <label for="productQuantity" class="inline-block mb-2 text-base font-medium">Quantity</label>
+                                        <input type="number" name="number" id="productQuantity" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                        @error('number')
+                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">{{ $message }}</span>
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="flex justify-end gap-2 mt-4">

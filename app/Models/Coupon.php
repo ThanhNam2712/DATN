@@ -16,5 +16,6 @@ class Coupon extends Model
         'start_end',
         'user_id',
         'minimum_order_amount',
+        'number',
     ];
 }

@@ -23,17 +23,16 @@ class CouponController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'code' => 'required|max:30',
+            'discount_type' => 'required',
+            'discount_value' => 'required|numeric|max:50',
+            'expiration_date' => 'required',
+            'start_end' => 'required',
+            'minimum_order_amount' => 'required',
+            'number' => 'required',
+        ]);
         $data = $request->all();
-
-
-        $dateStart = $request->input('start_end');
-        $dateEnd = $request->input('expiration_date');
-
-        if ($dateStart >= $dateEnd){
-            return redirect()->back()->with([
-                'message' => 'Ngày Bắt đầu không được lớn hơn ngày kết thúc',
-            ]);
-        }
 
         Coupon::create($data);
         return redirect('admin/coupon/')->with([
