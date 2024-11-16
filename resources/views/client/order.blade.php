@@ -25,12 +25,12 @@
                     @foreach ($address as $item)
                         <div class="xl:col-span-12">
                             <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
-                            <input type="text" id="provinceInput" name="Province" value="{{ $item->Province }}" class="form-input" placeholder="Enter Province">
+                            <input type="text" id="Province" name="Province" value="{{ $item->Province }}" class="form-input" placeholder="Enter Province">
                         </div>
 
                         <div class="xl:col-span-12">
                             <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
-                            <input type="text" id="townCityInput" name="district" value="{{ $item->district }}" class="form-input" placeholder="Enter District">
+                            <input type="text" id="district" name="district" value="{{ $item->district }}" class="form-input" placeholder="Enter District">
                         </div>
 
                         <div class="xl:col-span-6">
@@ -39,30 +39,46 @@
                         </div>
 
                         <div class="xl:col-span-6">
-                            <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
-                            <input type="text" id="apartmentInput" name="Apartment" value="{{ $item->Apartment }}" class="form-input" placeholder="Enter Apartment">
+                            <label for="Apartment" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
+                            <input type="text" id="Apartment" name="Apartment" value="{{ $item->Apartment }}" class="form-input" placeholder="Enter Apartment">
                         </div>
+                        {{--  <select id='provinces' onchange='getProvinces(event)'>
+                            <option value=''>-- select provinces --</option>
+                          </select>
+                          <select id='districts' onchange='getDistricts(event)'>
+                            <option value=''>-- select districts --</option>
+                          </select>
+                          <select id='wards'>
+                            <option value=''>-- select wards --</option>
+                          </select>  --}}
                     @endforeach
                 @else
                     <!-- Form for adding new address -->
+                    
                     <div class="xl:col-span-12">
                         <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
-                        <input type="text" id="provinceInput" name="Province" class="form-input" placeholder="Enter Province">
+                        <select id='provinces' name="Province" onchange='getProvinces(event)'>
+                            <option value=''>-- select provinces --</option>
+                          </select>
                     </div>
 
                     <div class="xl:col-span-12">
                         <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
-                        <input type="text" id="townCityInput" name="district" class="form-input" placeholder="Enter District">
+                        <select id='districts' name="district" onchange='getDistricts(event)'>
+                            <option value=''>-- select districts --</option>
+                          </select>
                     </div>
 
                     <div class="xl:col-span-6">
                         <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
-                        <input type="text" id="neighborhoodInput" name="Neighborhood" class="form-input" placeholder="Enter Neighborhood">
+                        <input type="text" id="Neighborhood" name="Neighborhood" class="form-input" placeholder="Enter Neighborhood">
                     </div>
 
                     <div class="xl:col-span-6">
                         <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
-                        <input type="text" id="apartmentInput" name="Apartment" class="form-input" placeholder="Enter Apartment">
+                        <select id='wards' name="Apartment">
+                            <option value=''>-- select wards --</option>
+                          </select>
                     </div>
                 @endif
 
@@ -138,4 +154,55 @@
 
     </div>
 </div>
+<script>
+    fetch('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1')
+    .then(response => response.json())
+    .then(data => {
+      let provinces = data.data.data;
+      provinces.map(value => document.getElementById('provinces').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+    })
+    .catch(error => {
+      console.error('Lỗi khi gọi API:', error);
+    });
+  
+  function fetchDistricts (provincesID) {
+    fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${provincesID}&limit=-1`)
+      .then(response => response.json())
+      .then(data => {
+        let districts = data.data.data;
+        document.getElementById('districts').innerHTML = `<option value=''>-- select districts --</option>`;
+        if (districts !== undefined) {
+          districts.map(value => document.getElementById('districts').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+        }
+      })
+      .catch(error => {
+        console.error('Lỗi khi gọi API:', error);
+      });
+  }
+  
+  function fetchWards (districtsID) {
+    fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${districtsID}&limit=-1`)
+      .then(response => response.json())
+      .then(data => {
+        let wards = data.data.data;
+        document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
+        if (wards !== undefined) {
+          wards.map(value => document.getElementById('wards').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+        }
+      })
+      .catch(error => {
+        console.error('Lỗi khi gọi API:', error);
+      });
+  }
+  
+  function getProvinces (event) {
+    fetchDistricts(event.target.value);
+    document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
+  }
+  
+  function getDistricts (event) {
+    fetchWards(event.target.value);
+  }
+  
+</script>
 @endsection
