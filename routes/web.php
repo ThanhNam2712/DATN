@@ -96,6 +96,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user/address/update/{id}', [UserEditController::class, 'updateAddress'])->name('auth.address.update');
     //xoá địa chỉ
     Route::delete('/user/destroy/{id}', [UserEditController::class, 'destroy'])->name('auth.address.destroy');
+
+Route::get('/get-districts', [UserEditController::class, 'getDistricts'])->name('get.districts');
+Route::get('/get-wards', [UserEditController::class, 'getWards'])->name('get.wards');
+
 });
 
 Route::group([
