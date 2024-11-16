@@ -94,7 +94,11 @@
 
           <div class="product-info">
             <h1>Asgaard sofa</h1>
-            <div class="price">25.000.000đ</div>
+            <div class="price-container">
+              <div class="old-price">25.000.000đ</div>
+              <div class="new-price">20.000.000đ</div>
+            </div>
+            
             <p>
               Setting the bar as one of the loudest speakers in its class, the
               Kilburn is a compact, stout-hearted hero with a well-balanced
@@ -133,12 +137,13 @@
               </div>
             </div>
             <div class="product-actions">
-              <label>Số Lượng:</label>
+              <label for="quantity">Số Lượng:</label>
               <div class="quantity-input">
-                <button class="minus-btn">-</button>
-                <input type="text" value="1" min="1" id="quantity" />
-                <button class="plus-btn">+</button>
+                <button class="minus-btn" aria-label="Giảm số lượng">-</button>
+                <input type="number" id="quantity" value="1" min="1" aria-label="Số lượng" />
+                <button class="plus-btn" aria-label="Tăng số lượng">+</button>
               </div>
+              
 
               <div class="button-group">
                 <button id="buy-now">
@@ -154,51 +159,42 @@
         </div>
       </div>
     </section>
-
-    <!-- Description Section -->
-    <div class="product-middle">
-      <!-- Tab Menu -->
-      <div class="tabs">
-        <ul>
-          <li class="active">Mô tả</li>
-         
-        </ul>
-      </div>
-
-      <!-- Description Section -->
-      <div class="description">
-        <p>
-          Chiếc áo polo này được làm từ chất liệu vải cotton mềm mại, 
-          mang lại cảm giác thoải mái suốt cả ngày dài. 
-          Thiết kế đơn giản nhưng tinh tế với cổ áo bo tròn 
-          và cúc áo khuyết tạo nên vẻ đẹp thanh lịch. 
-          Màu sắc nhẹ nhàng dễ phối đồ, thích hợp cho cả 
-          môi trường công sở lẫn đi chơi. Chất liệu thấm hút mồ hôi tốt, 
-          giúp bạn luôn cảm thấy thoải mái trong suốt ngày dài. 
-          Một món đồ không thể thiếu trong tủ đồ của những người yêu thích sự giản dị nhưng vẫn nổi bật.
-        </p>
-      </div>
-
-      <!-- Product Images (in a row) -->
-      <div class="product-images">
-        <img
-          src="../Ảnh/quần áo bộ/z5452633920757_024_2abab9e319ba36465419d02e3e738751-150x200.jpg"
-          alt="Product 1"
-        />
-        <img
-          src="../Ảnh/quần áo bộ/z5452633920757_025_bd1dbc2c8264b72cdae7a2f40c751ca6-300x400.jpg"
-          alt="Product 2"
-        />
-        <img
-          src="../Ảnh/quần áo bộ/z5452633920757_026_5bfc6c757bdfd9fbf43d399aea306a4a-150x200.jpg"
-          alt="Product 3"
-        />
-        <img
-          src="../Ảnh/quần áo bộ/z5452633920757_027_bc20818e157db12e7abe6d1b5f49983a-300x400.jpg"
-          alt="Product 4"
-        />
-      </div>
+      <h3>Đánh giá (0)</h3>
+      <div class="review-section">
+        <p>Chưa có đánh giá nào.</p>
+        
+        <h4>Hãy là người đầu tiên nhận xét "Quần Bò LV Đen Sau Túi Hồng Chữ Đỏ MS:76032-1"</h4>
+        <p>Email của bạn sẽ không được hiển thị công khai. Các trường bắt buộc được đánh dấu *</p>
+        
+        <form class="review-form">
+            <label>Đánh giá của bạn </label>
+            <div class="review-stars">
+                <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+            </div>
+            
+            <label for="comment">Nhận xét của bạn </label>
+            <textarea id="comment" rows="4" required></textarea>
+            
+            <label for="name">Tên </label>
+            <input type="text" id="name" required>
+            
+            <label for="email">Email </label>
+            <input type="email" id="email" required>
+            
+            <label>
+                <input type="checkbox">
+                Lưu tên của tôi, email, và trang web trong trình duyệt này cho lần bình luận kế tiếp của tôi.
+            </label>
+            
+        
+            <a href="your-link-here" class="submit-btn">Gửi đi</a>
+        </form>
     </div>
+    
 
 
     <!-- Sản phẩm mới -->

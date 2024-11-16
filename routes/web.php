@@ -1,17 +1,21 @@
 <?php
-
-
 use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
+
 use App\Http\Controllers\Admin\GalleryController;
+
+use App\Http\Controllers\Client\ForgotPasswordController;
+use App\Http\Controllers\Client\ResetPasswordController;
+
 use App\Http\Controllers\Client\ClientCartController;
 use App\Http\Controllers\Client\ClientOrderController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\RegisterController;
+use App\Http\Controllers\Client\ShopController;
 use App\Http\Controllers\Client\UserEditController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
@@ -27,21 +31,43 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('client.home');
 // });
+Route::get('/', [ProductsController::class, 'home'])->name('home');
+Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
+Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
+Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
+ Route::group([
+     'prefix' => 'client',
+     'as' => 'client.'
+ ], function (){
 
+//     Route::group([
+//         'prefix' => 'home',
+//         'as' => 'home.'
+//     ], function (){
+//         Route::get('/', [HomeController::class, 'index'])->name('home');
+//         Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
+//         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+//     });
 
-Route::group([
-    'prefix' => 'client',
-    'as' => 'client.'
-], function (){
+     Route::group([
+         'prefix' => 'home',
+         'as' => 'home.'
+     ], function (){
+         Route::get('/', [HomeController::class, 'index'])->name('home');
+         Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
+         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+     });
 
-    Route::group([
-        'prefix' => 'home',
-        'as' => 'home.'
-    ], function (){
-        Route::get('/', [HomeController::class, 'index'])->name('home');
-        Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
-        Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
-    });
+     Route::group([
+         'prefix' => 'cart',
+         'as' => 'cart.'
+     ], function (){
+         Route::get('/', [ClientCartController::class, 'index'])->name('index');
+         Route::post('add', [ClientCartController::class, 'add'])->name('add');
+         Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
+         Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
+     });
+
 
     Route::group([
         'prefix' => 'cart',
@@ -63,11 +89,31 @@ Route::group([
         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
         Route::get('vnPayCheck', [ClientOrderController::class, 'vnPayCheck'])->name('vnPayCheck');
     });
+
+    Route::group([
+        'prefix' => 'shop',
+        'as' => 'shop.'
+    ], function (){
+        Route::get('/', [ShopController::class, 'index'])->name('index');
+        Route::get('category/{name}', [ShopController::class, 'category'])->name('category');
+    });
+
 });
 ///////////////////////////////////////////////////////////////
+
+//     Route::group([
+//         'prefix' => 'order',
+//         'as' => 'order.',
+//     ], function (){
+//         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
+//         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
+//         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
+//         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
+//     });
+// });
+
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
-
 });
 Route::prefix('admin/categories')->name('admin.categories.')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('index');
@@ -119,6 +165,12 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::get('show-login', [LoginController::class, 'showFormLogin'])->name('showFormLogin');
     Route::post('login', [LoginController::class, 'login'])->name('login');
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
 });
 
 Route::group([

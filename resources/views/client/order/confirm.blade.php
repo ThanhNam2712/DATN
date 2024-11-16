@@ -26,6 +26,11 @@
                                 </div>
                             </div><!--end col-->
                         </div>
+                        @if(session('message'))
+                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                <span class="font-bold">{{ session('message') }}</span>
+                            </div>
+                        @endif
                         <a href="../client/home/" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Back Home</a>
 
                     </div>

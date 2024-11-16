@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Coupon;
+use App\Models\Coupon_user;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductVariant;
@@ -117,17 +118,22 @@ class ClientOrderController extends Controller
             ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
             ->first();
 
+
+
         $coupon = Coupon::where('code', $couponCode)
             ->where('start_end', '<=', now())
             ->where('expiration_date', '>=', now())
             ->where('number', '>', 0)
             ->first();
 
+
         if (!$coupon) {
             return response()->json([
                 'error' => 'coupon không hợp lệ'
             ]);
         }
+
+
 
         $discount = 0;
         $total = $cart->total_amuont;
@@ -143,6 +149,23 @@ class ClientOrderController extends Controller
                 'error' => 'coupon không hợp lệ'
             ]);
         }
+
+        $couponUsed = Coupon_user::where('user_id', Auth::id())
+            ->where('coupon_id', $coupon->id)
+            ->first();
+
+
+        if ($couponUsed) {
+            return response()->json([
+                'error' => 'Mã giảm giá đã được sử dụng trước đó'
+            ]);
+        }else{
+            Coupon_user::create([
+                'user_id' => Auth::id(),
+                'coupon_id' => $coupon->id,
+            ]);
+        }
+
         $final_total = $total - $discount;
         $coupon->decrement('number', 1);
         return response()->json([

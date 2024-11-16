@@ -21,6 +21,17 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function gioiThieu()
+    {
+        $product = Product::with('tags')->latest('id')->get();
+
+        return view('client.gioithieu', compact('product'));
+    }public function lienHe()
+    {
+        $product = Product::with('tags')->latest('id')->get();
+
+        return view('client.lienhe', compact('product'));
+    }
     public function home()
     {
         $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
