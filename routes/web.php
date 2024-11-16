@@ -61,6 +61,7 @@ Route::group([
         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
+        Route::get('vnPayCheck', [ClientOrderController::class, 'vnPayCheck'])->name('vnPayCheck');
     });
 });
 ///////////////////////////////////////////////////////////////

@@ -15,7 +15,7 @@ class VNPay
     static $vnp_TmnCode = "8FFL3N86"; //Mã website tại VNPAY
     static $vnp_HashSecret = "UXZKUUTRK3WKIJYYQEB3MM34QPYEZ7W6"; //Chuỗi bí mật
     static $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    static $vnp_Returnurl = "/client/order"; //Chú ý cấu hình env('APP_URL') khi sử dụng biến này.
+    static $vnp_Returnurl = "/client/order/vnPayCheck"; //Chú ý cấu hình env('APP_URL') khi sử dụng biến này.
 
     /**
      * vnpay_create_payment.php
@@ -43,11 +43,11 @@ class VNPay
 
         $vnp_TxnRef = $data['vnp_TxnRef']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = $data['vnp_OrderInfo'];
-        $vnp_OrderType = 100000; // Loại hàng hóa: Thực Phẩm - Tiêu Dùng (Xem thêm mã tại: https://sandbox.vnpayment.vn/apis/docs/loai-hang-hoa)
+        $vnp_OrderType = 200000; // Loại hàng hóa: Thực Phẩm - Tiêu Dùng (Xem thêm mã tại: https://sandbox.vnpayment.vn/apis/docs/loai-hang-hoa)
         $vnp_Amount = $data['vnp_Amount'] * 100;
         $vnp_Locale = 'vn'; //Ngôn ngữ tiếng việt
 //        $vnp_BankCode = $_POST['bank_code'];
-//        $vnp_BankCode = 'NCB';
+        $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
 
         $inputData = array(
