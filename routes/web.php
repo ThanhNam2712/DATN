@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\GalleryController;
 
 use App\Http\Controllers\Client\ForgotPasswordController;
+use App\Http\Controllers\Client\OrderControllerClient;
 use App\Http\Controllers\Client\ResetPasswordController;
 
 
@@ -112,6 +113,16 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
         Route::get('resetPass/{token}', [ForgotPasswordController::class, 'resetPass'])->name('resetPass');
         Route::post('resetPass/{id}', [ForgotPasswordController::class, 'confirmPass'])->name('confirmPass');
     });
+
+    Route::group([
+        'prefix' => 'order',
+        'as' => 'order.'
+    ], function (){
+        Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
+        Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
+    });
+
+
 
 });
 
@@ -264,6 +275,8 @@ Route::group([
         Route::get('edit/{id}', [ProductsController::class, 'edit'])->name('edit');
         Route::put('/{id}', [ProductsController::class, 'update'])->name('update');
         Route::delete('destroy/{id}', [ProductsController::class, 'destroy'])->name('destroy');
+        Route::get('softDelete', [ProductsController::class, 'soft'])->name('soft');
+        Route::put('softDelete/{id}', [ProductsController::class, 'restore'])->name('restore');
     });
 
     Route::group([

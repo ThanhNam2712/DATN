@@ -235,4 +235,21 @@ class ProductsController extends Controller
             'message' => 'Destroy Products Success'
         ]);
     }
+
+    public function soft()
+    {
+        $product = Product::onlyTrashed()->get();
+        return view('admin.products.delete', compact('product'));
+    }
+
+    public function restore($id)
+    {
+        $product = Product::onlyTrashed()->find($id);
+
+        $product->restore();
+
+        return redirect()->back()->with([
+            'message' => 'Connect Success'
+        ]);
+    }
 }
