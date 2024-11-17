@@ -25,11 +25,11 @@
 
             <div class="row"
                  style="height: 100px; padding: 10px 20px; line-height: 90px; background-color: white; box-sizing: border-box;">
-                <h1 class="pl-3"
-                    style="color: orange; line-height: 00px; float: left; padding-left: 20px; padding-top: 5px;">
-                    <img src="{{$message->embed(asset('front/img/logo.png'))}}"
-                         height="40" alt="logo">
-                </h1>
+{{--                <h1 class="pl-3"--}}
+{{--                    style="color: orange; line-height: 00px; float: left; padding-left: 20px; padding-top: 5px;">--}}
+{{--                    <img src="{{$message->embed(asset('front/img/logo.png'))}}"--}}
+{{--                         height="40" alt="logo">--}}
+{{--                </h1>--}}
                 <h1 class="pl-2"
                     style="color: orange; line-height: 30px; float: left; padding-left: 20px; font-size: 40px; font-weight: 500;">
                     CodeLean eCommerce
@@ -104,6 +104,7 @@
                                 <tr>
                                     <td style="border-top: 1px solid #dee2e6; padding: 5px 0;">
                                         {{ $orderDetail->products->name . ' (x' . $orderDetail->quantity . ')'}}
+                                        <img src="{{ \Illuminate\Support\Facades\Storage::url($orderDetail->products->image) }}" height="40" alt="logo">
                                     </td>
 
                                     <td style="border-top: 1px solid #dee2e6; padding: 5px 0;">
@@ -138,7 +139,7 @@
                                 <tr>
                                     <td class="">Shipping fee</td>
                                     <td class="pr-3 text-right" style="text-align: right; padding-right: 20px;">
-                                        0.0 $
+                                        ${{ $order->total_amount }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -150,7 +151,7 @@
                                 <tr style="font-size: 18px;">
                                     <td><b>TOTAL</b></td>
                                     <td class="pr-3 text-right" style="text-align: right; padding-right: 20px;">
-                                        <b>{{ $order->total }} $</b>
+                                        <b>${{ $order->total_amount }}</b>
                                     </td>
                                 </tr>
                             </table>

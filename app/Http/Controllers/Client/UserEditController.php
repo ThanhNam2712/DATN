@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class UserEditController extends Controller
 {
@@ -54,26 +55,14 @@ class UserEditController extends Controller
     {
         $data = $request->validate([
             'Province' => 'required|string|max:100',
-            'province_name' => 'required|string|max:100',
             'district' => 'required|string|max:100',
-            'district_name' => 'required|string|max:100',
             'Neighborhood' => 'nullable|string|max:100',
-            'Apartment' => 'required|string|max:100',
-            'apartment_name' => 'required|string|max:100',
+            'Apartment' => 'nullable|string|max:100',
         ]);
-
         $data['status'] = $data['status'] ?? 0;
-        dd($data);
-        auth()->user()->addresses()->create([
-            'Province' => $data['Province'],
-            'province_name' => $data['province_name'],  // Lưu tên tỉnh
-            'district' => $data['district'],
-            'district_name' => $data['district_name'],  // Lưu tên quận
-            'Neighborhood' => $data['Neighborhood'],
-            'Apartment' => $data['Apartment'],
-            'apartment_name' => $data['apartment_name'], // Lưu tên phường
-            'status' => $data['status'],
-        ]);
+
+
+        auth()->user()->addresses()->create($data);
 
         return redirect()->route('auth.user.account')->with('success', 'Địa chỉ đã được thêm thành công.');
     }

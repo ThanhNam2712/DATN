@@ -44,9 +44,17 @@ class ProductsController extends Controller
         return view('client.home', compact('products', 'trends'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $product = Product::with('tags')->latest('id')->get();
+        $search = $request->search;
+        $product = Product::with('category')
+                            ->join('categories', 'products.category_id', '=', 'categories.id')
+                            ->select('products.*', 'categories.name as cate_name')
+                            ->where('products.id', 'like', '%'. $search . '%')
+                            ->orWhere('products.name', 'like', '%' . $search . '%')
+                            ->orWhere('categories.name', 'like', '%' . $search . '%')
+                            ->orderBy('products.id', 'asc')
+                            ->get();
 
         return view('admin.products.index', compact('product'));
     }
@@ -112,17 +120,14 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
         $product = Product::find($id);
-        $trends = Product::with(['tags', 'variant'])
-            ->where('is_trending', 1) // Lọc những sản phẩm đang trending
-            ->orderBy('id', 'desc') // Sắp xếp theo ID (hoặc theo cột khác nếu cần)
-            ->limit(4) // Giới hạn chỉ lấy 4 sản phẩm
-            ->get();
-        // dd($product);
-        return view('client.detail', compact('products', 'trends', 'product'));
+        $category = Category::query()->pluck('name', 'id')->all();
+        $brand = Brand::query()->pluck('name', 'id')->all();
+        $color = ProductColor::all();
+        $size = ProductSize::all();
+        return view('admin.products.show', compact('product', 'category', 'brand', 'color', 'size'));
     }
 
     /**

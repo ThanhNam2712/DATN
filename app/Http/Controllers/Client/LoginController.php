@@ -28,7 +28,7 @@ class LoginController extends Controller
         if ($user && Hash::check($data['password'], $user->password)) {
             Auth::loginUsingId($user->id);
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('client/home');
         }
         return back()->withErrors([
             'email' => 'Thông tin đăng nhập không chính xác.',

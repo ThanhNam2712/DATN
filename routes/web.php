@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\ResetPasswordController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Client\ClientCartController;
 use App\Http\Controllers\Client\ClientOrderController;
 use App\Http\Controllers\Client\HomeController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Client\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -64,6 +66,7 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
 //         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
 //     });
 // });
+
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
 });
@@ -98,6 +101,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user/address/update/{id}', [UserEditController::class, 'updateAddress'])->name('auth.address.update');
     //xoá địa chỉ
     Route::delete('/user/destroy/{id}', [UserEditController::class, 'destroy'])->name('auth.address.destroy');
+
+Route::get('/get-districts', [UserEditController::class, 'getDistricts'])->name('get.districts');
+Route::get('/get-wards', [UserEditController::class, 'getWards'])->name('get.wards');
+
 });
 
 Route::group([
@@ -119,8 +126,13 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    // Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    // Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::get('verify/{user}', [VerifyEmailController::class, 'verify'])
+        ->name('verify.email')
+        ->middleware('signed');
+        Route::get('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('resendVerification');
+
 });
 
 Route::group([
@@ -135,21 +147,30 @@ Route::group([
         Route::get('/', [StatisticController::class, 'index'])->name('index');
     });
 
-    Route::group(['prefix' => 'color', 'as' => 'color.'], function () {
+    Route::group([
+        'prefix' => 'color',
+        'as' => 'color.'
+    ], function () {
         Route::get('/', [ColorController::class, 'index'])->name('index');
         Route::get('delete/{id}', [ColorController::class, 'destroy'])->name('destroy');
         Route::post('create', [ColorController::class, 'create'])->name('create');
         Route::put('update', [ColorController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'size', 'as' => 'size.'], function () {
+    Route::group(
+        ['prefix' => 'size',
+            'as' => 'size.'
+        ], function () {
         Route::get('/', [SizeController::class, 'index'])->name('index');
         Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('destroy');
         Route::post('create', [SizeController::class, 'create'])->name('create');
         Route::put('update', [SizeController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'tag', 'as' => 'tag.'], function () {
+    Route::group(
+        ['prefix' => 'tag',
+            'as' => 'tag.'
+        ], function () {
         Route::get('/', [TagController::class, 'index'])->name('index');
         Route::get('delete/{id}', [TagController::class, 'destroy'])->name('destroy');
         Route::post('create', [TagController::class, 'create'])->name('create');
@@ -171,11 +192,22 @@ Route::group([
         'as' => 'products.'
     ], function () {
         Route::get('/', [ProductsController::class, 'index'])->name('index');
+        Route::get('show/{id}', [ProductsController::class, 'show'])->name('show');
         Route::get('create', [ProductsController::class, 'create'])->name('create');
         Route::post('create', [ProductsController::class, 'store'])->name('store');
         Route::get('edit/{id}', [ProductsController::class, 'edit'])->name('edit');
         Route::put('/{id}', [ProductsController::class, 'update'])->name('update');
         Route::delete('destroy/{id}', [ProductsController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group([
+        'prefix' => 'gallery',
+        'as' => 'gallery.',
+    ], function (){
+        Route::get('/product/{id}', [GalleryController::class, 'index'])->name('index');
+        Route::get('/product/{id}/create/{idVariant}', [GalleryController::class, 'create'])->name('create');
+        Route::post('/product/{id}/create/', [GalleryController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [GalleryController::class, 'update'])->name('update');
     });
 
     Route::group([
@@ -208,6 +240,7 @@ Route::group([
         'as' => 'order.'
     ], function () {
         Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('detail/{id}', [OrderController::class, 'detail'])->name('detail');
         Route::post('create', [OrderController::class, 'create'])->name('create');
         Route::get('list', [OrderController::class, 'listOrders'])->name('list');
         Route::get('show/{id}', [OrderController::class, 'show'])->name('show');

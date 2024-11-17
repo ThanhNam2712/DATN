@@ -9,6 +9,7 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductVariant;
+use App\Utilities\VNPay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -58,11 +59,46 @@ class ClientOrderController extends Controller
             }
         }
         $total = $order->total_amount;
-        $cart->cartDetail()->delete();
-        $this->updateTotal($cart->id, 0);
-//        $this->sendMail($order, $total);
-        return view('client.order.confirm');
+        if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
+            $cart->cartDetail()->delete();
+            $this->updateTotal($cart->id, 0);
+            $this->sendMail($order, $total);
+            return view('client.order.confirm');
+        }elseif ($request->input('payments') == 'Thẻ Tín Dụng'){
+        $data_url = VNPay::vnpay_create_payment([
+            'vnp_TxnRef' => $order->id,
+            'vnp_OrderInfo' => 'Thanh toan thanh cong',
+            'vnp_Amount' => $order->total_amount * 25390,
+        ]);
+
+        return redirect()->to($data_url);
     }
+    }
+
+    public function vnPayCheck(Request $request)
+    {
+        $cart = Cart::where('user_id', Auth::id())
+            ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
+            ->first();
+        $vnp_ResponseCode = $request->get('vnp_ResponseCode');
+        $vnp_TxnRef = $request->get('vnp_TxnRef');
+        $vnp_Amount = $request->get('vnp_Amount');
+
+        if ($vnp_ResponseCode != null){
+            if ($vnp_ResponseCode == 00){
+                $cart->cartDetail()->delete();
+                return view('client.order.confirm')->with([
+                    'message' => 'Order Success ! You will pay on delivery. Please check email'
+                ]);
+            }else{
+                Order::delete($vnp_TxnRef);
+                return view('client.order.confirm')->with([
+                    'message' => 'Order Fail !'
+                ]);
+            }
+        }
+    }
+
     private function sendMail($order, $total){
         $email_to = $order->email;
 
@@ -84,11 +120,12 @@ class ClientOrderController extends Controller
         $coupon = Coupon::where('code', $couponCode)
             ->where('start_end', '<=', now())
             ->where('expiration_date', '>=', now())
+            ->where('number', '>', 0)
             ->first();
 
         if (!$coupon) {
             return response()->json([
-                'error' => 'Thằng ranh này nhập không đúng mã voucher'
+                'error' => 'coupon không hợp lệ'
             ]);
         }
 
@@ -103,10 +140,11 @@ class ClientOrderController extends Controller
             }
         } else {
             return response()->json([
-                'error' => 'Thằng ranh con này đơn hàng không đủ điều kiện'
+                'error' => 'coupon không hợp lệ'
             ]);
         }
         $final_total = $total - $discount;
+        $coupon->decrement('number', 1);
         return response()->json([
             'success' => true,
             'discount' => $discount,
@@ -122,6 +160,5 @@ class ClientOrderController extends Controller
             $cart->save();
         }
     }
-
 
 }

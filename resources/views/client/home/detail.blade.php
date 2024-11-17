@@ -35,21 +35,12 @@
                                                 <div class="rounded-md md:col-span-8 md:row-span-2 bg-slate-100 dark:bg-zink-600">
                                                     <img src="{{ Storage::url($product->image) }}" style="width: 271px;" alt="">
                                                 </div>
-                                                <div class="rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
-                                                    <img src="assets/images/overview-02.png" alt="">
-                                                </div>
-                                                <div class="p-4 rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
-                                                    <img src="assets/images/img-012.png" alt="">
-                                                </div>
-                                                <div class="p-4 rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
-                                                    <img src="assets/images/img-09.png" alt="">
-                                                </div>
-                                                <div class="p-4 rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
-                                                    <img src="assets/images/img-12.png" alt="">
-                                                </div>
-                                                <div class="p-4 rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
-                                                    <img src="assets/images/img-13.png" alt="">
-                                                </div>
+                                                @foreach($image as $img)
+                                                    <div class="rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
+                                                        <img src="{{ Storage::url($img->file_path) }}" alt="">
+                                                    </div>
+                                                @endforeach
+
                                             </div>
 
                                             <div class="flex gap-2 mt-4 shrink-0">
@@ -128,15 +119,17 @@
 
                                         <div class="mb-4">
                                             <p class="mb-1 text-green-500">Special Price</p>
-                                            <h4>${{ $product->variant->first()->price_sale }} <small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">${{ $product->variant->first()->price }}</small> <small class="text-green-500 align-middle">{{ round(($product->variant->first()->price - $product->variant->first()->price_sale) / $product->variant->first()->price * 100) }}% ON</small></h4>
-
+                                            <h4>${{ $priceVariant->price_sale }} <small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">${{ $priceVariant->price }}</small> <small class="text-green-500 align-middle">{{ round(($priceVariant->price - $priceVariant->price_sale) / $priceVariant->price * 100) }}% ON</small></h4>
                                         </div>
                                         <form action="../client/cart/add" method="post">
                                             @csrf
                                             <h6 class="mb-3 text-15">Select Color</h6>
                                             <div class="flex flex-wrap items-center gap-2">
                                                 @foreach($product->variant as $key => $color)
-                                                    <input id="color{{ $key }}" class="border rounded-sm appearance-none cursor-pointer size-5 border-custom-500 {{ $colorClasses[$color->color->name]  ?? '' }} checked:{{ $colorClasses[$color->color->name] ?? '' }} checked:border-custom-500 disabled:opacity-75 disabled:cursor-default" type="radio" name="color_id" value="{{ $color->color->id }}">
+                                                    <a href="../client/home/detail/{{ $product->id }}/color/{{ $color->id }}" class="color inline-block align-middle {{ $colorClasses[$color->color->name]  ?? '' }} border border-orange-500 rounded-sm appearance-none cursor-pointer size-5  checked:{{ $colorClasses[$color->color->name] ?? '' }} disabled:opacity-75 disabled:cursor-default @if($variant == $color->id) checkA @endif"></a>
+                                                    @if($variant == $color->id)
+                                                        <input type="hidden" name="color_id" value="{{ $color->color->id }}">
+                                                    @endif
                                                 @endforeach
                                             </div>
 
@@ -160,7 +153,8 @@
 
                                             <div class="flex gap-2 mt-4 shrink-0">
 
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="hidden" name="product_variant_id" value="{{ $priceVariant->id }}">
                                             <button type="submit" id="add-to-cart" data-product-id="{{ $product->id }}" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">
                                                 <i data-lucide="shopping-cart" class="inline-block align-middle size-3 ltr:mr-1 rtl:ml-1"></i>
                                                 <span class="align-middle">Add to Cart</span>
@@ -397,7 +391,7 @@
                 <button data-modal-close="addReviewsModal" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
             </div>
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                <form action="../client/post" method="post">
+                <form action="../client/home/post" method="post">
                     <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                         @csrf
                         <div class="xl:col-span-4">
