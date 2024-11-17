@@ -27,9 +27,10 @@
     <!-- Main Banner -->
     @yield('Banner')
     <!-- Hot Products Section -->
-     @yield('Main')
+    @yield('Main')
     @yield('Hot_Product')
     <br>
+    @yield('Shop')
     <!-- New Products Section -->
     @yield('New_Product')
     <!-- Store Section -->

@@ -23,24 +23,41 @@
                 <!-- Address Information (Optional) -->
                 @if($address->isNotEmpty())
                     @foreach ($address as $item)
-                        <div class="xl:col-span-12">
+                        <div class="xl:col-span-6">
                             <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
-                            <input type="text" id="Province" name="Province" value="{{ $item->Province }}" class="form-input" placeholder="Enter Province">
                         </div>
+                        <div class="xl:col-span-6">
+                            <select id='provinces' name="Province" onchange='getProvinces(event)'>
 
-                        <div class="xl:col-span-12">
-                            <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
-                            <input type="text" id="district" name="district" value="{{ $item->district }}" class="form-input" placeholder="Enter District">
+                                <option value=''>-- select provinces --</option>
+                            </select>
+                            {{--  <input type="text" id="Province" name="Province" value="{{ $item->Province }}" class="form-input" placeholder="Enter Province">  --}}
                         </div>
 
                         <div class="xl:col-span-6">
-                            <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
-                            <input type="text" id="neighborhoodInput" name="Neighborhood" value="{{ $item->Neighborhood }}" class="form-input" placeholder="Enter Neighborhood">
+                            <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
+                        </div>
+                        <div class="">
+                            <select id='districts' name="district" onchange='getDistricts(event)'>
+                                <option value=''>-- select districts --</option>
+                            </select>
+                            {{--  <input type="text" id="district" name="district" value="{{ $item->district }}" class="form-input" placeholder="Enter District">  --}}
                         </div>
 
                         <div class="xl:col-span-6">
                             <label for="Apartment" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
-                            <input type="text" id="Apartment" name="Apartment" value="{{ $item->Apartment }}" class="form-input" placeholder="Enter Apartment">
+                        </div>
+                        <div class="xl:col-span-6">
+                            <select id='wards' name="Apartment">
+                                <option value=''>-- select wards --</option>
+                            </select>
+                            {{--  <input type="text" id="Apartment" name="Apartment" value="{{ $item->Apartment }}" class="form-input" placeholder="Enter Apartment">  --}}
+                        </div>
+                        <div class="xl:col-span-6">
+                            <label for="Neighborhood" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
+                        </div>
+                        <div class="xl:col-span-6">
+                            <input type="text" id="Neighborhood" name="Neighborhood" value="{{ $item->Neighborhood }}" class="form-input" placeholder="Enter Neighborhood">
                         </div>
                         {{--  <select id='provinces' onchange='getProvinces(event)'>
                             <option value=''>-- select provinces --</option>
@@ -56,26 +73,26 @@
                     <!-- Form for adding new address -->
                     
                     <div class="xl:col-span-12">
-                        <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
+                        <label for="provinces" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
                         <select id='provinces' name="Province" onchange='getProvinces(event)'>
                             <option value=''>-- select provinces --</option>
                           </select>
                     </div>
 
                     <div class="xl:col-span-12">
-                        <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
+                        <label for="district" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
                         <select id='districts' name="district" onchange='getDistricts(event)'>
                             <option value=''>-- select districts --</option>
-                          </select>
+                        </select>
                     </div>
 
                     <div class="xl:col-span-6">
-                        <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
+                        <label for="Neighborhood" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
                         <input type="text" id="Neighborhood" name="Neighborhood" class="form-input" placeholder="Enter Neighborhood">
                     </div>
 
                     <div class="xl:col-span-6">
-                        <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
+                        <label for="Apartment" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
                         <select id='wards' name="Apartment">
                             <option value=''>-- select wards --</option>
                           </select>

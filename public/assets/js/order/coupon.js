@@ -2,7 +2,7 @@ function couponApply(){
     let coupon = document.getElementById('couponApply').value.trim();
     $.ajax({
         type: "GET",
-        url: "admin/order/coupon",
+        url: "client/order/coupon",
         data: {
             coupon: coupon
         },

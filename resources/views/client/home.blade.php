@@ -8,7 +8,9 @@
 @section('Hot_Product')
 @include('client.partials.hot_product',['products'=>$products])
 @endsection
-
+@section('Shop')
+@include('client.partials.shop')
+@endsection
 @section('New_Product')
 @include('client.partials.new_product',['trends'=>$trends])
 @endsection

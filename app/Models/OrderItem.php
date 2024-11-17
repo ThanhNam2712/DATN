@@ -13,12 +13,27 @@ class OrderItem extends Model
         'product_variant_id',
         'quantity',
         'price',
+        'color_id',
+        'size_id',
+        'product_id',
     ];
     public function Order(){
         return $this->belongsTo(Order::class);
     }
     public function Payment(){
         return $this->belongsTo(Payment::class);
+    }
+
+    public function products(){
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    public function color(){
+        return $this->belongsTo(ProductColor::class, 'color_id');
+    }
+
+    public function size(){
+        return $this->belongsTo(ProductSize::class, 'size_id');
     }
     public function product_variants(){
         return $this->belongsTo(ProductVariant::class, 'product_variant_id');

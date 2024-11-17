@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('client.layouts.master')
 
 @section('title')
     Chỉnh sửa thông tin người dùng

@@ -18,7 +18,7 @@
                 onclick="changeImage('sofa1.jpg')"
               />
               @endfor
-              
+
             </div>
             <div class="product-main-image">
               <img
@@ -30,8 +30,8 @@
           </div>
 
           <div class="product-info">
-            <h1>{{$product->name}}</h1>
-            <div class="price">{{$product->variant->first()->price}}</div>
+            <h1>{{ $product->name }}</h1>
+            <div class="price">{{ $product->variant->first()->price }}</div>
             <p>
               Setting the bar as one of the loudest speakers in its class, the
               Kilburn is a compact, stout-hearted hero with a well-balanced
@@ -43,10 +43,10 @@
             <div class="product-options">
               <div class="size-options">
                 <label>Size:</label>
-                <!-- @foreach ($product->variant as $colors)
-                
-                @endforeach -->
-                <button class="size-option" onclick="selectSize('L')">{{}}</button>
+               @foreach ($product->variant as $size)
+                      <button class="size-option" onclick="selectSize('{{ $size->size->name }}')"></button>
+                @endforeach
+
                 <button class="size-option" onclick="selectSize('XL')"></button>
                 <button class="size-option" onclick="selectSize('XS')">
                   XS
@@ -56,18 +56,13 @@
 
               <div class="color-options">
                 <label>Color:</label>
-                <button
-                  class="color-option black"
-                  onclick="selectColor('Black')"
-                ></button>
-                <button
-                  class="color-option purple"
-                  onclick="selectColor('Purple')"
-                ></button>
-                <button
-                  class="color-option gold"
-                  onclick="selectColor('Gold')"
-                ></button>
+                  @foreach($product->variant as $color)
+                      <button
+                          class="color-option black"
+                          onclick="selectColor('{{ $color->color->name }}')"
+                      ></button>
+                  @endforeach
+
               </div>
             </div>
             <div class="product-actions">
@@ -86,7 +81,7 @@
                   <i class="fas fa-cart-plus"></i> Thêm giỏ hàng
                 </button>
               </div>
-              
+
             </div>
           </div>
         </div>

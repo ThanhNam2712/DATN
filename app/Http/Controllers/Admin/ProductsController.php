@@ -21,6 +21,17 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function gioiThieu()
+    {
+        $product = Product::with('tags')->latest('id')->get();
+
+        return view('client.gioithieu', compact('product'));
+    }public function lienHe()
+    {
+        $product = Product::with('tags')->latest('id')->get();
+
+        return view('client.lienhe', compact('product'));
+    }
     public function home()
     {
         $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
@@ -47,10 +58,10 @@ class ProductsController extends Controller
     {
         $category = Category::all();
         $brand = Brand::all();
-        $tag = Tag::all();
         $color = ProductColor::all();
         $size = ProductSize::all();
-        return view('admin.products.create', compact('category', 'brand', 'tag', 'color', 'size'));
+        $tags = Tag::query()->pluck('name', 'id')->all();
+        return view('admin.products.create', compact('category', 'brand', 'color', 'size','tags'));
     }
 
     /**
@@ -65,11 +76,6 @@ class ProductsController extends Controller
             'image' => 'required|image',
             'description' => 'required|max:255',
             'content' => 'required|max:255',
-            'product_color_id' => 'required',
-            'product_size_id' => 'required',
-            'price_sale' => 'required|integer',
-            'price' => 'required|integer',
-            'quantity' => 'required|integer',
         ]);
         $data = $request->all();
         $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
@@ -109,9 +115,7 @@ class ProductsController extends Controller
     public function show(string $id)
     {
         $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
-        $product = Product::with(['tags', 'variant'])
-            ->where('id', $id) // Lọc sản Phẩm THeo ID
-            ->get();
+        $product = Product::find($id);
         $trends = Product::with(['tags', 'variant'])
             ->where('is_trending', 1) // Lọc những sản phẩm đang trending
             ->orderBy('id', 'desc') // Sắp xếp theo ID (hoặc theo cột khác nếu cần)
@@ -147,10 +151,10 @@ class ProductsController extends Controller
         //
         try {
             DB::transaction(function () use ($request, $id) {
-             
+
                 // dd( $request->validate());
                 // Update product details
-                $product = Product::find($id);   
+                $product = Product::find($id);
                 $request->validate([
                     'name' => 'required|max:255',
                     'category_id' => 'required',
