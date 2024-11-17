@@ -93,7 +93,7 @@
                         <button type="button" class="flex items-center justify-center size-[37.5px] transition-all duration-200 ease-linear p-0 text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 active:text-white active:bg-slate-600 active:border-slate-600"><i data-lucide="github" class="w-4 h-4"></i></button>
                     </div>
                     <div class="mt-10 text-center">
-                        <p>Chưa nhận được email xác minh? <a href="">Gửi lại email xác minh</a></p>
+                        <p>Chưa nhận được email xác minh? <a href="{{ route('account.resendVerification') }}">Gửi lại email xác minh</a></p>
                         <p class="mb-0 text-slate-500 dark:text-zink-200">Bạn chưa có tài khoản ? <a href="{{ route("account.showForm") }}" class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">Đăng ký</a> </p>
                     </div>
                 </form>

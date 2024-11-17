@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('account.password.email') }}">
+        <form method="POST" action="../client/reset/password">
             @csrf
             <div class="mb-8">
                 <label for="inputEmail" class="block text-sm font-medium text-gray-700">
@@ -27,9 +27,11 @@
                     required
                     placeholder="Nhập email của bạn"
                 >
-                @error('email')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
+                @if(Session::has('message'))
+                    <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                        <span class="font-bold">{{ session('message') }}</span>
+                    </div>
+                @endif
             </div>
 
             <button type="submit" class="w-full btn bg-custom-500 text-white hover:bg-custom-600 focus:ring focus:ring-custom-100 dark:ring-custom-400/20">

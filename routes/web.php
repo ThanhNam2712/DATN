@@ -4,10 +4,12 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 
+
 use App\Http\Controllers\Admin\GalleryController;
 
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\ResetPasswordController;
+
 
 use App\Http\Controllers\Client\ClientCartController;
 use App\Http\Controllers\Client\ClientOrderController;
@@ -26,6 +28,7 @@ use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Client\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -35,19 +38,20 @@ Route::get('/', [ProductsController::class, 'home'])->name('home');
 Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
 Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
 Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
+
  Route::group([
      'prefix' => 'client',
      'as' => 'client.'
  ], function (){
 
-//     Route::group([
-//         'prefix' => 'home',
-//         'as' => 'home.'
-//     ], function (){
-//         Route::get('/', [HomeController::class, 'index'])->name('home');
-//         Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
-//         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
-//     });
+     Route::group([
+         'prefix' => 'home',
+         'as' => 'home.'
+     ], function (){
+         Route::get('/', [HomeController::class, 'index'])->name('home');
+         Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
+         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+     });
 
      Route::group([
          'prefix' => 'home',
@@ -67,6 +71,7 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
          Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
          Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
      });
+
 
 
     Route::group([
@@ -98,8 +103,18 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
         Route::get('category/{name}', [ShopController::class, 'category'])->name('category');
     });
 
+    Route::group([
+        'prefix' => 'reset',
+        'as' => 'reset.'
+    ], function (){
+        Route::get('password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('showLinkRequestForm');
+        Route::post('password', [ForgotPasswordController::class, 'postNotPass'])->name('postNotPass');
+        Route::get('resetPass/{token}', [ForgotPasswordController::class, 'resetPass'])->name('resetPass');
+        Route::post('resetPass/{id}', [ForgotPasswordController::class, 'confirmPass'])->name('confirmPass');
+    });
+
 });
-///////////////////////////////////////////////////////////////
+
 
 //     Route::group([
 //         'prefix' => 'order',
@@ -111,6 +126,7 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
 //         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
 //     });
 // });
+
 
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
@@ -146,6 +162,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user/address/update/{id}', [UserEditController::class, 'updateAddress'])->name('auth.address.update');
     //xoá địa chỉ
     Route::delete('/user/destroy/{id}', [UserEditController::class, 'destroy'])->name('auth.address.destroy');
+
+Route::get('/get-districts', [UserEditController::class, 'getDistricts'])->name('get.districts');
+Route::get('/get-wards', [UserEditController::class, 'getWards'])->name('get.wards');
+
 });
 
 Route::group([
@@ -166,10 +186,18 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::post('login', [LoginController::class, 'login'])->name('login');
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
+
     Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
+    Route::get('verify/{user}', [VerifyEmailController::class, 'verify'])
+        ->name('verify.email')
+        ->middleware('signed');
+        Route::get('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('resendVerification');
+
 
 });
 
@@ -296,3 +324,7 @@ Route::group([
         Route::post('post', [ReviewsController::class, 'postReview'])->name('postReview');
     });
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
