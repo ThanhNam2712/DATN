@@ -68,7 +68,8 @@ class ProductsController extends Controller
         $brand = Brand::all();
         $color = ProductColor::all();
         $size = ProductSize::all();
-        return view('admin.products.create', compact('category', 'brand', 'color', 'size'));
+        $tags = Tag::query()->pluck('name', 'id')->all();
+        return view('admin.products.create', compact('category', 'brand', 'color', 'size','tags'));
     }
 
     /**
@@ -233,6 +234,23 @@ class ProductsController extends Controller
         $product->delete();
         return redirect()->back()->with([
             'message' => 'Destroy Products Success'
+        ]);
+    }
+
+    public function soft()
+    {
+        $product = Product::onlyTrashed()->get();
+        return view('admin.products.delete', compact('product'));
+    }
+
+    public function restore($id)
+    {
+        $product = Product::onlyTrashed()->find($id);
+
+        $product->restore();
+
+        return redirect()->back()->with([
+            'message' => 'Connect Success'
         ]);
     }
 }

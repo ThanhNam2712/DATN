@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CouponController extends Controller
 {
@@ -33,11 +34,20 @@ class CouponController extends Controller
             'number' => 'required',
         ]);
         $data = $request->all();
-
         Coupon::create($data);
+
         return redirect('admin/coupon/')->with([
             'message' => 'Create Coupon Success'
         ]);
+    }
+
+    private function sendmail($user, $coupon, $email_to)
+    {
+        Mail::send('client.mail.coupon', compact('user', 'coupon'), function ($message) use ($email_to) {
+            $message->from('tuancdph43313@fpt.adu.vn', 'Tuan Clothing');
+            $message->to($email_to, $email_to);
+            $message->subject("Forgot Notification");
+        });
     }
 
     public function update($id)

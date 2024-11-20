@@ -20,7 +20,7 @@ class LoginController extends Controller
         // Xác thực đầu vào
         $data = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|min:8|max:20',
+            'password' => 'required|min:4|max:20',
         ]);
         $user = User::where('email', $data['email'])->first();
 
