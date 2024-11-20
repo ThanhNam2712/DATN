@@ -119,7 +119,6 @@ public function getWards(Request $request)
 }
 public function storeAddAddress(Request $request)
 {
-    // Xử lý Validation
     $data = $request->validate([
         'Province' => 'required|string|max:100',
         'district' => 'required|string|max:100',
@@ -127,16 +126,14 @@ public function storeAddAddress(Request $request)
         'Apartment' => 'required|string|max:255',
     ]);
 
-    // Cập nhật giá trị cho 'Neighborhood' nếu nó không có
     $data['Neighborhood'] = $data['Neighborhood'] ?? null;
 
-    // Lưu địa chỉ mới vào cơ sở dữ liệu cho người dùng đã đăng nhập
     auth()->user()->addresses()->create([
-        'Province' => $data['Province'],   // Đảm bảo trường 'Province' được truyền vào
-        'district' => $data['district'],    // Truyền 'district' vào
-        'Neighborhood' => $data['Neighborhood'],  // Truyền 'Neighborhood' vào
-        'Apartment' => $data['Apartment'],  // Truyền 'Apartment' vào
-        'status' => $request->input('status', 0),  // Nếu không có status, mặc định là 0
+        'Province' => $data['Province'],
+        'district' => $data['district'],
+        'Neighborhood' => $data['Neighborhood'],
+        'Apartment' => $data['Apartment'],
+        'status' => $request->input('status', 0),
     ]);
 
     // Chuyển hướng về trang tài khoản với thông báo thành công

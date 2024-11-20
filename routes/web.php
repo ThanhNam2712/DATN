@@ -32,40 +32,41 @@ Route::get('/', [ProductsController::class, 'home'])->name('home');
 Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
 Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
 Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
-// Route::group([
-//     'prefix' => 'client',
-//     'as' => 'client.'
-// ], function (){
+Route::group([
+    'prefix' => 'client',
+    'as' => 'client.'
+], function (){
 
-//     Route::group([
-//         'prefix' => 'home',
-//         'as' => 'home.'
-//     ], function (){
-//         Route::get('/', [HomeController::class, 'index'])->name('home');
-//         Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
-//         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
-//     });
+    Route::group([
+        'prefix' => 'home',
+        'as' => 'home.'
+    ], function (){
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
+        Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+    });
 
-//     Route::group([
-//         'prefix' => 'cart',
-//         'as' => 'cart.'
-//     ], function (){
-//         Route::get('/', [ClientCartController::class, 'index'])->name('index');
-//         Route::post('add', [ClientCartController::class, 'add'])->name('add');
-//         Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
-//         Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
-//     });
+    Route::group([
+        'prefix' => 'cart',
+        'as' => 'cart.'
+    ], function (){
+        Route::get('/', [ClientCartController::class, 'index'])->name('index');
+        Route::post('add', [ClientCartController::class, 'add'])->name('add');
+        Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
+        Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
+    });
 
-//     Route::group([
-//         'prefix' => 'order',
-//         'as' => 'order.',
-//     ], function (){
-//         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
-//         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
-//         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
-//         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
-//     });
-// });
+    Route::group([
+        'prefix' => 'order',
+        'as' => 'order.',
+    ], function (){
+        Route::get('/', [ClientOrderController::class, 'index'])->name('index');
+        Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
+        Route::post('create', [ClientOrderController::class, 'create'])->name('create');
+        Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
+        Route::get('vnPayCheck', [ClientOrderController::class, 'vnPayCheck'])->name('vnPayCheck');
+    });
+});
 
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
