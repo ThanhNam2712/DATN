@@ -32,7 +32,7 @@
 {{--                </h1>--}}
                 <h1 class="pl-2"
                     style="color: orange; line-height: 30px; float: left; padding-left: 20px; font-size: 40px; font-weight: 500;">
-                    CodeLean eCommerce
+                    Clothing Store
                 </h1>
             </div>
 

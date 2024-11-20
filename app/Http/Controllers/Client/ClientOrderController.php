@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\Brand;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Coupon;
+use App\Models\Coupon_user;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
+use App\Models\ProductColor;
+use App\Models\ProductSize;
 use App\Models\ProductVariant;
 use App\Utilities\VNPay;
 use Illuminate\Http\Request;
@@ -117,17 +123,22 @@ class ClientOrderController extends Controller
             ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
             ->first();
 
+
+
         $coupon = Coupon::where('code', $couponCode)
             ->where('start_end', '<=', now())
             ->where('expiration_date', '>=', now())
             ->where('number', '>', 0)
             ->first();
 
+
         if (!$coupon) {
             return response()->json([
                 'error' => 'coupon không hợp lệ'
             ]);
         }
+
+
 
         $discount = 0;
         $total = $cart->total_amuont;
@@ -143,6 +154,23 @@ class ClientOrderController extends Controller
                 'error' => 'coupon không hợp lệ'
             ]);
         }
+
+        $couponUsed = Coupon_user::where('user_id', Auth::id())
+            ->where('coupon_id', $coupon->id)
+            ->first();
+
+
+        if ($couponUsed) {
+            return response()->json([
+                'error' => 'Mã giảm giá đã được sử dụng trước đó'
+            ]);
+        }else{
+            Coupon_user::create([
+                'user_id' => Auth::id(),
+                'coupon_id' => $coupon->id,
+            ]);
+        }
+
         $final_total = $total - $discount;
         $coupon->decrement('number', 1);
         return response()->json([
@@ -159,6 +187,22 @@ class ClientOrderController extends Controller
             $cart->total_amuont = $amount;
             $cart->save();
         }
+    }
+    public function listOrders()
+    {
+        $orders = auth()->user()->Orders()->with('Order_Items.product_variants')->get();
+        // dd($orders);
+        return view('client.order.list', compact('orders'));
+
+    }
+    public function show($id)
+    {
+        $order = Order::where('user_id', auth()->id())
+            ->with(['Order_Items.product_variants', 'user'])
+            ->findOrFail($id);
+            $user = auth()->user();
+            $address = $user->addresses;
+        return view('client.order.show', compact('order','user', 'address'));
     }
 
 }
