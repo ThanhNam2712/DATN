@@ -290,6 +290,16 @@ Route::group([
         Route::post('create', [ProductTagController::class, 'create'])->name('create');
         Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
     });
+    Route::group(
+        ['prefix' => 'orders',
+            'as' => 'orders.'
+        ], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index'); // Danh sách đơn hàng
+        // Route::get('show/{id}', [OrderController::class, 'show'])->name('show'); // Chi tiết đơn hàng
+        // Route::put('update-status/{id}', [OrderController::class, 'updateStatus'])->name('updateStatus'); // Cập nhật trạng thái đơn hàng
+        // Route::delete('delete/{id}', [OrderController::class, 'destroy'])->name('destroy'); // Xóa đơn hàng
+        // Route::get('invoice/{id}', [OrderController::class, 'generateInvoice'])->name('generateInvoice'); // Tạo hóa đơn cho đơn hàng
+    });
 
     Route::group([
         'prefix' => 'products',
