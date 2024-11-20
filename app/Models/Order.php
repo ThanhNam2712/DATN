@@ -28,6 +28,9 @@ class Order extends Model
     public function orderDetail(){
         return $this->hasMany(OrderItem::class, 'order_id');
     }
+    public function Order_Items(){
+        return $this->hasMany(OrderItem::class);
+    }
     public function Payment(){
         return $this->hasOne(Payment::class);
     }

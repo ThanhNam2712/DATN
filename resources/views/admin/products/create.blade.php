@@ -75,6 +75,20 @@
                                             </div>
                                         @enderror
                                     </div><!--end col-->
+                                    <div class="xl:col-span-4">
+                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Tag</label>
+                                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="tags[]" id="categorySelect" multiple>
+                                            <option value=""  >Select Tag</option>
+                                            @foreach ($tags as $id => $name)
+                                                <option value="{{$id}}">{{$name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('category_id')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                            </div>
+                                        @enderror
+                                    </div><!--end col-->
                                     {{-- active --}}
                                     <div class="xl:col-span-4">
                                         <label for="yellowIconSwitch" class="inline-block text-base font-medium cursor-pointer">Trending Products</label>

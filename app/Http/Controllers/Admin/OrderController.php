@@ -18,8 +18,16 @@ class OrderController extends Controller
     //
     public function index()
     {
-        $order = Order::all();
-        return view('admin.orders.index', compact('order'));
+        $cart = Cart::where('user_id', Auth::id())
+            ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
+            ->first();
+        $totalAmount = 0;
+        $user = auth()->user();
+        $address = $user->addresses;
+
+        // dd($address);
+        // return view('client.order');
+        return view('client.order', compact('cart', 'user', 'address'));
     }
 
     public function detail($id)
@@ -86,7 +94,8 @@ class OrderController extends Controller
                 $cart->cartDetail()->delete();
                 $cart->delete();
 
-                return response()->json(['message' => 'Đơn hàng được tạo thành công!', 'order' => $order]);
+                return redirect()->route('admin.order.show', ['id' => $order->id])
+                ->with('success', 'Đơn hàng được tạo thành công!');
             });
 
         } catch (\Throwable $th) {
@@ -99,8 +108,17 @@ class OrderController extends Controller
     {
         $orders = auth()->user()->Orders()->with('Order_Items.product_variants')->get();
         // dd($orders);
-        return view('admin.orders.list', compact('orders'));
+        return view('client.list', compact('orders'));
 
+    }
+    public function show($id)
+    {
+        $order = Order::where('user_id', auth()->id())
+            ->with(['Order_Items.product_variants', 'user'])
+            ->findOrFail($id);
+            $user = auth()->user();
+            $address = $user->addresses;
+        return view('client.chitietorder', compact('order','user', 'address'));
     }
 
 

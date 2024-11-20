@@ -2,62 +2,75 @@ nav ul {
   list-style-type: none;
   padding: 0;
 }
+
 nav ul li {
   display: inline;
   margin: 0 10px;
 }
+
 nav ul li a {
   color: white;
   text-decoration: none;
 }
+
 .product-grid,
 .store-grid {
   display: flex;
   justify-content: space-around;
 }
+
 .product,
 .store-item {
   width: 30%;
   text-align: center;
 }
+
 footer {
   background-color: white;
   color: white;
   padding: 20px;
   text-align: center;
 }
+
 .logo {
   display: flex;
   align-items: center;
 }
+
 .logo img {
   width: 50px;
   height: auto;
   margin-right: 10px;
 }
+
 .logo h1 {
   text-transform: uppercase;
   font-size: 24px;
   color: #333;
 }
+
 nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   display: flex;
 }
+
 nav ul li {
   margin: 0 15px;
 }
+
 nav ul li a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
   transition: color 0.3s;
 }
+
 nav ul li a:hover {
   color: #007bff;
 }
+
 .banner {
   position: relative;
   max-width: 100%;
@@ -65,34 +78,41 @@ nav ul li a:hover {
   overflow: hidden;
   border-radius: 10px;
 }
+
 .banner-container {
   display: flex;
   transition: transform 0.5s ease-in-out;
 }
+
 .banner-slide {
   min-width: 33.33%;
 }
+
 .banner img {
   width: 100%;
   height: auto;
   border-radius: 10px;
 }
+
 .store {
   max-width: 1200px;
   margin: 20px auto;
   padding: 20px;
   text-align: center;
 }
+
 .store h3 {
   font-size: 24px;
   margin-bottom: 20px;
   color: #333;
 }
+
 .store-grid {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .store-item {
   flex: 1 1 calc(25% - 20px);
   margin: 10px;
@@ -103,25 +123,30 @@ nav ul li a:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
 }
+
 .store-item img {
   width: 100%;
   height: auto;
   object-fit: cover;
 }
+
 .store-item:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
 @media (max-width: 768px) {
   .store-item {
     flex: 1 1 calc(50% - 20px);
   }
 }
+
 @media (max-width: 480px) {
   .store-item {
     flex: 1 1 100%;
   }
 }
+
 h3 {
   font-size: 28px;
   color: #333;
@@ -130,6 +155,7 @@ h3 {
   text-align: center;
   position: relative;
 }
+
 h3::after {
   content: "";
   display: block;
@@ -138,14 +164,17 @@ h3::after {
   margin: 10px auto;
   border-radius: 2px;
 }
+
 h3:hover {
   color: #e74c3c;
   transform: scale(1.05);
   transition: color 0.3s, transform 0.3s;
 }
+
 .news {
   padding: 20px;
 }
+
 .news-item {
   display: flex;
   align-items: flex-start;
@@ -155,23 +184,27 @@ h3:hover {
   border-radius: 5px;
   background-color: #f9f9f9;
 }
+
 .news-item img {
   width: 120px;
   height: auto;
   margin-right: 15px;
   border-radius: 5px;
 }
+
 .news-item h4 {
   margin: 0;
   margin-bottom: 5px;
   font-size: 1.2em;
   color: #007bff;
 }
+
 .news-item p {
   margin: 0;
   color: #666;
   line-height: 1.5;
 }
+
 .news-item a {
   display: inline-block;
   margin-top: 10px;
@@ -180,12 +213,15 @@ h3:hover {
   font-weight: bold;
   transition: color 0.2s;
 }
+
 .news-item a:hover {
   color: #0056b3;
 }
+
 body {
   font-family: Arial, sans-serif;
 }
+
 .footer-container {
   display: flex;
   justify-content: space-between;
@@ -194,50 +230,61 @@ body {
   border-top: 1px solid white;
   font-family: Arial, sans-serif;
 }
+
 .footer-item {
   flex-basis: 30%;
   margin-right: 20px;
 }
+
 .footer-item h5 {
   font-size: 18px;
   margin-bottom: 15px;
   color: black;
   font-weight: 600;
 }
+
 .footer-item h6 {
   font-size: 14px;
   color: black;
   margin-bottom: 20px;
 }
+
 .footer-item ul {
   list-style-type: none;
   padding: 0;
 }
+
 .footer-item ul li {
   margin-bottom: 10px;
 }
+
 .footer-item ul li a {
   text-decoration: none;
   font-size: 14px;
 }
+
 .social-icons a img {
   width: 30px;
   height: 30px;
   margin-right: 10px;
   transition: opacity 0.3s ease;
 }
+
 .social-icons a:hover img {
   opacity: 0.8;
 }
+
 .hotline span {
   font-size: 16px;
   font-weight: bold;
   color: #cd2323;
 }
+
 .payment-icons img {
   width: 50px;
   margin-right: 10px;
 }
+
 .footer-bottom {
   text-align: center;
   padding: 20px;
@@ -246,28 +293,34 @@ body {
   font-size: 12px;
   border-top: 1px solid white;
 }
+
 .footer-bottom p {
   margin: 0;
 }
+
 .logo img {
   width: 150px;
   height: auto;
 }
+
 nav ul {
   list-style: none;
   display: flex;
   margin: 0;
   padding: 0;
 }
+
 nav ul li {
   margin: 0 15px;
 }
+
 nav ul li a {
   text-decoration: none;
   font-size: 16px;
   color: #333;
   transition: color 0.3s;
 }
+
 nav ul li a:hover {
   color: #007bff;
 }
@@ -277,28 +330,34 @@ nav ul li a:hover {
   justify-content: space-around;
   margin-top: 20px;
 }
+
 .new-products .product {
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .new-products .product img {
   width: 100%;
   height: auto;
   max-width: 250px;
   transition: transform 0.3s ease;
 }
+
 .new-products .product:hover img {
   transform: scale(1.1);
 }
+
 .new-products .product:hover {
   transform: translateY(-10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
+
 .product-grid {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .product {
   width: 18%;
   text-align: center;
@@ -308,17 +367,21 @@ nav ul li a:hover {
   position: relative;
   transition: box-shadow 0.3s ease;
 }
+
 .product:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
+
 .product-image {
   position: relative;
   overflow: hidden;
 }
+
 .product img {
   width: 100%;
   height: auto;
 }
+
 .product-icons {
   position: absolute;
   top: 10px;
@@ -329,28 +392,35 @@ nav ul li a:hover {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
 .product:hover .product-icons {
   opacity: 1;
 }
+
 .product-icons a img {
   width: 30px;
   height: 30px;
 }
+
 .rating {
   margin-top: 10px;
 }
+
 .rating img {
   width: 20px;
   height: 20px;
 }
+
 .price {
   color: red;
   font-weight: bold;
   margin-top: 5px;
 }
+
 .logo img {
   width: 150px;
 }
+
 nav ul {
   list-style-type: none;
   margin: 0;
@@ -358,19 +428,23 @@ nav ul {
   display: flex;
   gap: 20px;
 }
+
 nav ul li {
   position: relative;
 }
+
 nav ul li a {
   text-decoration: none;
   color: #333;
   padding: 10px;
   transition: background-color 0.3s ease;
 }
+
 nav ul li a:hover {
   background-color: #ddd;
   border-radius: 5px;
 }
+
 .dropdown-menu {
   display: none;
   position: absolute;
@@ -383,20 +457,25 @@ nav ul li a:hover {
   border-radius: 5px;
   z-index: 1000;
 }
+
 .dropdown-menu li {
   margin-bottom: 10px;
 }
+
 .dropdown-menu li a {
   padding: 5px 10px;
   color: #333;
 }
+
 .dropdown-menu li a:hover {
   background-color: #ddd;
   border-radius: 5px;
 }
+
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+
 header {
   display: flex;
   justify-content: space-between;
@@ -404,9 +483,11 @@ header {
   padding: 10px 20px;
   background-color: white;
 }
+
 .logo img {
   width: 150px;
 }
+
 nav ul {
   list-style-type: none;
   margin: 0;
@@ -414,19 +495,23 @@ nav ul {
   display: flex;
   gap: 20px;
 }
+
 nav ul li {
   position: relative;
 }
+
 nav ul li a {
   text-decoration: none;
   color: #333;
   padding: 10px;
   transition: background-color 0.3s ease;
 }
+
 nav ul li a:hover {
   background-color: #ddd;
   border-radius: 5px;
 }
+
 .dropdown-menu {
   display: none;
   position: absolute;
@@ -439,23 +524,28 @@ nav ul li a:hover {
   z-index: 1000;
   padding: 0;
 }
+
 .dropdown-menu li {
   display: block;
   margin: 0;
 }
+
 .dropdown-menu li a {
   padding: 10px 15px;
   color: #333;
   display: block;
   text-align: left;
 }
+
 .dropdown-menu li a:hover {
   background-color: #ddd;
   border-radius: 0;
 }
+
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+
 .product-card {
   position: relative;
   width: 200px;
@@ -463,12 +553,15 @@ nav ul li a:hover {
   padding: 10px;
   text-align: center;
 }
+
 .product-image {
   position: relative;
 }
+
 .product-image img {
   width: 100%;
 }
+
 .icons {
   position: absolute;
   top: 10px;
@@ -477,6 +570,7 @@ nav ul li a:hover {
   flex-direction: column;
   gap: 10px;
 }
+
 .icons button {
   background-color: #fff;
   border: none;
@@ -485,37 +579,46 @@ nav ul li a:hover {
   border-radius: 50%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .icons button:hover {
   background-color: #f0f0f0;
 }
+
 .product-details {
   margin-top: 10px;
 }
+
 .price {
   color: red;
   font-weight: bold;
 }
+
 .cart-hidden {
   display: none;
 }
+
 .cart-visible {
   display: block;
 }
+
 .new-products h3 {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
 }
+
 .new-products hr {
   border: none;
   border-top: 2px solid #ddd;
   margin-bottom: 20px;
 }
+
 .product-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 .product-card {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -525,17 +628,21 @@ nav ul li a:hover {
   box-sizing: border-box;
   margin-bottom: 20px;
 }
+
 .product-image img {
   width: 100%;
   border-radius: 8px;
 }
+
 .product-details {
   text-align: center;
 }
+
 .price {
   color: #e91e63;
   font-weight: bold;
 }
+
 .about-us {
   display: flex;
   align-items: center;
@@ -544,10 +651,12 @@ nav ul li a:hover {
   padding: 20px;
   max-width: 1200px;
 }
+
 .about-us img {
   max-width: 45%;
   border-radius: 10px;
 }
+
 .about-us ul {
   max-width: 50%;
   list-style: none;
@@ -557,9 +666,11 @@ nav ul li a:hover {
   line-height: 1.6;
   color: #555;
 }
+
 .about-us ul li {
   margin-bottom: 15px;
 }
+
 .about-us ul li::before {
   content: "•";
   color: #333;
@@ -568,19 +679,23 @@ nav ul li a:hover {
   width: 20px;
   margin-left: -20px;
 }
+
 @media (max-width: 768px) {
   .about-us {
     flex-direction: column;
   }
+
   .about-us img,
   .about-us ul {
     max-width: 100%;
     margin-left: 0;
   }
+
   .about-us img {
     margin-bottom: 20px;
   }
 }
+
 .container {
   display: flex;
   align-items: flex-start;
@@ -590,6 +705,7 @@ nav ul li a:hover {
   max-width: 1200px;
   padding: 20px;
 }
+
 .contact-info {
   flex: 1;
   padding: 20px;
@@ -597,14 +713,17 @@ nav ul li a:hover {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .contact-info h2 {
   margin-bottom: 20px;
 }
+
 .contact-info p {
   font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 10px;
 }
+
 .contact-info strong {
   color: #333;
 }
@@ -616,41 +735,50 @@ table {
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
+
 table th,
 table td {
   padding: 10px;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
+
 table th {
   background-color: #343a40;
   color: #fff;
 }
+
 table td.actions button {
   padding: 5px 10px;
   border: none;
   color: #fff;
   cursor: pointer;
 }
+
 table td .details-btn {
   background-color: #007bff;
 }
+
 table td .cancel-btn {
   background-color: #dc3545;
 }
+
 .status {
   padding: 5px 8px;
   border-radius: 4px;
   font-weight: bold;
 }
+
 .status.pending {
   background-color: #ffc107;
   color: #333;
 }
+
 .status.confirmed {
   background-color: #28a745;
   color: #fff;
 }
+
 .status.cancelled {
   background-color: #dc3545;
   color: #fff;
@@ -716,22 +844,27 @@ table td .cancel-btn {
 
 /* Star rating styling */
 .star-rating {
-  color: #FFD700; /* Gold border color */
+  color: #FFD700;
+  /* Gold border color */
   font-size: 14px;
   margin-bottom: 8px;
   text-align: left;
 }
 
 .star-rating span {
-  color: white; /* White fill */
-  -webkit-text-stroke: 1px #FFD700; /* Gold border */
+  color: white;
+  /* White fill */
+  -webkit-text-stroke: 1px #FFD700;
+  /* Gold border */
   transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
 }
 
 .star-rating span:hover,
-.star-rating span:hover ~ span {
-  color: #FFD700; /* Gold color on hover */
-  -webkit-text-stroke: 0; /* Remove border on hover */
+.star-rating span:hover~span {
+  color: #FFD700;
+  /* Gold color on hover */
+  -webkit-text-stroke: 0;
+  /* Remove border on hover */
 }
 
 /* Price styling */
@@ -779,9 +912,12 @@ table td .cancel-btn {
 
 
 header nav ul li a {
-  text-decoration: none; /* Bỏ gạch chân mặc định */
-  position: relative; /* Để có thể sử dụng ::after */
-  color: #000; /* Màu sắc của chữ */
+  text-decoration: none;
+  /* Bỏ gạch chân mặc định */
+  position: relative;
+  /* Để có thể sử dụng ::after */
+  color: #000;
+  /* Màu sắc của chữ */
   padding: 5px 10px;
   font-weight: bold;
   transition: color 0.3s;
@@ -794,16 +930,19 @@ header nav ul li a::after {
   bottom: 0;
   width: 0;
   height: 2px;
-  background-color: #000; /* Màu gạch chân */
+  background-color: #000;
+  /* Màu gạch chân */
   transition: width 0.3s;
 }
 
 header nav ul li a:hover {
-  color: #000000; /* Màu chữ khi hover */
+  color: #000000;
+  /* Màu chữ khi hover */
 }
 
 header nav ul li a:hover::after {
-  width: 100%; /* Mở rộng gạch chân khi hover */
+  width: 100%;
+  /* Mở rộng gạch chân khi hover */
 }
 
 /* CSS cho header và menu */
@@ -825,7 +964,7 @@ header nav ul li a {
   font-weight: bold;
 }
 
-header nav ul li:hover > a {
+header nav ul li:hover>a {
   color: #0c0c0c;
 }
 

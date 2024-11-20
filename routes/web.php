@@ -3,15 +3,22 @@ use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Client\ForgotPasswordController;
-use App\Http\Controllers\Client\ResetPasswordController;
+
+
 use App\Http\Controllers\Admin\GalleryController;
+
+use App\Http\Controllers\Client\ForgotPasswordController;
+use App\Http\Controllers\Client\OrderControllerClient;
+use App\Http\Controllers\Client\ResetPasswordController;
+
+
 use App\Http\Controllers\Client\ClientCartController;
 use App\Http\Controllers\Client\ClientOrderController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\RegisterController;
+use App\Http\Controllers\Client\ShopController;
 use App\Http\Controllers\Client\UserEditController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
@@ -32,29 +39,95 @@ Route::get('/', [ProductsController::class, 'home'])->name('home');
 Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
 Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
 Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
-// Route::group([
-//     'prefix' => 'client',
-//     'as' => 'client.'
-// ], function (){
 
-//     Route::group([
-//         'prefix' => 'home',
-//         'as' => 'home.'
-//     ], function (){
-//         Route::get('/', [HomeController::class, 'index'])->name('home');
-//         Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
-//         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
-//     });
+ Route::group([
+     'prefix' => 'client',
+     'as' => 'client.'
+ ], function (){
 
-//     Route::group([
-//         'prefix' => 'cart',
-//         'as' => 'cart.'
-//     ], function (){
-//         Route::get('/', [ClientCartController::class, 'index'])->name('index');
-//         Route::post('add', [ClientCartController::class, 'add'])->name('add');
-//         Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
-//         Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
-//     });
+     Route::group([
+         'prefix' => 'home',
+         'as' => 'home.'
+     ], function (){
+         Route::get('/', [HomeController::class, 'index'])->name('home');
+         Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
+         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+     });
+
+     Route::group([
+         'prefix' => 'home',
+         'as' => 'home.'
+     ], function (){
+         Route::get('/', [HomeController::class, 'index'])->name('home');
+         Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
+         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+     });
+
+     Route::group([
+         'prefix' => 'cart',
+         'as' => 'cart.'
+     ], function (){
+         Route::get('/', [ClientCartController::class, 'index'])->name('index');
+         Route::post('add', [ClientCartController::class, 'add'])->name('add');
+         Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
+         Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
+     });
+
+
+
+    Route::group([
+        'prefix' => 'cart',
+        'as' => 'cart.'
+    ], function (){
+        Route::get('/', [ClientCartController::class, 'index'])->name('index');
+        Route::post('add', [ClientCartController::class, 'add'])->name('add');
+        Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
+        Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
+    });
+
+    Route::group([
+        'prefix' => 'order',
+        'as' => 'order.',
+    ], function (){
+        Route::get('/', [ClientOrderController::class, 'index'])->name('index');
+        Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
+        Route::post('create', [ClientOrderController::class, 'create'])->name('create');
+        Route::get('list', [ClientOrderController::class, 'listOrders'])->name('list');
+        Route::get('show/{id}', [ClientOrderController::class, 'show'])->name('show');
+        Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
+        Route::get('vnPayCheck', [ClientOrderController::class, 'vnPayCheck'])->name('vnPayCheck');
+    });
+
+    Route::group([
+        'prefix' => 'shop',
+        'as' => 'shop.'
+    ], function (){
+        Route::get('/', [ShopController::class, 'index'])->name('index');
+        Route::get('category/{name}', [ShopController::class, 'category'])->name('category');
+    });
+
+    Route::group([
+        'prefix' => 'reset',
+        'as' => 'reset.'
+    ], function (){
+        Route::get('password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('showLinkRequestForm');
+        Route::post('password', [ForgotPasswordController::class, 'postNotPass'])->name('postNotPass');
+        Route::get('resetPass/{token}', [ForgotPasswordController::class, 'resetPass'])->name('resetPass');
+        Route::post('resetPass/{id}', [ForgotPasswordController::class, 'confirmPass'])->name('confirmPass');
+    });
+
+    Route::group([
+        'prefix' => 'order',
+        'as' => 'order.'
+    ], function (){
+        Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
+        Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
+    });
+
+
+
+});
+
 
 //     Route::group([
 //         'prefix' => 'order',
@@ -66,6 +139,7 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
 //         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
 //     });
 // });
+
 
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
@@ -124,14 +198,19 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::get('show-login', [LoginController::class, 'showFormLogin'])->name('showFormLogin');
     Route::post('login', [LoginController::class, 'login'])->name('login');
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+
     Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
     Route::get('verify/{user}', [VerifyEmailController::class, 'verify'])
         ->name('verify.email')
         ->middleware('signed');
         Route::get('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('resendVerification');
+
 
 });
 
@@ -198,6 +277,8 @@ Route::group([
         Route::get('edit/{id}', [ProductsController::class, 'edit'])->name('edit');
         Route::put('/{id}', [ProductsController::class, 'update'])->name('update');
         Route::delete('destroy/{id}', [ProductsController::class, 'destroy'])->name('destroy');
+        Route::get('softDelete', [ProductsController::class, 'soft'])->name('soft');
+        Route::put('softDelete/{id}', [ProductsController::class, 'restore'])->name('restore');
     });
 
     Route::group([
@@ -243,7 +324,9 @@ Route::group([
         Route::get('detail/{id}', [OrderController::class, 'detail'])->name('detail');
         Route::post('create', [OrderController::class, 'create'])->name('create');
         Route::get('list', [OrderController::class, 'listOrders'])->name('list');
+        Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
         Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
+        
         // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
         // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
     });
@@ -258,3 +341,7 @@ Route::group([
         Route::post('post', [ReviewsController::class, 'postReview'])->name('postReview');
     });
 });
+
+// Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\Client\HomeController::class, 'index'])->name('home');
