@@ -67,31 +67,27 @@
                 <div class="dropdown">
                     <button type="button" class="inline-block p-0 transition-all duration-200 ease-linear bg-topbar rounded-full text-topbar-item dropdown-toggle btn hover:bg-topbar-item-bg-hover hover:text-topbar-item-hover group-data-[topbar=dark]:text-topbar-item-dark group-data-[topbar=dark]:bg-topbar-dark group-data-[topbar=dark]:hover:bg-topbar-item-bg-hover-dark group-data-[topbar=dark]:hover:text-topbar-item-hover-dark group-data-[topbar=brand]:bg-topbar-brand group-data-[topbar=brand]:hover:bg-topbar-item-bg-hover-brand group-data-[topbar=brand]:hover:text-topbar-item-hover-brand group-data-[topbar=dark]:dark:bg-zink-700 group-data-[topbar=dark]:dark:hover:bg-zink-600 group-data-[topbar=brand]:text-topbar-item-brand group-data-[topbar=dark]:dark:hover:text-zink-50 group-data-[topbar=dark]:dark:text-zink-200" id="dropdownMenuButton" data-bs-toggle="dropdown">
                         <div class="bg-pink-100 rounded-full">
-                            <img src="../assets/images/profile.png" alt="" class="w-[37.5px] h-[37.5px] rounded-full">
+                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="" class="w-[37.5px] h-[37.5px] rounded-full">
                         </div>
                     </button>
                     <div class="absolute z-50 hidden p-4 ltr:text-left rtl:text-right bg-white rounded-md shadow-md !top-4 dropdown-menu min-w-[14rem] dark:bg-zink-600" aria-labelledby="dropdownMenuButton">
                         <h6 class="mb-2 text-sm font-normal text-slate-500 dark:text-zink-300">Welcome to starcode</h6>
                         <a href="#!" class="flex gap-3 mb-3">
+
                             <div class="relative inline-block shrink-0">
                                 <div class="rounded bg-slate-100 dark:bg-zink-500">
-                                    <img src="assets/images/profile.png" alt="" class="w-12 h-12 rounded">
+                                    <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="" class="w-12 h-12 rounded">
                                 </div>
                                 <span class="-top-1 ltr:-right-1 rtl:-left-1 absolute w-2.5 h-2.5 bg-green-400 border-2 border-white rounded-full dark:border-zink-600"></span>
                             </div>
                             <div>
-                                @if(Auth::check())
-                                    <h6 class="mb-1 text-15">{{ Auth::user()->name }}</h6>
-                                    <p class="text-slate-500 dark:text-zink-300">{{ Auth::user()->email }}</p>
-                                @else
-                                    <h6 class="mb-1 text-15">Test</h6>
-                                    <p class="text-slate-500 dark:text-zink-300">Web Developer</p>
-                                @endif
+                            <h6 class="mb-1 text-15">{{ Auth::user()->name }}</h6>
+                            <p class="text-slate-500 dark:text-zink-300">{{ Auth::user()->email }}</p>
                             </div>
                         </a>
                         <ul>
                             <li>
-                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../user/account"><i data-lucide="user-2" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Profile</a>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/profile/"><i data-lucide="user-2" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Profile</a>
                             </li>
                             <li>
                                 <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/order/view"><i data-lucide="mail" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Order <span class="inline-flex items-center justify-center w-5 h-5 ltr:ml-2 rtl:mr-2 text-[11px] font-medium border rounded-full text-white bg-red-500 border-red-500"></span></a>
@@ -311,6 +307,8 @@
 <script src="../assets/js/cart/quantity.js"></script>
 <script src="../assets/js/cart/cartAddCart.js"></script>
 <script src="../assets/js/order/coupon.js"></script>
+{{--<script src="../assets/js/apiAddress/api.js"></script>--}}
+{{--<script src="../assets/js/apiAddress/api2.js"></script>--}}
 <script src="../assets/js/pages/landing-product.init.js"></script>
 <script src="../assets/js/pages/notifications.init.js"></script>
 <script>

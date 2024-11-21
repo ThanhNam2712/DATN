@@ -58,28 +58,28 @@
                                     </div>
 
                                     <!-- Address Information (Optional) -->
-                                    @if($address->isNotEmpty())
-                                        @foreach ($address as $item)
+                                    @if($address != null)
+
                                             <div class="xl:col-span-12">
                                                 <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
-                                                <input type="text" id="provinceInput" name="Province" value="{{ $item->Province }}" class="form-input" placeholder="Enter Province">
+                                                <input type="text" id="provinceInput" name="Province" value="{{ $address->Province }}" class="form-input" placeholder="Enter Province">
                                             </div>
 
                                             <div class="xl:col-span-12">
                                                 <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
-                                                <input type="text" id="townCityInput" name="district" value="{{ $item->district }}" class="form-input" placeholder="Enter District">
+                                                <input type="text" id="townCityInput" name="district" value="{{ $address->district }}" class="form-input" placeholder="Enter District">
                                             </div>
 
                                             <div class="xl:col-span-6">
                                                 <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
-                                                <input type="text" id="neighborhoodInput" name="Neighborhood" value="{{ $item->Neighborhood }}" class="form-input" placeholder="Enter Neighborhood">
+                                                <input type="text" id="neighborhoodInput" name="Neighborhood" value="{{ $address->Neighborhood }}" class="form-input" placeholder="Enter Neighborhood">
                                             </div>
 
                                             <div class="xl:col-span-6">
                                                 <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
-                                                <input type="text" id="apartmentInput" name="Apartment" value="{{ $item->Apartment }}" class="form-input" placeholder="Enter Apartment">
+                                                <input type="text" id="apartmentInput" name="Apartment" value="{{ $address->Apartment }}" class="form-input" placeholder="Enter Apartment">
                                             </div>
-                                        @endforeach
+
                                     @else
                                         <!-- Form for adding new address -->
                                         <div class="xl:col-span-12">
@@ -251,6 +251,7 @@
                                         </div>
 
                                     <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
+                                    <input type="hidden" name="allQuantity" value="{{ $cart->cartDetail->sum('quantity') }}">
                                     <button type="submit" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
                                         Place Order
                                     </button>

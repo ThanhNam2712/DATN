@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ class OrderControllerClient extends Controller
     public function index()
     {
         $orders = Order::where('user_id', Auth::id())->get();
+
         return view('client.list', compact('orders'));
     }
 
@@ -19,7 +21,8 @@ class OrderControllerClient extends Controller
     {
         $order = Order::find($id);
         $user = auth()->user();
-        $address = $user->addresses;
-        return view('client.order', compact('order', 'address'));
+        $is_default = Address::where('user_id', $user->id);
+        $address = $is_default->where('is_default', 1)->first();
+        return view('client.order.show', compact('order', 'address', 'user'));
     }
 }
