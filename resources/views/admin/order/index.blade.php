@@ -3,6 +3,14 @@
 @section('title')
 @endsection
 @section('body')
+<div class="card">
+    <div class="card-body">
+        <h6 class="mb-4 text-15"></h6>
+        <button id="sa-close" type="button"
+            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Click
+            Me</button>
+    </div>
+</div>
 <div
     class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
@@ -20,6 +28,7 @@
                     Danh sách đơn hàng</li>
             </ul>
         </div>
+
         <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
             <div class="xl:col-span-12">
                 <div class="card" id="usersTable">
@@ -42,18 +51,29 @@
                         <div class="-mx-5 -mb-5 overflow-x-auto">
                             <table class="w-full border-separate table-custom border-spacing-y-1 whitespace-nowrap">
                                 <thead class="text-left">
-                                    <tr class="relative rounded-md bg-slate-100 dark:bg-zink-600 after:absolute ltr:after:border-l-2 rtl:after:border-r-2 ltr:after:left-0 rtl:after:right-0 after:top-0 after:bottom-0 after:border-transparent [&.active]:after:border-custom-500 [&.active]:bg-slate-100 dark:[&.active]:bg-zink-600">
+                                    <tr
+                                        class="relative rounded-md bg-slate-100 dark:bg-zink-600 after:absolute ltr:after:border-l-2 rtl:after:border-r-2 ltr:after:left-0 rtl:after:right-0 after:top-0 after:bottom-0 after:border-transparent [&.active]:after:border-custom-500 [&.active]:bg-slate-100 dark:[&.active]:bg-zink-600">
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">
                                             <div class="flex items-center h-full">
-                                                <input id="CheckboxAll" class="size-4 bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative" type="checkbox">
+                                                <input id="CheckboxAll"
+                                                    class="size-4 bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative"
+                                                    type="checkbox">
                                             </div>
                                         </th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="order-id">Mã đơn hàng</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="name">Tên khách hàng</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="location">Địa chỉ</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="email">Email</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="phone-number">Số điện thoại</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="status">Trạng thái đơn hàng</th>
+                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
+                                            data-sort="order-id">Mã đơn hàng</th>
+                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
+                                            data-sort="name">Tên khách hàng</th>
+                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
+                                            data-sort="location">Địa chỉ</th>
+                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
+                                            data-sort="email">Email</th>
+                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
+                                            data-sort="phone-number">Số điện thoại</th>
+                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
+                                            data-sort="phone-number">Thời gian đặt</th>
+                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
+                                            data-sort="status">Trạng thái đơn hàng</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Hành động</th>
                                     </tr>
                                 </thead>
@@ -62,46 +82,66 @@
                                     <tr class="relative rounded-md">
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <div class="flex items-center h-full">
-                                                <input id="Checkbox{{ $order->id }}" class="size-4 bg-white border" type="checkbox">
+                                                <input id="Checkbox{{ $order->id }}" class="size-4 bg-white border"
+                                                    type="checkbox">
                                             </div>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->id }}</td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->name }}</td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            {{ $order->province ?? 'tỉnh chưa có' }} - {{ $order->district ?? 'huyện chưa có'}} - {{ $order->ward ?? 'xã chưa có' }} -  {{ $order->address_detail ?? 'dchi ctiet chưa có' }}<br>
+                                            {{ $order->province ?? 'tỉnh chưa có' }} - {{ $order->district ?? 'huyện
+                                            chưa có'}} - {{ $order->ward ?? 'xã chưa có' }} - {{ $order->address_detail
+                                            ?? 'dchi ctiet chưa có' }}<br>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->email }}</td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->phone_number ?? 'sđt đặt hàng chưa có' }}</td>
+                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->phone_number ?? 'sđt
+                                            đặt hàng chưa có' }}</td>
+                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->created_at ?? 'N/A' }}
+                                        </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            <form action="{{-- {{ route('admin.orders.updateStatus', $order->id) }} --}}" method="POST">
+                                            <form action="{{ route('admin.orders.updateStatus', $order->id) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('PUT')
-                                                <select name="status" class="form-select">
-                                                    <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xử lý</option>
-                                                    <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử lý</option>
-                                                    <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Hoàn thành</option>
-                                                    <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Đã hủy</option>
+                                                <select name="status" style="color: red" class="form-select">
+                                                    <option value="pending" {{ $order->status == 'pending' ? 'selected'
+                                                        : '' }}>Chờ xử lý</option>
+                                                    <option value="processing" {{ $order->status == 'processing' ?
+                                                        'selected' : '' }}>Đang xử lý</option>
+                                                    <option value="completed" {{ $order->status == 'completed' ?
+                                                        'selected' : '' }}>Hoàn thành</option>
+                                                    <option value="cancelled" {{ $order->status == 'cancelled' ?
+                                                        'selected' : '' }}>Đã hủy</option>
                                                 </select>
-                                                <button type="submit" class="btn btn-primary mt-2">Cập nhật</button>
+                                                <button style="color: green" type="submit"
+                                                    class="btn btn-primary mt-2">Cập nhật</button>
                                             </form>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <div class="relative dropdown">
-                                                <button class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100">
+                                                <button
+                                                    class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100">
                                                     <i data-lucide="more-horizontal" class="size-3"></i>
                                                 </button>
-                                                <ul class="absolute z-50 hidden py-2 mt-1 list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem]" aria-labelledby="usersAction{{ $order->id }}">
+                                                <ul class="absolute z-50 hidden py-2 mt-1 list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem]"
+                                                    aria-labelledby="usersAction{{ $order->id }}">
                                                     <li>
-                                                        <a class="block px-4 py-1.5 text-base text-slate-600" href="{{-- {{ route('admin.orders.show', $order->id) }} --}}">
+                                                        <a class="block px-4 py-1.5 text-base text-slate-600"
+                                                            href="{{-- {{ route('admin.orders.show', $order->id) }} --}}">
                                                             <i data-lucide="eye" class="inline-block size-3"></i> Xem
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{-- {{ route('admin.orders.destroy', $order->id) }} --}}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                                                        <form
+                                                            action="{{-- {{ route('admin.orders.destroy', $order->id) }} --}}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Bạn có chắc muốn xóa?');">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="block px-4 py-1.5 text-base text-slate-600">
-                                                                <i data-lucide="trash-2" class="inline-block size-3"></i> Xóa
+                                                            <button type="submit"
+                                                                class="block px-4 py-1.5 text-base text-slate-600">
+                                                                <i data-lucide="trash-2"
+                                                                    class="inline-block size-3"></i> Xóa
                                                             </button>
                                                         </form>
                                                     </li>
@@ -113,9 +153,6 @@
                                 </tbody>
 
                             </table>
-
-
-
                             <div class="noresult" style="display: none">
                                 <div class="py-6 text-center">
                                     <i data-lucide="search"

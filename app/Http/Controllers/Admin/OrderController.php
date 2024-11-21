@@ -18,6 +18,14 @@ class OrderController extends Controller
         return view('admin.order.index', compact('orders'));
     }
 
+    public function updateStatus(Request $request, $id)
+{
+    $orders = Order::findOrFail($id);
+    $orders->status = $request->status;
+    $orders->save();
+
+    return redirect()->route('admin.orders.index')->with('success', 'Cập nhật trạng thái thành công.');
+}
 
 
 

@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('client.home');
 // });
+
 Route::get('/', [ProductsController::class, 'home'])->name('home');
 Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
 Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
@@ -140,13 +141,13 @@ Route::group([
         Route::post('resetPass/{id}', [ForgotPasswordController::class, 'confirmPass'])->name('confirmPass');
     });
 
-    Route::group([
-        'prefix' => 'order',
-        'as' => 'order.'
-    ], function (){
-        Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
-        Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
-    });
+    // Route::group([
+    //     'prefix' => 'order',
+    //     'as' => 'order.'
+    // ], function (){
+    //     Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
+    //     Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
+    // });
 
 
 
@@ -290,13 +291,14 @@ Route::group([
         Route::post('create', [ProductTagController::class, 'create'])->name('create');
         Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
     });
+
     Route::group(
         ['prefix' => 'orders',
             'as' => 'orders.'
         ], function () {
-        Route::get('/', [OrderController::class, 'index'])->name('index'); // Danh sách đơn hàng
-        // Route::get('show/{id}', [OrderController::class, 'show'])->name('show'); // Chi tiết đơn hàng
-        // Route::put('update-status/{id}', [OrderController::class, 'updateStatus'])->name('updateStatus'); // Cập nhật trạng thái đơn hàng
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        // Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
+        Route::put('update-status/{id}', [OrderController::class, 'updateStatus'])->name('updateStatus');
         // Route::delete('delete/{id}', [OrderController::class, 'destroy'])->name('destroy'); // Xóa đơn hàng
         // Route::get('invoice/{id}', [OrderController::class, 'generateInvoice'])->name('generateInvoice'); // Tạo hóa đơn cho đơn hàng
     });
@@ -351,20 +353,20 @@ Route::group([
     });
 
     // order
-    Route::group([
-        'prefix' => 'order',
-        'as' => 'order.'
-    ], function () {
-        Route::get('/', [OrderController::class, 'index'])->name('index');
-        Route::get('detail/{id}', [OrderController::class, 'detail'])->name('detail');
-        Route::post('create', [OrderController::class, 'create'])->name('create');
-        Route::get('list', [OrderController::class, 'listOrders'])->name('list');
-        Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
-        Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
+    // Route::group([
+    //     'prefix' => 'order',
+    //     'as' => 'order.'
+    // ], function () {
+    //     Route::get('/', [OrderController::class, 'index'])->name('index');
+    //     Route::get('detail/{id}', [OrderController::class, 'detail'])->name('detail');
+    //     Route::post('create', [OrderController::class, 'create'])->name('create');
+    //     Route::get('list', [OrderController::class, 'listOrders'])->name('list');
+    //     Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
+    //     Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
 
-        // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
-        // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
-    });
+    //     // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
+    //     // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+    // });
 
     // reviews
 
