@@ -9,11 +9,14 @@ use App\Models\Coupon;
 use App\Models\Coupon_user;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Payment;
 use App\Models\ProductVariant;
-use App\Utilities\VNPay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Stripe\Stripe;
+use Stripe\Webhook;
 
 class ClientOrderController extends Controller
 {
@@ -24,18 +27,92 @@ class ClientOrderController extends Controller
             ->first();
 
         $user = auth()->user();
-        $address = $user->addresses;
+        $is_default = Address::where('user_id', $user->id);
+        $address = $is_default->where('is_default', 1)->first();
         return view('client.order.index', compact('cart', 'address', 'user'));
     }
 
     public function create(Request $request)
+    {
+
+        if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
+            $order = $this->createOrder($request, 'COD');
+            Payment::create([
+                'order_id' => $order->id,
+                'payment_method' => $request->input('payments'),
+                'amount' => $order->total_amount,
+                'status' => 0,
+            ]);
+            return view('client.order.success', compact('order'));
+        }
+        elseif ($request->input('payments') == 'Thẻ Tín Dụng'){
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            $data = [
+                'user_id' => Auth::id(),
+                'total_amount' => $request->total_amount,
+                'email' => Auth::user()->email,
+                'status' => 0,
+                'payment_status' => 0,
+            ];
+
+            $order = Order::create($data);
+
+            $cart = Cart::where('user_id', Auth::id())
+                ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
+                ->first();
+
+            foreach ($cart->cartDetail as $key => $list){
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_variant_id' => $list->product_variant_id,
+                    'quantity' => $list->quantity,
+                    'price' => $list->product_variant->price_sale,
+                    'color_id' => $list->color_id,
+                    'size_id' => $list->size_id,
+                    'product_id' => $list->product_id,
+                ]);
+                $productVariant = ProductVariant::find($list->product_variant_id);
+                if ($productVariant) {
+                    $productVariant->decrement('quantity', $list->quantity);
+                }
+            }
+            $total = $order->total_amount;
+
+            $cart->cartDetail()->delete();
+            $this->updateTotal($cart->id, 0);
+            $session = \Stripe\Checkout\Session::create([
+                'customer_email' => Auth::user()->email,
+                'line_items'  => [
+                    [
+                        'price_data' => [
+                            'currency'     => 'VND',
+                            'product_data' => [
+                                "name" => Auth::user()->name,
+                                "description" => "Price: " . $request->total_amount . " USD Quantity :" . $request->allQuantity
+                            ],
+                            'unit_amount'  => $request->total_amount * 25397,
+
+                        ],
+                        'quantity'   => 1,
+                    ],
+                ],
+                'mode'        => 'payment',
+                'success_url' => url('client/order/confirm/'. $order->id. '?session_id={CHECKOUT_SESSION_ID}'),
+                'cancel_url'  => url('client/order/'),
+            ]);
+            return redirect()->away($session->url);
+
+        }
+    }
+
+    private function createOrder(Request $request, $paymentMethod)
     {
         $data = [
             'user_id' => Auth::id(),
             'total_amount' => $request->total_amount,
             'email' => Auth::user()->email,
             'status' => 0,
-            'payment_status' => 0,
+            'payment_status' => $paymentMethod == 'COD' ? 0 : 1,
         ];
 
         $order = Order::create($data);
@@ -60,44 +137,41 @@ class ClientOrderController extends Controller
             }
         }
         $total = $order->total_amount;
-        if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
-            $cart->cartDetail()->delete();
-            $this->updateTotal($cart->id, 0);
-            $this->sendMail($order, $total);
-            return view('client.order.confirm');
-        }elseif ($request->input('payments') == 'Thẻ Tín Dụng'){
-        $data_url = VNPay::vnpay_create_payment([
-            'vnp_TxnRef' => $order->id,
-            'vnp_OrderInfo' => 'Thanh toan thanh cong',
-            'vnp_Amount' => $order->total_amount * 25390,
-        ]);
 
-        return redirect()->to($data_url);
-    }
+        $cart->cartDetail()->delete();
+        $this->updateTotal($cart->id, 0);
+
+        $this->sendMail($order, $total);
+
+        return $order;
+
     }
 
-    public function vnPayCheck(Request $request)
+    public function confirm(Request $request, $id)
     {
-        $cart = Cart::where('user_id', Auth::id())
-            ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
-            ->first();
-        $vnp_ResponseCode = $request->get('vnp_ResponseCode');
-        $vnp_TxnRef = $request->get('vnp_TxnRef');
-        $vnp_Amount = $request->get('vnp_Amount');
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+        $session = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
+        $order = Order::find($id);
+        $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
+        $status = $paymentIntent->status;
 
-        if ($vnp_ResponseCode != null){
-            if ($vnp_ResponseCode == 00){
-                $cart->cartDetail()->delete();
-                return view('client.order.confirm')->with([
-                    'message' => 'Order Success ! You will pay on delivery. Please check email'
-                ]);
-            }else{
-                Order::delete($vnp_TxnRef);
-                return view('client.order.confirm')->with([
-                    'message' => 'Order Fail !'
-                ]);
-            }
+        if ($status == 'succeeded'){
+            $paymentMethodType = $paymentIntent->payment_method_types[0];
+            $order->update([
+                'status' => 1,
+                'payment_status' => 1,
+            ]);
+
+            Payment::create([
+                'order_id' => $order->id,
+                'payment_method' => $paymentMethodType,
+                'amount' => $order->total_amount,
+                'status' => 1,
+            ]);
+            $this->sendMail($order, $order->total_amount);
+            return view('client.order.success' ,compact('order'));
         }
+        return view('client.order.confirm', compact('status'));
     }
 
     private function sendMail($order, $total){
@@ -117,8 +191,6 @@ class ClientOrderController extends Controller
         $cart = Cart::where('user_id', Auth::id())
             ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
             ->first();
-
-
 
         $coupon = Coupon::where('code', $couponCode)
             ->where('start_end', '<=', now())

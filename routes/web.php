@@ -92,8 +92,9 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
-        Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
-        Route::get('vnPayCheck', [ClientOrderController::class, 'vnPayCheck'])->name('vnPayCheck');
+        Route::get('confirm/{id}', [ClientOrderController::class, 'confirm'])->name('confirm');
+        Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
+        Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
     });
 
     Route::group([
@@ -114,29 +115,28 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
         Route::post('resetPass/{id}', [ForgotPasswordController::class, 'confirmPass'])->name('confirmPass');
     });
 
+//    Route::group([
+//        'prefix' => 'order',
+//        'as' => 'order.'
+//    ], function (){
+//        Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
+//        Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
+//    });
+
     Route::group([
-        'prefix' => 'order',
-        'as' => 'order.'
+        'prefix' => 'profile',
+        'as' => 'profile.'
     ], function (){
-        Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
-        Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
+        Route::get('/', [UserEditController::class, 'index'])->name('index');
+        Route::post('create', [UserEditController::class, 'store'])->name('store');
+        Route::put('update/{id}', [UserEditController::class, 'update'])->name('update');
+        Route::put('changePass', [UserEditController::class, 'changePass'])->name('changePass');
+        Route::put('changeAddress/{id}', [UserEditController::class, 'changeAddress'])->name('changeAddress');
+        Route::delete('delete/{id}', [UserEditController::class, 'delete'])->name('delete');
     });
-
-
 
 });
 
-
-//     Route::group([
-//         'prefix' => 'order',
-//         'as' => 'order.',
-//     ], function (){
-//         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
-//         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
-//         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
-//         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
-//     });
-// });
 
 
 Route::get('/admin/dashboard', function () {
@@ -338,6 +338,6 @@ Route::group([
     });
 });
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Auth::routes();
+//
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
