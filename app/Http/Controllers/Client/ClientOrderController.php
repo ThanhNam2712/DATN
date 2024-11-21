@@ -108,8 +108,8 @@ class ClientOrderController extends Controller
     private function sendMail($order, $total){
         $email_to = $order->email;
 
-        Mail::send('client.mail.send', compact('order', 'total'), function ($message) use ($email_to){
-            $message->from('tuancdph43313@fpt.edu.vn', 'Tuan Clothing');
+        Mail::send('client.mail.send', compact('order', 'total'), function ($message) use ($email_to) {
+            $message->from('dungntph32857@fpt.edu.vn', 'Tuan Clothing');
             $message->to($email_to, $email_to);
             $message->subject('Order Notification');
         });
@@ -188,21 +188,6 @@ class ClientOrderController extends Controller
             $cart->save();
         }
     }
-    public function listOrders()
-    {
-        $orders = auth()->user()->Orders()->with('Order_Items.product_variants')->get();
-        // dd($orders);
-        return view('client.order.list', compact('orders'));
 
-    }
-    public function show($id)
-    {
-        $order = Order::where('user_id', auth()->id())
-            ->with(['Order_Items.product_variants', 'user'])
-            ->findOrFail($id);
-            $user = auth()->user();
-            $address = $user->addresses;
-        return view('client.order.show', compact('order','user', 'address'));
-    }
 
 }

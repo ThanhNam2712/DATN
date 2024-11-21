@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\GalleryController;
 
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\OrderControllerClient;
+
 use App\Http\Controllers\Client\ResetPasswordController;
 
 
@@ -40,45 +41,45 @@ Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioith
 Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
 Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
 
- Route::group([
-     'prefix' => 'client',
-     'as' => 'client.'
- ], function (){
+Route::group([
+    'prefix' => 'client',
+    'as' => 'client.'
+], function () {
 
-     Route::group([
-         'prefix' => 'home',
-         'as' => 'home.'
-     ], function (){
-         Route::get('/', [HomeController::class, 'index'])->name('home');
-         Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
-         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
-     });
+    Route::group([
+        'prefix' => 'home',
+        'as' => 'home.'
+    ], function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
+        Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+    });
 
-     Route::group([
-         'prefix' => 'home',
-         'as' => 'home.'
-     ], function (){
-         Route::get('/', [HomeController::class, 'index'])->name('home');
-         Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
-         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
-     });
+    Route::group([
+        'prefix' => 'home',
+        'as' => 'home.'
+    ], function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
+        Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+    });
 
-     Route::group([
-         'prefix' => 'cart',
-         'as' => 'cart.'
-     ], function (){
-         Route::get('/', [ClientCartController::class, 'index'])->name('index');
-         Route::post('add', [ClientCartController::class, 'add'])->name('add');
-         Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
-         Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
-     });
+    Route::group([
+        'prefix' => 'cart',
+        'as' => 'cart.'
+    ], function () {
+        Route::get('/', [ClientCartController::class, 'index'])->name('index');
+        Route::post('add', [ClientCartController::class, 'add'])->name('add');
+        Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
+        Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
+    });
 
 
 
     Route::group([
         'prefix' => 'cart',
         'as' => 'cart.'
-    ], function (){
+    ], function () {
         Route::get('/', [ClientCartController::class, 'index'])->name('index');
         Route::post('add', [ClientCartController::class, 'add'])->name('add');
         Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
@@ -88,12 +89,12 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
     Route::group([
         'prefix' => 'order',
         'as' => 'order.',
-    ], function (){
+    ], function () {
         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
-        Route::get('list', [ClientOrderController::class, 'listOrders'])->name('list');
-        Route::get('show/{id}', [ClientOrderController::class, 'show'])->name('show');
+        Route::get('list', [OrderControllerClient::class, 'listOrders'])->name('list');
+        Route::get('show/{id}', [OrderControllerClient::class, 'show'])->name('show');
         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
         Route::get('vnPayCheck', [ClientOrderController::class, 'vnPayCheck'])->name('vnPayCheck');
     });
@@ -101,7 +102,7 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
     Route::group([
         'prefix' => 'shop',
         'as' => 'shop.'
-    ], function (){
+    ], function () {
         Route::get('/', [ShopController::class, 'index'])->name('index');
         Route::get('category/{name}', [ShopController::class, 'category'])->name('category');
     });
@@ -109,7 +110,7 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
     Route::group([
         'prefix' => 'reset',
         'as' => 'reset.'
-    ], function (){
+    ], function () {
         Route::get('password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('showLinkRequestForm');
         Route::post('password', [ForgotPasswordController::class, 'postNotPass'])->name('postNotPass');
         Route::get('resetPass/{token}', [ForgotPasswordController::class, 'resetPass'])->name('resetPass');
@@ -119,7 +120,7 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
     Route::group([
         'prefix' => 'order',
         'as' => 'order.'
-    ], function (){
+    ], function () {
         Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
         Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
     });
@@ -176,15 +177,15 @@ Route::middleware(['auth'])->group(function () {
     //xoá địa chỉ
     Route::delete('/user/destroy/{id}', [UserEditController::class, 'destroy'])->name('auth.address.destroy');
 
-Route::get('/get-districts', [UserEditController::class, 'getDistricts'])->name('get.districts');
-Route::get('/get-wards', [UserEditController::class, 'getWards'])->name('get.wards');
+    Route::get('/get-districts', [UserEditController::class, 'getDistricts'])->name('get.districts');
+    Route::get('/get-wards', [UserEditController::class, 'getWards'])->name('get.wards');
 
 });
 
 Route::group([
     'prefix' => 'login',
     'as' => 'login.'
-], function (){
+], function () {
     Route::get('login', [AuthenController::class, 'login'])->name('login');
     Route::get('logout', [AuthenController::class, 'logout'])->name('logout');
     Route::post('login', [AuthenController::class, 'loginPost'])->name('loginPost');
@@ -209,7 +210,7 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::get('verify/{user}', [VerifyEmailController::class, 'verify'])
         ->name('verify.email')
         ->middleware('signed');
-        Route::get('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('resendVerification');
+    Route::get('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('resendVerification');
 
 
 });
@@ -237,34 +238,43 @@ Route::group([
     });
 
     Route::group(
-        ['prefix' => 'size',
+        [
+            'prefix' => 'size',
             'as' => 'size.'
-        ], function () {
-        Route::get('/', [SizeController::class, 'index'])->name('index');
-        Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('destroy');
-        Route::post('create', [SizeController::class, 'create'])->name('create');
-        Route::put('update', [SizeController::class, 'update'])->name('update');
-    });
+        ],
+        function () {
+            Route::get('/', [SizeController::class, 'index'])->name('index');
+            Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('destroy');
+            Route::post('create', [SizeController::class, 'create'])->name('create');
+            Route::put('update', [SizeController::class, 'update'])->name('update');
+        }
+    );
 
     Route::group(
-        ['prefix' => 'tag',
+        [
+            'prefix' => 'tag',
             'as' => 'tag.'
-        ], function () {
-        Route::get('/', [TagController::class, 'index'])->name('index');
-        Route::get('delete/{id}', [TagController::class, 'destroy'])->name('destroy');
-        Route::post('create', [TagController::class, 'create'])->name('create');
-        Route::put('update', [TagController::class, 'update'])->name('update');
-    });
+        ],
+        function () {
+            Route::get('/', [TagController::class, 'index'])->name('index');
+            Route::get('delete/{id}', [TagController::class, 'destroy'])->name('destroy');
+            Route::post('create', [TagController::class, 'create'])->name('create');
+            Route::put('update', [TagController::class, 'update'])->name('update');
+        }
+    );
 
     Route::group(
-        ['prefix' => 'product_tag',
+        [
+            'prefix' => 'product_tag',
             'as' => 'product_tag.'
-        ], function () {
-        Route::get('/', [ProductTagController::class, 'index'])->name('index');
-        Route::delete('delete/{id}', [ProductTagController::class, 'destroy'])->name('destroy');
-        Route::post('create', [ProductTagController::class, 'create'])->name('create');
-        Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
-    });
+        ],
+        function () {
+            Route::get('/', [ProductTagController::class, 'index'])->name('index');
+            Route::delete('delete/{id}', [ProductTagController::class, 'destroy'])->name('destroy');
+            Route::post('create', [ProductTagController::class, 'create'])->name('create');
+            Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
+        }
+    );
 
     Route::group([
         'prefix' => 'products',
@@ -284,7 +294,7 @@ Route::group([
     Route::group([
         'prefix' => 'gallery',
         'as' => 'gallery.',
-    ], function (){
+    ], function () {
         Route::get('/product/{id}', [GalleryController::class, 'index'])->name('index');
         Route::get('/product/{id}/create/{idVariant}', [GalleryController::class, 'create'])->name('create');
         Route::post('/product/{id}/create/', [GalleryController::class, 'store'])->name('store');
@@ -326,7 +336,7 @@ Route::group([
         Route::get('list', [OrderController::class, 'listOrders'])->name('list');
         Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
         Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
-        
+
         // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
         // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
     });
@@ -336,7 +346,7 @@ Route::group([
     Route::group([
         'prefix' => 'review',
         'as' => 'review.'
-    ], function (){
+    ], function () {
         Route::get('/{id}', [ReviewsController::class, 'index']);
         Route::post('post', [ReviewsController::class, 'postReview'])->name('postReview');
     });

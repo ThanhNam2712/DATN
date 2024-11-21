@@ -20,7 +20,8 @@ return new class extends Migration
             $table->date('expiration_date');
             $table->double('minimum_order_amount');
             $table->date('start_end')->nullable(); 
-            $table->foreignIdFor(User::class)->onDelete('cascade')->after('id');
+            $table->unsignedBigInteger('user_id'); // Không cần `after`
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Thêm khóa ngoại
             $table->timestamps();
         });
         

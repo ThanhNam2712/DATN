@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('Neighborhood');
             $table->string('Apartment');
             $table->boolean('status');
+            $table->string('province_name')->nullable(); // Tên tỉnh
+            $table->string('district_name')->nullable(); // Tên quận/huyện
+            $table->string('apartment_name')->nullable(); // Tên phường/xã
             $table->timestamps();
         });
     }
