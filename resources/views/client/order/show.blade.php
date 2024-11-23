@@ -61,7 +61,7 @@
                                 <div class="card">
                                     <div class="text-center card-body">
                                         <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-purple-100 border-purple-200 text-purple-500 dark:bg-purple-500/20 dark:border-purple-500/20">Shipping</span>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">Order Status</p>
+                                        <p class="uppercase text-slate-500 dark:text-zink-200">{{ $order->status }}</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -113,7 +113,7 @@
                                             <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
                                                 Shipping Charge
                                             </td>
-                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">$0</td>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ $order->coupon }}</td>
                                         </tr>
                                         <tr class="font-semibold">
                                             <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
@@ -131,7 +131,7 @@
                                 <div class="flex items-center gap-3 mb-4">
                                     <h6 class="text-15 grow">Order Status</h6>
                                     <div class="shrink-0">
-                                        <a href="#!" class="inline-block text-red-500 underline ltr:mr-2 rtl:ml-2">Cancelled Order</a>
+                                        <a href="../client/home" class="btn inline-block text-red-500 underline ltr:mr-2 rtl:ml-2">Cancelled Order</a>
                                         <a href="apps-invoice-overview.html" class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="download" class="inline-block align-middle size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Invoice</span></a>
                                     </div>
                                 </div>

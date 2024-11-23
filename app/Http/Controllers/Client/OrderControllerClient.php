@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderControllerClient extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::where('user_id', Auth::id())->get();
+        $search = $request->search;
+        $orders = Order::where('user_id', Auth::id())
+            ->where('orders.barcode', 'like', '%'. $search . '%')->get();
 
-        return view('client.list', compact('orders'));
+        return view('client.order.list', compact('orders'));
     }
 
     public function detail($id)

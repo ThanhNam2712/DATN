@@ -10,21 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class ReviewsController extends Controller
 {
-    public function index($id)
+    public function index()
     {
-        $product = Product::find($id);
-        return view('admin.reviews.index', compact('product'));
+        $reviews = Review::all();
+        return view('admin.reviews.index', compact('reviews'));
     }
 
-    public function postReview(Request $request)
+    public function delete($id)
     {
-        $data = $request->all();
-        $data['user_id'] = Auth::id();
-
-        Review::create($data);
-
+        $review = Review::find($id);
+        $review->delete();
         return redirect()->back()->with([
-            'message' => 'Create Review Products Success'
+            'message' => 'Delete Success'
         ]);
     }
 }

@@ -137,12 +137,10 @@
                                                         <span class="note needsclick btn btn-sm btn-label-primary" id="btnBrowse">
                                                             Browse image
                                                             <input type="file" name="image" id="fileInput">
+                                                            <input type="hidden" name="file_old" value="{{ $product->image }}">
                                                         </span>
                                                     </div>
                                                 </div>
-                                                @if ($product->image && \Storage::exists($product->image))
-                                                <img src="{{\Storage::url($product->image)}}" width="100px" alt="">
-                                                @endif
                                             </div>
 
                                         </div>
@@ -179,87 +177,9 @@
                                     @enderror
                                     {{-- End Product creare --}}
                                 </div><!--end grid-->
-                                <h6 class="mb-4 text-30 mt-5 mb-5" style="text-align: center">Products Variants</h6>
-
-                                <div id="variants">
-                                    @foreach($product->variant as $index => $list)
-                                    <div id="variant-{{ $index }}">
-                                        <div style="margin-top: 38px" class="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
-                                            {{-- Products variants --}}
-                                            @if(isset($list->id))
-                                            <input type="hidden" name="variants[{{ $index }}][id]" value="{{ $list->id }}">
-                                            @endif
-
-                                            <div class="xl:col-span-4">
-                                                <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
-                                                <input type="number" name="variants[{{ $index ?? variants[0]}}][price]" id="productPrice" class="form-input ..." value="{{ $list->price }}" required="">
-                                                @error('price')
-                                                <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-                                                <span class="font-bold">{{ $message }}</span>
-                                                </div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="xl:col-span-4">
-                                                <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Discounts</label>
-                                                <input type="number" name="variants[{{ $index ?? variants[0] }}][price_sale]" id="productDiscounts" class="form-input ..." value="{{ $list->price_sale }}" required="">
-                                                @error('price_sale')
-                                                <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-                                                    <span class="font-bold">{{ $message }}</span>
-                                                </div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="xl:col-span-4">
-                                                <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Quantity</label>
-                                                <input type="number" id="qualityInput" name="variants[{{ $index ?? variants[0] }}][quantity]" class="form-input ..." value="{{ $list->quantity }}" required="">
-                                                @error('quantity')
-                                                <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-                                                    <span class="font-bold">{{ $message }}</span>
-                                                </div>
-                                                @enderror
-                                            </div>
-
-                                            {{-- color --}}
-                                            <div class="xl:col-span-4">
-                                                <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Color</label>
-                                                <select class="form-input ..." name="variants[{{ $index ?? variants[0] }}][product_color_id]" id="categorySelect">
-                                                    <option value="">Select Color</option>
-                                                    @foreach($color as $listColor)
-                                                        <option value="{{ $listColor->id }}" {{ $listColor->id == $list->product_color_id ? 'selected' : ''}}>{{ $listColor->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('product_color_id')
-                                                <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-                                                    <span class="font-bold">{{ $message }}</span>
-                                                </div>
-                                                @enderror
-                                            </div>
-
-                                            {{-- size --}}
-                                            <div class="xl:col-span-4">
-                                                <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Size</label>
-                                                <select class="form-input ..." name="variants[{{ $index ?? variants[0] }}][product_size_id]" id="categorySelect">
-                                                    <option value="">Select Size</option>
-                                                    @foreach($size as $listSize)
-                                                        <option value="{{ $listSize->id }}" {{ $listSize->id == $list->product_size_id ? 'selected' : ''}}>{{ $listSize->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('product_size_id')
-                                                <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-                                                    <span class="font-bold">{{ $message }}</span>
-                                                </div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-
                                 <div class="flex justify-end gap-2 mt-4">
-                                    <button type="reset" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Reset</button>
+                                    <a href="../admin/products" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Back</a>
                                     <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Product</button>
-                                    <button type="button" onclick="addVariant()" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Add Variant</button>
                                 </div>
                             </form>
                         </div>

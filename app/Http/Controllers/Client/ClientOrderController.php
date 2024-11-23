@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\ProductVariant;
+use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -36,7 +37,7 @@ class ClientOrderController extends Controller
     {
 
         if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
-            $order = $this->createOrder($request, 'COD');
+            $order = $this->createOrder($request);
             Payment::create([
                 'order_id' => $order->id,
                 'payment_method' => $request->input('payments'),
@@ -51,9 +52,21 @@ class ClientOrderController extends Controller
                 'user_id' => Auth::id(),
                 'total_amount' => $request->total_amount,
                 'email' => Auth::user()->email,
-                'status' => 0,
-                'payment_status' => 0,
+                'status' => 'pending',
+                'province' => $request->province,
+                'district' => $request->district,
+                'ward' => $request->ward,
+                'address_detail' => $request->address_detail,
+                'phone_number' => $request->phone_number,
+                'coupon' => $request->coupon,
             ];
+
+            $number = mt_rand(1000000000, 9999999999);
+
+            $data['barcode'] = $number;
+            if ($this->barcodeOrder($number)){
+                $number = mt_rand(1000000000, 9999999999);
+            }
 
             $order = Order::create($data);
 
@@ -80,6 +93,9 @@ class ClientOrderController extends Controller
 
             $cart->cartDetail()->delete();
             $this->updateTotal($cart->id, 0);
+            ShipmentOrder::create([
+                'order_id' => $order->id,
+            ]);
             $session = \Stripe\Checkout\Session::create([
                 'customer_email' => Auth::user()->email,
                 'line_items'  => [
@@ -105,16 +121,26 @@ class ClientOrderController extends Controller
         }
     }
 
-    private function createOrder(Request $request, $paymentMethod)
+    private function createOrder(Request $request)
     {
         $data = [
             'user_id' => Auth::id(),
             'total_amount' => $request->total_amount,
-            'email' => Auth::user()->email,
-            'status' => 0,
-            'payment_status' => $paymentMethod == 'COD' ? 0 : 1,
+            'email' => $request->email,
+            'status' => 'pending',
+            'province' => $request->province,
+            'district' => $request->district,
+            'ward' => $request->ward,
+            'address_detail' => $request->address_detail,
+            'phone_number' => $request->phone_number,
+            'coupon' => $request->coupon,
         ];
 
+        $number = mt_rand(1000000000, 9999999999);
+        $data['barcode'] = $number;
+        if ($this->barcodeOrder($number)){
+            $number = mt_rand(1000000000, 9999999999);
+        }
         $order = Order::create($data);
 
         $cart = Cart::where('user_id', Auth::id())
@@ -142,7 +168,9 @@ class ClientOrderController extends Controller
         $this->updateTotal($cart->id, 0);
 
         $this->sendMail($order, $total);
-
+        ShipmentOrder::create([
+            'order_id' => $order->id,
+        ]);
         return $order;
 
     }
@@ -158,8 +186,7 @@ class ClientOrderController extends Controller
         if ($status == 'succeeded'){
             $paymentMethodType = $paymentIntent->payment_method_types[0];
             $order->update([
-                'status' => 1,
-                'payment_status' => 1,
+                'status' => 'pending',
             ]);
 
             Payment::create([
@@ -189,7 +216,7 @@ class ClientOrderController extends Controller
         $couponCode = $request->input('coupon');
 
         $cart = Cart::where('user_id', Auth::id())
-            ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
+            ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
             ->first();
 
         $coupon = Coupon::where('code', $couponCode)
@@ -256,4 +283,8 @@ class ClientOrderController extends Controller
         }
     }
 
+    private function barcodeOrder($number)
+    {
+        return Order::where('barcode', $number)->exists();
+    }
 }
