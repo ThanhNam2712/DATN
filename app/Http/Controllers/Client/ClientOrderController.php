@@ -49,7 +49,7 @@ class ClientOrderController extends Controller
             ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
             ->first();
 
-        foreach ($cart->cartDetail as $key => $list){
+        foreach ($cart->cartDetail as $key => $list) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_variant_id' => $list->product_variant_id,
@@ -65,20 +65,20 @@ class ClientOrderController extends Controller
             }
         }
         $total = $order->total_amount;
-        if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
+        if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng') {
             $cart->cartDetail()->delete();
             $this->updateTotal($cart->id, 0);
             $this->sendMail($order, $total);
             return view('client.order.confirm');
-        }elseif ($request->input('payments') == 'Thẻ Tín Dụng'){
-        $data_url = VNPay::vnpay_create_payment([
-            'vnp_TxnRef' => $order->id,
-            'vnp_OrderInfo' => 'Thanh toan thanh cong',
-            'vnp_Amount' => $order->total_amount * 25390,
-        ]);
+        } elseif ($request->input('payments') == 'Thẻ Tín Dụng') {
+            $data_url = VNPay::vnpay_create_payment([
+                'vnp_TxnRef' => $order->id,
+                'vnp_OrderInfo' => 'Thanh toan thanh cong',
+                'vnp_Amount' => $order->total_amount * 25390,
+            ]);
 
-        return redirect()->to($data_url);
-    }
+            return redirect()->to($data_url);
+        }
     }
 
     public function vnPayCheck(Request $request)
@@ -90,13 +90,13 @@ class ClientOrderController extends Controller
         $vnp_TxnRef = $request->get('vnp_TxnRef');
         $vnp_Amount = $request->get('vnp_Amount');
 
-        if ($vnp_ResponseCode != null){
-            if ($vnp_ResponseCode == 00){
+        if ($vnp_ResponseCode != null) {
+            if ($vnp_ResponseCode == 00) {
                 $cart->cartDetail()->delete();
                 return view('client.order.confirm')->with([
                     'message' => 'Order Success ! You will pay on delivery. Please check email'
                 ]);
-            }else{
+            } else {
                 Order::delete($vnp_TxnRef);
                 return view('client.order.confirm')->with([
                     'message' => 'Order Fail !'
@@ -105,11 +105,12 @@ class ClientOrderController extends Controller
         }
     }
 
-    private function sendMail($order, $total){
+    private function sendMail($order, $total)
+    {
         $email_to = $order->email;
 
         Mail::send('client.mail.send', compact('order', 'total'), function ($message) use ($email_to) {
-            $message->from('dungntph32857@fpt.edu.vn', 'Tuan Clothing');
+            $message->from('tuancdph43313@fpt.edu.vn', 'Tuan Clothing');
             $message->to($email_to, $email_to);
             $message->subject('Order Notification');
         });
@@ -164,7 +165,7 @@ class ClientOrderController extends Controller
             return response()->json([
                 'error' => 'Mã giảm giá đã được sử dụng trước đó'
             ]);
-        }else{
+        } else {
             Coupon_user::create([
                 'user_id' => Auth::id(),
                 'coupon_id' => $coupon->id,
@@ -183,7 +184,7 @@ class ClientOrderController extends Controller
     private function updateTotal($id, $amount)
     {
         $cart = Cart::find($id);
-        if ($cart){
+        if ($cart) {
             $cart->total_amuont = $amount;
             $cart->save();
         }
