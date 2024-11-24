@@ -188,17 +188,20 @@
                                                 Danh sách đơn hàng
                                             </a>
                                         </li>
-                                        {{-- <li class="relative">
-                                            <a href="{{ route('admin.orders.create') }}" class="block text-vertical-menu-item font-normal transition-all duration-75 ease-linear py-1 px-3 hover:text-blue-500 hover:bg-vertical-menu-item-bg-hover dark:text-vertical-menu-item-dark dark:hover:bg-vertical-menu-item-bg-hover-dark group-data-[sidebar=brand]:hover:bg-vertical-menu-item-bg-hover-brand group-data-[sidebar=modern]:hover:bg-vertical-menu-item-bg-hover-modern group-data-[layout=horizontal]:py-2 group-data-[layout=horizontal]:px-3">
-                                                Thêm đơn hàng mới
+                                        <li class="relative">
+                                            <a href="{{ route('admin.refund.index') }}" class="block text-vertical-menu-item font-normal transition-all duration-75 ease-linear py-1 px-3 hover:text-blue-500 hover:bg-vertical-menu-item-bg-hover dark:text-vertical-menu-item-dark dark:hover:bg-vertical-menu-item-bg-hover-dark group-data-[sidebar=brand]:hover:bg-vertical-menu-item-bg-hover-brand group-data-[sidebar=modern]:hover:bg-vertical-menu-item-bg-hover-modern group-data-[layout=horizontal]:py-2 group-data-[layout=horizontal]:px-3">
+                                                Đơn hoàn trả
                                             </a>
-                                        </li> --}}
+                                        </li>
+
+
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </li>
+
 
 
                 <!-- Tag view -->

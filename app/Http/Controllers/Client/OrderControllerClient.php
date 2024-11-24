@@ -12,6 +12,12 @@ class OrderControllerClient extends Controller
     public function index()
     {
         $orders = Order::where('user_id', Auth::id())->get();
+        $statusMapping = [
+            'completed' => 'Hoàn thành',
+            'processing' => 'Đang xử lý',
+            'pending' => 'Chờ xử lý',
+            'cancelled' => 'Đã hủy',
+        ];
         return view('client.list', compact('orders'));
     }
 

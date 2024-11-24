@@ -34,4 +34,9 @@ class Order extends Model
     public function Payment(){
         return $this->hasOne(Payment::class);
     }
+    public function refund()
+{
+    return $this->hasOne(Refund::class);
+}
+
 }

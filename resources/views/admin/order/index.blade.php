@@ -131,20 +131,7 @@
                                                             <i data-lucide="eye" class="inline-block size-3"></i> Xem
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <form
-                                                            action="{{-- {{ route('admin.orders.destroy', $order->id) }} --}}"
-                                                            method="POST"
-                                                            onsubmit="return confirm('Bạn có chắc muốn xóa?');">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="block px-4 py-1.5 text-base text-slate-600">
-                                                                <i data-lucide="trash-2"
-                                                                    class="inline-block size-3"></i> Xóa
-                                                            </button>
-                                                        </form>
-                                                    </li>
+
                                                 </ul>
                                             </div>
                                         </td>
@@ -153,15 +140,7 @@
                                 </tbody>
 
                             </table>
-                            <div class="noresult" style="display: none">
-                                <div class="py-6 text-center">
-                                    <i data-lucide="search"
-                                        class="w-6 h-6 mx-auto text-sky-500 fill-sky-100 dark:fill-sky-500/20"></i>
-                                    <h5 class="mt-2">Sorry! No Result Found</h5>
-                                    <p class="mb-0 text-slate-500 dark:text-zink-200">We've searched more than 199+
-                                        users We did not find any users for you search.</p>
-                                </div>
-                            </div>
+                         
                         </div>
                         <div class="flex flex-col items-center mt-8 md:flex-row">
                             <div class="mb-4 grow md:mb-0">

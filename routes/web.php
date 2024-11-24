@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\CategoryController;
 
 use App\Http\Controllers\Admin\GalleryController;
 
+use App\Http\Controllers\Admin\RefundController;
+use App\Http\Controllers\Client\ClientRefundController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\OrderControllerClient;
 use App\Http\Controllers\Client\ResetPasswordController;
@@ -35,6 +37,14 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('client.home');
 // });
+
+//hoàn hàng
+Route::prefix('client')->middleware('auth')->group(function () {
+    // Route tạo yêu cầu hoàn trả
+    Route::get('/orders/{order_id}/refund', [ClientRefundController::class, 'create'])->name('client.refund.create');
+    Route::post('/orders/{order_id}/refund', [ClientRefundController::class, 'store'])->name('client.refund.store');
+});
+
 
 Route::get('/', [ProductsController::class, 'home'])->name('home');
 Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
@@ -302,6 +312,16 @@ Route::group([
         // Route::delete('delete/{id}', [OrderController::class, 'destroy'])->name('destroy'); // Xóa đơn hàng
         // Route::get('invoice/{id}', [OrderController::class, 'generateInvoice'])->name('generateInvoice'); // Tạo hóa đơn cho đơn hàng
     });
+
+    Route::group(
+        ['prefix' => 'refund', 'as' => 'refund.'],
+        function () {
+            Route::get('/', [RefundController::class, 'index'])->name('index');
+            Route::put('update/{id}', [RefundController::class, 'update'])->name('update');
+        }
+    );
+
+
 
     Route::group([
         'prefix' => 'products',

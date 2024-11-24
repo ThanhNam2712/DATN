@@ -13,7 +13,7 @@ class ReviewsController extends Controller
     public function index($id)
     {
         $product = Product::find($id);
-        
+
         return view('admin.reviews.index', compact('product'));
     }
 

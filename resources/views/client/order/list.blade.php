@@ -143,7 +143,9 @@
                                         <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="customer_name">Customer Name</th>
                                         <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="payment_method">Payment Method(chưa sửa)</th>
                                         <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="amount">Amount</th>
-                                        <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="delivery_status">Delivery Status(chưa sửa)</th>
+                                        <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="delivery_status">Trạng thái đơn hàng</th>
+                                        <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="delivery_status">Bồi hoàn</th>
+
                                         <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200">Action</th>
                                     </tr>
                                 </thead>
@@ -161,10 +163,36 @@
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $order->user->name }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method">Credit Card</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount">${{ $order->total_amount }}</td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                            <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">Delivered</span>
-                                        </td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                        @php
+                                        $statusMapping = [
+                                            'completed' => 'Hoàn thành',
+                                            'processing' => 'Đang xử lý',
+                                            'pending' => 'Chờ xử lý',
+                                            'cancelled' => 'Đã hủy',
+                                        ];
+                                    @endphp
+
+                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 ">{{ $statusMapping[$order->status] ?? 'Không xác định' }}</td>
+                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                        @if($order->status == 'completed' && !$order->refund)
+                                            <a href="{{ route('client.refund.create', $order->id) }}" class="btn btn-warning">Yêu cầu hoàn</a>
+                                        @elseif($order->refund && $order->refund->status == 'rejected')
+                                            <span class="text-danger">Không được duyệt</span>
+                                        @elseif($order->refund && $order->refund->status == 'pending')
+                                            <span class="text-warning">Đã gửi yêu cầu, chờ xem xét</span>
+                                        @elseif($order->refund && $order->refund->status == 'approved')
+                                            <span class="text-success">Được chấp nhận hoàn</span>
+                                        @else
+                                            <span>Đơn hàng chưa hoàn thành</span>
+                                        @endif
+                                    </td>
+
+
+
+
+
+
+                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                             <div class="relative dropdown">
                                                 <button id="orderAction1" data-bs-toggle="dropdown" class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i data-lucide="more-horizontal" class="size-3"></i></button>
                                                 <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="orderAction1">
