@@ -1,4 +1,4 @@
 @extends('client.master')
 @section('Main')
-<script src="gioithieu.js"></script>
+<script src="/Front-end/gioithieu/gioithieu.js"></script>
 @endsection
