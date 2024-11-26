@@ -36,39 +36,55 @@
             <div class="row" style="background-color: #00509d; height: 130px; padding: 35px; color: white; text-align: center;">
                 <div class="container-fluid">
                     <h3 class="m-0 p-0 mt-4" style="margin-top: 0; font-size: 28px; font-weight: 500;">
-                        <strong style="font-size: 32px;">Reset Notification</strong>
+                        <strong style="font-size: 32px;">New Coupon Available</strong>
                         <br>
                     </h3>
 
                 </div>
             </div>
 
-            <div class="row mt-2 p-4" style="background-color: white; margin-top: 15px; padding: 20px;">
-                <table>
-                    <tr>
-                        <td>
-                            <img
-                                src="https://ci6.googleusercontent.com/proxy/8eUxMUXMkvgUKX8veBCRQM5N7-jXP0Wx8KjQLaGDch2DnV_5HYw9PMgJXsoqgSR_jonTY9jAftWPKNsN5W9cUUneQ9hz7IhxH4rIXNzHMm0ijbsNjHB9m7g6XfJJ=s0-d-e1-ft#https://www.bambooairways.com/reservation/common/hosted-images/tickets.jpg"
-                                alt="">
-                        </td>
+            <div class="row mt-2" style="margin-top: 15px;">
+                <div class="container-fluid">
+                    <div class="row pl-3 py-2" style="background-color: #f4f8fd; padding: 10px 0 10px 20px;">
+                        <b>Coupon New User {{ $user->name }}</b>
+                    </div>
+                    <div class="row pl-3 py-2" style="background-color: #fff; padding: 10px 20px 10px 20px;">
+                        <table class="table table-sm table-hover"
+                               style="text-align: left;  width: 100%; margin-bottom: 5px; border-collapse: collapse;">
+                            <thead>
+                            <tr>
+                                <th style="padding: 5px 0;">Code</th>
+                                <th style="padding: 5px 0;">Discount Type</th>
+                                <th style="padding: 5px 0;">Discount Value</th>
+                                <th style="padding: 5px 0;">Minimum price</th>
+                                <th style="padding: 5px 0;">Expiration Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border-top: 1px solid #dee2e6; padding: 5px 0;">
+                                        {{ $coupon->code }}
+                                    </td>
 
+                                    <td style="border-top: 1px solid #dee2e6; padding: 5px 0;">
+                                        {{ $coupon->discount_type }}
+                                    </td>
 
-                        <td class="pl-3" style=" padding-left:20px;">
-                                <span class="d-inline"
-                                      style="color:#424853; font-family:trebuchet,sans-serif; font-size:16px; font-weight:normal; line-height:22px;">
-                                      Please click this link to retrieve your password
-                                </span><br>
-                                <span class="d-inline"
-                                  style="color:#424853; font-family:trebuchet,sans-serif; font-size:16px; font-weight:normal; line-height:22px;">
-                                      {{ $coupon->code }}
-                                </span>
-
-{{--                            <a href="{{ route('client.reset.resetPass', $user->remember_token) }}" class="btn btn-primary">Chang pass</a>--}}
-                        </td>
-                    </tr>
-                </table>
+                                    <td style="border-top: 1px solid #dee2e6; padding: 5px 0;">
+                                        {{ $coupon->discount_value }}
+                                    </td>
+                                    <td style="border-top: 1px solid #dee2e6; padding: 5px 20px 5px 0; text-align: right;">
+                                        {{ $coupon->minimum_order_amount }}
+                                    </td>
+                                    <td style="border-top: 1px solid #dee2e6; padding: 5px 20px 5px 0; text-align: right;">
+                                        {{ $coupon->expiration_date }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-
 
             <div class="row mt-2 mb-4" style="margin-top: 15px; margin-bottom: 25px;">
                 <div class="container-fluid">

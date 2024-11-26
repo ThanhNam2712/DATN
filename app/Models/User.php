@@ -26,6 +26,7 @@ class User extends Authenticatable
         'role_id',
         'sdt',
         'status',
+        'avatar',
     ];
 
 
@@ -49,9 +50,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function Orders()
+    public function order()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'user_id');
     }
     public function Wishlists()
     {

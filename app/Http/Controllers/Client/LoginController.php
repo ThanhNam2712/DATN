@@ -22,18 +22,28 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:4|max:20',
         ]);
+
         $user = User::where('email', $data['email'])->first();
 
-        // Kiểm tra xem người dùng có tồn tại không và mật khẩu có đúng không
-        if ($user && Hash::check($data['password'], $user->password)) {
-            Auth::loginUsingId($user->id);
-            $request->session()->regenerate();
-            return redirect()->intended('client/home');
+        if ($user) {
+            if ($user->status === 'inactive') {
+                return back()->withErrors([
+                    'email' => 'Tài khoản của bạn hiện đang bị vô hiệu hóa.',
+                ]);
+            }
+            if (Hash::check($data['password'], $user->password)) {
+                Auth::loginUsingId($user->id);
+                $request->session()->regenerate();
+                return redirect()->intended('client/home');
+            }
         }
+
+        // Trả về lỗi nếu thông tin không chính xác
         return back()->withErrors([
             'email' => 'Thông tin đăng nhập không chính xác.',
         ]);
     }
+
 
     // Xử lý đăng xuất
     public function logout(Request $request)

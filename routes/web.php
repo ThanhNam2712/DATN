@@ -3,17 +3,12 @@ use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
-
-
 use App\Http\Controllers\Admin\GalleryController;
-
-use App\Http\Controllers\Admin\RefundController;
-use App\Http\Controllers\Client\ClientRefundController;
+use App\Http\Controllers\Admin\ShipmentController;
+use App\Http\Controllers\Admin\VariantProductController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\OrderControllerClient;
 use App\Http\Controllers\Client\ResetPasswordController;
-
-
 use App\Http\Controllers\Client\ClientCartController;
 use App\Http\Controllers\Client\ClientOrderController;
 use App\Http\Controllers\Client\HomeController;
@@ -37,43 +32,10 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('client.home');
 // });
-
-//hoàn hàng
-Route::prefix('client')->middleware('auth')->group(function () {
-    // Route tạo yêu cầu hoàn trả
-    Route::get('/orders/{order_id}/refund', [ClientRefundController::class, 'create'])->name('client.refund.create');
-    Route::post('/orders/{order_id}/refund', [ClientRefundController::class, 'store'])->name('client.refund.store');
-});
-
-
 Route::get('/', [ProductsController::class, 'home'])->name('home');
 Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
 Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
 Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
-
-Route::group([
-    'prefix' => 'client',
-    'as' => 'client.'
-], function (){
-
-    Route::group([
-        'prefix' => 'home',
-        'as' => 'home.'
-    ], function (){
-        Route::get('/', [HomeController::class, 'index'])->name('home');
-        Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
-        Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
-    });
-
-    Route::group([
-        'prefix' => 'cart',
-        'as' => 'cart.'
-    ], function (){
-        Route::get('/', [ClientCartController::class, 'index'])->name('index');
-        Route::post('add', [ClientCartController::class, 'add'])->name('add');
-        Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
-        Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
-    });
 
  Route::group([
      'prefix' => 'client',
@@ -98,16 +60,6 @@ Route::group([
          Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
      });
 
-     Route::group([
-         'prefix' => 'cart',
-         'as' => 'cart.'
-     ], function (){
-         Route::get('/', [ClientCartController::class, 'index'])->name('index');
-         Route::post('add', [ClientCartController::class, 'add'])->name('add');
-         Route::post('update/{id}', [ClientCartController::class, 'updateCart'])->name('updateCart');
-         Route::get('delete/{id}', [ClientCartController::class, 'deleteCart'])->name('deleteCart');
-     });
-
 
 
     Route::group([
@@ -127,10 +79,9 @@ Route::group([
         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
-        Route::get('list', [ClientOrderController::class, 'listOrders'])->name('list');
-        Route::get('show/{id}', [ClientOrderController::class, 'show'])->name('show');
-        Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
-        Route::get('vnPayCheck', [ClientOrderController::class, 'vnPayCheck'])->name('vnPayCheck');
+        Route::get('confirm/{id}', [ClientOrderController::class, 'confirm'])->name('confirm');
+        Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
+        Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
     });
 
     Route::group([
@@ -151,30 +102,22 @@ Route::group([
         Route::post('resetPass/{id}', [ForgotPasswordController::class, 'confirmPass'])->name('confirmPass');
     });
 
-    // Route::group([
-    //     'prefix' => 'order',
-    //     'as' => 'order.'
-    // ], function (){
-    //     Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
-    //     Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
-    // });
-
-
-
-});
 
 
     Route::group([
-        'prefix' => 'order',
-        'as' => 'order.',
+        'prefix' => 'profile',
+        'as' => 'profile.'
     ], function (){
-        Route::get('/', [ClientOrderController::class, 'index'])->name('index');
-        Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
-        Route::post('create', [ClientOrderController::class, 'create'])->name('create');
-        Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
-        Route::get('vnPayCheck', [ClientOrderController::class, 'vnPayCheck'])->name('vnPayCheck');
+        Route::get('/', [UserEditController::class, 'index'])->name('index');
+        Route::post('create', [UserEditController::class, 'store'])->name('store');
+        Route::put('update/{id}', [UserEditController::class, 'update'])->name('update');
+        Route::put('changePass', [UserEditController::class, 'changePass'])->name('changePass');
+        Route::put('changeAddress/{id}', [UserEditController::class, 'changeAddress'])->name('changeAddress');
+        Route::delete('delete/{id}', [UserEditController::class, 'delete'])->name('delete');
     });
+
 });
+
 
 
 Route::get('/admin/dashboard', function () {
@@ -302,27 +245,6 @@ Route::group([
         Route::put('update/{id}', [ProductTagController::class, 'update'])->name('update');
     });
 
-    Route::group(
-        ['prefix' => 'orders',
-            'as' => 'orders.'
-        ], function () {
-        Route::get('/', [OrderController::class, 'index'])->name('index');
-        // Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
-        Route::put('update-status/{id}', [OrderController::class, 'updateStatus'])->name('updateStatus');
-        // Route::delete('delete/{id}', [OrderController::class, 'destroy'])->name('destroy'); // Xóa đơn hàng
-        // Route::get('invoice/{id}', [OrderController::class, 'generateInvoice'])->name('generateInvoice'); // Tạo hóa đơn cho đơn hàng
-    });
-
-    Route::group(
-        ['prefix' => 'refund', 'as' => 'refund.'],
-        function () {
-            Route::get('/', [RefundController::class, 'index'])->name('index');
-            Route::put('update/{id}', [RefundController::class, 'update'])->name('update');
-        }
-    );
-
-
-
     Route::group([
         'prefix' => 'products',
         'as' => 'products.'
@@ -349,15 +271,15 @@ Route::group([
     });
 
     Route::group([
-        'prefix' => 'cart',
-        'as' => 'cart.'
-    ], function () {
-        Route::get('/', [CartController::class, 'index'])->name('index');
-        Route::post('create', [CartController::class, 'create'])->name('create');
-        Route::get('cart_detail', [CartController::class, 'detail'])->name('detail');
-        Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
-        Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+        'prefix' => 'variant',
+        'as' => 'variant.'
+    ], function (){
+        Route::get('/{id}', [VariantProductController::class, 'index'])->name('index');
+        Route::post('create', [VariantProductController::class, 'create'])->name('create');
+        Route::put('update', [VariantProductController::class, 'update'])->name('update');
+        Route::get('delete/{id}', [VariantProductController::class, 'delete'])->name('delete');
     });
+
 
     // Coupon
     Route::group([
@@ -373,20 +295,30 @@ Route::group([
     });
 
     // order
-    // Route::group([
-    //     'prefix' => 'order',
-    //     'as' => 'order.'
-    // ], function () {
-    //     Route::get('/', [OrderController::class, 'index'])->name('index');
-    //     Route::get('detail/{id}', [OrderController::class, 'detail'])->name('detail');
-    //     Route::post('create', [OrderController::class, 'create'])->name('create');
-    //     Route::get('list', [OrderController::class, 'listOrders'])->name('list');
-    //     Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
-    //     Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
+    Route::group([
+        'prefix' => 'order',
+        'as' => 'order.'
+    ], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
 
-    //     // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
-    //     // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
-    // });
+        Route::post('create', [OrderController::class, 'create'])->name('create');
+        Route::get('list', [OrderController::class, 'listOrders'])->name('list');
+        Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
+
+        // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
+        // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+    });
+
+    Route::group(
+        ['prefix' => 'orders',
+            'as' => 'orders.'
+        ], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('detail/{id}', [OrderController::class, 'detail'])->name('detail');
+        Route::put('update-status/{id}', [OrderController::class, 'updateStatus'])->name('updateStatus');
+        Route::put('cancel/{id}', [OrderController::class, 'cancel'])->name('cancel');
+        Route::get('get-id-by-barcode', [OrderController::class, 'getById'])->name('getById');
+    });
 
     // reviews
 
@@ -394,11 +326,24 @@ Route::group([
         'prefix' => 'review',
         'as' => 'review.'
     ], function (){
-        Route::get('/{id}', [ReviewsController::class, 'index']);
-        Route::post('post', [ReviewsController::class, 'postReview'])->name('postReview');
+        Route::get('/', [ReviewsController::class, 'index'])->name('index');
+        Route::delete('delete/{id}', [ReviewsController::class, 'delete'])->name('delete');
+    });
+
+    Route::group([
+        'prefix' => 'shipment',
+        'as' => 'shipment.'
+    ], function (){
+        Route::get('/', [ShipmentController::class, 'index'])->name('index');
+        Route::get('delivery', [ShipmentController::class, 'delivery'])->name('delivery');
+        Route::get('delivery/{id}', [ShipmentController::class, 'detail'])->name('detail');
+        Route::put('update/{id}', [ShipmentController::class, 'update'])->name('update');
+        Route::put('cancel/{id}', [ShipmentController::class, 'cancel'])->name('cancel');
+        Route::delete('delete/{id}', [ShipmentController::class, 'delete'])->name('delete');
+        Route::post('/', [ShipmentController::class, 'postOrder'])->name('postOrder');
     });
 });
 
-// Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\Client\HomeController::class, 'index'])->name('home');
+//Auth::routes();
+//
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

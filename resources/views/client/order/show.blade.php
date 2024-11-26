@@ -1,26 +1,41 @@
 @extends('client.layouts.master')
 @section('title', 'Cart')
 @section('body')
+<<<<<<< HEAD
     
+=======
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
     <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
 
         <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
             <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
+<<<<<<< HEAD
                 
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
                         <h5 class="text-16">Chi tiết đơn hàng</h5>
+=======
+
+                <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
+                    <div class="grow">
+                        <h5 class="text-16">Order Overview</h5>
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                     </div>
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
                             <a href="#!" class="text-slate-400 dark:text-zink-200">Ecommerce</a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
+<<<<<<< HEAD
                             Chi tiết đơn hàng
+=======
+                            Order Overview
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                         </li>
                     </ul>
                 </div>
                 <div class="grid grid-cols-1 2xl:grid-cols-12 gap-x-5">
+<<<<<<< HEAD
                     <div class="2xl:col-span-3">
                         <div class="card">
                             <div class="card-body">
@@ -82,6 +97,8 @@
                             </div>
                         </div>
                     </div><!--end col-->
+=======
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                 </div><!--end grid-->
 
                 <div class="grid grid-cols-1 2xl:grid-cols-12 gap-x-5">
@@ -90,7 +107,11 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
+<<<<<<< HEAD
                                         <h6 class="mb-1 underline">#{{ $order->id }}</h6>
+=======
+                                        <h6 class="mb-1 underline">#TWT50151003{{ $order->id }}</h6>
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Order ID</p>
                                     </div>
                                 </div>
@@ -98,7 +119,11 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
+<<<<<<< HEAD
                                         <h6 class="mb-1">{{ $order->created_at->format('d/m/Y') }}</h6>
+=======
+                                        <h6 class="mb-1">{{ $order->updated_at }}</h6>
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Order Date</p>
                                     </div>
                                 </div>
@@ -106,7 +131,11 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
+<<<<<<< HEAD
                                         <h6 class="mb-1">( chưa sửa )</h6>
+=======
+                                        <h6 class="mb-1">09 Nov, 2023</h6>
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Delivery Date</p>
                                     </div>
                                 </div>
@@ -114,7 +143,11 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
+<<<<<<< HEAD
                                         <h6 class="mb-1">${{ number_format($order->total_amount, 0, ',', '.') }}</h6>
+=======
+                                        <h6 class="mb-1">${{ $order->total_amount }}</h6>
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Order Amount</p>
                                     </div>
                                 </div>
@@ -122,8 +155,13 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
+<<<<<<< HEAD
                                         <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-purple-100 border-purple-200 text-purple-500 dark:bg-purple-500/20 dark:border-purple-500/20">Shipping(chưa s</span>
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Order Status</p>
+=======
+                                        <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-purple-100 border-purple-200 text-purple-500 dark:bg-purple-500/20 dark:border-purple-500/20">Shipping</span>
+                                        <p class="uppercase text-slate-500 dark:text-zink-200">{{ $order->status }}</p>
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -137,11 +175,16 @@
                                 <div class="overflow-x-auto">
                                     <table class="w-full">
                                         <tbody>
+<<<<<<< HEAD
                                             @foreach ($order->Order_Items as $item)
+=======
+                                        @foreach($order->orderDetail as $key => $list)
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                                             <tr>
                                                 <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
                                                     <div class="flex items-center gap-3">
                                                         <div class="flex items-center justify-center rounded-md size-12 bg-slate-100 shrink-0">
+<<<<<<< HEAD
                                                             <img src="assets/images/img-08.png" alt="" class="h-8">
                                                         </div>
                                                         <div class="grow">
@@ -178,6 +221,49 @@
                                                 </td>
                                                 <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ number_format($order->total_amount, 0, ',', '.') }}</td>
                                             </tr>
+=======
+                                                            <img src="{{ Storage::url($list->products->image) }}" alt="" class="h-8">
+                                                        </div>
+                                                        <div class="grow">
+                                                            <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->products->name }}</a></h6>
+                                                            <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variants->price_sale }} x {{ $list->quantity }}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variants->price_sale * $list->quantity) }}</td>
+                                            </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Sub Total
+                                            </td>
+                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $order->total_amount }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Estimated Tax (18%)
+                                            </td>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">$167.79</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Item Discounts (12%)
+                                            </td>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">-$111.86</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Shipping Charge
+                                            </td>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ $order->coupon }}</td>
+                                        </tr>
+                                        <tr class="font-semibold">
+                                            <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Total Amount (USD)
+                                            </td>
+                                            <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $order->total_amount }}</td>
+                                        </tr>
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                                         </tbody>
                                     </table>
                                 </div>
@@ -188,7 +274,11 @@
                                 <div class="flex items-center gap-3 mb-4">
                                     <h6 class="text-15 grow">Order Status</h6>
                                     <div class="shrink-0">
+<<<<<<< HEAD
                                         <a href="#!" class="inline-block text-red-500 underline ltr:mr-2 rtl:ml-2">Cancelled Order</a>
+=======
+                                        <a href="../client/home" class="btn inline-block text-red-500 underline ltr:mr-2 rtl:ml-2">Cancelled Order</a>
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                                         <a href="apps-invoice-overview.html" class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="download" class="inline-block align-middle size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Invoice</span></a>
                                     </div>
                                 </div>
@@ -244,6 +334,7 @@
                     </div><!--end col-->
                     <div class="2xl:col-span-3">
                         <div class="card">
+<<<<<<< HEAD
                             <div class="card-body">
                                 <h6 class="mb-3 text-gray-800 text-15 dark:text-white">Documents</h6>
                                 <div class="overflow-x-auto">
@@ -261,6 +352,22 @@
                                     </table>
                                 </div>
                             </div>
+=======
+                            <div class="2xl:col-span-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="bg-yellow-100 rounded-md size-12 ltr:float-right rtl:float-left dark:bg-yellow-500/20">
+                                            <img src="{{ Storage::url($order->user->avatar) }}" alt="" style="width: auto; height: auto" class="h-12 rounded-md">
+                                        </div>
+                                        <h6 class="mb-4 text-15">Customer Info</h6>
+
+                                        <h6 class="mb-1">{{ $order->user->name }}</h6>
+                                        <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $order->user->email }}</p>
+                                        <p class="text-slate-500 dark:text-zink-200">{{ $order->user->sdt }}</p>
+                                    </div>
+                                </div>
+                            </div><!--end col-->
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
                         </div>
                         <div class="card">
                             <div class="card-body">
@@ -286,6 +393,12 @@
             <!-- container-fluid -->
         </div>
         <!-- End Page-content -->
+<<<<<<< HEAD
     </div>
 @endsection
 
+=======
+
+    </div>
+@endsection
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395

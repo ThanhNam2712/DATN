@@ -76,7 +76,7 @@
                             <td class="pl-3" style=" padding-left:15px;">
                                 <span class="d-inline"
                                       style="color:#424853; font-family:trebuchet,sans-serif; font-size:16px; font-weight:normal; line-height:22px;">
-                                    You will pay on delivery. We have just handed over your order to a shipping partner.
+                                    You will pay on delivery. Please copy the code so you can find the corresponding order: <p>{{ $order->barcode }}</p>
                                 </span>
                             </td>
                     </tr>

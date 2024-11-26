@@ -16,7 +16,7 @@ class CheckAccount
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->status == 0) {
+        if (Auth::check() && Auth::user()->status == "inactive") {
             Auth::logout();
             return redirect()->route('account.showForm')->with('error', 'Tài khoản bạn đã bị khóa');
         }

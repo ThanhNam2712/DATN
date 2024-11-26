@@ -16,14 +16,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $product = Product::paginate(5);
+        $product = Product::paginate(4);
         $brandLimit = Brand::orderBy('id', 'asc')->limit(1)->get();
         $comment = Review::limit(5)->get();
-
-        foreach ($product as $list){
-            $list->firstVariant = $list->variant->first()->id;
-        }
-        return view('client.home.index', compact('product', 'brandLimit', 'comment'));
+        $viewProduct = Product::orderBy('view', 'desc')->limit(3)->get();
+        return view('client.home.index', compact('product', 'brandLimit', 'comment', 'viewProduct'));
     }
 
     public function detail(Request $request ,$id)
@@ -45,9 +42,20 @@ class HomeController extends Controller
         ];
 
         $product = Product::find($id);
-        $image = Gallery::where('variant_id', $variant)->get();
+        if ($product){
+            $product->view = $product->view + 1;
+            $product->save();
+        }
+        $image = Gallery::where('variant_id', $variant)
+                        ->limit(5)
+                        ->get();
         $priceVariant = ProductVariant::find($variant);
-        return view('client.home.detail', compact('product', 'image' ,'colorClasses', 'variant', 'priceVariant'));
+        $productRelated = Product::orderBy('id', 'desc')
+                        ->where('category_id', $product->category_id)
+                        ->where('id', '!=', $product->id)
+                        ->limit(4)
+                        ->get();
+        return view('client.home.detail', compact('product', 'image' ,'colorClasses', 'variant', 'priceVariant', 'productRelated'));
     }
 
     public function postReview(Request $request)

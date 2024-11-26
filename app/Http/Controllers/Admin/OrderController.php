@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+<<<<<<< HEAD
+=======
+use App\Models\OrderItem;
+use App\Models\ProductVariant;
+use App\Models\ShipmentOrder;
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,9 +19,14 @@ class OrderController extends Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $orders = Order::with('user', 'Order_Items.color', 'Order_Items.size', 'Order_Items.product_variants')->get();
 
         return view('admin.order.index', compact('orders'));
+=======
+        $orders = Order::all();
+        return view('admin.orders.index', compact('orders'));
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
     }
 
     public function updateStatus(Request $request, $id)
@@ -24,6 +35,7 @@ class OrderController extends Controller
     $orders->status = $request->status;
     $orders->save();
 
+<<<<<<< HEAD
     return redirect()->route('admin.orders.index')->with('success', 'Cập nhật trạng thái thành công.');
 }
 
@@ -179,4 +191,55 @@ class OrderController extends Controller
     //         'final_total' => $final_total,
     //     ]);
     // }
+=======
+    public function updateStatus(Request $request, $id)
+    {
+        $orders = Order::findOrFail($id);
+        $orders->status = $request->status;
+        $orders->save();
+
+        return redirect()->back()->with([
+            'success' => 'Cập nhật trạng thái thành công.'
+        ]);
+    }
+
+    public function cancel(Request $request,$id)
+    {
+        $request->validate([
+            'cancel_8' => 'required|string|min:5',
+        ], [
+            'cancel_8.required' => 'Vui lòng nhập lý do hủy.',
+            'cancel_8.min' => 'Lý do hủy phải có ít nhất 5 ký tự.'
+        ]);
+
+        $order = Order::find($id);
+        $shipment = ShipmentOrder::where('order_id' ,$order->id)->first();
+        if ($order->status != "completed" && $shipment->shipments_5 != "completed"){
+            $order->status = 'cancelled';
+            $shipment->cancel = $request->input('cancel_8');
+            $order->save();
+            $shipment->save();
+            return back()->with('message', 'Hủy Đơn Thành Công');
+        }else{
+            return back()->with('message', 'Hủy Đơn Thất Bại');
+        }
+    }
+
+    public function getById(Request $request)
+    {
+        $barcode = $request->get('barcode');
+        $order = Order::where('barcode', $barcode)->first();
+        if ($order){
+            return response()->json([
+                'success' => true,
+                'id' => $order->id,
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Thằng ranh lấy mã tài xỉu à',
+            ]);
+        }
+    }
+>>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
 }
