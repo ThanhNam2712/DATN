@@ -131,13 +131,17 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
-// --------------------------Dũng----------------------------------
 Route::resource('admin/brands', BrandController::class);
+
 Route::prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
     Route::put('/{id}', [UserController::class, 'update'])->name('update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/create', [UserController::class, 'store'])->name('store');
+
+
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -169,6 +173,7 @@ Route::group([
     Route::post('login', [AuthenController::class, 'loginPost'])->name('loginPost');
     Route::get('resister', [AuthenController::class, 'resister'])->name('resister');
     Route::post('resister', [AuthenController::class, 'postResister'])->name('postResister');
+
 });
 
 Route::prefix('account')->as('account.')->group(function () {

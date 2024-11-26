@@ -68,4 +68,5 @@ class AuthenController extends Controller
 
         return redirect('login/login')->with('message', "Thành Công Rồi Hahahha");
     }
+    
 }

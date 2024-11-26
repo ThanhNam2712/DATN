@@ -12,14 +12,8 @@ class ReviewsController extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
-        $product = Product::find($id);
-
-        return view('admin.reviews.index', compact('product'));
-=======
         $reviews = Review::all();
         return view('admin.reviews.index', compact('reviews'));
->>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
     }
 
     public function delete($id)

@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-<<<<<<< HEAD
-=======
 use App\Models\OrderItem;
 use App\Models\ProductVariant;
 use App\Models\ShipmentOrder;
->>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,25 +16,10 @@ class OrderController extends Controller
 
     public function index()
     {
-<<<<<<< HEAD
-        $orders = Order::with('user', 'Order_Items.color', 'Order_Items.size', 'Order_Items.product_variants')->get();
-
-        return view('admin.order.index', compact('orders'));
-=======
         $orders = Order::all();
         return view('admin.orders.index', compact('orders'));
->>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
     }
 
-    public function updateStatus(Request $request, $id)
-{
-    $orders = Order::findOrFail($id);
-    $orders->status = $request->status;
-    $orders->save();
-
-<<<<<<< HEAD
-    return redirect()->route('admin.orders.index')->with('success', 'Cập nhật trạng thái thành công.');
-}
 
 
 
@@ -191,7 +173,6 @@ class OrderController extends Controller
     //         'final_total' => $final_total,
     //     ]);
     // }
-=======
     public function updateStatus(Request $request, $id)
     {
         $orders = Order::findOrFail($id);
@@ -241,5 +222,4 @@ class OrderController extends Controller
             ]);
         }
     }
->>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
 }

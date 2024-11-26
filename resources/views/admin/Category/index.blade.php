@@ -24,45 +24,6 @@ Danh mục sản phẩm
                 {{ session('success') }}
             </div>
         @endif
-<<<<<<< HEAD
-            <div class="card" id="customerList">
-                <div class="card-body">
-                    <div class="overflow-x-auto">
-                        <table class="w-full whitespace-nowrap" id="customerTable">
-                            <thead class="bg-slate-100 dark:bg-zinc-600">
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên Danh Mục</th>
-                                    <th>Ảnh</th>
-                                    <th>Hành Động</th>
-                                </tr>
-                            </thead>
-                            <tbody class="list form-check-all">
-                                @foreach($categories as $index => $category)
-                                <tr>
-                                    <td>{{ $index+1 }}</td>
-                                    <td class="customer_name">{{ $category->name }}</td>
-                                    <td class="image">
-                                        <img src="{{ asset('storage/' . $category->image) }}"
-                                             alt="{{ $category->name }}" class="w-16 h-16">
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.categories.edit', $category->id) }}"
-                                           class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn">
-                                           Edit
-                                        </a>
-                                        <a href="{{ route('admin.categories.destroy', $category->id) }}"
-                                           class="py-1 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20 remove-item-btn"
-                                           onclick="event.preventDefault(); if(confirm('Bạn có chắc chắn muốn xóa?')) { document.getElementById('delete-form-{{ $category->id }}').submit(); }">
-                                           Xóa
-                                        </a>
-                                        {{-- <form id="delete-form-{{ $category->id }}" action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" style="display: none;">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form> --}}
-                                    </td>
-=======
->>>>>>> 32488c3c0171f99681826f3ff09d74f46448a395
 
         <div class="card" id="productListTable">
             <div class="card-body">
