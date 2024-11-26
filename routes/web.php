@@ -39,7 +39,8 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
 
  Route::group([
      'prefix' => 'client',
-     'as' => 'client.'
+     'as' => 'client.',
+//     'middleware' => 'checkUser'
  ], function (){
 
      Route::group([
@@ -82,6 +83,8 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
         Route::get('confirm/{id}', [ClientOrderController::class, 'confirm'])->name('confirm');
         Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
         Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
+        Route::put('cancel/{id}', [OrderControllerClient::class, 'cancel'])->name('cancel');
+        Route::put('submit/{id}', [OrderControllerClient::class, 'submit'])->name('submit');
     });
 
     Route::group([
@@ -300,7 +303,8 @@ Route::group([
         'as' => 'order.'
     ], function () {
         Route::get('/', [OrderController::class, 'index'])->name('index');
-
+        Route::get('completed', [OrderController::class, 'viewCompleted'])->name('viewCompleted');
+        Route::get('cancelled', [OrderController::class, 'cancelled'])->name('cancelled');
         Route::post('create', [OrderController::class, 'create'])->name('create');
         Route::get('list', [OrderController::class, 'listOrders'])->name('list');
         Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
@@ -336,6 +340,7 @@ Route::group([
     ], function (){
         Route::get('/', [ShipmentController::class, 'index'])->name('index');
         Route::get('delivery', [ShipmentController::class, 'delivery'])->name('delivery');
+        Route::get('delivery/success', [ShipmentController::class, 'success'])->name('success');
         Route::get('delivery/{id}', [ShipmentController::class, 'detail'])->name('detail');
         Route::put('update/{id}', [ShipmentController::class, 'update'])->name('update');
         Route::put('cancel/{id}', [ShipmentController::class, 'cancel'])->name('cancel');

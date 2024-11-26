@@ -21,6 +21,7 @@ class Order extends Model
         'phone_number',
         'coupon',
         'barcode',
+        'confirmation_deadline',
     ];
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
@@ -36,6 +37,10 @@ class Order extends Model
     }
     public function payment(){
         return $this->hasOne(Payment::class, 'order_id');
+    }
+
+    public function paymentAll(){
+        return $this->hasMany(Payment::class, 'order_id');
     }
 
     public function shipments()

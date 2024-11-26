@@ -19,7 +19,10 @@ class OrderController extends Controller
     //
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::where('status', '=' , 'pending')
+                        ->orWhere('status', '=', 'processing')
+                        ->orWhere('status', '=', 'delivery person')
+                        ->get();
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -27,6 +30,21 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         return view('admin.orders.detail', compact('order'));
+    }
+
+    public function viewCompleted()
+    {
+        $orders = Order::where('status', '=' , 'completed')
+                        ->orWhere('status', '=', 'Giao Thành công')
+                        ->get();
+        return view('admin.orders.completed', compact('orders'));
+    }
+
+    public function cancelled()
+    {
+        $orders = Order::where('status', '=' , 'cancelled')
+                        ->get();
+        return view('admin.orders.completed', compact('orders'));
     }
 
     public function updateStatus(Request $request, $id)

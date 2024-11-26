@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\Shipment;
 use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ShipmentController extends Controller
@@ -25,6 +26,15 @@ class ShipmentController extends Controller
         })->get();
 
         return view('admin.shipment.detail', compact('shipment'));
+    }
+
+    public function success()
+    {
+        $shipment = Shipment::where('shiper_id', Auth::id())->whereHas('order', function ($query) {
+            $query->whereIn('status', ['Giao Thành công', 'completed']);
+        })->get();
+
+        return view('admin.shipment.success', compact('shipment'));
     }
 
     public function detail($id)
@@ -52,21 +62,21 @@ class ShipmentController extends Controller
 
     public function update(Request $request, $id)
     {
+        $now = Carbon::now();
         $order = Order::find($id);
         $shipment = ShipmentOrder::where('order_id' ,$order->id)->first();
         $payment = Payment::where('order_id' ,$order->id)->first();
         if ($order->status === 'Đã Nhận Đơn' && $shipment->shipments_1 === 'Chưa nhận đơn') {
             $shipment->shipments_1 = "Đã Nhận Đơn";
         }elseif ($shipment->shipments_1 === 'Đã Nhận Đơn' && $shipment->shipments_2 === 'Chưa xử lý'){
-            $shipment->shipments_2 = "Đã Kiểm Tra Đơn Hàng";
-        }elseif ($shipment->shipments_2 === 'Đã Kiểm Tra Đơn Hàng' && $shipment->shipments_3 === 'Chưa xử lý'){
-            $shipment->shipments_3 = "Bắt Đầu Giao Hàng";
+            $shipment->shipments_2 = "Bắt Đầu Giao Hàng";
             $order->status = "Bắt Đầu Giao Hàng";
-        }elseif ($shipment->shipments_3 === 'Bắt Đầu Giao Hàng' && $shipment->shipments_4 === 'Chưa xử lý'){
-            $shipment->shipments_4 = "Đã Đến Điểm Giao";
-        }elseif ($shipment->shipments_4 === 'Đã Đến Điểm Giao' && $shipment->shipments_5 === 'Chưa hoàn thành'){
-            $shipment->shipments_5 = "completed";
-            $order->status = "completed";
+        }elseif ($shipment->shipments_2 === 'Bắt Đầu Giao Hàng' && $shipment->shipments_3 === 'Chưa xử lý'){
+            $shipment->shipments_3 = "Đã Đến Điểm Giao";
+        }elseif ($shipment->shipments_3 === 'Đã Đến Điểm Giao' && $shipment->shipments_4 === 'Chưa xử lý'){
+            $shipment->shipments_4 = "Giao Thành công";
+            $order->status = "Giao Thành công";
+            $order->confirmation_deadline = $now->addMinutes(1);
             $payment->status = '1';
         }
         $shipment->save();

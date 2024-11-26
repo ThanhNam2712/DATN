@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,5 +27,43 @@ class OrderControllerClient extends Controller
         $is_default = Address::where('user_id', $user->id);
         $address = $is_default->where('is_default', 1)->first();
         return view('client.order.show', compact('order', 'address', 'user'));
+    }
+
+    public function submit($id)
+    {
+        $order = Order::find($id);
+        $shipment = ShipmentOrder::where('order_id' ,$order->id)->first();
+
+        if ($order->status != "completed" && $shipment->shipments_5 != "completed"){
+            $order->status = 'completed';
+            $shipment->shipments_5 = 'completed';
+            $order->save();
+            $shipment->save();
+            return back()->with('message', 'Xác Nhận Thành Công');
+        }else{
+            return back()->with('message', 'Xác Nhận Thất Bại');
+        }
+    }
+
+    public function cancel(Request $request,$id)
+    {
+        $request->validate([
+            'cancel_8' => 'required|string|min:5',
+        ], [
+            'cancel_8.required' => 'Vui lòng nhập lý do hủy.',
+            'cancel_8.min' => 'Lý do hủy phải có ít nhất 5 ký tự.'
+        ]);
+
+        $order = Order::find($id);
+        $shipment = ShipmentOrder::where('order_id' ,$order->id)->first();
+        if ($order->status != "completed" && $shipment->shipments_5 != "completed"){
+            $order->status = 'cancelled';
+            $shipment->cancel = $request->input('cancel_8');
+            $order->save();
+            $shipment->save();
+            return back()->with('message', 'Hủy Đơn Thành Công');
+        }else{
+            return back()->with('message', 'Hủy Đơn Thất Bại');
+        }
     }
 }

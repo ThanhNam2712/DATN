@@ -1,0 +1,85 @@
+.pagination {
+    --bs-pagination-padding-x: 0.5rem;
+    --bs-pagination-padding-y: 0.4809rem;
+    --bs-pagination-font-size: 0.9375rem;
+    --bs-pagination-color: #d5d5e2;
+    --bs-pagination-bg: rgba(230, 230, 241, 0.06);
+    --bs-pagination-border-width: 1px;
+    --bs-pagination-border-color: #5f607b;
+    --bs-pagination-border-radius: 50%;
+    --bs-pagination-hover-color: #d5d5e2;
+    --bs-pagination-hover-bg: rgba(230, 230, 241, 0.06);
+    --bs-pagination-hover-border-color: #5f607b;
+    --bs-pagination-focus-color: #d5d5e2;
+    --bs-pagination-focus-bg: rgba(230, 230, 241, 0.06);
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: #696cff;
+    --bs-pagination-active-border-color: #696cff;
+    --bs-pagination-disabled-color: #d5d5e2;
+    --bs-pagination-disabled-bg: rgba(230, 230, 241, 0.06);
+    --bs-pagination-disabled-border-color: #5f607b;
+    display: flex;
+    padding-left: 0;
+    list-style: none
+}
+
+li.page-item.active {
+    width: 35px;
+    height: 41px;
+    background: var(--bs-pagination-active-bg);
+}
+li.page-item{
+    margin: 4px;
+}
+.page-link {
+    cursor: pointer;
+    position: relative;
+    display: inline-flex
+;
+
+    padding: 9px;
+    width: 35px;
+    height: 41px;
+    font-size: var(--bs-pagination-font-size);
+    color: var(--bs-pagination-color);
+    background-color: var(--bs-pagination-bg);
+    border: 1px solid #e2e8f0;
+    transition: all 150ms ease-linear;
+}
+
+.activess{
+    background-color: #3b82f633;
+}
+
+.size-products{
+    display: none;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+    margin: 0;
+    white-space: nowrap;
+    text-align: right
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    /* margin: 2px 0; */
+    white-space: nowrap;
+    justify-content: flex-end
+}
+.d-flex.justify-content-between.flex-fill.d-sm-none {
+    display: none;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-link {
+    /* padding: .625rem; */
+    /* min-width: calc(2rem + calc(0px * 2)); */
+    /* font-size: .75rem; */
+    line-height: 1
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-link div:not(.table-responsive) div.dataTables_wrapper .dataTables_paginate {
+    margin-right: 0
+}
+
+
+
+

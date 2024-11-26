@@ -71,12 +71,24 @@
                                 <div class="flex items-center gap-3 mb-4">
                                     <h6 class="text-15 grow">Order Status</h6>
                                     <div class="shrink-0" style="display: flex">
-                                        @if ($shipment->order->status != 'completed' && $shipment->order->status != 'cancelled')
+                                        @if ($shipment->order->status != 'completed' && $shipment->order->status != 'cancelled' && $shipment->order->status != 'Giao Thành công')
                                             <button type="button" data-modal-target="deleteModal" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại</button>
                                             <form action="../admin/shipment/update/{{ $shipment->order->id }}" method="post">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Xác Nhận Đơn</button>
+                                                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                                                    @if($shipment->order->shipmentOrder->shipments_1 == 'Chưa nhận đơn')
+                                                       Đã Nhận Đơn
+                                                    @elseif($shipment->order->shipmentOrder->shipments_1 == 'Đã Nhận Đơn' && $shipment->order->shipmentOrder->shipments_2 == 'Chưa xử lý')
+                                                        Bắt Đầu Giao Hàng
+                                                    @elseif($shipment->order->shipmentOrder->shipments_2 == 'Bắt Đầu Giao Hàng' && $shipment->order->shipmentOrder->shipments_3 == 'Chưa xử lý')
+                                                        Đã Đến Điểm Giao
+                                                    @elseif($shipment->order->shipmentOrder->shipments_3 == 'Đã Đến Điểm Giao' && $shipment->order->shipmentOrder->shipments_4 == 'Chưa xử lý')
+                                                        Giao Thành Công
+                                                    @endif
+
+
+                                                </button>
                                             </form>
                                         @endif
                                     </div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('shipments_2')->default('Chưa xử lý');
             $table->string('shipments_3')->default('Chưa xử lý');
             $table->string('shipments_4')->default('Chưa xử lý');
-            $table->string('shipments_5')->default('Chưa hoàn thành');
+            $table->string('shipments_5')->default('Chưa xử lý');
             $table->string('cancel')->default('Chưa xử lý');
             $table->bigIncrements('order_id');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

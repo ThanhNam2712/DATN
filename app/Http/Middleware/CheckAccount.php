@@ -16,10 +16,16 @@ class CheckAccount
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->status == 0) {
-            Auth::logout();
-            return redirect()->route('account.showForm')->with('error', 'Tài khoản bạn đã bị khóa');
-        }
+//        if (Auth::check()) {
+//            if (Auth::user()->status === 'success'){
+//                return $next($request);
+//            }else{
+//                return redirect()->back()->with('message', 'Tài khoản bạn đã bị khóa');
+//            }
+//        }
+//        return redirect()->route('account.showForm')->with([
+//            'messageLog' => 'Bạn không đủ quyền để truy cập',
+//        ]);
         return $next($request);
     }
 }
