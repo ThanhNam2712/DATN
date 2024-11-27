@@ -236,32 +236,35 @@
         @if($cart && $cart->cartDetail->count() > 0)
             <div class="h-[calc(100vh_-_370px)] p-4 overflow-y-auto product-list">
                 <div class="flex flex-col gap-4">
-                    @foreach($cart->cartDetail as $key => $list)
-                        <div class="flex gap-2 product">
-                            <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
-                                <img src="{{ Storage::url($list->product->image) }}" alt="" class="h-8">
-                            </div>
-                            <div class="overflow-hidden grow">
-                                <div class="ltr:float-right rtl:float-left">
-                                    <button class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
+                     @foreach($cart->cartDetail as $key => $list)
+                         @if($list->product != null)
+                            <div class="flex gap-2 product">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
+                                    <img src="{{ Storage::url($list->product->image) }}" alt="" class="h-8">
                                 </div>
-                                <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
-                                    <h6 class="mb-1 text-15">{{ $list->product->name }}</h6>
-                                </a>
-                                <div class="flex items-center mb-3">
-                                    <h5 class="text-base product-price"> $<span>{{ $list->product_variant->price_sale }}</span></h5>
-                                    <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }})</div>
-                                </div>
-                                <div class="flex items-center justify-between gap-3">
-                                    <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
-                                        <button type="button" onclick="reduce('{{ $list->id }}')" class="border w-7 leading-[15px] minus-value bg-slate-200 dark:bg-zink-600 dark:border-zink-600 rounded transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block w-4 h-4"></i></button>
-                                        <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 products-quantity dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
-                                        <button type="button" onclick="increaseCart('{{ $list->id }}')" class="transition-all duration-200 ease-linear border rounded border-slate-200 bg-slate-200 dark:bg-zink-600 dark:border-zink-600 w-7 plus-value text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block w-4 h-4"></i></button>
+                                <div class="overflow-hidden grow">
+                                    <div class="ltr:float-right rtl:float-left">
+                                        <button class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
                                     </div>
-                                    <h6 class="products-line-price">${{ $list->product_variant->price_sale * $list->quantity }}</h6>
+                                    <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
+                                        <h6 class="mb-1 text-15">{{ $list->product->name }}</h6>
+                                    </a>
+                                    <div class="flex items-center mb-3">
+                                        <h5 class="text-base product-price"> $<span>{{ $list->product_variant->price_sale }}</span></h5>
+                                        <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }})</div>
+                                    </div>
+                                    <div class="flex items-center justify-between gap-3">
+                                        <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
+                                            <button type="button" onclick="reduce('{{ $list->id }}')" class="border w-7 leading-[15px] minus-value bg-slate-200 dark:bg-zink-600 dark:border-zink-600 rounded transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block w-4 h-4"></i></button>
+                                            <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 products-quantity dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
+                                            <button type="button" onclick="increaseCart('{{ $list->id }}')" class="transition-all duration-200 ease-linear border rounded border-slate-200 bg-slate-200 dark:bg-zink-600 dark:border-zink-600 w-7 plus-value text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block w-4 h-4"></i></button>
+                                        </div>
+                                        <h6 class="products-line-price">${{ $list->product_variant->price_sale * $list->quantity }}</h6>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                         @endif
+
                     @endforeach
                 </div>
             </div>
