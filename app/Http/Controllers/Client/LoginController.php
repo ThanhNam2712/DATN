@@ -26,9 +26,9 @@ class LoginController extends Controller
         $user = User::where('email', $data['email'])->first();
 
         if ($user) {
-            if ($user->status === 'inactive') {
+            if ($user->status === 'block') {
                 return back()->withErrors([
-                    'email' => 'Tài khoản của bạn hiện đang bị vô hiệu hóa.',
+                    'email' => 'Tài khoản của bạn hiện đang bị vô hiệu hóa, vui lòng liên hệ QTV.',
                 ]);
             }
             if (Hash::check($data['password'], $user->password)) {
@@ -38,14 +38,12 @@ class LoginController extends Controller
             }
         }
 
-        // Trả về lỗi nếu thông tin không chính xác
         return back()->withErrors([
             'email' => 'Thông tin đăng nhập không chính xác.',
         ]);
     }
 
 
-    // Xử lý đăng xuất
     public function logout(Request $request)
     {
         Auth::logout();

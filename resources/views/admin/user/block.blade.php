@@ -71,14 +71,13 @@ Danh mục sản phẩm
                                             data-sort="user-id">User ID</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="name">Name</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="location">Địa chỉ</th>
+
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="email">Email</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="phone-number">Số điện thoại</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="status">Vai trò</th>
+                                            data-sort="status">Trạng thái</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Hành động</th>
                                     </tr>
                                 </thead>
@@ -107,24 +106,12 @@ Danh mục sản phẩm
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 location">
-                                            @if($user->addresses->isNotEmpty())
-                                            @foreach($user->addresses as $address)
-                                            <div>
-                                                {{ $address->Apartment }}, {{ $address->Neighborhood }}, {{
-                                                $address->district }}, {{ $address->Province }}
-                                            </div>
-                                            @endforeach
-                                            @else
-                                            Chưa có
-                                            @endif
-                                        </td>
+
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 email">{{ $user->email }}</td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 phone-number">{{ $user->sdt ??
                                             'N/A' }}</td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            <span class="badge badge-soft-primary">{{ $user->role->name ?? 'Chưa có'
-                                                }}</span>
+                                            <span class="badge badge-soft-primary" style="color: red">{{ $user->status }}</span>
                                         </td>
 
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
@@ -136,26 +123,14 @@ Danh mục sản phẩm
                                                 </button>
                                                 <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
                                                     aria-labelledby="usersAction{{ $user->id }}">
-
-                                                    {{-- <li>
-                                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                            href="{{ route('user.edit', $user->id) }}">
-                                                            <i data-lucide="file-edit"
-                                                                class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> Sửa
-                                                        </a>
-                                                    </li> --}}
                                                     <li>
-                                                        <form action="{{ route('admin.users.block', $user->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn block user này không?');">
+                                                        @if ($user->status === 'block')
+                                                        <form action="{{ route('admin.users.unblock', $user->id) }}" method="POST" style="display:inline-block;">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button type="submit" class="btn btn-danger">Block</button>
+                                                            <button type="submit" class="btn btn-success">Unblock</button>
                                                         </form>
-                                                        <a href="{{ route('admin.users.edit', $user->id) }}"
-                                                            class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200">
-                                                             <i data-lucide="edit"
-                                                                class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                             Sửa
-                                                         </a>
+                                                    @endif
                                                     </li>
                                                 </ul>
                                             </div>
@@ -177,7 +152,7 @@ Danh mục sản phẩm
                                     <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
                                         <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                                             @csrf
-                                            @method('PUT') 
+                                            @method('PUT')
 
                                             <div class="mb-3">
                                                 <label for="userId" class="inline-block mb-2 text-base font-medium">User ID</label>

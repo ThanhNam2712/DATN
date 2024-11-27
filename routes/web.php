@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\VerifyEmailController;
+use App\Http\Controllers\Client\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -36,6 +37,12 @@ Route::get('/', [ProductsController::class, 'home'])->name('home');
 Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
 Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
 Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
+
+
+Route::get('/blocked', function () {
+    return view('auth.blocked');
+})->name('blocked.notice');
+
 
  Route::group([
      'prefix' => 'client',
@@ -59,6 +66,12 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
          Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
          Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
      });
+     Route::group([
+        'prefix' => 'wishlist',
+        'as' => 'wishlist.'
+    ], function () {
+        Route::post('toggle/{id}', [WishlistController::class, 'toggle'])->name('toggle');
+    });
 
 
 
@@ -140,11 +153,13 @@ Route::prefix('admin/users')->name('admin.users.')->group(function () {
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
     Route::get('/create', [UserController::class, 'create'])->name('create');
     Route::post('/create', [UserController::class, 'store'])->name('store');
-
+    Route::put('/{id}/block', [UserController::class, 'block'])->name('block');
+    Route::get('/blocked', [UserController::class, 'blockedUsers'])->name('blocked');
+    Route::put('/{id}/unblock', [UserController::class, 'unblock'])->name('unblock');
 
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'check.status'])->group(function () {
     //thông tin tk
     Route::get('/user/account', [UserEditController::class, 'index'])->name('auth.user.account');
     //sửa tk

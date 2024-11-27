@@ -15,7 +15,7 @@ class UserController extends Controller
     //
     function index()
     {
-        $users = User::all();
+        $users =  User::where('status', '!=', 'block')->get();
         $roles = Role::all();
         $addresses = Address::all();
         return view('admin.user.index', compact('users', 'roles','addresses'));
@@ -95,6 +95,36 @@ public function update(Request $request, $id)
         // Quay lại danh sách người dùng với thông báo thành công
         return redirect()->route('admin.users.index')->with('success', 'Người dùng đã được thêm thành công và trạng thái là active.');
     }
+    public function block($id)
+{
+    $user = User::find($id);
+    if (auth()->id() === $user->id) {
+        return redirect()->route('admin.users.index')->with('error', 'Bạn không thể khóa chính mình.');
+    }
+
+    if ($user->role_id === 2) {
+        return redirect()->route('admin.users.index')->with('error', 'Bạn không thể khóa người dùng có quyền admin.');
+    }
+    $user->status = 'block';
+    $user->save();
+    return redirect()->route('admin.users.index')->with('success', 'User đã bị block thành công!');
+}
+
+
+public function blockedUsers()
+{
+    $users = User::where('status', 'block')->get();
+    $roles = Role::all();
+    $addresses = Address::all();
+    return view('admin.user.block', compact('users', 'roles', 'addresses'));
+}
+public function unblock($id)
+{
+    $user = User::findOrFail($id);
+    $user->status = 'active';
+    $user->save();
+    return redirect()->route('admin.users.index')->with('success', 'Người dùng đã được mở khóa.');
+}
 
 
 
