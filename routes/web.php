@@ -70,7 +70,10 @@ Route::get('/blocked', function () {
         'prefix' => 'wishlist',
         'as' => 'wishlist.'
     ], function () {
+        Route::get('/', [WishlistController::class, 'index'])->name('index');
+        Route::get('home/detail/{id}/color/{idColor?}', [HomeController::class, 'detail'])->name('client.home.detail');
         Route::post('toggle/{id}', [WishlistController::class, 'toggle'])->name('toggle');
+
     });
 
 
