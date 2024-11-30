@@ -1,6 +1,7 @@
 @extends('client.layouts.master')
 @section('title', 'Cart')
 @section('body')
+
     <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
 
@@ -40,7 +41,7 @@
                         </div>
                     </div>
                 </div><!--end col-->
-                {{--  Orders Overview123--------------------------------------------------------------------------  --}}
+
                 <div class="order-last md:col-span-2 2xl:col-span-8 2xl:row-span-3 card 2xl:order-none">
                     <div class="card-body">
                         <h6 class="mb-4 text-gray-800 text-15 dark:text-zink-50">Orders Overview123</h6>
@@ -91,7 +92,7 @@
                         </div>
                     </div>
                 </div><!--end col-->
-                {{--  Orders Overview123--------------------------------------------------------------------------  --}}
+
             </div><!--end grid-->
 
             <div class="card" id="ordersTable">
@@ -138,9 +139,7 @@
                                     </div>
                                 </th>
                                 <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="order_id">Order ID</th>
-                                <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="order_date">Order Email</th>
                                 <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="delivery_date">Order Status</th>
-                                <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="customer_name">Customer Name</th>
                                 <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="payment_method">Payment Method</th>
                                 <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="amount">Amount</th>
                                 <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="delivery_status">Order Coupon</th>
@@ -156,13 +155,11 @@
                                         </div>
                                     </td>
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="{{route('client.order.detail',$order)}}" class="transition-all duration-150 ease-linear order_id text-custom-500 hover:text-custom-600">#{{ $order->id }}</a></td>
-                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 order_date">{{ $order->user->email }}</td>
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 delivery_date">{{ $order->status }}</td>
-                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $order->user->name }}</td>
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method">{{ $order->payment->payment_method }}</td>
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount">${{ $order->total_amount }}</td>
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                        <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">{{ $order->coupon }}</span>
+                                        <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">{{ $order->coupon ?? 'Không App Mã'}}</span>
                                     </td>
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                         <div class="relative dropdown">

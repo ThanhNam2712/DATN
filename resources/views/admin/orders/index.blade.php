@@ -15,15 +15,7 @@
 
         class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
-            @if(Session::has('success'))
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                <script>
-                    swal("Message", "{{ Session::get("success") }}", "success", {
-                        button:true,
-                        button:"OK",
-                    })
-                </script>
-            @endif
+
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
                     <h5 class="text-16">Danh sách đơn hàng</h5>
@@ -43,18 +35,18 @@
                     <div class="card" id="usersTable">
 
                         <div class="!py-3.5 card-body border-y border-dashed border-slate-200 dark:border-zink-500">
-{{--                            <form action="#!">--}}
-{{--                                <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">--}}
-{{--                                    <div class="relative xl:col-span-2">--}}
-{{--                                        <input type="text"--}}
-{{--                                               class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"--}}
-{{--                                               placeholder="Search for name, email, phone number etc..." autocomplete="off">--}}
-{{--                                        <i data-lucide="search"--}}
-{{--                                           class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>--}}
-{{--                                    </div>--}}
+                            {{--                            <form action="#!">--}}
+                            {{--                                <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">--}}
+                            {{--                                    <div class="relative xl:col-span-2">--}}
+                            {{--                                        <input type="text"--}}
+                            {{--                                               class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"--}}
+                            {{--                                               placeholder="Search for name, email, phone number etc..." autocomplete="off">--}}
+                            {{--                                        <i data-lucide="search"--}}
+                            {{--                                           class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>--}}
+                            {{--                                    </div>--}}
 
-{{--                                </div>--}}
-{{--                            </form>--}}
+                            {{--                                </div>--}}
+                            {{--                            </form>--}}
                             <div id="reader" style="width: 500px; margin-top: 20px;display: none; text-align: center"></div>
                             <div class="lg:col-span-2 ltr:lg:text-right rtl:lg:text-left xl:col-span-2 xl:col-start-11">
                                 <button type="button" id="start-scan-btn" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
@@ -70,7 +62,7 @@
                                     </span>
                                 </button>
                             </div>
-                         </div>
+                        </div>
                         <div class="card-body">
                             <div class="-mx-5 -mb-5 overflow-x-auto">
                                 <table class="w-full border-separate table-custom border-spacing-y-1 whitespace-nowrap">
@@ -112,11 +104,11 @@
                                             </td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->id }}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->name }}</td>
-{{--                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">--}}
-{{--                                                {{ $order->province ?? 'tỉnh chưa có' }} - {{ $order->district ?? 'huyện--}}
-{{--                                            chưa có'}} - {{ $order->ward ?? 'xã chưa có' }} - {{ $order->address_detail--}}
-{{--                                            ?? 'dchi ctiet chưa có' }}<br>--}}
-{{--                                            </td>--}}
+                                            {{--                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">--}}
+                                            {{--                                                {{ $order->province ?? 'tỉnh chưa có' }} - {{ $order->district ?? 'huyện--}}
+                                            {{--                                            chưa có'}} - {{ $order->ward ?? 'xã chưa có' }} - {{ $order->address_detail--}}
+                                            {{--                                            ?? 'dchi ctiet chưa có' }}<br>--}}
+                                            {{--                                            </td>--}}
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{!! DNS2D::getBarcodeHTML("$order->barcode", 'QRCODE', 4, 4) !!}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->email }}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->phone_number ?? 'sđt

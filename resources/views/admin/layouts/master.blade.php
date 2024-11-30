@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="../assets/images/favicon.ico">
     <!-- Layout config Js -->
     <script src="../assets/js/layout.js"></script>
-    <script src="../assets/css/page.css"></script>
+    <link src="../assets/css/page.css">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css" integrity="sha512-OQDNdI5rpnZ0BRhhJc+btbbtnxaj+LdQFeh0V9/igiEPDiWE2fG+ZsXl0JEH+bjXKPJ3zcXqNyP4/F/NegVdZg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- StarCode CSS -->

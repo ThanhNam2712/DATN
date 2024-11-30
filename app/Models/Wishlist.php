@@ -12,11 +12,11 @@ class Wishlist extends Model
         'user_id',
         'product_id'
     ];
-    public function User()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function Product()
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }

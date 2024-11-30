@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(4);
         return view('admin.category.index', compact('categories'));
     }
     public function getCategories()//call api cho front
@@ -26,9 +26,8 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
-            'image' => 'nullable|max:2048',
+            'image' => 'nullable',
         ]);
-
         $category = new Category();
         $category->name = $request->name;
 

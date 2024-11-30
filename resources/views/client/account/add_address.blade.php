@@ -23,51 +23,36 @@
                                 </ul>
                             </div>
                         @endif
-
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            <!-- Tỉnh/Thành phố -->
-                            <div>
-                                <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố <span class="text-red-500">*</span></label>
-                                <select name="Province" id="provinceInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" required>
-                                    <option value="" disabled selected>Chọn tỉnh/thành phố</option>
-                                    @foreach ($citys as $city)
-                                        <option value="{{ $city['ProvinceID'] }}" {{ old('Province') == $city['ProvinceID'] ? 'selected' : '' }}>{{ $city['ProvinceName'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Quận/Huyện -->
-                            <div>
-                                <label for="districtInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện <span class="text-red-500">*</span></label>
-                                <select name="district" id="districtInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" required>
-                                    <option value="" disabled selected>Chọn quận/huyện</option>
-                                    @foreach ($districts as $district)
-                                        <option value="{{ $district['DistrictID'] }}" {{ old('district') == $district['DistrictID'] ? 'selected' : '' }}>{{ $district['DistrictName'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Xã/Phường -->
-                            <div>
-                                <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Xã/Phường</label>
-                                <select name="Neighborhood" id="neighborhoodInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                    <option value="" disabled selected>Chọn phường/xã</option>
-                                    @foreach ($wards as $ward)
-                                        <option value="{{ $ward['WardCode'] }}" {{ old('Neighborhood') == $ward['WardCode'] ? 'selected' : '' }}>{{ $ward['WardName'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Địa chỉ cụ thể -->
-                            <div>
-                                <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể <span class="text-red-500">*</span></label>
-                                <input type="text" id="apartmentInput" name="Apartment" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" value="{{ old('Apartment') }}" placeholder="Nhập địa chỉ cụ thể" required>
-                            </div>
-                        </div><!--end grid-->
-
+                        <div class="xl:col-span-12">
+                          <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
+                          <select id="provinces" name="Province" onchange="getProvinces(event)">
+                              <option value="">-- select provinces --</option>
+                          </select>
+                          <input type="hidden" name="province_name" id="province_name">
+                        </div>
+                  
+                        <div class="xl:col-span-12">
+                          <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
+                          <select id="districts" name="district" onchange="getDistricts(event)">
+                              <option value="">-- select districts --</option>
+                          </select>
+                          <input type="hidden" name="district_name" id="district_name">
+                        </div>
+                  
+                        <div class="xl:col-span-6">
+                          <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Phường/Xã</label>
+                          <select id="wards" name="Apartment" onchange="setWardName(event)">
+                              <option value="">-- select wards --</option>
+                          </select>
+                          <input type="hidden" name="apartment_name" id="apartment_name">
+                        </div>  
+                        <div>
+                          <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Xã/Phường</label>
+                          <input type="text" id="neighborhoodInput" name="Neighborhood" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"  placeholder="Nhập xã/phường">
+                        </div>
+                  
                         <div class="flex justify-end gap-2 mt-5">
-                            <button type="button" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Hủy</button>
-                            <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Lưu Địa Chỉ</button>
+                          <button type="submit" class="btn bg-custom-500 text-white">Lưu Địa Chỉ</button>
                         </div>
                     </form>
                 </div>
@@ -77,41 +62,69 @@
     </div>
 </div>
 <script>
-    document.getElementById('provinceInput').addEventListener('change', function() {
-        let province_id = this.value;
-        fetch(`{{ url('/get-districts') }}?province_id=${province_id}`)
-            .then(response => response.json())
-            .then(data => {
-                let districtSelect = document.getElementById('districtInput');
-                districtSelect.innerHTML = '<option value="" disabled selected>Chọn quận/huyện</option>';
-                data.forEach(district => {
-                    let option = document.createElement('option');
-                    option.value = district.DistrictID;
-                    option.textContent = district.DistrictName;
-                    districtSelect.appendChild(option);
-                });
+  fetch('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1')
+  .then(response => response.json())
+  .then(data => {
+      let provinces = data.data.data;
+      provinces.map(value => {
+          document.getElementById('provinces').innerHTML += 
+              `<option value="${value.code}" data-name="${value.name}">${value.name}</option>`;
+      });
+  })
+  .catch(error => console.error('Lỗi khi gọi API:', error));
 
-                // Xóa các lựa chọn xã/phường khi tỉnh thay đổi
-                let neighborhoodSelect = document.getElementById('neighborhoodInput');
-                neighborhoodSelect.innerHTML = '<option value="" disabled selected>Chọn phường/xã</option>';
-            });
-    });
+function fetchDistricts(provinceCode) {
+  fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${provinceCode}&limit=-1`)
+      .then(response => response.json())
+      .then(data => {
+          let districts = data.data.data;
+          document.getElementById('districts').innerHTML = `<option value="">-- select districts --</option>`;
+          if (districts) {
+              districts.map(value => {
+                  document.getElementById('districts').innerHTML += 
+                      `<option value="${value.code}" data-name="${value.name}">${value.name}</option>`;
+              });
+          }
+      })
+      .catch(error => console.error('Lỗi khi gọi API:', error));
+}
 
-    document.getElementById('districtInput').addEventListener('change', function() {
-        let district_id = this.value;
-        fetch(`{{ url('/get-wards') }}?district_id=${district_id}`)
-            .then(response => response.json())
-            .then(data => {
-                let neighborhoodSelect = document.getElementById('neighborhoodInput');
-                neighborhoodSelect.innerHTML = '<option value="" disabled selected>Chọn phường/xã</option>';
-                data.forEach(ward => {
-                    let option = document.createElement('option');
-                    option.value = ward.WardCode;
-                    option.textContent = ward.WardName;
-                    neighborhoodSelect.appendChild(option);
-                });
-            });
-    });
+function fetchWards(districtCode) {
+  fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${districtCode}&limit=-1`)
+      .then(response => response.json())
+      .then(data => {
+          let wards = data.data.data;
+          document.getElementById('wards').innerHTML = `<option value="">-- select wards --</option>`;
+          if (wards) {
+              wards.map(value => {
+                  document.getElementById('wards').innerHTML += 
+                      `<option value="${value.code}" data-name="${value.name}">${value.name}</option>`;
+              });
+          }
+      })
+      .catch(error => console.error('Lỗi khi gọi API:', error));
+}
+
+// Lấy tên tỉnh và gán vào trường ẩn province_name
+function getProvinces(event) {
+  const selectedOption = event.target.options[event.target.selectedIndex];
+  document.getElementById('province_name').value = selectedOption.getAttribute('data-name');
+  fetchDistricts(event.target.value);  // Lấy quận của tỉnh đã chọn
+  document.getElementById('wards').innerHTML = `<option value="">-- select wards --</option>`;
+}
+
+// Lấy tên quận và gán vào trường ẩn district_name
+function getDistricts(event) {
+  const selectedOption = event.target.options[event.target.selectedIndex];
+  document.getElementById('district_name').value = selectedOption.getAttribute('data-name');
+  fetchWards(event.target.value);  // Lấy phường của quận đã chọn
+}
+
+// Lấy tên phường và gán vào trường ẩn apartment_name
+function setWardName(event) {
+  const selectedOption = event.target.options[event.target.selectedIndex];
+  document.getElementById('apartment_name').value = selectedOption.getAttribute('data-name');
+}
 </script>
 
 @endsection

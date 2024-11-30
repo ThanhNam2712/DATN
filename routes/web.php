@@ -4,8 +4,10 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\RefundController;
 use App\Http\Controllers\Admin\ShipmentController;
 use App\Http\Controllers\Admin\VariantProductController;
+use App\Http\Controllers\Client\ClientRefundController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\OrderControllerClient;
 use App\Http\Controllers\Client\ResetPasswordController;
@@ -27,6 +29,7 @@ use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\VerifyEmailController;
+use App\Http\Controllers\Client\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -36,6 +39,12 @@ Route::get('/', [ProductsController::class, 'home'])->name('home');
 Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
 Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
 Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
+
+
+Route::get('/blocked', function () {
+    return view('auth.blocked');
+})->name('blocked.notice');
+
 
  Route::group([
      'prefix' => 'client',
@@ -60,6 +69,13 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
          Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
          Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
      });
+     Route::group([
+        'prefix' => 'wishlist',
+        'as' => 'wishlist.'
+    ], function () {
+         Route::get('/', [WishlistController::class, 'index'])->name('index');
+        Route::post('toggle/{id}', [WishlistController::class, 'toggle'])->name('toggle');
+    });
 
 
 
@@ -119,6 +135,22 @@ Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
         Route::delete('delete/{id}', [UserEditController::class, 'delete'])->name('delete');
     });
 
+    Route::group([
+        'prefix' => 'refund',
+        'as' => 'refund,'
+    ], function (){
+        Route::get('/{id}', [ClientRefundController::class, 'index'])->name('index');
+        Route::post('/{id}', [ClientRefundController::class, 'create'])->name('create');
+        Route::put('update/{id}', [ClientRefundController::class, 'update'])->name('update');
+    });
+
+    Route::group([
+        'prefix' => 'email',
+        'as' => 'email.'
+    ], function (){
+        Route::get('/', [UserEditController::class, 'changeEmail'])->name('changeEmail');
+        Route::post('create', [UserEditController::class, 'postEmail'])->name('postEmail');
+    });
 });
 
 
@@ -134,16 +166,22 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
-// --------------------------Dũng----------------------------------
 Route::resource('admin/brands', BrandController::class);
+
 Route::prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
     Route::put('/{id}', [UserController::class, 'update'])->name('update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/create', [UserController::class, 'store'])->name('store');
+    Route::put('/{id}/block', [UserController::class, 'block'])->name('block');
+    Route::get('/blocked', [UserController::class, 'blockedUsers'])->name('blocked');
+    Route::put('/{id}/unblock', [UserController::class, 'unblock'])->name('unblock');
+
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'check.status'])->group(function () {
     //thông tin tk
     Route::get('/user/account', [UserEditController::class, 'index'])->name('auth.user.account');
     //sửa tk
@@ -172,6 +210,7 @@ Route::group([
     Route::post('login', [AuthenController::class, 'loginPost'])->name('loginPost');
     Route::get('resister', [AuthenController::class, 'resister'])->name('resister');
     Route::post('resister', [AuthenController::class, 'postResister'])->name('postResister');
+
 });
 
 Route::prefix('account')->as('account.')->group(function () {
@@ -303,8 +342,7 @@ Route::group([
         'as' => 'order.'
     ], function () {
         Route::get('/', [OrderController::class, 'index'])->name('index');
-        Route::get('completed', [OrderController::class, 'viewCompleted'])->name('viewCompleted');
-        Route::get('cancelled', [OrderController::class, 'cancelled'])->name('cancelled');
+
         Route::post('create', [OrderController::class, 'create'])->name('create');
         Route::get('list', [OrderController::class, 'listOrders'])->name('list');
         Route::get('coupon', [OrderController::class, 'coupon'])->name('coupon');
@@ -322,6 +360,8 @@ Route::group([
         Route::put('update-status/{id}', [OrderController::class, 'updateStatus'])->name('updateStatus');
         Route::put('cancel/{id}', [OrderController::class, 'cancel'])->name('cancel');
         Route::get('get-id-by-barcode', [OrderController::class, 'getById'])->name('getById');
+        Route::get('completed', [OrderController::class, 'viewCompleted'])->name('viewCompleted');
+        Route::get('cancelled', [OrderController::class, 'cancelled'])->name('cancelled');
     });
 
     // reviews
@@ -346,6 +386,28 @@ Route::group([
         Route::put('cancel/{id}', [ShipmentController::class, 'cancel'])->name('cancel');
         Route::delete('delete/{id}', [ShipmentController::class, 'delete'])->name('delete');
         Route::post('/', [ShipmentController::class, 'postOrder'])->name('postOrder');
+    });
+
+    Route::group([
+        'prefix' => 'refund',
+        'as' => 'refund.'
+    ], function (){
+        Route::get('/', [RefundController::class, 'index'])->name('index');
+        Route::get('/{id}', [RefundController::class, 'show'])->name('show');
+        Route::put('update/{id}', [RefundController::class, 'update'])->name('update');
+        Route::put('check/{id}', [RefundController::class, 'checkOut'])->name('checkOut');
+        Route::get('confirm/{id}', [RefundController::class, 'confirm'])->name('confirm');
+    });
+
+    Route::group([
+        'prefix' => 'email',
+        'as' => 'email.'
+    ], function (){
+        Route::get('/', [UserController::class, 'changeEmail'])->name('changeEmail');
+        Route::get('view/{id}', [UserController::class, 'changeView'])->name('changeView');
+        Route::put('view/{id}', [UserController::class, 'change'])->name('change');
+        Route::put('view/{id}', [UserController::class, 'updateEmail'])->name('updateEmail');
+        Route::get('success', [UserController::class, 'success'])->name('success');
     });
 });
 

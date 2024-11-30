@@ -4,6 +4,15 @@
     register
 @endsection
 @section('body')
+@if(Session::has('success'))
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                <script>
+                    swal("Message", "{{ Session::get("success") }}", "success", {
+                        button:true,
+                        button:"OK",
+                    })
+                </script>
+            @endif
     <div class="relative">
         <div class="absolute hidden opacity-50 ltr:-left-16 rtl:-right-16 -top-10 md:block">
             <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 125 316" width="125" height="316">

@@ -49,13 +49,15 @@ class HomeController extends Controller
         $image = Gallery::where('variant_id', $variant)
                         ->limit(5)
                         ->get();
+        $imageFirst = Gallery::where('variant_id', $variant)->first();
+
         $priceVariant = ProductVariant::find($variant);
         $productRelated = Product::orderBy('id', 'desc')
                         ->where('category_id', $product->category_id)
                         ->where('id', '!=', $product->id)
                         ->limit(4)
                         ->get();
-        return view('client.home.detail', compact('product', 'image' ,'colorClasses', 'variant', 'priceVariant', 'productRelated'));
+        return view('client.home.detail', compact('product', 'image' ,'colorClasses', 'variant', 'priceVariant', 'productRelated', 'imageFirst'));
     }
 
     public function postReview(Request $request)

@@ -54,7 +54,7 @@ class ProductsController extends Controller
                             ->orWhere('products.name', 'like', '%' . $search . '%')
                             ->orWhere('categories.name', 'like', '%' . $search . '%')
                             ->orderBy('products.id', 'asc')
-                            ->get();
+                            ->paginate(4);
 
         return view('admin.products.index', compact('product'));
     }
@@ -68,7 +68,8 @@ class ProductsController extends Controller
         $brand = Brand::all();
         $color = ProductColor::all();
         $size = ProductSize::all();
-        return view('admin.products.create', compact('category', 'brand', 'color', 'size'));
+        $tags = Tag::query()->pluck('name', 'id')->all();
+        return view('admin.products.create', compact('category', 'brand', 'color', 'size','tags'));
     }
 
     /**

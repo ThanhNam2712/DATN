@@ -23,7 +23,7 @@ class RegisterController extends Controller
             'password' => 'required|min:4|max:100',
         ]);
         $password = Hash::make($data['password']);
-        $role = DB::table('roles')->where('name', 'User')->first();
+        $role = DB::table('roles')->where('name', 'Client')->first();
         $userId = DB::table('users')->insertGetId([
             'email' => $data['email'],
             'name' => $data['name'],

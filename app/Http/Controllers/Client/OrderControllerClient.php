@@ -16,7 +16,6 @@ class OrderControllerClient extends Controller
         $search = $request->search;
         $orders = Order::where('user_id', Auth::id())
             ->where('orders.barcode', 'like', '%'. $search . '%')->get();
-
         return view('client.order.list', compact('orders'));
     }
 

@@ -4,6 +4,20 @@
 Danh mục sản phẩm
 @endsection
 @section('body')
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
 <div
     class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
@@ -131,17 +145,10 @@ Danh mục sản phẩm
                                                         </a>
                                                     </li> --}}
                                                     <li>
-                                                        <form action="{{ route('admin.users.destroy', $user->id) }}"
-                                                            method="POST"
-                                                            onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                                                        <form action="{{ route('admin.users.block', $user->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn block user này không?');">
                                                             @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200">
-                                                                <i data-lucide="trash-2"
-                                                                    class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                Xóa
-                                                            </button>
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-danger">Block</button>
                                                         </form>
                                                         <a href="{{ route('admin.users.edit', $user->id) }}"
                                                             class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200">
@@ -170,7 +177,7 @@ Danh mục sản phẩm
                                     <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
                                         <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                                             @csrf
-                                            @method('PUT') <!-- Thêm phương thức PUT để cập nhật -->
+                                            @method('PUT') 
 
                                             <div class="mb-3">
                                                 <label for="userId" class="inline-block mb-2 text-base font-medium">User ID</label>

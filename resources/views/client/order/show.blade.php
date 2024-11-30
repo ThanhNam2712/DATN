@@ -105,18 +105,18 @@
                                             </td>
                                             <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $order->total_amount }}</td>
                                         </tr>
-{{--                                        <tr>--}}
-{{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">--}}
-{{--                                                Estimated Tax (18%)--}}
-{{--                                            </td>--}}
-{{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">$167.79</td>--}}
-{{--                                        </tr>--}}
-{{--                                        <tr>--}}
-{{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">--}}
-{{--                                                Item Discounts (12%)--}}
-{{--                                            </td>--}}
-{{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">-$111.86</td>--}}
-{{--                                        </tr>--}}
+                                        {{--                                        <tr>--}}
+                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">--}}
+                                        {{--                                                Estimated Tax (18%)--}}
+                                        {{--                                            </td>--}}
+                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">$167.79</td>--}}
+                                        {{--                                        </tr>--}}
+                                        {{--                                        <tr>--}}
+                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">--}}
+                                        {{--                                                Item Discounts (12%)--}}
+                                        {{--                                            </td>--}}
+                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">-$111.86</td>--}}
+                                        {{--                                        </tr>--}}
                                         <tr>
                                             <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
                                                 Shipping Charge
@@ -140,8 +140,11 @@
                                     <h6 class="text-15 grow">Order Status</h6>
                                     <div class="shrink-0" style="display: flex">
                                         <button onclick="window.print()" type="button" class="me-3 text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="save" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Save & Print</span></button>
-                                        @if ($order->status != 'completed' && $order->status != 'cancelled' && $order->shipmentOrder->shipments_3 != 'Đã Đến Điểm Giao' && $order->status != 'Giao Thành công')
-                                            <button type="button" data-modal-target="addressModal" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại</button>
+                                        @if ($order->status != 'completed' && $order->status != 'cancelled' && $order->status != 'return order' && $order->shipmentOrder->shipments_3 != 'Đã Đến Điểm Giao' && $order->status != 'Giao Thành công')
+                                            <button type="button" data-modal-target="addressModal" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Hủy Đơn Hàng</button>
+                                        @endif
+                                        @if($order->status == 'completed')
+                                            <a href="../client/refund/{{ $order->id }}"  class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Hoàn Trả Hàng</a>
                                         @endif
                                         @if($order->status === 'Giao Thành công')
                                             <form action="../client/order/submit/{{ $order->id }}" method="post">
@@ -153,6 +156,17 @@
                                     </div>
                                 </div>
                                 <div>
+                                    @if($order->status == 'return order')
+                                        <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
+                                            <div class="flex gap-4">
+                                                <div class="grow">
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Return</h6>
+                                                    <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->status }}.</p>
+                                                </div>
+                                                <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0" >{{ $order->updated_at }}</p>
+                                            </div>
+                                        </div>
+                                    @endif
                                     @if($order->shipmentOrder->cancel != 'Chưa xử lý')
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
@@ -268,23 +282,23 @@
     <div id="addressModal" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
         <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
             <div class="max-h-[calc(theme('height.screen')_-_280px)] overflow-y-auto px-6 py-8">
-            <div class="float-right">
-                <button data-modal-close="addressModal" class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+                <div class="float-right">
+                    <button data-modal-close="addressModal" class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+                </div>
+                <div class="mt-5 text-center">
+                    <h5 class="mb-1">HỦY ĐƠN HÀNG</h5>
+                    <p class="text-slate-500 dark:text-zink-200">Vui Lòng nhập lý do hủy đơn hàng?</p>
+                    <form action="../client/order/cancel/{{ $order->id }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <textarea name="cancel_8" class="mt-4 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Reason for Cancellation" rows="5" style="height: 80px;"></textarea>
+                        <div class="flex justify-center gap-2 mt-6">
+                            <button type="reset" data-modal-close="deleteModal" class="bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-600 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10">Cancel</button>
+                            <button type="submit" class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại!</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="mt-5 text-center">
-                <h5 class="mb-1">HỦY ĐƠN HÀNG</h5>
-                <p class="text-slate-500 dark:text-zink-200">Vui Lòng nhập lý do hủy đơn hàng?</p>
-                <form action="../client/order/cancel/{{ $order->id }}" method="post">
-                    @csrf
-                    @method('PUT')
-                    <textarea name="cancel_8" class="mt-4 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Reason for Cancellation" rows="5" style="height: 80px;"></textarea>
-                    <div class="flex justify-center gap-2 mt-6">
-                        <button type="reset" data-modal-close="deleteModal" class="bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-600 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10">Cancel</button>
-                        <button type="submit" class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại!</button>
-                    </div>
-                </form>
-            </div>
-        </div>
         </div>
     </div><!--end add user-->
 @endsection

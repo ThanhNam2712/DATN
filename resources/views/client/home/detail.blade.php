@@ -49,7 +49,11 @@
                                         <div class="card-body">
                                             <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
                                                 <div class="rounded-md md:col-span-8 md:row-span-2 bg-slate-100 dark:bg-zink-600">
-                                                    <img src="{{ Storage::url($product->image) }}" style="width: 271px;" alt="">
+                                                    @if (!$imageFirst)
+                                                        <img src="{{ Storage::url($product->image) }}" style="width: 271px;" alt="">
+                                                    @else
+                                                        <img src="{{ Storage::url($imageFirst->file_path) }}" style="width: 271px;" alt="">
+                                                    @endif
                                                 </div>
                                                 @foreach($image as $img)
                                                     <div class="rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">

@@ -16,6 +16,7 @@ class CheckAccount
      */
     public function handle(Request $request, Closure $next): Response
     {
+<<<<<<< HEAD
 //        if (Auth::check()) {
 //            if (Auth::user()->status === 'success'){
 //                return $next($request);
@@ -26,6 +27,12 @@ class CheckAccount
 //        return redirect()->route('account.showForm')->with([
 //            'messageLog' => 'Bạn không đủ quyền để truy cập',
 //        ]);
+=======
+        if (Auth::check() && Auth::user()->status == "inactive") {
+            Auth::logout();
+            return redirect()->route('account.showForm')->with('error', 'Tài khoản bạn đã bị khóa');
+        }
+>>>>>>> b7a163c807e400003ed8460a7635c53ea39e682a
         return $next($request);
     }
 }
