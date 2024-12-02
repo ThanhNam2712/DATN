@@ -4,11 +4,14 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\ChangeEmail;
 use App\Models\Role;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -21,14 +24,14 @@ class UserController extends Controller
         return view('admin.user.index', compact('users', 'roles','addresses'));
     }
     public function edit($id)
-{
-    $user = User::findOrFail($id);
-    $roles = Role::all();
-    $address = Address::where('user_id', $id)->first(); // Lấy một bản ghi địa chỉ
+    {
+        $user = User::findOrFail($id);
+        $roles = Role::all();
+        $address = Address::where('user_id', $id)->first(); // Lấy một bản ghi địa chỉ
 
-    return view('admin.user.edit', compact('user', 'roles', 'address'));
-}
-public function update(Request $request, $id)
+        return view('admin.user.edit', compact('user', 'roles', 'address'));
+    }
+    public function update(Request $request, $id)
 {
     $user = User::find($id);
     if (!$user) {
@@ -42,7 +45,7 @@ public function update(Request $request, $id)
         'name' => 'required|min:6|max:100',
         'email' => 'required|email|unique:users,email,' . $user->id,
         'password' => 'nullable|min:4|max:100',
-        'sdt' => 'nullable|min:10|max:11',
+        'sdt' => 'nullable|regex:/^0\d{9,10}$/',
         'role_id' => 'required|exists:roles,id',
     ]);
 
@@ -56,8 +59,6 @@ public function update(Request $request, $id)
 
     return redirect()->route('admin.users.index')->with('success', 'Người dùng đã được cập nhật thành công.');
 }
-
-
 
     public function destroy($id)
     {
@@ -92,10 +93,9 @@ public function update(Request $request, $id)
 
         $user->save();
 
-        // Quay lại danh sách người dùng với thông báo thành công
         return redirect()->route('admin.users.index')->with('success', 'Người dùng đã được thêm thành công và trạng thái là active.');
     }
-    public function block($id)
+    public function block(Request $request, $id)
 {
     $user = User::find($id);
     if (auth()->id() === $user->id) {
@@ -106,26 +106,82 @@ public function update(Request $request, $id)
         return redirect()->route('admin.users.index')->with('error', 'Bạn không thể khóa người dùng có quyền admin.');
     }
     $user->status = 'block';
+    $user->block_reason = $request->input('block_reason');
     $user->save();
     return redirect()->route('admin.users.index')->with('success', 'User đã bị block thành công!');
 }
 
 
-public function blockedUsers()
-{
-    $users = User::where('status', 'block')->get();
-    $roles = Role::all();
-    $addresses = Address::all();
-    return view('admin.user.block', compact('users', 'roles', 'addresses'));
-}
-public function unblock($id)
+    public function blockedUsers()
+    {
+        $users = User::where('status', 'block')->get();
+        $roles = Role::all();
+        $addresses = Address::all();
+        return view('admin.user.block', compact('users', 'roles', 'addresses'));
+    }
+    public function unblock($id)
 {
     $user = User::findOrFail($id);
-    $user->status = 'active';
+    $user->status = 'active';  $user->block_reason = null;
     $user->save();
     return redirect()->route('admin.users.index')->with('success', 'Người dùng đã được mở khóa.');
 }
 
+    public function changeEmail()
+    {
+        $change = ChangeEmail::whereIn('status', ['pending', 'check'])->get();
+        return view('admin.change.index', compact('change'));
+    }
 
+    public function changeView($id)
+    {
+        $change = ChangeEmail::find($id);
+        return view('admin.change.view', compact('change'));
+    }
 
+    public function change($id)
+    {
+        $change = ChangeEmail::find($id);
+        $change->update([
+            'status' => 'check'
+        ]);
+        return back()->with([
+            'message' => 'Xác Nhận Thành Công'
+        ]);
+    }
+
+    public function updateEmail($id)
+    {
+        $change = ChangeEmail::find($id);
+        $user = User::where('id', $change->	processed_by)->first();
+
+        $change->update([
+            'status' => 'Success',
+        ]);
+
+        $user->update([
+            'email' => $change->change_email
+        ]);
+
+        $this->sendmail($user, $change, $change->change_email);
+
+        return redirect('admin/email/')->with([
+            'message' => 'Change Email Success'
+        ]);
+    }
+
+    private function sendmail($user, $change, $email_to)
+    {
+        Mail::send('client.mail.email', compact('user', 'change'), function ($message) use ($email_to) {
+            $message->from('tuancdph43313@fpt.adu.vn', 'Tuan Clothing');
+            $message->to($email_to, $email_to);
+            $message->subject("Update Email Client");
+        });
+    }
+
+    public function success()
+    {
+        $change = ChangeEmail::where('status', 'success')->get();
+        return view('admin.change.index', compact('change'));
+    }
 }

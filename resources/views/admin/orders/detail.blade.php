@@ -70,7 +70,7 @@
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
                                     <h6 class="text-15 grow">Order Summary</h6>
-                                    @if ($order->status != 'completed' && $order->status != 'cancelled')
+                                    @if ($order->status != 'completed' && $order->status != 'cancelled' && $order->status != 'Giao Thành công')
                                         <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
@@ -147,7 +147,7 @@
                                     <h6 class="text-15 grow">Order Status</h6>
                                     <div class="shrink-0" style="display: flex">
                                         <button onclick="window.print()" type="button" class="me-3 text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="save" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Save & Print</span></button>
-                                        @if ($order->status != 'completed' && $order->status != 'cancelled')
+                                        @if ($order->status != 'completed' && $order->status != 'cancelled' && $order->status != 'Giao Thành công')
                                             <button type="button" data-modal-target="deleteModal" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại</button>
                                         @endif
                                     </div>

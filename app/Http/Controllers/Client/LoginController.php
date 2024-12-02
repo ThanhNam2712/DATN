@@ -17,7 +17,6 @@ class LoginController extends Controller
     }
     public function login(Request $request)
     {
-        // Xác thực đầu vào
         $data = $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:4|max:20',
@@ -27,10 +26,14 @@ class LoginController extends Controller
 
         if ($user) {
             if ($user->status === 'block') {
+                return view('client.404', ['block_reason' => $user->block_reason]);
+            }
+            if ($user->status === 'inactive') {
                 return back()->withErrors([
-                    'email' => 'Tài khoản của bạn hiện đang bị vô hiệu hóa, vui lòng liên hệ QTV.',
+                    'email' => 'Tài khoản của bạn chưa được xác minh. Vui lòng kiểm tra email để kích hoạt tài khoản.'
                 ]);
             }
+
             if (Hash::check($data['password'], $user->password)) {
                 Auth::loginUsingId($user->id);
                 $request->session()->regenerate();

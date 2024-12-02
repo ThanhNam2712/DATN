@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(4);
         return view('admin.category.index', compact('categories'));
     }
     public function getCategories()//call api cho front

@@ -28,6 +28,16 @@
             showConfirmButton: false
         });
     @endif
+    @if(session('error'))
+        Swal.fire({
+            title: 'Thất bại!',
+            text: '{{ session('error') }}',
+            icon: 'error',
+            timer: 4000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    @endif
     </script>
 </footer>
 {{--<footer

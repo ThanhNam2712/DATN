@@ -13,6 +13,7 @@
                     })
                 </script>
             @endif
+
     <div class="relative">
         <div class="absolute hidden opacity-50 ltr:-left-16 rtl:-right-16 -top-10 md:block">
             <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 125 316" width="125" height="316">
@@ -53,7 +54,7 @@
                 </g>
             </svg>
         </div>
-
+        <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="mb-0 w-screen lg:w-[500px] card shadow-lg border-none shadow-slate-100 relative">
             <div class="!px-10 !py-12 card-body">
                 <div class="mt-8 text-center">
@@ -109,4 +110,6 @@
             </div>
         </div>
     </div>
+</div>
+
 @endsection

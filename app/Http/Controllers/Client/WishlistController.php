@@ -27,10 +27,11 @@ class WishlistController extends Controller
         }
         return back();
     }
+
+
     public function index()
     {
-        $wishlists = Wishlist::with(['product.variant'])->where('user_id', Auth::id())->get(); // Load variants
+        $wishlists = Wishlist::where('user_id', Auth::id())->paginate(5); // Load variants
         return view('client.wishlist.index', compact('wishlists'));
     }
-
 }

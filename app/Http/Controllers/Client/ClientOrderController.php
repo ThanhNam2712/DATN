@@ -4,16 +4,11 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
-use App\Models\Brand;
 use App\Models\Cart;
-use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Coupon_user;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\ProductColor;
-use App\Models\ProductSize;
 use App\Models\Payment;
 use App\Models\ProductVariant;
 use App\Models\ShipmentOrder;
@@ -286,22 +281,6 @@ class ClientOrderController extends Controller
             $cart->total_amuont = $amount;
             $cart->save();
         }
-    }
-    public function listOrders()
-    {
-        $orders = auth()->user()->Orders()->with('Order_Items.product_variants')->get();
-        // dd($orders);
-        return view('client.order.list', compact('orders'));
-
-    }
-    public function show($id)
-    {
-        $order = Order::where('user_id', auth()->id())
-            ->with(['Order_Items.product_variants', 'user'])
-            ->findOrFail($id);
-            $user = auth()->user();
-            $address = $user->addresses;
-        return view('client.order.show', compact('order','user', 'address'));
     }
 
     private function barcodeOrder($number)

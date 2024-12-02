@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('status', 50)->change();
-
+        Schema::table('users', function (Blueprint $table) {
+            $table->text('block_reason')->nullable()->after('status');
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->tinyInteger('status')->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('block_reason');
 
         });
     }

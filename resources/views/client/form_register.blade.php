@@ -44,6 +44,7 @@ register
                     </g>
                 </svg>
             </div>
+            <div class="flex items-center justify-center min-h-screen bg-gray-100">
 
             <div class="mb-0 w-screen lg:w-[500px] card shadow-lg border-none shadow-slate-100 relative">
                 <div class="!px-10 !py-12 card-body">
@@ -97,5 +98,7 @@ register
                 </div>
             </div>
         </div>
+    </div>
+
 @endsection
 
