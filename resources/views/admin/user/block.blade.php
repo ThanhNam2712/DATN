@@ -78,6 +78,8 @@ Danh mục sản phẩm
                                             data-sort="phone-number">Số điện thoại</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="status">Trạng thái</th>
+                                            <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
+                                            data-sort="status">Lý do</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Hành động</th>
                                     </tr>
                                 </thead>
@@ -113,6 +115,7 @@ Danh mục sản phẩm
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <span class="badge badge-soft-primary" style="color: red">{{ $user->status }}</span>
                                         </td>
+                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 phone-number">{{ $user->block_reason }}</td>
 
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <div class="relative dropdown">
@@ -128,7 +131,7 @@ Danh mục sản phẩm
                                                         <form action="{{ route('admin.users.unblock', $user->id) }}" method="POST" style="display:inline-block;">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button type="submit" class="btn btn-success">Unblock</button>
+                                                            <button type="submit" class="btn btn-success"><i class="ri-lock-unlock-line"></i>UnBlock</button>
                                                         </form>
                                                     @endif
                                                     </li>

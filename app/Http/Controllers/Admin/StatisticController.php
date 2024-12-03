@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class StatisticController extends Controller
 {
@@ -15,14 +16,68 @@ class StatisticController extends Controller
         $order = $this->getOrderSuccess();
         $orderCancel = $this->getOrderCancel();
         $orderChart = $this->getOrderChart();
+        $orderChartYear = $this->getOrderChartByYear();
         $orderPayments = $this->getOrdersPay();
         $orderUser = $this->getTopCustomer();
         $orderProduct = $this->getProductTopSale();
         $category = $this->getCategory();
         $categoryChart = $this->getCategoryChart();
         return view('admin.Statistic.index', compact('order', 'orderCancel',
-            'orderChart', 'orderPayments', 'orderUser', 'orderProduct', 'category', 'categoryChart'));
+            'orderChart', 'orderPayments', 'orderUser', 'orderProduct', 'category', 'categoryChart', 'orderChartYear'));
     }
+
+    public function chart(Request $request)
+    {
+        $month = $request->input('month', now()->format('Y-m'));
+        $startOfMonth = Carbon::parse($month)->startOfMonth();
+        $endOfMonth = Carbon::parse($month)->endOfMonth();
+
+        $ordersSuccess = Order::selectRaw('DAY(created_at) as day, SUM(total_amount) as total')
+            ->whereIn('status', ['completed', 'Giao Thành công'])
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get()
+            ->keyBy('day');
+
+        $ordersCancelled = Order::selectRaw('DAY(created_at) as day, SUM(total_amount) as total')
+            ->where('status', 'cancelled')
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get()
+            ->keyBy('day');
+
+        $labels = [];
+        $dataChartSuccess = [];
+        $dataChartCancelled = [];
+        $daysInMonth = $startOfMonth->daysInMonth;
+
+        for ($i = 1; $i <= $daysInMonth; $i++) {
+            $labels[] = $i;
+            $dataChartSuccess[] = $ordersSuccess->get($i)->total ?? 0;
+            $dataChartCancelled[] = $ordersCancelled->get($i)->total ?? 0;
+        }
+
+        $datasets = [
+            [
+                'label' => 'Total Revenue',
+                'data' => $dataChartSuccess,
+                'backgroundColor' => '#36A2EB'
+            ],
+            [
+                'label' => 'Total Revenue Cancel',
+                'data' => $dataChartCancelled,
+                'backgroundColor' => '#FF6384'
+            ]
+        ];
+
+        return response()->json([
+            'labels' => $labels,
+            'datasets' => $datasets,
+        ]);
+    }
+
 
     private function getOrderSuccess()
     {
@@ -37,7 +92,7 @@ class StatisticController extends Controller
     private function getOrderChart()
     {
         $ordersSuccess = Order::selectRaw('DAY(created_at) as day, SUM(total_amount) as total')
-            ->where('status', 'completed')
+            ->whereIn('status', ['completed', 'Giao Thành công'])
             ->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])
             ->groupBy('day')
             ->orderBy('day')
@@ -82,6 +137,55 @@ class StatisticController extends Controller
             'datasets' => $datasets,
         ];
     }
+
+    private function getOrderChartByYear()
+    {
+        $ordersSuccess = Order::selectRaw('MONTH(created_at) as month, SUM(total_amount) as total')
+            ->whereIn('status', ['completed', 'Giao Thành công'])
+            ->whereYear('created_at', now()->year)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get()
+            ->keyBy('month');
+
+        $ordersCancelled = Order::selectRaw('MONTH(created_at) as month, SUM(total_amount) as total')
+            ->where('status', 'cancelled')
+            ->whereYear('created_at', now()->year)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get()
+            ->keyBy('month');
+
+        $labels = [];
+        $dataChartSuccess = [];
+        $dataChartCancelled = [];
+        $color = ['#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#FF5722', '#009688', '#795548', '#009688', '#795548', '#FE9800', '#CDDC39', '#607D8B'];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $labels[] = "Tháng $i";
+            $dataChartSuccess[] = $ordersSuccess->get($i)->total ?? 0;
+            $dataChartCancelled[] = $ordersCancelled->get($i)->total ?? 0;
+        }
+
+        $datasets = [
+            [
+                'label' => 'Total Revenue',
+                'data' => $dataChartSuccess,
+                'backgroundColor' => '#36A2EB'
+            ],
+            [
+                'label' => 'Total Revenue Cancel',
+                'data' => $dataChartCancelled,
+                'backgroundColor' => '#FF6384'
+            ]
+        ];
+
+        return [
+            'labels' => $labels,
+            'datasets' => $datasets,
+        ];
+    }
+
 
     private function getOrdersPay()
     {

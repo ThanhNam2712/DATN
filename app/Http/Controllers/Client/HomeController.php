@@ -65,31 +65,38 @@ class HomeController extends Controller
         $data = $request->all();
         $data['user_id'] = Auth::id();
 
-        $hasPurchased = OrderItem::join('orders', 'order_items.order_id', '=', 'orders.id')
-        ->where('orders.user_id', Auth::id())
-        ->where('order_items.product_id', $request->product_id)
-        ->exists();
+        // Lấy đơn hàng liên quan đến sản phẩm
+        $order = OrderItem::join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('orders.user_id', Auth::id())
+            ->where('order_items.product_id', $request->product_id)
+            ->whereIn('orders.status', ['completed', 'Giao Thành công'])
+            ->select('orders.id', 'order_items.order_id')
+            ->first();
 
-        if (!$hasPurchased) {
+        if (!$order) {
             return redirect()->back()->with([
                 'error' => 'Bạn phải mua sản phẩm này trước khi đánh giá.',
             ]);
         }
 
-        $review = Review::where('user_id', Auth::id())
-            ->where('product_id', $request->product_id)
-            ->exists();
-
-        if ($review) {
-            return redirect()->back()->with([
-                'error' => 'Bạn chỉ có thể đánh giá sản phẩm này một lần.',
-            ]);
-        }
+//        $existingReview = Review::where('user_id', Auth::id())
+//            ->where('product_id', $request->product_id)
+//            ->where('order_id', $order->id) // Kiểm tra dựa trên đơn hàng
+//            ->first();
+//
+//        if ($existingReview) {
+//            return redirect()->back()->with([
+//                'error' => 'Bạn đã đánh giá sản phẩm này cho đơn hàng này. Vui lòng mua thêm sản phẩm để đánh giá lại.',
+//            ]);
+//        }
+//
+//        $data['order_id'] = $order->id;
 
         Review::create($data);
 
         return redirect()->back()->with([
-            'message' => 'Create Review Products Success'
+            'message' => 'Đánh giá sản phẩm thành công!',
         ]);
     }
+
 }

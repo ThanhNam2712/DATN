@@ -22,7 +22,7 @@ class ShipmentController extends Controller
     public function delivery()
     {
         $shipment = Shipment::where('shiper_id', Auth::id())->whereHas('order', function ($query) {
-            $query->whereNotIn('status', ['cancelled', 'completed', 'return order']);
+            $query->whereNotIn('status', ['cancelled', 'completed', 'return order', 'Giao Thành công']);
         })->get();
 
         return view('admin.shipment.detail', compact('shipment'));

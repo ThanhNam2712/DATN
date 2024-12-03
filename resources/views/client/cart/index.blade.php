@@ -38,7 +38,8 @@
                                     </div>
                                 @else
                                     @foreach($cart->cartDetail as $key => $list)
-                                        <div class="card products products-cart" id="product{{ $key }}">
+                                        @if($list->product && !$list->product->trashed())
+                                            <div class="card products products-cart" id="product{{ $key }}">
                                             <div class="card-body" data-cartDetail="{{ $list->id }}">
                                                 <div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
                                                     <div class="p-4 rounded-md lg:col-span-2 bg-slate-100 dark:bg-zink-600" style="width: 130px; height: 130px">
@@ -69,6 +70,11 @@
                                                 </div><!--end grid-->
                                             </div>
                                         </div><!--end card-->
+                                        @else
+                                            <div class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                                                <span class="font-bold">Sản phẩm Đang Được Quản Trị Thay Đổi, Bạn Vẫn Có Thể Mua Hàng Bình Thường</span>
+                                            </div>
+                                        @endif
                                     @endforeach
                                 @endif
                             </div><!--end col-->

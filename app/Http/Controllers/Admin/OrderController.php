@@ -13,16 +13,15 @@ use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use function Laravel\Prompts\search;
 
 class OrderController extends Controller
 {
     //
     public function index()
     {
-        $orders = Order::where('status', '=' , 'pending')
-            ->orWhere('status', '=', 'processing')
-            ->orWhere('status', '=', 'delivery person')
-            ->get();
+        $orders = Order::whereIn('status', ['pending', 'processing', 'delivery person'])
+                        ->paginate(5);
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -32,19 +31,28 @@ class OrderController extends Controller
         return view('admin.orders.detail', compact('order'));
     }
 
-    public function viewCompleted()
+    public function viewCompleted(Request $request)
     {
-        $orders = Order::where('status', '=' , 'completed')
-            ->orWhere('status', '=', 'Giao Thành công')
-            ->get();
+        $search = $request->search;
+        $orders = Order::select('orders.*')
+                        ->join('users', 'orders.user_id', 'users.id')
+                        ->where(function($check) use ($search) {
+                            $check->where('orders.barcode', 'like', '%' . $search . '%')
+                                ->orWhere('users.name', 'like', '%' . $search . '%')
+                                ->orWhere('users.email', 'like', '%' . $search . '%');
+                        })
+                        ->whereIn('orders.status', ['completed', 'Giao Thành công'])
+                        ->orderBy('orders.id', 'desc')
+                        ->paginate(5);
         return view('admin.orders.completed', compact('orders'));
     }
+
 
     public function cancelled()
     {
         $orders = Order::where('status', '=' , 'cancelled')
             ->get();
-        return view('admin.orders.completed', compact('orders'));
+        return view('admin.orders.cancelled', compact('orders'));
     }
 
     public function updateStatus(Request $request, $id)

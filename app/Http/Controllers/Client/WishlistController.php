@@ -28,6 +28,7 @@ class WishlistController extends Controller
         return back();
     }
 
+
     public function index()
     {
         $wishlists = Wishlist::where('user_id', Auth::id())->paginate(5); // Load variants

@@ -42,7 +42,7 @@
         <div class="mx-auto">
             <ul id="navbar7" class="absolute inset-x-0 z-20 items-center hidden py-3 mt-px bg-white shadow-lg md:mt-0 dark:bg-zinc-800 dark:md:bg-transparent md:z-0 navbar-menu rounded-b-md md:shadow-none md:flex top-full ltr:ml-auto rtl:mr-auto md:relative md:bg-transparent md:rounded-none md:top-auto md:py-0">
                 <li>
-                    <a href="#home" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 active">Home</a>
+                    <a href="../client/home/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 active">Home</a>
                 </li>
                 <li>
                     <a href="../client/shop" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Shop Product</a>
@@ -240,7 +240,7 @@
             <div class="h-[calc(100vh_-_370px)] p-4 overflow-y-auto product-list">
                 <div class="flex flex-col gap-4">
                      @foreach($cart->cartDetail as $key => $list)
-                         @if($list->product != null)
+                        @if($list->product && !$list->product->trashed())
                             <div class="flex gap-2 product">
                                 <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
                                     <img src="{{ Storage::url($list->product->image) }}" alt="" class="h-8">
@@ -266,8 +266,12 @@
                                     </div>
                                 </div>
                             </div>
-                         @endif
 
+                        @else
+                            <div class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                                <span class="font-bold">Sản phẩm Đang Được Quản Trị Thay Đổi, Bạn Vẫn Có Thể Mua Hàng Bình Thường</span>
+                            </div>
+                         @endif
                     @endforeach
                 </div>
             </div>

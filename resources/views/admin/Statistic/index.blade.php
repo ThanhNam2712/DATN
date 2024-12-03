@@ -238,15 +238,39 @@
                 <div class="col-span-12 card 2xl:col-span-8">
                     <div class="card-body">
                         <div class="flex flex-col gap-4 mb-4 md:mb-3 md:items-center md:flex-row">
-                            <h6 class="grow text-15">Sales Revenue Overview</h6>
+                            <h6 class="grow text-15">Chart Order</h6>
+                            <ul class="flex flex-wrap w-full text-sm font-medium text-center nav-tabs">
+                                <li class="group active">
+                                    <a href="javascript:void(0);" data-tab-toggle="" data-target="personalTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Personal Info</a>
+                                </li>
+                                <li class="group">
+                                    <a href="javascript:void(0);" data-tab-toggle="" data-target="integrationTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Integration</a>
+                                </li>
+                            </ul>
+
                         </div>
 
-                        <div style="min-height: 305px;">
+                        <div class="block tab-pane" id="personalTabs" style="min-height: 305px;">
+                            <div class="card-body">
+                                <h6 class="mb-1 text-15">Select Month</h6>
+                                <input
+                                    type="month"
+                                    id="monthPicker"
+                                    onchange="updateChart()"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    placeholder="Select Month"
+                                >
+
+                            </div>
                             <canvas id="chartOrder" style="min-height: 305px;" class="apex-charts">
 
                             </canvas>
                         </div>
+                        <div class="hidden tab-pane" id="integrationTabs" style="min-height: 305px;">
+                            <canvas id="chartOrderYear" style="min-height: 305px;" class="apex-charts">
 
+                            </canvas>
+                        </div>
                     </div>
                 </div><!--end col-->
                 <div class="col-span-12 2xl:col-span-4">
@@ -302,91 +326,7 @@
                         </div><!--end col-->
                     </div><!--end grid-->
                 </div><!--end col-->
-                <div class="col-span-12 card 2xl:col-span-12">
-                    <div class="card-body">
-                        <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
-                            <div class="2xl:col-span-3">
-                                <h6 class="text-15">Product Orders</h6>
-                            </div><!--end col-->
-                            <div class="2xl:col-span-3 2xl:col-start-10">
-                                <div class="flex gap-3">
-                                    <div class="relative grow">
-                                        <input type="text" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search for ..." autocomplete="off">
-                                        <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
-                                    </div>
-                                    <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i class="align-baseline ltr:pr-1 rtl:pl-1 ri-download-2-line"></i> Export</button>
-                                </div>
-                            </div><!--end col-->
-                        </div><!--end grid-->
-                        <div class="overflow-x-auto">
-                            <table class="w-full whitespace-nowrap">
-                                <thead class="ltr:text-left rtl:text-right bg-slate-100 text-slate-500 dark:text-zink-200 dark:bg-zink-600">
-                                <tr>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                        #
-                                    </th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Order ID</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Customer Name</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Location</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Order Date</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Payments</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Quantity</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Coupon</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Total Amount</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Status</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @forelse($orderPayments as $key => $orderPayment)
-                                    <tr>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                            {{ $key + 1 }}
-                                        </td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"><a href="apps-ecommerce-order-overview.html">#TWT{{ $orderPayment->barcode }}</a></td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">{{ $orderPayment->user->name }}</td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">{{ $orderPayment->province }}</td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">{{ $orderPayment->updated_at->toDateString() }}</td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">{{ $orderPayment->payment->payment_method }}</td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">{{ $orderPayment->orderDetail->sum('quantity') }}</td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">{{ $orderPayment->coupon ?? 'Không Sử Dụng' }}</td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">${{ $orderPayment->total_amount }}</td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                            <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">{{ $orderPayment->status }}</span>
-                                        </td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                            <div class="relative dropdown">
-                                                <button id="orderAction1" data-bs-toggle="dropdown" class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i data-lucide="more-horizontal" class="size-3"></i></button>
-                                                <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="orderAction1">
-                                                    <li>
-                                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="apps-ecommerce-order-overview.html"><i data-lucide="eye" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Overview</span></a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!"><i data-lucide="file-edit" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Edit</span></a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!"><i data-lucide="trash-2" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Delete</span></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <h2>
-                                        Hiện Tại Chưa có đơn Hàng nào
-                                    </h2>
-                                @endforelse
 
-                                </tbody>
-                            </table>
-                        </div>
-                        <nav aria-label="..." style="margin-top: 10px">
-                            <ul class="pagination pagination-sm">
-                                {{ $orderPayments->links() }}
-                            </ul>
-                        </nav>
-                    </div>
-                </div><!--end col-->
                 <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
                     <div class="card-body">
                         <div class="flex items-center mb-3">
@@ -578,6 +518,34 @@
         });
     </script>
 
+    <script>
+        function updateChart() {
+            var selectedMonth = document.getElementById('monthPicker').value;
+            var url = `../admin/statistic/chart?month=${selectedMonth || ''}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    orderChart.data.labels = data.labels;
+                    orderChart.data.datasets = data.datasets;
+                    orderChart.update();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+{{--  chart Year  --}}
+    <script>
+        var ctxYear = document.getElementById('chartOrderYear').getContext('2d');
+        var orderChartYear = new Chart(ctxYear, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($orderChartYear['labels']) !!},
+                datasets: {!! json_encode($orderChartYear['datasets']) !!}
+            },
+        });
+    </script>
+{{--   end --}}
 {{--  carygory chart  --}}
 
     <script>
@@ -590,4 +558,5 @@
             },
         });
     </script>
+
 @endsection

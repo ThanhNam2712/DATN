@@ -45,7 +45,7 @@ class UserController extends Controller
         'name' => 'required|min:6|max:100',
         'email' => 'required|email|unique:users,email,' . $user->id,
         'password' => 'nullable|min:4|max:100',
-        'sdt' => 'nullable|min:10|max:11',
+        'sdt' => 'nullable|regex:/^0\d{9,10}$/',
         'role_id' => 'required|exists:roles,id',
     ]);
 
@@ -93,10 +93,9 @@ class UserController extends Controller
 
         $user->save();
 
-        // Quay lại danh sách người dùng với thông báo thành công
         return redirect()->route('admin.users.index')->with('success', 'Người dùng đã được thêm thành công và trạng thái là active.');
     }
-    public function block($id)
+    public function block(Request $request, $id)
 {
     $user = User::find($id);
     if (auth()->id() === $user->id) {
@@ -107,6 +106,7 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('error', 'Bạn không thể khóa người dùng có quyền admin.');
     }
     $user->status = 'block';
+    $user->block_reason = $request->input('block_reason');
     $user->save();
     return redirect()->route('admin.users.index')->with('success', 'User đã bị block thành công!');
 }
@@ -122,7 +122,7 @@ class UserController extends Controller
     public function unblock($id)
 {
     $user = User::findOrFail($id);
-    $user->status = 'active';
+    $user->status = 'active';  $user->block_reason = null;
     $user->save();
     return redirect()->route('admin.users.index')->with('success', 'Người dùng đã được mở khóa.');
 }

@@ -82,9 +82,9 @@
                     <div class="flex items-center gap-3 mt-3">
                         <h6 class="text-16 grow">${{ $list->variant->first()->price_sale }}</h6>
                         <div class="shrink-0">
-                            <button type="button"
-                                class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Add
-                                to Cart</button>
+                            <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}"
+                                class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                                View Product</a>
                         </div>
                     </div>
                 </div>
