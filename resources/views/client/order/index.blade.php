@@ -108,73 +108,39 @@
                             </div>
                         </div><!--end card-->
 
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="mb-4 text-15">Delivery</h6>
-
-                            </div>
-                        </div><!--end card-->
-
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="mb-4 text-15">Payment Information</h6>
-                                <div>
-                                    <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
-                                        <div class="xl:col-span-12">
-                                            <label for="cardNumberInput" class="inline-block mb-2 text-base font-medium">Card Number</label>
-                                            <input type="text" pattern="\d*" maxlength="16" id="cardNumberInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="XXXX XXXX XXXX XXXX">
-                                        </div><!--end col-->
-                                        <div class="xl:col-span-6">
-                                            <label for="expiringInput" class="inline-block mb-2 text-base font-medium">Expiring (MM/YY)</label>
-                                            <input type="text" pattern="\d*" maxlength="4" id="expiringInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="MM/YY">
-                                        </div><!--end col-->
-                                        <div class="xl:col-span-6">
-                                            <label for="cvvInput" class="inline-block mb-2 text-base font-medium">CVV Code</label>
-                                            <input type="text" pattern="\d*" maxlength="3" id="cvvInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="000">
-                                        </div><!--end col-->
-                                    </div><!--end grid-->
-                                </div>
-
-                                <div class="mt-3">
-                                    <h6 class="mb-1">We accept the following cards</h6>
-                                    <div class="flex items-center gap-2">
-                                        <img src="assets/images/img-013.png" alt="" class="h-8">
-                                        <img src="assets/images/img-022.png" alt="" class="h-8">
-                                        <img src="assets/images/img-032.png" alt="" class="h-8">
-                                        <img src="assets/images/img-042.png" alt="" class="h-8">
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!--end card-->
                     </div><!--end col-->
                     <div class="xl:col-span-4">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Orders Summary</h6>
-                            <div class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
-                                These products are limited, checkout within <span class="font-bold">03m 21s</span>
-                            </div>
+                            <h6 class="mb-4 text-15">Đơn Hàng</h6>
                             {{--  sản phẩm -------------------------------------------------------------------------  --}}
                             <div class="overflow-x-auto">
 
                                 <table class="w-full">
                                     <tbody>
                                         @foreach($cart->cartDetail as $key => $list)
-                                        <tr>
-                                            <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
-                                                <div class="flex items-center gap-3">
-                                                    <div class="flex items-center justify-center rounded-md size-12 bg-slate-100 shrink-0">
-                                                        <img src="{{ Storage::url($list->product->image) }}" alt="">
-                                                    </div>
-                                                    <div class="grow">
-                                                        <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
-                                                        <p class="text-slate-500 dark:text-zink-200">{{ $list->product_variant->price_sale }} x {{$list->quantity}}</p>
-                                                    </div>
+                                            @if($list->product && !$list->product->trashed())
+                                                <tr>
+                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="flex items-center justify-center rounded-md size-12 bg-slate-100 shrink-0">
+                                                                <img src="{{ Storage::url($list->product->image) }}" alt="">
+                                                            </div>
+                                                            <div class="grow">
+                                                                <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
+                                                                <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variant->price_sale }} x {{$list->quantity}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
+                                                </tr>
+                                            @else
+                                                <div class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                                                    <span class="font-bold">Sản phẩm Đang Được Quản Trị Thay Đổi, Bạn Vẫn Có Thể Mua Hàng Bình Thường</span>
                                                 </div>
-                                            </td>
-                                            <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">{{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
-                                        </tr>
-                                    @endforeach
+                                            @endif
+
+                                        @endforeach
                                         <div>
                                         <tr>
                                             <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
@@ -243,41 +209,7 @@
                             </div>
                         </div>
                     </div>
-                    <h6 class="mb-4 underline text-16">Additional Service</h6>
-                    <div class="card">
-                        <div class="flex flex-col gap-3 md:items-center card-body md:flex-row">
-                            <div class="grow">
-                                <h6 class="mb-1 text-15">Care + Package</h6>
-                                <p class="text-slate-500 dark:text-zink-200">2 year of additional care</p>
-                            </div>
-                            <div class="shrink-0">
-                                <b>$24.99</b>
-                            </div>
-                            <div class="shrink-0">
-                                <div class="relative inline-block w-10 align-middle transition duration-200 ease-in">
-                                    <input type="checkbox" name="carePackage" id="carePackage" class="absolute block transition duration-300 ease-linear border-2 rounded-full appearance-none cursor-pointer size-5 border-slate-200 dark:border-zink-600 bg-white/80 dark:bg-zink-400 peer/published checked:bg-custom-500 dark:checked:bg-custom-500 ltr:checked:right-0 rtl:checked:left-0 checked:border-custom-100 dark:checked:border-custom-900 arrow-none checked:bg-none">
-                                    <label for="carePackage" class="block h-5 overflow-hidden duration-300 ease-linear border rounded-full cursor-pointer cursor-pointertransition border-slate-200 dark:border-zink-500 bg-slate-200 dark:bg-zink-600 peer-checked/published:bg-custom-100 dark:peer-checked/published:bg-custom-900 peer-checked/published:border-custom-100 dark:peer-checked/published:border-custom-900"></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--end card-->
-                    <div class="card">
-                        <div class="flex flex-col gap-3 md:items-center card-body md:flex-row">
-                            <div class="grow">
-                                <h6 class="mb-1 text-15">Environment Friendly</h6>
-                                <p class="text-slate-500 dark:text-zink-200">The primary goal of eco-warriors is creating</p>
-                            </div>
-                            <div class="shrink-0">
-                                <b>$19.99</b>
-                            </div>
-                            <div class="shrink-0">
-                                <div class="relative inline-block w-10 align-middle transition duration-200 ease-in">
-                                    <input type="checkbox" name="friendlyCheckbox" id="friendlyCheckbox" class="absolute block transition duration-300 ease-linear border-2 rounded-full appearance-none cursor-pointer size-5 border-slate-200 dark:border-zink-600 bg-white/80 dark:bg-zink-400 peer/published checked:bg-custom-500 dark:checked:bg-custom-500 ltr:checked:right-0 rtl:checked:left-0 checked:border-custom-100 dark:checked:border-custom-900 arrow-none checked:bg-none">
-                                    <label for="friendlyCheckbox" class="block h-5 overflow-hidden duration-300 ease-linear border rounded-full cursor-pointer cursor-pointertransition border-slate-200 dark:border-zink-500 bg-slate-200 dark:bg-zink-600 peer-checked/published:bg-custom-100 dark:peer-checked/published:bg-custom-900 peer-checked/published:border-custom-100 dark:peer-checked/published:border-custom-900"></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--end card-->
+
                 </div><!--end col-->
             </div><!--end grid-->
             </form>

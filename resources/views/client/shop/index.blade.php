@@ -276,14 +276,11 @@
                             @endforeach
                         </div><!--end grid-->
 
-                        <div class="flex flex-col items-center mb-5 md:flex-row">
-                            <div class="mb-4 grow md:mb-0">
-                                <p class="text-slate-500 dark:text-zink-200">Showing <b>12</b> of <b>44</b> Results</p>
-                            </div>
-                            <ul class="flex flex-wrap items-center gap-2 shrink-0">
-{{--                                {{ $product->links() }}--}}
+                        <nav aria-label="..." style="margin-top: 10px">
+                            <ul class="pagination pagination-sm">
+                                {{ $products->links() }}
                             </ul>
-                        </div>
+                        </nav>
                     </div><!--end col-->
                 </div><!--end grid-->
 

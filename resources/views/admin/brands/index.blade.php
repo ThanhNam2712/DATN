@@ -5,15 +5,12 @@ Danh mục sản phẩm
 @endsection
 @section('body')
 <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
-
-
-
     <div
         class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4">
         <div class="container-fluid mx-auto">
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Listjs</h5>
+                    <h5 class="text-16">List Brand</h5>
                 </div>
                 <a href="{{route('brands.create')}}" data-modal-target="addCustomerModal" class="btn bg-custom-500 text-white">Add Customer</a>
             </div>
@@ -32,13 +29,13 @@ Danh mục sản phẩm
                         </tr>
                     </thead>
                     <tbody class="list form-check-all">
-                        @foreach ($brands as $brand)
+                        @foreach ($brands as $key => $brand)
                         <tr>
                             <th class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500" scope="row">
                                 <input class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" name="chk_child">
                             </th>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary id">#VZ2101</a></td>
-                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{$brand->id}}</td>
+                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $key + 1 }}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 email">{{$brand->name}}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 phone">
                                 <img src="{{ Storage::url($brand->image) }}" width="100px" alt="">
@@ -63,12 +60,11 @@ Danh mục sản phẩm
                         @endforeach
                     </tbody>
                 </table>
-                <div class="noresult" style="display: none">
-                    <div class="text-center p-7">
-                        <h5 class="mb-2">Sorry! No Result Found</h5>
-                        <p class="mb-0 text-slate-500 dark:text-zink-200">We've searched more than 150+ Orders We did not find any orders for you search.</p>
-                    </div>
-                </div>
+                <nav aria-label="..." style="margin-top: 10px">
+                    <ul class="pagination pagination-sm">
+                        {{ $brands->links() }}
+                    </ul>
+                </nav>
             </div>
 
 

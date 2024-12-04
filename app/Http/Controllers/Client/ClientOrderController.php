@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
-use App\Models\Brand;
 use App\Models\Cart;
-use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Coupon_user;
 use App\Models\Order;
@@ -14,6 +12,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
+use App\Models\Payment;
 use App\Models\ProductVariant;
 use App\Utilities\VNPay;
 use Illuminate\Http\Request;

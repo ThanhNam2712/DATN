@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\ChangeEmail;
 use App\Models\Coupon;
 use App\Models\User;
 use App\Utilities\Common;
@@ -39,7 +40,6 @@ class UserEditController extends Controller
         $user = User::find($id);
         $data = $request->validate([
             'name' => 'required|min:6|max:100',
-            'email' => 'required|email|unique:users,email,' . $user->id,
             'sdt' => 'nullable|numeric', // Nếu có số điện thoại
         ]);
         if ($request->hasFile('avatar')) {
@@ -113,6 +113,27 @@ class UserEditController extends Controller
         $address->delete();
         return redirect()->back()->with([
             'message' => 'Delete Address Success'
+        ]);
+    }
+
+    public function changeEmail()
+    {
+        return view('client.change.email');
+    }
+
+    public function postEmail(Request $request)
+    {
+
+        $request->validate([
+            'change_email' => 'required|email|unique:users,email',
+        ]);
+        $userId = Auth::id();
+        $data = $request->all();
+        $data['processed_by'] = $userId;
+        ChangeEmail::create($data);
+
+        return back()->with([
+            'message' => 'Yêu Cầu Thay Đổi Email Thành Công, Vui Lòng Đợi Email Từ Admin'
         ]);
     }
 }

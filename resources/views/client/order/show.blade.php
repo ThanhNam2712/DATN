@@ -1,8 +1,16 @@
 @extends('client.layouts.master')
-@section('title', 'Cart')
+@section('title', 'Profile')
 @section('body')
     <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
-
+        @if(Session::has('message'))
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script>
+                swal("Message", "{{ Session::get("message") }}", "success", {
+                    button:true,
+                    button:"OK",
+                })
+            </script>
+        @endif
         <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
             <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
 
@@ -80,42 +88,47 @@
                                                 <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
                                                     <div class="flex items-center gap-3">
                                                         <div class="flex items-center justify-center rounded-md size-12 bg-slate-100 shrink-0">
-                                                            <img src="assets/images/img-08.png" alt="" class="h-8">
+                                                            <img src="{{ Storage::url($list->products->image) }}" alt="" class="h-8">
                                                         </div>
                                                         <div class="grow">
-                                                            <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product_variants->product->name  }}</a></h6>
-                                                            <p class="text-slate-500 dark:text-zink-200">${{ number_format($list->price, 0, ',', '.') }} x {{ $list->quantity }}</p>
+                                                            <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->products->name }}</a></h6>
+                                                            <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variants->price_sale }} x {{ $list->quantity }}</p>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variants->price_sale * $list->quantity) }}</td>
                                             </tr>
-                                            @endforeach
-                                       
-                                            <tr>
-                                                <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                    Sub Total
-                                                </td>
-                                                <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ number_format($order->total_amount, 0, ',', '.') }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                    Estimated Tax (18%)
-                                                </td>
-                                                <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">hiện thị giảm giá ( chưa làm )</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                    Shipping Charge
-                                                </td>
-                                                <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">chưa sửa</td>
-                                            </tr>
-                                            <tr class="font-semibold">
-                                                <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                    Total Amount (USD)
-                                                </td>
-                                                <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ number_format($order->total_amount, 0, ',', '.') }}</td>
-                                            </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Sub Total
+                                            </td>
+                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $order->total_amount }}</td>
+                                        </tr>
+                                        {{--                                        <tr>--}}
+                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">--}}
+                                        {{--                                                Estimated Tax (18%)--}}
+                                        {{--                                            </td>--}}
+                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">$167.79</td>--}}
+                                        {{--                                        </tr>--}}
+                                        {{--                                        <tr>--}}
+                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">--}}
+                                        {{--                                                Item Discounts (12%)--}}
+                                        {{--                                            </td>--}}
+                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">-$111.86</td>--}}
+                                        {{--                                        </tr>--}}
+                                        <tr>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Shipping Charge
+                                            </td>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ $order->coupon }}</td>
+                                        </tr>
+                                        <tr class="font-semibold">
+                                            <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Total Amount (USD)
+                                            </td>
+                                            <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $order->total_amount }}</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -125,94 +138,134 @@
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
                                     <h6 class="text-15 grow">Order Status</h6>
-                                    <div class="shrink-0">
-                                        <a href="#!" class="inline-block text-red-500 underline ltr:mr-2 rtl:ml-2">Cancelled Order</a>
-                                        <a href="apps-invoice-overview.html" class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="download" class="inline-block align-middle size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Invoice</span></a>
+                                    <div class="shrink-0" style="display: flex">
+                                        <button onclick="window.print()" type="button" class="me-3 text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="save" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Save & Print</span></button>
+                                        @if ($order->status != 'completed' && $order->status != 'cancelled' && $order->status != 'return order' && $order->shipmentOrder->shipments_3 != 'Đã Đến Điểm Giao' && $order->status != 'Giao Thành công')
+                                            <button type="button" data-modal-target="addressModal" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Hủy Đơn Hàng</button>
+                                        @endif
+                                        @if($order->status == 'completed')
+                                            <a href="../client/refund/{{ $order->id }}"  class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Hoàn Trả Hàng</a>
+                                        @endif
+                                        @if($order->status === 'Giao Thành công')
+                                            <form action="../client/order/submit/{{ $order->id }}" method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" onclick="return confirm('Bạn có muốn xác nhận đơn hàng không')" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Xác Nhận Thành Công</button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
-                                        <div class="flex gap-4">
-                                            <div class="grow">
-                                                <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Placed</h6>
-                                                <p class="text-gray-400 dark:text-zink-200">Your order has been successfully submitted.</p>
+                                    @if($order->status == 'return order')
+                                        <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
+                                            <div class="flex gap-4">
+                                                <div class="grow">
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Return</h6>
+                                                    <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->status }}.</p>
+                                                </div>
+                                                <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0" >{{ $order->updated_at }}</p>
                                             </div>
-                                            <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">02 Nov, 2023</p>
                                         </div>
-                                    </div>
-                                    <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
-                                        <div class="flex gap-4">
-                                            <div class="grow">
-                                                <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Processing</h6>
-                                                <p class="text-gray-400 dark:text-zink-200">Once the order is received, it goes through the processing stage. During this time, the items are gathered, and the order is prepared for shipment.</p>
+                                    @endif
+                                    @if($order->shipmentOrder->cancel != 'Chưa xử lý')
+                                        <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
+                                            <div class="flex gap-4">
+                                                <div class="grow">
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Cancel</h6>
+                                                    <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->cancel}}.</p>
+                                                </div>
+                                                <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0" >{{ $order->shipmentOrder->updated_at }}</p>
                                             </div>
-                                            <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">02 Nov, 2023</p>
                                         </div>
-                                    </div>
-                                    <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
-                                        <div class="flex gap-4">
-                                            <div class="grow">
-                                                <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Shipped Order</h6>
-                                                <p class="text-gray-400 dark:text-zink-200">The order is shipped out to the customer's designated delivery address.</p>
+                                    @endif
+                                    @if($order->shipmentOrder->shipments_5 != 'Chưa hoàn thành')
+                                        <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
+                                            <div class="flex gap-4">
+                                                <div class="grow">
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Placed</h6>
+                                                    <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_5 }}.</p>
+                                                </div>
+                                                <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
                                             </div>
-                                            <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">04 Nov, 2023</p>
                                         </div>
-                                    </div>
-                                    <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
-                                        <div class="flex gap-4">
-                                            <div class="grow">
-                                                <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Out for Delivery</h6>
-                                                <p class="text-gray-400 dark:text-zink-200">This status indicates that the order is currently out for delivery by the shipping or courier company.</p>
+                                    @endif
+                                    @if($order->shipmentOrder->shipments_4 != 'Chưa xử lý')
+                                        <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
+                                            <div class="flex gap-4">
+                                                <div class="grow">
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Processing</h6>
+                                                    <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_4 }}.</p>
+                                                </div>
+                                                <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
                                             </div>
-                                            <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">06 Nov, 2023</p>
                                         </div>
-                                    </div>
-                                    <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
-                                        <div class="flex gap-4">
-                                            <div class="grow">
-                                                <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Delivered</h6>
-                                                <p class="text-gray-400 dark:text-zink-200">Finally, when the order successfully reaches the customer's address and is handed over, the status changes to "Delivered."</p>
+                                    @endif
+                                    @if($order->shipmentOrder->shipments_3 != 'Chưa xử lý')
+                                        <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
+                                            <div class="flex gap-4">
+                                                <div class="grow">
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Shipped Order</h6>
+                                                    <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_3 }}.</p>
+                                                </div>
+                                                <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
                                             </div>
-                                            <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">09 Nov, 2023</p>
                                         </div>
-                                    </div>
+                                    @endif
+                                    @if($order->shipmentOrder->shipments_2 != 'Chưa xử lý')
+                                        <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
+                                            <div class="flex gap-4">
+                                                <div class="grow">
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Out for Delivery</h6>
+                                                    <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_2 }}.</p>
+                                                </div>
+                                                <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if($order->shipmentOrder->shipments_1 != 'Chưa nhận đơn')
+                                        <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
+                                            <div class="flex gap-4">
+                                                <div class="grow">
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Delivered</h6>
+                                                    <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_1 }}</p>
+                                                </div>
+                                                <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div><!--end col-->
                     <div class="2xl:col-span-3">
                         <div class="card">
-                            <div class="card-body">
-                                <h6 class="mb-3 text-gray-800 text-15 dark:text-white">Documents</h6>
-                                <div class="overflow-x-auto">
-                                    <table class="w-full">
-                                        <tbody>
-                                            <tr>
-                                                <td class="px-3.5 first:pl-0 last:pr-0 py-2 border-y border-transparent">Invoice No.</td>
-                                                <td class="px-3.5 first:pl-0 last:pr-0 py-2 border-y border-transparent"><a href="apps-invoice-overview.html" class="text-custom-500">#TWI154203</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-3.5 first:pl-0 last:pr-0 py-2 border-y border-transparent">Shipping No</td>
-                                                <td class="px-3.5 first:pl-0 last:pr-0 py-2 border-y border-transparent"><a href="#!" class="text-custom-500">#TWS987102301</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="2xl:col-span-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="bg-yellow-100 rounded-md size-12 ltr:float-right rtl:float-left dark:bg-yellow-500/20">
+                                            <img src="{{ Storage::url($order->user->avatar) }}" alt="" style="width: auto; height: auto" class="h-12 rounded-md">
+                                        </div>
+                                        <h6 class="mb-4 text-15">Customer Info</h6>
+
+                                        <h6 class="mb-1">{{ $order->user->name }}</h6>
+                                        <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $order->user->email }}</p>
+                                        <p class="text-slate-500 dark:text-zink-200">{{ $order->user->sdt }}</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </div><!--end col-->
                         </div>
                         <div class="card">
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
-                                    <h6 class="text-15 grow">Logistics Details</h6>
-                                    <a href="#!" class="underline text-custom-500 shrink-0">Track Order</a>
+                                    <h6 class="text-15 grow">QR code order</h6>
+
                                 </div>
                                 <div class="flex gap-4">
                                     <div class="shrink-0">
-                                        <img src="assets/images/delivery-1.png" alt="" class="h-10">
+                                        {!! DNS2D::getBarcodeHTML("$order->barcode", 'QRCODE', 4, 4) !!}
                                     </div>
                                     <div class="grow">
-                                        <h6 class="mb-1 text-15">Express Delivery</h6>
-                                        <p class="text-slate-500 dark:text-zink-200">ID: EDTW1400457854</p>
+                                        <p class="text-slate-500 dark:text-zink-200">ID: EDTW{{ $order->barcode }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -224,6 +277,28 @@
             <!-- container-fluid -->
         </div>
         <!-- End Page-content -->
-    </div>
-@endsection
 
+    </div>
+    <div id="addressModal" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
+        <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+            <div class="max-h-[calc(theme('height.screen')_-_280px)] overflow-y-auto px-6 py-8">
+                <div class="float-right">
+                    <button data-modal-close="addressModal" class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+                </div>
+                <div class="mt-5 text-center">
+                    <h5 class="mb-1">HỦY ĐƠN HÀNG</h5>
+                    <p class="text-slate-500 dark:text-zink-200">Vui Lòng nhập lý do hủy đơn hàng?</p>
+                    <form action="../client/order/cancel/{{ $order->id }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <textarea name="cancel_8" class="mt-4 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Reason for Cancellation" rows="5" style="height: 80px;"></textarea>
+                        <div class="flex justify-center gap-2 mt-6">
+                            <button type="reset" data-modal-close="deleteModal" class="bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-600 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10">Cancel</button>
+                            <button type="submit" class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại!</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!--end add user-->
+@endsection

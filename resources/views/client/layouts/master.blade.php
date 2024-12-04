@@ -12,7 +12,7 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="../assets/images/favicon.ico">
     <link href="../../css2?family=Tourney:wght@100&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="../assets/css/page.css">
     <link rel="stylesheet" href="../../aos%403.0.0-beta.6/dist/aos.css">
 
     <!-- Swiper Slider css-->
@@ -42,7 +42,7 @@
         <div class="mx-auto">
             <ul id="navbar7" class="absolute inset-x-0 z-20 items-center hidden py-3 mt-px bg-white shadow-lg md:mt-0 dark:bg-zinc-800 dark:md:bg-transparent md:z-0 navbar-menu rounded-b-md md:shadow-none md:flex top-full ltr:ml-auto rtl:mr-auto md:relative md:bg-transparent md:rounded-none md:top-auto md:py-0">
                 <li>
-                    <a href="#home" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 active">Home</a>
+                    <a href="../client/home/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 active">Home</a>
                 </li>
                 <li>
                     <a href="../client/shop" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Shop Product</a>
@@ -90,16 +90,19 @@
                                 <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/profile/"><i data-lucide="user-2" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Profile</a>
                             </li>
                             <li>
-                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/order/view"><i data-lucide="mail" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Order <span class="inline-flex items-center justify-center w-5 h-5 ltr:ml-2 rtl:mr-2 text-[11px] font-medium border rounded-full text-white bg-red-500 border-red-500"></span></a>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/order/view"><i data-lucide="store" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>My Order</a>
+                            </li>
+                            <li>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/email/"><i data-lucide="mail" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Change Email</a>
                             </li>
                             <li>
                                 <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="apps-chat.html"><i data-lucide="messages-square" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Chat</a>
                             </li>
                             <li>
-                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/coupon"><i data-lucide="ri-gift-line" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Upgrade <span class="inline-flex items-center justify-center w-auto h-5 ltr:ml-2 rtl:mr-2 px-1 text-[12px] font-medium border rounded text-white bg-sky-500 border-sky-500">Pro</span></a>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="{{ route('client.wishlist.index') }}"><i data-lucide="heart" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> WishList </a>
                             </li>
                             <li>
-                                <a  class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/reset/password">Reset Pass</a>
+                                <a  class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/reset/password"><i data-lucide="lock" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Reset Pass</a>
                             </li>
                             <li class="pt-2 mt-2 border-t border-slate-200 dark:border-zink-500">
                                 <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../account/logout"><i data-lucide="log-out" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Sign Out</a>
@@ -236,32 +239,39 @@
         @if($cart && $cart->cartDetail->count() > 0)
             <div class="h-[calc(100vh_-_370px)] p-4 overflow-y-auto product-list">
                 <div class="flex flex-col gap-4">
-                    @foreach($cart->cartDetail as $key => $list)
-                        <div class="flex gap-2 product">
-                            <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
-                                <img src="{{ Storage::url($list->product->image) }}" alt="" class="h-8">
-                            </div>
-                            <div class="overflow-hidden grow">
-                                <div class="ltr:float-right rtl:float-left">
-                                    <button class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
+                     @foreach($cart->cartDetail as $key => $list)
+                        @if($list->product && !$list->product->trashed())
+                            <div class="flex gap-2 product">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
+                                    <img src="{{ Storage::url($list->product->image) }}" alt="" class="h-8">
                                 </div>
-                                <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
-                                    <h6 class="mb-1 text-15">{{ $list->product->name }}</h6>
-                                </a>
-                                <div class="flex items-center mb-3">
-                                    <h5 class="text-base product-price"> $<span>{{ $list->product_variant->price_sale }}</span></h5>
-                                    <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }})</div>
-                                </div>
-                                <div class="flex items-center justify-between gap-3">
-                                    <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
-                                        <button type="button" onclick="reduce('{{ $list->id }}')" class="border w-7 leading-[15px] minus-value bg-slate-200 dark:bg-zink-600 dark:border-zink-600 rounded transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block w-4 h-4"></i></button>
-                                        <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 products-quantity dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
-                                        <button type="button" onclick="increaseCart('{{ $list->id }}')" class="transition-all duration-200 ease-linear border rounded border-slate-200 bg-slate-200 dark:bg-zink-600 dark:border-zink-600 w-7 plus-value text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block w-4 h-4"></i></button>
+                                <div class="overflow-hidden grow">
+                                    <div class="ltr:float-right rtl:float-left">
+                                        <button class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
                                     </div>
-                                    <h6 class="products-line-price">${{ $list->product_variant->price_sale * $list->quantity }}</h6>
+                                    <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
+                                        <h6 class="mb-1 text-15">{{ $list->product->name }}</h6>
+                                    </a>
+                                    <div class="flex items-center mb-3">
+                                        <h5 class="text-base product-price"> $<span>{{ $list->product_variant->price_sale }}</span></h5>
+                                        <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }})</div>
+                                    </div>
+                                    <div class="flex items-center justify-between gap-3">
+                                        <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
+                                            <button type="button" onclick="reduce('{{ $list->id }}')" class="border w-7 leading-[15px] minus-value bg-slate-200 dark:bg-zink-600 dark:border-zink-600 rounded transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block w-4 h-4"></i></button>
+                                            <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 products-quantity dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
+                                            <button type="button" onclick="increaseCart('{{ $list->id }}')" class="transition-all duration-200 ease-linear border rounded border-slate-200 bg-slate-200 dark:bg-zink-600 dark:border-zink-600 w-7 plus-value text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block w-4 h-4"></i></button>
+                                        </div>
+                                        <h6 class="products-line-price">${{ $list->product_variant->price_sale * $list->quantity }}</h6>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+
+                        @else
+                            <div class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                                <span class="font-bold">Sản phẩm Đang Được Quản Trị Thay Đổi, Bạn Vẫn Có Thể Mua Hàng Bình Thường</span>
+                            </div>
+                         @endif
                     @endforeach
                 </div>
             </div>
