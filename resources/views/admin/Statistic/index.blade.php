@@ -15,14 +15,14 @@
             @endif
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Ecommerce</h5>
+                    <h5 class="text-16"></h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="#!" class="text-slate-400 dark:text-zink-200">Dashboards</a>
+                        <a href="#!" class="text-slate-400 dark:text-zink-200">Trang chủ</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Ecommerce
+                        Thống kê
                     </li>
                 </ul>
             </div>
@@ -173,9 +173,9 @@
                     <div class="relative card-body">
                         <div class="grid items-center grid-cols-12">
                             <div class="col-span-12 lg:col-span-8 2xl:col-span-7">
-                                <h5 class="mb-3 font-normal tracking-wide text-slate-200">Welcome StarCode Kh 🎉</h5>
-                                <p class="mb-5 text-slate-400">An e-commerce dashboard has just that purpose. It provides your e-commerce team with a clear overview of key financial and website KPIs at any time.</p>
-                                <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-500/20 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-500/20 dark:ring-custom-400/20">Take a Product</button>
+                                <h5 class="mb-3 font-normal tracking-wide text-slate-200">Trang quản trị 🎉</h5>
+                                <p class="mb-5 text-slate-400">Trang thống kê tổng hợp và hiển thị các số liệu quan trọng của cửa hàng, giúp theo dõi tình hình hoạt động. Với các biểu đồ trực quan và bảng số liệu chi tiết, trang này cung cấp thông tin về doanh thu, số lượng đơn hàng, sản phẩm bán chạy, và tình trạng kho hàng, hỗ trợ việc đưa ra quyết định nhanh chóng và chính xác.
+                                </p>
                             </div>
                             <div class="hidden col-span-12 2xl:col-span-3 lg:col-span-2 lg:col-start-11 2xl:col-start-10 lg:block">
                                 <img src="assets/images/dashboard.png" alt="" class="h-40 ltr:2xl:ml-auto rtl:2xl:mr-auto">
@@ -186,9 +186,8 @@
                 <div class="col-span-12 card 2xl:col-span-4 2xl:row-span-2">
                     <div class="card-body">
                         <div class="flex items-center mb-3">
-                            <h6 class="grow text-15">Order Statistics</h6>
+                            <h6 class="grow text-15">Danh mục</h6>
                             <div class="relative">
-                                <a href="#!" class="underline transition-all duration-200 ease-linear text-custom-500 hover:text-custom-600">View All <i data-lucide="move-right" class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1"></i></a>
                             </div>
                         </div>
                         <div>
@@ -205,7 +204,7 @@
                             <i data-lucide="wallet-2"></i>
                         </div>
                         <h5 class="mt-4 mb-2">$<span class="counter-value" data-target="{{ $order->sum('total_amount') }}">0</span>k</h5>
-                        <p class="text-slate-500 dark:text-zink-200">Total Revenue</p>
+                        <p class="text-slate-500 dark:text-zink-200">Doanh thu</p>
                     </div>
                 </div><!--end col-->
                 <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
@@ -214,7 +213,7 @@
                             <i data-lucide="package"></i>
                         </div>
                         <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ $order->count() }}">0</span></h5>
-                        <p class="text-slate-500 dark:text-zink-200">Total Orders Success</p>
+                        <p class="text-slate-500 dark:text-zink-200">Đơn hàng thành công</p>
                     </div>
                 </div><!--end col-->
                 <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
@@ -223,7 +222,7 @@
                             <i data-lucide="truck"></i>
                         </div>
                         <h5 class="mt-4 mb-2"><span class="counter-value" data-target="17150">0</span></h5>
-                        <p class="text-slate-500 dark:text-zink-200">Delivered</p>
+                        <p class="text-slate-500 dark:text-zink-200">Đã giao hàng </p>
                     </div>
                 </div><!--end col-->
                 <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
@@ -232,19 +231,19 @@
                             <i data-lucide="package-x"></i>
                         </div>
                         <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ $orderCancel->count() }}">0</span></h5>
-                        <p class="text-slate-500 dark:text-zink-200">Cancelled</p>
+                        <p class="text-slate-500 dark:text-zink-200">Đơn thất bại</p>
                     </div>
                 </div><!--end col-->
                 <div class="col-span-12 card 2xl:col-span-8">
                     <div class="card-body">
                         <div class="flex flex-col gap-4 mb-4 md:mb-3 md:items-center md:flex-row">
-                            <h6 class="grow text-15">Chart Order</h6>
+                            <h6 class="grow text-15">Đơn hàng</h6>
                             <ul class="flex flex-wrap w-full text-sm font-medium text-center nav-tabs">
                                 <li class="group active">
-                                    <a href="javascript:void(0);" data-tab-toggle="" data-target="personalTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Personal Info</a>
+                                    <a href="javascript:void(0);" data-tab-toggle="" data-target="personalTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Theo tháng</a>
                                 </li>
                                 <li class="group">
-                                    <a href="javascript:void(0);" data-tab-toggle="" data-target="integrationTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Integration</a>
+                                    <a href="javascript:void(0);" data-tab-toggle="" data-target="integrationTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Theo năm</a>
                                 </li>
                             </ul>
 
@@ -252,7 +251,7 @@
 
                         <div class="block tab-pane" id="personalTabs" style="min-height: 305px;">
                             <div class="card-body">
-                                <h6 class="mb-1 text-15">Select Month</h6>
+                                <h6 class="mb-1 text-15">Chọn tháng</h6>
                                 <input
                                     type="month"
                                     id="monthPicker"
@@ -268,13 +267,13 @@
                         </div>
                         <div class="hidden tab-pane" id="integrationTabs" style="min-height: 305px;">
                             <div class="card-body">
-                                <h6 class="mb-1 text-15">Select Month</h6>
+                                <h6 class="mb-1 text-15">Chọn năm</h6>
                                 <select
                                     id="yearPicker"
                                     onchange="updateChartYear()"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 >
-                                    <option value="" disabled selected>Select Year</option>
+                                    <option value="" disabled selected>Năm</option>
                                     <script>
                                         for (let year = 2000; year <= 2029; year++) {
                                             document.write(`<option value="${year}">${year}</option>`);
@@ -288,7 +287,7 @@
                         </div>
                     </div>
                 </div><!--end col-->
-                <div class="col-span-12 2xl:col-span-4">
+                {{-- <div class="col-span-12 2xl:col-span-4">
                     <div class="grid grid-cols-12 gap-x-5">
                         <div class="col-span-12 card lg:col-span-6 2xl:col-span-12">
                             <div class="card-body">
@@ -340,54 +339,18 @@
                             </div>
                         </div><!--end col-->
                     </div><!--end grid-->
-                </div><!--end col-->
+                </div><!--end col--> --}}
 
                 <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
                     <div class="card-body">
                         <div class="flex items-center mb-3">
-                            <h6 class="grow text-15">Customer Service</h6>
+                            <h6 class="grow text-15">Khách hàng thân thiết</h6>
                             <div class="relative dropdown shrink-0">
-                                <button type="button" class="flex items-center justify-center size-[30px] p-0 bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-700 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10 dropdown-toggle" id="customServiceDropdown" data-bs-toggle="dropdown">
-                                    <i data-lucide="more-vertical" class="inline-block size-4"></i>
-                                </button>
 
-                                <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="customServiceDropdown">
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">1 Weekly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">1 Monthly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">3 Monthly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">6 Monthly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">This Yearly</a>
-                                    </li>
-                                </ul>
+
                             </div>
                         </div>
 
-                        <div>
-                            <div class="flex items-center justify-between mt-5 mb-2">
-                                <p class="text-slate-500 dark:text-zink-200">28% of the Goal Reached ($25k)</p>
-                            </div>
-                            <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-zink-600">
-                                <div class="h-2 bg-green-500 rounded-full" style="width: 28%"></div>
-                            </div>
-                            <div class="grid mt-3 xl:grid-cols-2">
-                                <div class="flex items-center gap-2">
-                                    <div class="shrink-0">
-                                        <i data-lucide="calendar-days" class="inline-block mb-1 align-middle size-4"></i>
-                                    </div>
-                                    <p class="mb-0 text-slate-500 dark:text-zink-200">This Month: <span class="font-medium text-slate-800 dark:text-zink-50">$13,741</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <h6 class="mt-4 mb-3">Top Customer</h6>
                         <ul class="divide-y divide-slate-200 dark:divide-zink-500">
                             @forelse($orderUser as $key => $list)
                                 <li class="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
@@ -414,29 +377,11 @@
                 <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
                     <div class="card-body">
                         <div class="flex items-center mb-3">
-                            <h6 class="grow text-15">Top Category Products</h6>
+                            <h6 class="grow text-15">Giá theo danh mục</h6>
                             <div class="relative dropdown shrink-0">
-                                <button type="button" class="flex items-center justify-center size-[30px] p-0 bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-700 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10 dropdown-toggle" id="sellingProductDropdown" data-bs-toggle="dropdown">
-                                    <i data-lucide="more-vertical" class="inline-block size-4"></i>
-                                </button>
 
-                                <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="sellingProductDropdown">
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">1 Weekly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">1 Monthly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">3 Monthly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">6 Monthly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">This Yearly</a>
-                                    </li>
-                                </ul>
+
+
                             </div>
                         </div>
                         <ul class="flex flex-col gap-5">
@@ -464,29 +409,11 @@
                 <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
                     <div class="card-body">
                         <div class="flex items-center mb-3">
-                            <h6 class="grow text-15">Top Selling Products</h6>
+                            <h6 class="grow text-15">Sản phẩm bán chạy</h6>
                             <div class="relative dropdown shrink-0">
-                                <button type="button" class="flex items-center justify-center size-[30px] p-0 bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-700 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10 dropdown-toggle" id="sellingProductDropdown" data-bs-toggle="dropdown">
-                                    <i data-lucide="more-vertical" class="inline-block size-4"></i>
-                                </button>
 
-                                <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="sellingProductDropdown">
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">1 Weekly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">1 Monthly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">3 Monthly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">6 Monthly</a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!">This Yearly</a>
-                                    </li>
-                                </ul>
+
+
                             </div>
                         </div>
                         <ul class="flex flex-col gap-5">
@@ -511,12 +438,12 @@
                         </ul>
                     </div>
                 </div><!--end col-->
-                <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
+                {{-- <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
                     <div class="card-body">
                         <h6 class="relative mb-3 grow text-15">Audience</h6>
                         <div id="audienceChart" class="-mt-9 apex-charts" data-chart-colors='["bg-sky-500", "bg-orange-400", "bg-green-500", "bg-yellow-500"]' dir="ltr"></div>
                     </div>
-                </div><!--end col-->
+                </div><!--end col--> --}}
             </div><!--end grid-->
         </div>
         <!-- container-fluid -->

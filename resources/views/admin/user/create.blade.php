@@ -38,7 +38,7 @@
                                 <input type="password" id="passwordInput" name="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Nhập mật khẩu" required>
                             </div>
 
-                            
+
                             <div>
                                 <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Số điện thoại</label>
                                 <input type="number" id="phoneNumberInput" name="sdt" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" value="{{ old('sdt') }}" placeholder="+(84) 123 456 789" >
@@ -47,7 +47,11 @@
                             <div>
                                 <label for="roleSelect" class="inline-block mb-2 text-base font-medium">Vai trò </label>
                                 <select id="roleSelect" name="role_id" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" required>
-                                    <option value="2" selected>Admin</option> <!-- Gán role_id = 2 cho admin -->
+                                    <option value="2" selected>Admin</option>
+                                    <option value="3" selected>Client</option>
+                                    <option value="4" selected>Shipper</option>
+
+
                                 </select>
                             </div>
                         </div><!--end grid-->
