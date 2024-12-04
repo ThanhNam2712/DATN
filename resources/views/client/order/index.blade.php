@@ -32,29 +32,29 @@
                                 <a href="../client/cart" class="transition-all duration-300 ease-linear text-custom-500 hover:text-custom-600"><i data-lucide="chevron-left" class="inline-block align-middle size-4 ltr:mr-1 rtl:ml-1 rtl:rotate-180"></i> <span class="align-middle">Back to Cart</span></a>
                             </div>
                             <div class="shrink-0">
-                                <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span> <i data-lucide="move-right" class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180"></i></button>
+{{--                                <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span> <i data-lucide="move-right" class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180"></i></button>--}}
                             </div>
                         </div>
 
                         <div class="card">
                             <div class="card-body">
-                                <h6 class="mb-4 text-15">Shipping Information</h6>
+                                <h6 class="mb-4 text-15">Thông Tin Vận Chuyển</h6>
                                 <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-12">
                                         <!-- First Name -->
                                         <div class="xl:col-span-4">
-                                            <label for="firstNameInput" class="inline-block mb-2 text-base font-medium">First Name</label>
+                                            <label for="firstNameInput" class="inline-block mb-2 text-base font-medium">Tên Đầy Đủ</label>
                                             <input type="text" id="firstNameInput" name="first_name" value="{{ $user->name }}" class="form-input" placeholder="Enter First Name">
                                         </div>
 
                                         <!-- Phone Number -->
                                         <div class="xl:col-span-4">
-                                            <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Phone Number</label>
+                                            <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Số Điện Thoại</label>
                                             <input type="text" id="phoneNumberInput" name="phone_number" value="{{ $user->sdt ?? 'Chưa có thông tin' }}" class="form-input" placeholder="(012) 345 678 9010">
                                         </div>
 
                                         <!-- Email Address -->
                                         <div class="xl:col-span-4">
-                                            <label for="emailAddressInput" class="inline-block mb-2 text-base font-medium">Email Address</label>
+                                            <label for="emailAddressInput" class="inline-block mb-2 text-base font-medium">Địa Chỉ Email</label>
                                             <input type="email" id="emailAddressInput" name="email" value="{{ $user->email }}" class="form-input" placeholder="Enter email">
                                         </div>
 
@@ -71,7 +71,7 @@
                                                 </div>
 
                                                 <div class="xl:col-span-6">
-                                                    <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
+                                                    <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Số Nhà</label>
                                                     <input type="text" id="neighborhoodInput" name="address_detail" value="{{ $address->Neighborhood }}" class="form-input" placeholder="Enter Neighborhood">
                                                 </div>
 
@@ -142,7 +142,7 @@
                                         <div>
                                         <tr>
                                             <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                Sub Total
+                                                Giá
                                             </td>
                                             {{--  @dd($cart);  --}}
                                             <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $cart->total_amuont}}</td>
@@ -167,7 +167,7 @@
                                         </tr>
                                         <tr class="font-semibold">
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                            Total Amount (USD)
+                                            Tổng Tiền Cần Trả(USD)
                                         </td>
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">${{ $cart->total_amuont}}</td>
                                         <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $cart->total_amuont }}">

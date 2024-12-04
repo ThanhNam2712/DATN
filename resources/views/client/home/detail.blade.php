@@ -138,12 +138,12 @@
                                         </div>
 
                                         <div class="mb-4">
-                                            <p class="mb-1 text-green-500">Special Price</p>
+                                            <p class="mb-1 text-green-500">Giá Tiền Sản Phẩm</p>
                                             <h4>${{ $priceVariant->price_sale }} <small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">${{ $priceVariant->price }}</small> <small class="text-green-500 align-middle">{{ round(($priceVariant->price - $priceVariant->price_sale) / $priceVariant->price * 100) }}% ON</small></h4>
                                         </div>
                                         <form action="../client/cart/add" method="post">
                                             @csrf
-                                            <h6 class="mb-3 text-15">Select Color</h6>
+                                            <h6 class="mb-3 text-15">Chọn màu sản phẩm</h6>
                                             <div class="flex flex-wrap items-center gap-2">
                                                 @foreach($product->variant as $key => $color)
                                                     <a href="../client/home/detail/{{ $product->id }}/color/{{ $color->id }}" class="color inline-block align-middle {{ $colorClasses[$color->color->name]  ?? '' }} border border-orange-500 rounded-sm appearance-none cursor-pointer size-5  checked:{{ $colorClasses[$color->color->name] ?? '' }} disabled:opacity-75 disabled:cursor-default @if($variant == $color->id) checkA @endif"></a>
@@ -153,7 +153,7 @@
                                                 @endforeach
                                             </div>
 
-                                            <h6 class="mt-5 mb-3 text-15">Select Size</h6>
+                                            <h6 class="mt-5 mb-3 text-15">Chọn kích thước sản phẩm</h6>
                                             <div class="flex flex-wrap items-center gap-2">
                                                 @foreach($product->variant as $key => $size)
                                                     <div>
@@ -162,7 +162,7 @@
                                                     </div>
                                                 @endforeach
                                             </div>
-                                            <h6 class="mt-5 mb-3 text-15">Quantity</h6>
+                                            <h6 class="mt-5 mb-3 text-15">Chọn số lượng sản phẩm</h6>
                                             <div class="flex gap-2 mt-4 shrink-0">
                                                 <div class="inline-flex text-center input-step">
                                                     <button type="button" onclick="decrease()" class="border size-9 leading-[15px] minusBtn bg-white dark:bg-zink-700 dark:border-zink-500 ltr:rounded-l rtl:rounded-r transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block size-4"></i></button>
@@ -177,18 +177,18 @@
                                                 <input type="hidden" name="product_variant_id" value="{{ $priceVariant->id }}">
                                             <button type="submit" id="add-to-cart" data-product-id="{{ $product->id }}" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">
                                                 <i data-lucide="shopping-cart" class="inline-block align-middle size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                <span class="align-middle">Add to Cart</span>
+                                                <span class="align-middle">Thêm giỏ hàng</span>
                                             </button>
 
                                             <button type="button" class="w-full"></button>
                                         </div>
                                         </form>
 
-                                        <h6 class="mt-5 mb-3 text-15">Available Offers (4)</h6>
+                                        <h6 class="mt-5 mb-3 text-15">Các ưu đãi của hàng (4)</h6>
                                         <ul class="flex flex-col gap-2">
-                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Bank Offer</span> 10% Instant Discount on Paypal, up to $1250 on orders of $5,000 and above <a href="#!" class="underline text-custom-500">T&C</a></li>
-                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Special Price</span> Get at flat $199 <a href="#!" class="underline text-custom-500">T&C</a></li>
-                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Partner Offer</span> Purchase now & get 1 surprise cashback coupon in Future <a href="#!" class="underline text-custom-500">Know More</a></li>
+                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Mua hàng trực tiếp</span> 10% Instant Discount on Paypal, up to $1250 on orders of $5,000 and above <a href="#!" class="underline text-custom-500">T&C</a></li>
+                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Giá Đặc biệt</span> Get at flat $199 <a href="#!" class="underline text-custom-500">T&C</a></li>
+                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Ưu đãi đối tác</span> Purchase now & get 1 surprise cashback coupon in Future <a href="#!" class="underline text-custom-500">Know More</a></li>
                                             <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Bank Offer</span> UPI Offer Men's Clothing <a href="#!" class="underline text-custom-500">T&C</a></li>
                                         </ul>
 
@@ -198,7 +198,7 @@
                                                     <i data-lucide="truck" class="w-6 h-6 text-slate-500 fill-slate-200 dark:text-zink-200 dark:fill-zink-500"></i>
                                                 </div>
                                                 <div>
-                                                    <h6 class="mb-1">Estimated Delivery</h6>
+                                                    <h6 class="mb-1">Giao Hàng Nhanh Chóng</h6>
                                                     <p class="text-slate-500 dark:text-zink-200">01 - 07 Dec, 2023</p>
                                                 </div>
                                             </div>
@@ -207,33 +207,33 @@
                                                     <i data-lucide="container" class="w-6 h-6 text-slate-500 fill-slate-200 dark:text-zink-200 dark:fill-zink-500"></i>
                                                 </div>
                                                 <div>
-                                                    <h6 class="mb-1">Free Shipping & Returns</h6>
+                                                    <h6 class="mb-1">Miễn Phí Vận Chuyển</h6>
                                                     <p class="text-slate-500 dark:text-zink-200">On all orders over $200.00</p>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="mt-5">
-                                            <h6 class="mb-3 text-15">Product Description:</h6>
+                                            <h6 class="mb-3 text-15">Mô Tả Sản Phẩm:</h6>
                                             <p class="mb-2 text-slate-500 dark:text-zink-200">{{ $product->description }}.</p>
-                                            <p class="text-slate-500 dark:text-zink-200"><b>Avoid shapeless and baggy clothing</b>. {{ $product->content }}!</p>
+                                            <p class="text-slate-500 dark:text-zink-200"><b>Mô Tả Ngắn Sản Phẩm</b>. {{ $product->content }}!</p>
                                         </div>
 
                                         <div class="mt-5">
-                                            <h6 class="mb-3 text-15">Features:</h6>
+                                            <h6 class="mb-3 text-15">Đặc Trưng:</h6>
                                             <div class="overflow-x-auto">
                                                 <table class="w-full">
                                                     <tbody>
                                                     <tr>
-                                                        <th class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">Type</th>
+                                                        <th class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">Kiểu</th>
                                                         <td class="px-3.5 py-2.5 border-b border-transparent">{{ $product->brand->name }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <th class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">Sleeve</th>
+                                                        <th class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">Kiểu</th>
                                                         <td class="px-3.5 py-2.5 border-b border-transparent">{{ $product->category->name }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <th class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">Trending</th>
+                                                        <th class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">Xu Hướng</th>
                                                         <td class="px-3.5 py-2.5 border-b border-transparent">@if($product->is_trending == 1)
                                                                 <span class="px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-sky-100 border-sky-100 text-sky-500 dark:bg-sky-400/20 dark:border-transparent"> New Arrivals</span>
                                                             @endif</td>
@@ -259,13 +259,13 @@
                                             </div>
                                         </div>
 
-                                        <h6 class="mt-5 mb-3 text-15">Ratings & Reviews</h6>
+                                        <h6 class="mt-5 mb-3 text-15">Đánh Giá Sản Phẩm</h6>
                                         <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                                             <div class="xl:col-span-4">
                                                 <div class="border border-dashed rounded-md border-slate-200 dark:border-zink-500">
                                                     <div class="p-5">
                                                         <div class="text-center">
-                                                            <h5 class="mb-2 text-16">Customer Ratings</h5>
+                                                            <h5 class="mb-2 text-16">Người Dùng Đánh Giá</h5>
                                                             <span class="px-3.5 py-1.5 inline-flex gap-3 text-xs font-medium rounded-full border bg-slate-100 border-slate-100 text-slate-500 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-600">
                                                         <span class="flex items-center gap-2 text-yellow-500">
                                                             <i class="ri-star-fill"></i>
@@ -340,16 +340,16 @@
                                             </div><!--end col-->
                                             <div class="xl:col-span-8">
                                                 <div class="flex items-center gap-3 mb-4">
-                                                    <h5 class="text-16 grow">Reviews</h5>
+                                                    <h5 class="text-16 grow">Đánh Giá</h5>
                                                     @if(Auth::check())
-                                                        <button type="button" data-modal-target="addReviewsModal" class="px-2 shrink-0 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Add Review</button>
+                                                        <button type="button" data-modal-target="addReviewsModal" class="px-2 shrink-0 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Đánh Giá</button>
                                                     @else
-                                                        <h5 class="text-16 grow">Please Login to comment</h5>
+                                                        <h5 class="text-16 grow">Vui Lòng Đăng Nhập Để Bình Luận</h5>
                                                         <a href="" class="px-2 shrink-0 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Login</a>
                                                     @endif
                                                 </div>
                                                 @if($product->review->count() == 0)
-                                                    <h3 class="text-16 grow">There are no comments for this product yet</h3>
+                                                    <h3 class="text-16 grow">Sản Phẩm Chưa Có Lượt Bình Luận Nào</h3>
                                                 @else
                                                     @foreach($product->review as $list)
                                                         <div class="pt-3 mt-3 border-t border-slate-200 dark:border-zink-500">

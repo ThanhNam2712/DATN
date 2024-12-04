@@ -160,7 +160,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Return</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Trả Hàng</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->status }}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0" >{{ $order->updated_at }}</p>
@@ -171,7 +171,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Cancel</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Hủy Đơn Hàng</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->cancel}}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0" >{{ $order->shipmentOrder->updated_at }}</p>
@@ -182,7 +182,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Placed</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Hoàn Thành</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_5 }}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -193,7 +193,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Processing</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Đã Điểm Giao</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_4 }}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -204,7 +204,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Shipped Order</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Bắt Đầu Giao</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_3 }}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -215,7 +215,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Out for Delivery</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Đơn Hàng Đang Kiểm Tra</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_2 }}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -226,7 +226,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Delivered</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Đã Nhận Đơn</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_1 }}</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -245,7 +245,7 @@
                                         <div class="bg-yellow-100 rounded-md size-12 ltr:float-right rtl:float-left dark:bg-yellow-500/20">
                                             <img src="{{ Storage::url($order->user->avatar) }}" alt="" style="width: auto; height: auto" class="h-12 rounded-md">
                                         </div>
-                                        <h6 class="mb-4 text-15">Customer Info</h6>
+                                        <h6 class="mb-4 text-15">Thông Tin Đặt Hàng</h6>
 
                                         <h6 class="mb-1">{{ $order->user->name }}</h6>
                                         <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $order->user->email }}</p>

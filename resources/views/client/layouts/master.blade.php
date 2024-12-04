@@ -317,6 +317,7 @@
 <script src="../assets/js/cart/quantity.js"></script>
 <script src="../assets/js/cart/cartAddCart.js"></script>
 <script src="../assets/js/order/coupon.js"></script>
+<script src="../assets/js/pages/swiper.init.js"></script>
 {{--<script src="../assets/js/apiAddress/api.js"></script>--}}
 {{--<script src="../assets/js/apiAddress/api2.js"></script>--}}
 <script src="../assets/js/pages/landing-product.init.js"></script>

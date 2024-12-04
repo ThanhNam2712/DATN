@@ -4,6 +4,15 @@
     <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
         <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
             <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
+                @if(Session::has('success'))
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                    <script>
+                        swal("Message", "{{ Session::get("success") }}", "success", {
+                            button:true,
+                            button:"OK",
+                        })
+                    </script>
+                @endif
                 <div>
                     <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-1">
                         <div class="card">
@@ -22,14 +31,14 @@
                 </div>
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Grid View</h5>
+                        <h5 class="text-16">Xem Dạng Lướt</h5>
                     </div>
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
                             <a href="#!" class="text-slate-400 dark:text-zink-200">Products</a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
-                            Grid View
+                            Xem Dạng Lướt
                         </li>
                     </ul>
                 </div>
@@ -54,7 +63,7 @@
                                     {{-- color products --}}
                                     <div class="mt-4 collapsible">
                                         <button class="flex items-center w-full text-left collapsible-header group">
-                                            <h6 class="underline grow">Color</h6>
+                                            <h6 class="underline grow">Chọn Màu</h6>
                                         </button>
                                         <div class="mt-4 collapsible-content">
                                             <div class="flex flex-wrap items-center gap-2">
@@ -71,7 +80,7 @@
                                     {{-- size products --}}
                                     <div class="mt-4 collapsible">
                                         <button class="flex items-center w-full text-left collapsible-header group">
-                                            <h6 class="underline grow">Color</h6>
+                                            <h6 class="underline grow">Chọn Kích Thước</h6>
                                         </button>
                                         <div class="mt-4 collapsible-content">
                                             <div class="flex flex-wrap items-center gap-2">
@@ -88,7 +97,7 @@
                                     {{-- price products --}}
                                     <div class="mt-4 collapsible">
                                         <button class="flex items-center w-full text-left collapsible-header group">
-                                            <h6 class="underline grow">Price</h6>
+                                            <h6 class="underline grow">Nhập Giá Tiền</h6>
                                             <div class="shrink-0 text-slate-500 dark:text-zink-200">
                                                 <i data-lucide="chevron-down" class="hidden size-4 group-[.show]:inline-block"></i>
                                                 <i data-lucide="chevron-up" class="inline-block size-4 group-[.show]:hidden"></i>
@@ -107,7 +116,7 @@
                                     {{-- brand products --}}
                                     <div class="mt-4 collapsible">
                                         <button class="flex items-center w-full text-left collapsible-header group show">
-                                            <h6 class="underline grow">Brand</h6>
+                                            <h6 class="underline grow">Chọn Thương Hiệu</h6>
                                         </button>
                                         <div class=" mt-4 collapsible-content">
                                             <div class="flex flex-col gap-2">
@@ -125,7 +134,7 @@
                                     {{-- Category --}}
                                     <div class="mt-4 collapsible">
                                         <button class="flex items-center w-full text-left collapsible-header group">
-                                            <h6 class="underline grow">Product Category</h6>
+                                            <h6 class="underline grow">Chọn Danh Mục</h6>
                                             <div class="shrink-0 text-slate-500 dark:text-zink-200">
                                                 <i data-lucide="chevron-down" class="hidden size-4 group-[.show]:inline-block"></i>
                                                 <i data-lucide="chevron-up" class="inline-block size-4 group-[.show]:hidden"></i>
@@ -148,7 +157,7 @@
                                     {{-- rating --}}
                                     <div class="mt-4 collapsible">
                                         <button class="flex items-center w-full text-left collapsible-header group">
-                                            <h6 class="underline grow">Rating</h6>
+                                            <h6 class="underline grow">Chọn Số Sao</h6>
                                             <div class="shrink-0 text-slate-500 dark:text-zink-200">
                                                 <i data-lucide="chevron-down" class="hidden size-4 group-[.show]:inline-block"></i>
                                                 <i data-lucide="chevron-up" class="inline-block size-4 group-[.show]:hidden"></i>
@@ -245,7 +254,12 @@
                             @foreach($products as $key => $list)
                                 <div class="card md:group-[.gridView]:flex relative">
                                     <div class="relative group-[.gridView]:static p-8 group-[.gridView]:p-5">
-                                        <a href="#!" class="absolute group/item toggle-button top-6 ltr:right-6 rtl:left-6 active"><i data-lucide="heart" class="size-5 text-slate-400 fill-slate-200 transition-all duration-150 ease-linear dark:text-zink-200 dark:fill-zink-600 group-[.active]/item:text-red-500 dark:group-[.active]/item:text-red-500 group-[.active]/item:fill-red-200 dark:group-[.active]/item:fill-red-500/20 group-hover/item:text-red-500 dark:group-hover/item:text-red-500 group-hover/item:fill-red-200 dark:group-hover/item:fill-red-500/20"></i></a>
+                                        <form action="{{ route('client.wishlist.toggle', $list->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="favorite-btn">
+                                                <i class="{{ Auth::check() && Auth::user()->wishlists->contains('product_id', $list->id) ? 'ri-heart-fill' : 'ri-heart-line' }}"></i>
+                                            </button>
+                                        </form>
                                         <div class="group-[.gridView]:p-3 group-[.gridView]:bg-slate-100 dark:group-[.gridView]:bg-zink-600 group-[.gridView]:inline-block rounded-md">
                                             <img src="{{ Storage::url($list->image) }}" alt="" class="group-[.gridView]:h-16">
                                         </div>
@@ -255,20 +269,20 @@
                                             <h6 class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500"><a href="../client/detail/product-detail/{{ $list->id }}/color/{{ $list->firstId }}">{{ $list->name }}</a></h6>
 
                                             <div class="flex items-center text-slate-500 dark:text-zink-200">
-                                                <div class="mr-1 text-yellow-500 shrink-0 text-15">
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-half-line"></i>
-                                                </div>
-                                                ({{ $list->comment->count() }})
+{{--                                                <div class="mr-1 text-yellow-500 shrink-0 text-15">--}}
+{{--                                                    <i class="ri-star-fill"></i>--}}
+{{--                                                    <i class="ri-star-fill"></i>--}}
+{{--                                                    <i class="ri-star-fill"></i>--}}
+{{--                                                    <i class="ri-star-fill"></i>--}}
+{{--                                                    <i class="ri-star-half-line"></i>--}}
+{{--                                                </div>--}}
+{{--                                                ({{ $list->comment->count() }})--}}
                                             </div>
                                             <h5 class="mt-4 text-16">${{ $list->variant->first()->price_sale }} <small class="font-normal line-through text-slate-500 dark:text-zink-200">${{ $list->variant->first()->price }}</small></h5>
                                         </div>
 
                                         <div class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
-                                            <button type="button" class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i> <span class="align-middle">Add to Cart</span></button>
+                                            <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}" class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i> <span class="align-middle">Chi Tiết Sản Phẩm</span></a>
 
                                         </div>
                                     </div>
