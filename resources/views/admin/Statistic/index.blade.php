@@ -267,6 +267,21 @@
                             </canvas>
                         </div>
                         <div class="hidden tab-pane" id="integrationTabs" style="min-height: 305px;">
+                            <div class="card-body">
+                                <h6 class="mb-1 text-15">Select Month</h6>
+                                <select
+                                    id="yearPicker"
+                                    onchange="updateChartYear()"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                >
+                                    <option value="" disabled selected>Select Year</option>
+                                    <script>
+                                        for (let year = 2000; year <= 2029; year++) {
+                                            document.write(`<option value="${year}">${year}</option>`);
+                                        }
+                                    </script>
+                                </select>
+                            </div>
                             <canvas id="chartOrderYear" style="min-height: 305px;" class="apex-charts">
 
                             </canvas>
@@ -534,7 +549,6 @@
         }
     </script>
 
-{{--  chart Year  --}}
     <script>
         var ctxYear = document.getElementById('chartOrderYear').getContext('2d');
         var orderChartYear = new Chart(ctxYear, {
@@ -545,8 +559,23 @@
             },
         });
     </script>
-{{--   end --}}
-{{--  carygory chart  --}}
+
+    <script>
+        function updateChartYear(){
+            var selectedYear = document.getElementById('yearPicker').value;
+            var url = `../admin/statistic/chartYear?year=${selectedYear || ''}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    orderChartYear.data.labels = data.labels;
+                    orderChartYear.data.datasets = data.datasets;
+                    orderChartYear.update();
+                })
+                .catch(error => console.error('Error:', error));
+
+        }
+
+    </script>
 
     <script>
         var ctx = document.getElementById('categoryChart').getContext('2d');

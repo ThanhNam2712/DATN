@@ -32,13 +32,6 @@ use App\Http\Controllers\Client\VerifyEmailController;
 use App\Http\Controllers\Client\WishlistController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('client.home');
-// });
-Route::get('/', [ProductsController::class, 'home'])->name('home');
-Route::get('gioi-thieu', [ProductsController::class, 'gioiThieu'])->name('gioithieu');
-Route::get('lien-he', [ProductsController::class, 'lienHe'])->name('lienhe');
-Route::get('detail/{id}', [ProductsController::class, 'show'])->name('detail');
 Route::view('/client/404', 'client.404')->name('client.404');
 
 
@@ -111,6 +104,7 @@ Route::get('/blocked', function () {
     ], function (){
         Route::get('/', [ShopController::class, 'index'])->name('index');
         Route::get('category/{name}', [ShopController::class, 'category'])->name('category');
+        Route::get('introduce', [ShopController::class, 'introduce'])->name('introduce');
     });
 
     Route::group([
@@ -153,6 +147,7 @@ Route::get('/blocked', function () {
         Route::get('/', [UserEditController::class, 'changeEmail'])->name('changeEmail');
         Route::post('create', [UserEditController::class, 'postEmail'])->name('postEmail');
     });
+
 });
 
 
@@ -231,6 +226,7 @@ Route::group([
     ], function () {
         Route::get('/', [StatisticController::class, 'index'])->name('index');
         Route::get('chart', [StatisticController::class, 'chart'])->name('chart');
+        Route::get('chartYear', [StatisticController::class, 'chartYear'])->name('chartYear');
     });
 
     Route::group([

@@ -78,7 +78,55 @@ class StatisticController extends Controller
         ]);
     }
 
+    public function chartYear(Request $request)
+    {
+        $year = $request->input('year', now()->year);
+        $startOfYear = Carbon::create($year, 1, 1)->startOfYear();
+        $endOfYear = Carbon::create($year, 12, 31)->endOfYear();
 
+        $ordersSuccess = Order::selectRaw('MONTH(created_at) as month, SUM(total_amount) as total')
+            ->whereIn('status', ['completed', 'Giao Thành công'])
+            ->whereBetween('created_at', [$startOfYear, $endOfYear])
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get()
+            ->keyBy('month');
+
+        $ordersCancelled = Order::selectRaw('MONTH(created_at) as month, SUM(total_amount) as total')
+            ->where('status', 'cancelled')
+            ->whereBetween('created_at', [$startOfYear, $endOfYear])
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get()
+            ->keyBy('month');
+
+        $labels = [];
+        $dataChartSuccess = [];
+        $dataChartCancelled = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $labels[] = Carbon::create($year, $i, 1)->format('F'); // Tháng dưới dạng chữ
+            $dataChartSuccess[] = $ordersSuccess->get($i)->total ?? 0;
+            $dataChartCancelled[] = $ordersCancelled->get($i)->total ?? 0;
+        }
+
+        $datasets = [
+            [
+                'label' => 'Total Revenue',
+                'data' => $dataChartSuccess,
+                'backgroundColor' => '#36A2EB'
+            ],
+            [
+                'label' => 'Total Revenue Cancel',
+                'data' => $dataChartCancelled,
+                'backgroundColor' => '#FF6384'
+            ]
+        ];
+
+        return response()->json([
+            'labels' => $labels,
+            'datasets' => $datasets,
+        ]);
+    }
     private function getOrderSuccess()
     {
         return Order::where('status', '=', 'completed')->get();

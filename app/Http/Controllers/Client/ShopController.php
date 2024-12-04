@@ -153,5 +153,8 @@ class ShopController extends Controller
         return $products;
     }
 
-
+    public function introduce()
+    {
+        return view('client.profileShop.index');
+    }
 }

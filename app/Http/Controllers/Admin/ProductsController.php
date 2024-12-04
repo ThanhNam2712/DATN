@@ -21,29 +21,6 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function gioiThieu()
-    {
-        $product = Product::with('tags')->latest('id')->get();
-
-        return view('client.gioithieu', compact('product'));
-    }public function lienHe()
-    {
-        $product = Product::with('tags')->latest('id')->get();
-
-        return view('client.lienhe', compact('product'));
-    }
-    public function home()
-    {
-        $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
-        $trends = Product::with(['tags', 'variant'])
-            ->where('is_trending', 1) // Lọc những sản phẩm đang trending
-            ->orderBy('id', 'desc') // Sắp xếp theo ID (hoặc theo cột khác nếu cần)
-            ->limit(4) // Giới hạn chỉ lấy 4 sản phẩm
-            ->get();
-        // dd($trends);
-        return view('client.home', compact('products', 'trends'));
-    }
-
     public function index(Request $request)
     {
         $search = $request->search;

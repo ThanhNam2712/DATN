@@ -6,12 +6,12 @@
 <section class="relative pb-28 xl:pb-36 pt-44 xl:pt-52" id="home">
     <div class="absolute top-0 left-0 size-64 bg-custom-500 opacity-10 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 size-64 bg-purple-500/10 blur-3xl"></div>
-    @foreach($brandLimit as $brand)
+    @foreach($cateLimit as $cate)
     <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
         <div class="grid items-center grid-cols-12 gap-5 2xl:grid-cols-12">
             <div class="col-span-12 xl:col-span-5 2xl:col-span-5">
                 <h1 class="mb-4 !leading-normal lg:text-5xl 2xl:text-6xl dark:text-zinc-100" data-aos="fade-right"
-                    data-aos-delay="300">{{ $brand->name }} 2024</h1>
+                    data-aos-delay="300">{{ $cate->name }} 2024</h1>
                 <p class="text-lg mb-7 text-slate-500 dark:text-zinc-400" data-aos="fade-right" data-aos-delay="600">In
                     2024, metallics will be taking over the sneaker world. I love this trend because there are so many
                     different ways to wear it. You can wear sequined sneakers, white sneakers with metallic accents, or
@@ -29,13 +29,10 @@
                         data-aos="zoom-in-down" data-aos-delay="1400">
                         Unique Fashion
                     </div>
-                    <img src="../assets/images/offer.png" alt="" class="absolute h-40 left-10 xl:-left-10 top-32"
-                        data-aos="fade-down-right" data-aos-delay="900" data-aos-easing="linear">
                     <div class="relative" data-aos="zoom-in" data-aos-delay="500">
                         <button data-tooltip="default" data-tooltip-content="$199.99"
-                            class="absolute items-center justify-center hidden bg-white rounded-full size-8 xl:flex bottom-20 text-slate-800 left-20"><i
-                                data-lucide="plus"></i></button>
-                        <img src="../assets/images/product-home.png" alt="" class="mx-auto">
+                            class="absolute items-center justify-center hidden bg-white rounded-full size-8 xl:flex bottom-20 text-slate-800 left-20"></button>
+                        <img src="{{ Storage::url($cate->image) }}" alt="" class="mx-auto">
                     </div>
                 </div>
             </div>
@@ -92,7 +89,11 @@
             <!--end-->
             @endforeach
         </div>
-        <!--end grid-->
+        <nav aria-label="..." style="margin-top: 10px; float: inline-end;">
+            <ul class="pagination pagination-sm">
+                {{ $product->links() }}
+            </ul>
+        </nav>
     </div>
     <!--end container-->
 </section>
