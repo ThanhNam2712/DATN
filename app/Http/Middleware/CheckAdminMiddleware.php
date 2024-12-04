@@ -17,7 +17,7 @@ class CheckAdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()){
-            if (Auth::user()->role->name === 'Admin'){
+            if (Auth::user()->role_id === 2 || Auth::user()->role_id === 4){
                 return $next($request);
             }else{
                 return redirect()->back()->with([

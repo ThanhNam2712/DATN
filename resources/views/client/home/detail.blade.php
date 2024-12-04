@@ -7,17 +7,27 @@
 
                 <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
                     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
-                        @if(session('message'))
-                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-                                <span class="font-bold">{{ session('message') }}</span>
-                            </div>
+
+                        @if(Session::has('message'))
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                            <script>
+                                swal("Message", "{{ Session::get("message") }}", "success", {
+                                    button:true,
+                                    button:"OK",
+                                })
+                            </script>
                         @endif
 
-                        @if(session('error'))
-                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-                                <span class="font-bold">{{ session('error') }}</span>
-                            </div>
+                        @if(Session::has('error'))
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                            <script>
+                                swal("Message", "{{ Session::get("error") }}", "error", {
+                                    button:true,
+                                    button:"OK",
+                                })
+                            </script>
                         @endif
+
                         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                             <div class="grow">
                                 <h5 class="text-16">Overview</h5>
@@ -384,6 +394,31 @@
 
                     </div>
                     <!-- container-fluid -->
+                    <section class="relative py-24 xl:py-32" id="product">
+                        <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
+                            <div class="mx-auto text-center xl:max-w-3xl">
+                                <h1 class="mb-0 leading-normal capitalize">Similar Products</h1>
+                            </div>
+                            <div class="grid grid-cols-1 gap-5 mt-12 md:grid-cols-2 xl:grid-cols-4">
+                                @foreach($productRelated as $key => $list)
+                                    <div class="p-5 rounded-md bg-gradient-to-b from-slate-100 to-white dark:from-zinc-800 dark:to-zinc-900" data-aos="fade-up" data-aos-easing="linear">
+                                        <img src="{{ Storage::url($list->image) }}" style="mix-blend-mode: darken; width: 200px; height: auto" alt="" class="mx-auto">
+                                        <div class="mt-3">
+                                            <p class="mb-3"><i data-lucide="star" class="inline-block text-yellow-500 align-middle size-4 ltr:mr-1 rtl:ml-1"></i> (4.8)</p>
+                                            <h5><a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}">{{ $list->name }}</a></h5>
+
+                                            <div class="flex items-center gap-3 mt-3">
+                                                <h6 class="text-16 grow">${{ $list->variant->first()->price_sale }}</h6>
+                                                <div class="shrink-0">
+                                                    <button type="button" class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Add to Cart</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--end-->
+                                @endforeach
+                            </div><!--end grid-->
+                        </div><!--end container-->
+                    </section><!--end -->
                 </div>
                 <!-- End Page-content -->
             </div>

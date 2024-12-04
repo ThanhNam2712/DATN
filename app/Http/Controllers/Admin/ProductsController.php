@@ -153,75 +153,25 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-        try {
-            DB::transaction(function () use ($request, $id) {
+        $product = Product::find($id);
+        $data = $request->all();
+        $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
+        $data['is_sale'] = $request->has('is_sale') ? 1 : 0;
+        $data['is_new'] = $request->has('is_new') ? 1 : 0;
+        $data['is_show_home'] = $request->has('is_show_home') ? 1 : 0;
+        $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
-                // dd( $request->validate());
-                // Update product details
-                $product = Product::find($id);
-                $request->validate([
-                    'name' => 'required|max:255',
-                    'category_id' => 'required',
-                    'brand_id' => 'required',
-                    // 'image' => 'required|image',
-                    'description' => 'required|max:255',
-                    'content' => 'required|max:255',
-                    // 'product_color_id' => 'required',
-                    // 'product_size_id' => 'required',
-                    // 'price_sale' => 'required|integer',
-                    // 'price' => 'required|integer',
-                    // 'quantity' => 'required|integer',
-                ]);
-                $data = $request->all();
+        if ($request->hasFile('image')) {
+            $data['image'] = Common::uploadFile($request->file('image'), 'admin/img/products');
 
-                $data['is_trending'] = $request->has('is_trending') ? 1 : 0;
-                $data['is_sale'] = $request->has('is_sale') ? 1 : 0;
-                $data['is_new'] = $request->has('is_new') ? 1 : 0;
-                $data['is_show_home'] = $request->has('is_show_home') ? 1 : 0;
-                $data['is_active'] = $request->has('is_active') ? 1 : 0;
-
-                if ($request->hasFile('image')) {
-                    $data['image'] = Common::uploadFile($request->file('image'), 'admin/img/products');
-                }
-
-                $product->update($data);
-
-                $id_product = $product->id;
-                // dd($id_product);
-                foreach ($request->variants as $variantData) {
-                    // dd($request->variants);
-                    if (isset($variantData['id'])) {
-                        // Nếu có ID, đây là biến thể cũ cần cập nhật
-                        $variant = ProductVariant::find($variantData['id']);
-                        // Cập nhật thông tin biến thể
-                        $variant->update([
-                            'price' => $variantData['price'],
-                            'price_sale' => $variantData['price_sale'],
-                            'quantity' => $variantData['quantity'],
-                            'product_color_id' => $variantData['product_color_id'],
-                            'product_size_id' => $variantData['product_size_id'],
-                        ]);
-                    } else {
-                        // Nếu không có ID, đây là biến thể mới cần thêm
-                        ProductVariant::create([
-                            'product_id' => $id_product,
-                            'product_color_id' => $variantData['product_color_id'],
-                            'product_size_id' => $variantData['product_size_id'],
-                            'price_sale' => $variantData['price_sale'],
-                            'price' => $variantData['price'],
-                            'quantity' => $variantData['quantity'],
-                        ]);
-                    }
-                }
-                $product->tags()->sync($request->tags);
-            });
-
-            return back()->with('success', 'Product updated successfully');
-        } catch (\Throwable $th) {
-            dd($th->getMessage());
-            return back()->with('error', $th->getMessage());
+            $file_old = $request->input('file_old');
+            if ($file_old && Storage::disk('public')->exists($file_old)) {
+                Storage::disk('public')->delete($file_old);
+            }
         }
+        $product->update($data);
+        $product->tags()->sync($request->tags);
+        return redirect()->back()->with('message', 'Update Success');
     }
 
 

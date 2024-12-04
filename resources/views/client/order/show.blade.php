@@ -1,87 +1,25 @@
 @extends('client.layouts.master')
 @section('title', 'Cart')
 @section('body')
-    
     <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
 
         <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
             <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
-                
+
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Chi tiết đơn hàng</h5>
+                        <h5 class="text-16">Order Overview</h5>
                     </div>
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
                             <a href="#!" class="text-slate-400 dark:text-zink-200">Ecommerce</a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
-                            Chi tiết đơn hàng
+                            Order Overview
                         </li>
                     </ul>
                 </div>
                 <div class="grid grid-cols-1 2xl:grid-cols-12 gap-x-5">
-                    <div class="2xl:col-span-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="flex items-center justify-center bg-purple-100 rounded-md size-12 dark:bg-purple-500/20 ltr:float-right rtl:float-left">
-                                    <i data-lucide="truck" class="text-purple-500 fill-purple-200 dark:fill-purple-500/30"></i>
-                                </div>
-                                <h6 class="mb-4 text-15">Shipping Details</h6>
-
-                                <h6 class="mb-1">Pauline Hylton</h6>
-                                <p class="mb-1 text-slate-500 dark:text-zink-200">1235 Crossing Meadows Dr, Onalaska</p>
-                                <p class="text-slate-500 dark:text-zink-200">West Virginia, USA</p>
-                            </div>
-                        </div>
-                    </div><!--end col-->
-                    <div class="2xl:col-span-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="flex items-center justify-center bg-orange-100 rounded-md size-12 dark:bg-orange-500/20 ltr:float-right rtl:float-left">
-                                    <i data-lucide="credit-card" class="text-orange-500 fill-orange-200 dark:fill-orange-500/30"></i>
-                                </div>
-                                
-                                <h6 class="mb-4 text-15">Chi tiết thanh toán</h6>
-
-                                <h6 class="mb-1">{{$user->name}}</h6>
-                                @foreach ($address as $item)
-                                <p class="mb-1 text-slate-500 dark:text-zink-200">{{  $item->Province ?? '' }}</p>
-                                <p class="text-slate-500 dark:text-zink-200">{{  $item->Neighborhood ?? '' }}</p>
-                                <p class="text-slate-500 dark:text-zink-200">{{  $item->district ?? '' }}</p>
-                                <p class="text-slate-500 dark:text-zink-200">{{  $item->Apartment ?? '' }}</p>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div><!--end col-->
-                    <div class="2xl:col-span-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="flex items-center justify-center rounded-md size-12 ltr:float-right rtl:float-left bg-sky-100 dark:bg-sky-500/20">
-                                    <i data-lucide="circle-dollar-sign" class="text-sky-500 fill-sky-200 dark:fill-sky-500/30"></i>
-                                </div>
-                                <h6 class="mb-4 text-15">Payment Details</h6>
-
-                                <h6 class="mb-1">ID: #TSD456DF41SD5</h6>
-                                <p class="mb-1 text-slate-500 dark:text-zink-200">Payment Method: <b>Credit Card</b></p>
-                                <p class="mb-1 text-slate-500 dark:text-zink-200">Card Number: <b>xxxx xxxx xxxx 1501</b></p>
-                            </div>
-                        </div>
-                    </div><!--end col-->
-                    <div class="2xl:col-span-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="bg-yellow-100 rounded-md size-12 ltr:float-right rtl:float-left dark:bg-yellow-500/20">
-                                    <img src="assets/images/avatar-4.png" alt="" class="h-12 rounded-md">
-                                </div>
-                                <h6 class="mb-4 text-15">Thông tin khách hàng</h6>
-
-                                <h6 class="mb-1">{{$user->name}}</h6>
-                                <p class="mb-1 text-slate-500 dark:text-zink-200">{{$user->email }}</p>
-                                <p class="text-slate-500 dark:text-zink-200">{{$user->sdt}}</p>
-                            </div>
-                        </div>
-                    </div><!--end col-->
                 </div><!--end grid-->
 
                 <div class="grid grid-cols-1 2xl:grid-cols-12 gap-x-5">
@@ -90,7 +28,7 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1 underline">#{{ $order->id }}</h6>
+                                        <h6 class="mb-1 underline">#TWT50151003{{ $order->id }}</h6>
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Order ID</p>
                                     </div>
                                 </div>
@@ -98,7 +36,7 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1">{{ $order->created_at->format('d/m/Y') }}</h6>
+                                        <h6 class="mb-1">{{ $order->updated_at }}</h6>
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Order Date</p>
                                     </div>
                                 </div>
@@ -106,7 +44,7 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1">( chưa sửa )</h6>
+                                        <h6 class="mb-1">09 Nov, 2023</h6>
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Delivery Date</p>
                                     </div>
                                 </div>
@@ -122,8 +60,8 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-purple-100 border-purple-200 text-purple-500 dark:bg-purple-500/20 dark:border-purple-500/20">Shipping(chưa s</span>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">Order Status</p>
+                                        <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-purple-100 border-purple-200 text-purple-500 dark:bg-purple-500/20 dark:border-purple-500/20">Shipping</span>
+                                        <p class="uppercase text-slate-500 dark:text-zink-200">{{ $order->status }}</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -137,7 +75,7 @@
                                 <div class="overflow-x-auto">
                                     <table class="w-full">
                                         <tbody>
-                                            @foreach ($order->Order_Items as $item)
+                                        @foreach($order->orderDetail as $key => $list)
                                             <tr>
                                                 <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
                                                     <div class="flex items-center gap-3">
@@ -145,12 +83,12 @@
                                                             <img src="assets/images/img-08.png" alt="" class="h-8">
                                                         </div>
                                                         <div class="grow">
-                                                            <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $item->product_variants->product->name  }}</a></h6>
-                                                            <p class="text-slate-500 dark:text-zink-200">${{ number_format($item->price, 0, ',', '.') }} x {{ $item->quantity }}</p>
+                                                            <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product_variants->product->name  }}</a></h6>
+                                                            <p class="text-slate-500 dark:text-zink-200">${{ number_format($list->price, 0, ',', '.') }} x {{ $list->quantity }}</p>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($item->product_variants->price_sale * $item->quantity) }}</td>
+                                                <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variants->price_sale * $list->quantity) }}</td>
                                             </tr>
                                             @endforeach
                                        

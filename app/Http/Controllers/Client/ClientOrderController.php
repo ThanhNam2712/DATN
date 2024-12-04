@@ -30,6 +30,7 @@ class ClientOrderController extends Controller
 
         $user = auth()->user();
         $address = $user->addresses;
+        
         return view('client.order.index', compact('cart', 'address', 'user'));
     }
 
@@ -68,7 +69,7 @@ class ClientOrderController extends Controller
         if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng') {
             $cart->cartDetail()->delete();
             $this->updateTotal($cart->id, 0);
-            $this->sendMail($order, $total);
+            // $this->sendMail($order, $total);
             return view('client.order.confirm');
         } elseif ($request->input('payments') == 'Thẻ Tín Dụng') {
             $data_url = VNPay::vnpay_create_payment([

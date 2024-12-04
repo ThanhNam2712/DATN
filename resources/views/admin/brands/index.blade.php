@@ -33,8 +33,6 @@ Danh mục sản phẩm
                     </thead>
                     <tbody class="list form-check-all">
                         @foreach ($brands as $brand)
-                            
-                     
                         <tr>
                             <th class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500" scope="row">
                                 <input class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" name="chk_child">
@@ -42,11 +40,9 @@ Danh mục sản phẩm
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary id">#VZ2101</a></td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{$brand->id}}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 email">{{$brand->name}}</td>
-                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 phone"> 
-                                
+                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 phone">
                                 <img src="{{ Storage::url($brand->image) }}" width="100px" alt="">
-                                
-                            </td>                          
+                            </td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                 <div class="flex gap-2">
                                     <div class="edit">
@@ -56,14 +52,14 @@ Danh mục sản phẩm
                                         <form action="{{route('brands.destroy',$brand)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" data-modal-target="deleteRecordModal" id="delete-record" class="py-1 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20 remove-item-btn" 
+                                            <button type="submit" data-modal-target="deleteRecordModal" id="delete-record" class="py-1 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20 remove-item-btn"
                                             onclick="return confirm('bạn có muốn xóa')">Delete</button>
                                         </form>
-                                    
+
                                     </div>
                                 </div>
                             </td>
-                        </tr>  
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>

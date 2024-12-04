@@ -33,9 +33,16 @@ class AuthenController extends Controller
 
         if (Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return redirect()->route('admin.statistic.index')->with([
-                'message' => 'Login Success'
-            ]);
+            if (Auth::user()->role_id == 2){
+                return redirect()->route('admin.statistic.index')->with([
+                    'message' => 'Login Success'
+                ]);
+            }else{
+                return redirect()->route('admin.shipment.index')->with([
+                    'message' => 'Login Success'
+                ]);
+            }
+
         }
         else{
             return redirect()->back()->with([

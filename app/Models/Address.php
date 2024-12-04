@@ -15,8 +15,9 @@ class Address extends Model
         'Neighborhood',
         'Apartment',
         'status',
+        'is_default',
     ];
-    public function User(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
 }

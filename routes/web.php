@@ -3,16 +3,13 @@ use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
-
-
 use App\Http\Controllers\Admin\GalleryController;
-
+use App\Http\Controllers\Admin\ShipmentController;
+use App\Http\Controllers\Admin\VariantProductController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\OrderControllerClient;
 
 use App\Http\Controllers\Client\ResetPasswordController;
-
-
 use App\Http\Controllers\Client\ClientCartController;
 use App\Http\Controllers\Client\ClientOrderController;
 use App\Http\Controllers\Client\HomeController;
@@ -117,6 +114,8 @@ Route::group([
         Route::post('resetPass/{id}', [ForgotPasswordController::class, 'confirmPass'])->name('confirmPass');
     });
 
+
+
     Route::group([
         'prefix' => 'order',
         'as' => 'order.'
@@ -125,21 +124,8 @@ Route::group([
         Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
     });
 
-
-
 });
 
-
-//     Route::group([
-//         'prefix' => 'order',
-//         'as' => 'order.',
-//     ], function (){
-//         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
-//         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
-//         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
-//         Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
-//     });
-// });
 
 
 Route::get('/admin/dashboard', function () {
@@ -170,7 +156,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user/update', [UserEditController::class, 'updateProfile'])->name('auth.user.update');
     //tạo địa chỉ
     Route::get('/user/create', [UserEditController::class, 'addAddresses'])->name('auth.address.create');
-    Route::post('/user/store', [UserEditController::class, 'storeAddAddress'])->name('auth.address.store');
+    Route::post('/user/store', [UserEditController::class, 'store'])->name('auth.address.store');
     //sửa địa chỉ
     Route::get('/user/account/edit/{id}', [UserEditController::class, 'editAddress'])->name('auth.address.edit');
     Route::put('/user/address/update/{id}', [UserEditController::class, 'updateAddress'])->name('auth.address.update');
@@ -302,15 +288,15 @@ Route::group([
     });
 
     Route::group([
-        'prefix' => 'cart',
-        'as' => 'cart.'
-    ], function () {
-        Route::get('/', [CartController::class, 'index'])->name('index');
-        Route::post('create', [CartController::class, 'create'])->name('create');
-        Route::get('cart_detail', [CartController::class, 'detail'])->name('detail');
-        Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
-        Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+        'prefix' => 'variant',
+        'as' => 'variant.'
+    ], function (){
+        Route::get('/{id}', [VariantProductController::class, 'index'])->name('index');
+        Route::post('create', [VariantProductController::class, 'create'])->name('create');
+        Route::put('update', [VariantProductController::class, 'update'])->name('update');
+        Route::get('delete/{id}', [VariantProductController::class, 'delete'])->name('delete');
     });
+
 
     // Coupon
     Route::group([
@@ -331,7 +317,7 @@ Route::group([
         'as' => 'order.'
     ], function () {
         Route::get('/', [OrderController::class, 'index'])->name('index');
-        Route::get('detail/{id}', [OrderController::class, 'detail'])->name('detail');
+
         Route::post('create', [OrderController::class, 'create'])->name('create');
         Route::get('list', [OrderController::class, 'listOrders'])->name('list');
         Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
@@ -339,6 +325,17 @@ Route::group([
 
         // Route::post('update/{id}', [CartController::class, 'updateCart'])->name('updateCart');
         // Route::get('delete/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+    });
+
+    Route::group(
+        ['prefix' => 'orders',
+            'as' => 'orders.'
+        ], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('detail/{id}', [OrderController::class, 'detail'])->name('detail');
+        Route::put('update-status/{id}', [OrderController::class, 'updateStatus'])->name('updateStatus');
+        Route::put('cancel/{id}', [OrderController::class, 'cancel'])->name('cancel');
+        Route::get('get-id-by-barcode', [OrderController::class, 'getById'])->name('getById');
     });
 
     // reviews

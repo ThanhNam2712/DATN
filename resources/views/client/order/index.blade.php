@@ -10,145 +10,144 @@
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="{{route('admin.cart.detail')}}" class="text-slate-400 dark:text-zink-200">Cart</a>
+                        <a href="" class="text-slate-400 dark:text-zink-200">Cart</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
                         Order
                     </li>
                 </ul>
             </div>
-            <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
+            <form action="{{ route('client.order.create') }}" method="POST">
+                @csrf
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
                 <div class="xl:col-span-12">
                     <div class="flex gap-1 px-4 py-3 mb-5 text-sm text-green-500 border border-green-200 rounded-md md:items-center bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
                         <i data-lucide="shopping-bag" class="h-4 shrink-0"></i> <p>The minimum order requirement is <b>$1,800</b>. To meet this threshold, please add additional products with a combined value of <b>$300</b>.</p>
                     </div>
                 </div><!--end col-->
-                <div class="xl:col-span-8">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="grow">
-                            <a href="{{route('admin.cart.detail')}}" class="transition-all duration-300 ease-linear text-custom-500 hover:text-custom-600"><i data-lucide="chevron-left" class="inline-block align-middle size-4 ltr:mr-1 rtl:ml-1 rtl:rotate-180"></i> <span class="align-middle">Back to Cart</span></a>
+
+                    <div class="xl:col-span-8">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="grow">
+                                <a href="../client/cart" class="transition-all duration-300 ease-linear text-custom-500 hover:text-custom-600"><i data-lucide="chevron-left" class="inline-block align-middle size-4 ltr:mr-1 rtl:ml-1 rtl:rotate-180"></i> <span class="align-middle">Back to Cart</span></a>
+                            </div>
+                            <div class="shrink-0">
+                                <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span> <i data-lucide="move-right" class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180"></i></button>
+                            </div>
                         </div>
-                        <div class="shrink-0">
-                            <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span> <i data-lucide="move-right" class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180"></i></button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="mb-4 text-15">Shipping Information</h6>
-                            <form action="{{ route('client.order.create') }}" method="POST">
-                                @csrf
+
+                        <div class="card">
+                            <div class="card-body">
+                                {{--  @dd($address ->Province );    --}}
+                                <h6 class="mb-4 text-15">Shipping Information</h6>
                                 <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-12">
+                                        <!-- First Name -->
+                                        <div class="xl:col-span-4">
+                                            <label for="firstNameInput" class="inline-block mb-2 text-base font-medium">First Name</label>
+                                            <input type="text" id="firstNameInput" name="first_name" value="{{ $user->name }}" class="form-input" placeholder="Enter First Name">
+                                        </div>
 
-                                    <!-- First Name -->
-                                    <div class="xl:col-span-4">
-                                        <label for="firstNameInput" class="inline-block mb-2 text-base font-medium">First Name</label>
-                                        <input type="text" id="firstNameInput" name="first_name" value="{{ $user->name }}" class="form-input" placeholder="Enter First Name">
-                                    </div>
+                                        <!-- Phone Number -->
+                                        <div class="xl:col-span-4">
+                                            <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Phone Number</label>
+                                            <input type="text" id="phoneNumberInput" name="phone_number" value="{{ $user->sdt ?? 'Chưa có thông tin' }}" class="form-input" placeholder="(012) 345 678 9010">
+                                        </div>
 
-                                    <!-- Phone Number -->
-                                    <div class="xl:col-span-4">
-                                        <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Phone Number</label>
-                                        <input type="text" id="phoneNumberInput" name="phone" value="{{ $user->sdt ?? 'Chưa có thông tin' }}" class="form-input" placeholder="(012) 345 678 9010">
-                                    </div>
+                                        <!-- Email Address -->
+                                        <div class="xl:col-span-4">
+                                            <label for="emailAddressInput" class="inline-block mb-2 text-base font-medium">Email Address</label>
+                                            <input type="email" id="emailAddressInput" name="email" value="{{ $user->email }}" class="form-input" placeholder="Enter email">
+                                        </div>
 
-                                    <!-- Email Address -->
-                                    <div class="xl:col-span-4">
-                                        <label for="emailAddressInput" class="inline-block mb-2 text-base font-medium">Email Address</label>
-                                        <input type="email" id="emailAddressInput" name="email" value="{{ $user->email }}" class="form-input" placeholder="Enter email">
-                                    </div>
+                                        <!-- Address Information (Optional) -->
+                                        @if($address != null)
+                                            @foreach ($address as $add)
+                                                <div class="xl:col-span-12">
+                                                    <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
+                                                    <input type="text" id="provinceInput" name="province" value="{{ $add->Province }}" class="form-input" placeholder="Enter Province">
+                                                </div>
 
-                                    <!-- Address Information (Optional) -->
-                                    @if($address->isNotEmpty())
-                                        @foreach ($address as $item)
+                                                <div class="xl:col-span-12">
+                                                    <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
+                                                    <input type="text" id="townCityInput" name="district" value="{{ $add->district }}" class="form-input" placeholder="Enter District">
+                                                </div>
+
+                                                <div class="xl:col-span-6">
+                                                    <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
+                                                    <input type="text" id="neighborhoodInput" name="address_detail" value="{{ $add->Neighborhood }}" class="form-input" placeholder="Enter Neighborhood">
+                                                </div>
+
+                                                <div class="xl:col-span-6">
+                                                    <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
+                                                    <input type="text" id="apartmentInput" name="ward" value="{{ $add->Apartment }}" class="form-input" placeholder="Enter Apartment">
+                                                </div>
+                                            @endforeach            
+                                        @else
+                                            <!-- Form for adding new address -->
                                             <div class="xl:col-span-12">
                                                 <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
-                                                <input type="text" id="provinceInput" name="Province" value="{{ $item->Province }}" class="form-input" placeholder="Enter Province">
+                                                <input type="text" id="provinceInput" name="Province" class="form-input" placeholder="Enter Province">
                                             </div>
 
                                             <div class="xl:col-span-12">
                                                 <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
-                                                <input type="text" id="townCityInput" name="district" value="{{ $item->district }}" class="form-input" placeholder="Enter District">
+                                                <input type="text" id="townCityInput" name="district" class="form-input" placeholder="Enter District">
                                             </div>
 
                                             <div class="xl:col-span-6">
                                                 <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
-                                                <input type="text" id="neighborhoodInput" name="Neighborhood" value="{{ $item->Neighborhood }}" class="form-input" placeholder="Enter Neighborhood">
+                                                <input type="text" id="neighborhoodInput" name="Neighborhood" class="form-input" placeholder="Enter Neighborhood">
                                             </div>
 
                                             <div class="xl:col-span-6">
                                                 <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
-                                                <input type="text" id="apartmentInput" name="Apartment" value="{{ $item->Apartment }}" class="form-input" placeholder="Enter Apartment">
+                                                <input type="text" id="apartmentInput" name="Apartment" class="form-input" placeholder="Enter Apartment">
                                             </div>
-                                        @endforeach
-                                    @else
-                                        <!-- Form for adding new address -->
+                                        @endif
+                                    </div><!--end grid-->
+                            </div>
+                        </div><!--end card-->
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-4 text-15">Delivery</h6>
+
+                            </div>
+                        </div><!--end card-->
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-4 text-15">Payment Information</h6>
+                                <div>
+                                    <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                                         <div class="xl:col-span-12">
-                                            <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
-                                            <input type="text" id="provinceInput" name="Province" class="form-input" placeholder="Enter Province">
-                                        </div>
-
-                                        <div class="xl:col-span-12">
-                                            <label for="townCityInput" class="inline-block mb-2 text-base font-medium">Quận/Huyện</label>
-                                            <input type="text" id="townCityInput" name="district" class="form-input" placeholder="Enter District">
-                                        </div>
-
+                                            <label for="cardNumberInput" class="inline-block mb-2 text-base font-medium">Card Number</label>
+                                            <input type="text" pattern="\d*" maxlength="16" id="cardNumberInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="XXXX XXXX XXXX XXXX">
+                                        </div><!--end col-->
                                         <div class="xl:col-span-6">
-                                            <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
-                                            <input type="text" id="neighborhoodInput" name="Neighborhood" class="form-input" placeholder="Enter Neighborhood">
-                                        </div>
-
+                                            <label for="expiringInput" class="inline-block mb-2 text-base font-medium">Expiring (MM/YY)</label>
+                                            <input type="text" pattern="\d*" maxlength="4" id="expiringInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="MM/YY">
+                                        </div><!--end col-->
                                         <div class="xl:col-span-6">
-                                            <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
-                                            <input type="text" id="apartmentInput" name="Apartment" class="form-input" placeholder="Enter Apartment">
-                                        </div>
-                                    @endif
-                                </div><!--end grid-->
-                                <!-- Save Button -->
-                                <button type="submit" class="btn btn-primary mt-4">Save Address</button>
-                            </form>
-                        </div>
-                    </div><!--end card-->
+                                            <label for="cvvInput" class="inline-block mb-2 text-base font-medium">CVV Code</label>
+                                            <input type="text" pattern="\d*" maxlength="3" id="cvvInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="000">
+                                        </div><!--end col-->
+                                    </div><!--end grid-->
+                                </div>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="mb-4 text-15">Delivery</h6>
-
-                        </div>
-                    </div><!--end card-->
-
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="mb-4 text-15">Payment Information</h6>
-                            <form action="#!">
-                                <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
-                                    <div class="xl:col-span-12">
-                                        <label for="cardNumberInput" class="inline-block mb-2 text-base font-medium">Card Number</label>
-                                        <input type="text" pattern="\d*" maxlength="16" id="cardNumberInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="XXXX XXXX XXXX XXXX">
-                                    </div><!--end col-->
-                                    <div class="xl:col-span-6">
-                                        <label for="expiringInput" class="inline-block mb-2 text-base font-medium">Expiring (MM/YY)</label>
-                                        <input type="text" pattern="\d*" maxlength="4" id="expiringInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="MM/YY">
-                                    </div><!--end col-->
-                                    <div class="xl:col-span-6">
-                                        <label for="cvvInput" class="inline-block mb-2 text-base font-medium">CVV Code</label>
-                                        <input type="text" pattern="\d*" maxlength="3" id="cvvInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="000">
-                                    </div><!--end col-->
-                                </div><!--end grid-->
-                            </form>
-
-                            <div class="mt-3">
-                                <h6 class="mb-1">We accept the following cards</h6>
-                                <div class="flex items-center gap-2">
-                                    <img src="assets/images/img-013.png" alt="" class="h-8">
-                                    <img src="assets/images/img-022.png" alt="" class="h-8">
-                                    <img src="assets/images/img-032.png" alt="" class="h-8">
-                                    <img src="assets/images/img-042.png" alt="" class="h-8">
+                                <div class="mt-3">
+                                    <h6 class="mb-1">We accept the following cards</h6>
+                                    <div class="flex items-center gap-2">
+                                        <img src="assets/images/img-013.png" alt="" class="h-8">
+                                        <img src="assets/images/img-022.png" alt="" class="h-8">
+                                        <img src="assets/images/img-032.png" alt="" class="h-8">
+                                        <img src="assets/images/img-042.png" alt="" class="h-8">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div><!--end card-->
-                </div><!--end col-->
-                <div class="xl:col-span-4">
+                        </div><!--end card-->
+                    </div><!--end col-->
+                    <div class="xl:col-span-4">
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4 text-15">Orders Summary</h6>
@@ -160,7 +159,7 @@
 
                                 <table class="w-full">
                                     <tbody>
-                                    @foreach($cart->cartDetail as $key => $list)
+                                        @foreach($cart->cartDetail as $key => $list)
                                         <tr>
                                             <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
                                                 <div class="flex items-center gap-3">
@@ -176,7 +175,7 @@
                                             <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">{{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
                                         </tr>
                                     @endforeach
-                                    <div>
+                                        <div>
                                         <tr>
                                             <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
                                                 Sub Total
@@ -185,76 +184,62 @@
                                             <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $cart->total_amuont}}</td>
                                         </tr>
                                     </div>
-                                    <tr>
-                                        <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                            Estimated Tax
-                                        </td>
-                                        <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left response_discount">$0</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                            <input type="text" name="coupon" id="couponApply" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Coupon Client">
-                                        </td>
+                                        <tr>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Estimated Tax
+                                            </td>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left response_discount">$0</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                <input type="text" name="coupon" id="couponApply" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Coupon Client">
+                                            </td>
 
-                                        <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">
-                                            <a href="javascript:couponApply()">
-                                                <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span></button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr class="font-semibold">
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">
+                                                <a href="javascript:couponApply()">
+                                                    <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span></button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-semibold">
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
                                             Total Amount (USD)
                                         </td>
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">${{ $cart->total_amuont}}</td>
                                         <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $cart->total_amuont }}">
                                     </tr>
-
                                     </tbody>
                                 </table>
 
                             </div>
                             {{--  sản phẩm -----------------------------------------------------------  --}}
                             <div class="mt-4">
-                                <form action="{{ route('client.order.create') }}" method="POST">
-                                    @csrf
+                                <div class="flex items-center gap-3">
+                                    <input id="deliveryOption1" class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer" type="radio" name="payments" value="Thanh Toán Khi Nhận Hàng">
+                                    <label for="deliveryOption1" class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">
 
-                                        <div class="flex items-center gap-3">
-                                            <input id="deliveryOption1" class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer" type="radio" name="payments" value="Thanh Toán Khi Nhận Hàng">
-                                            <label for="deliveryOption1" class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">
-                                                <span class="shrink-0">
-                                                    <img src="assets/images/delivery-1.png" alt="" class="h-12">
-                                                </span>
-                                                <span class="grow">
-                                                    <span class="block mb-1 font-semibold text-15">Express Delivery</span>
-                                                    <span class="text-slate-500 dark:text-zink-200">Expected delivery: 01 Nov, Wednesday</span>
-                                                </span>
-                                                <span class="shrink-0">
-                                                    <span class="block text-lg font-semibold">$11.99</span>
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="mt-4 flex items-center gap-3">
-                                            <input id="deliveryOption2" class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer" type="radio" name="payments" value="Thẻ Tín Dụng">
-                                            <label for="deliveryOption2" class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">
-                                        <span class="shrink-0">
-                                            <img src="assets/images/delivery-2.png" alt="" class="h-12">
+                                        <span class="grow">
+                                            <span class="block mb-1 font-semibold text-15">Thanh Toán Khi Nhận Hàng</span>
+                                            <span class="text-slate-500 dark:text-zink-200">Khi Nhận Hàng Thanh Toán</span>
                                         </span>
-                                                <span class="grow">
-                                            <span class="block mb-1 font-semibold text-15">Air Logistic Delivery</span>
-                                            <span class="text-slate-500 dark:text-zink-200">Expected delivery: 06 Nov, Monday</span>
-                                        </span>
-                                                <span class="shrink-0">
-                                            <span class="block text-lg font-semibold">$5</span>
-                                        </span>
-                                            </label>
-                                        </div>
+                                    </label>
+                                </div>
+                                <div class="mt-4 flex items-center gap-3">
+                                    <input id="deliveryOption2" class="border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-purple-500 checked:border-purple-500 dark:checked:bg-purple-500 dark:checked:border-purple-500 checked:disabled:bg-purple-400 checked:disabled:border-purple-400 peer" type="radio" name="payments" value="Thẻ Tín Dụng">
+                                    <label for="deliveryOption2" class="flex flex-col gap-4 p-5 border rounded-md cursor-pointer md:flex-row border-slate-200 dark:border-zink-500 peer-checked:border-purple-500 dark:peer-checked:border-purple-700 grow">
 
-                                    <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
-                                    <button type="submit" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
-                                        Place Order
-                                    </button>
-                                </form>
+                                        <span class="grow">
+                                            <span class="block mb-1 font-semibold text-15">Thẻ Tín Dụng</span>
+                                            <span class="text-slate-500 dark:text-zink-200">Thanh Toán Trước Khi Nhận Hàng</span>
+                                        </span>
+                                    </label>
+                                </div>
+
+                                <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
+                                <input type="hidden" name="allQuantity" value="{{ $cart->cartDetail->sum('quantity') }}">
+                                <button type="submit" class="mt-3 w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
+                                    Place Order
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -295,7 +280,7 @@
                     </div><!--end card-->
                 </div><!--end col-->
             </div><!--end grid-->
-
+            </form>
         </div>
         <!-- container-fluid -->
     </div>

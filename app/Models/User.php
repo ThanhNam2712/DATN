@@ -26,6 +26,7 @@ class User extends Authenticatable
         'role_id',
         'sdt',
         'status',
+        'avatar',
     ];
 
 
@@ -51,7 +52,7 @@ class User extends Authenticatable
     ];
     public function Orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'user_id');
     }
     public function Wishlists()
     {

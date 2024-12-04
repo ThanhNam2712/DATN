@@ -34,7 +34,14 @@ class CouponController extends Controller
             'number' => 'required',
         ]);
         $data = $request->all();
-        Coupon::create($data);
+        $coupon = Coupon::create($data);
+
+        if ($request->user_id){
+            $user = User::find($request->user_id);
+            if ($user){
+                $this->sendmail($user, $coupon, $user->email);
+            }
+        }
 
         return redirect('admin/coupon/')->with([
             'message' => 'Create Coupon Success'
@@ -46,7 +53,7 @@ class CouponController extends Controller
         Mail::send('client.mail.coupon', compact('user', 'coupon'), function ($message) use ($email_to) {
             $message->from('tuancdph43313@fpt.adu.vn', 'Tuan Clothing');
             $message->to($email_to, $email_to);
-            $message->subject("Forgot Notification");
+            $message->subject("New Coupon Available!");
         });
     }
 

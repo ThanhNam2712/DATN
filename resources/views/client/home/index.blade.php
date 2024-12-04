@@ -42,51 +42,49 @@
             <div class="grid grid-cols-1 gap-5 mt-12 md:grid-cols-2 xl:grid-cols-4">
                 @foreach($product as $key => $list)
                     <div class="p-5 rounded-md bg-gradient-to-b from-slate-100 to-white dark:from-zinc-800 dark:to-zinc-900" data-aos="fade-up" data-aos-easing="linear">
-                    <img src="{{ Storage::url($list->image) }}" style="mix-blend-mode: darken" alt="" class="mx-auto h-52">
-                    <div class="mt-3">
-                        <p class="mb-3"><i data-lucide="star" class="inline-block text-yellow-500 align-middle size-4 ltr:mr-1 rtl:ml-1"></i> (4.8)</p>
-                        <h5><a href="../client/home/detail/{{ $list->id }}/color/{{ $list->firstVariant }}">{{ $list->name }}</a></h5>
+                        <img src="{{ Storage::url($list->image) }}" style="mix-blend-mode: darken; width: 200px; height: auto" alt="" class="mx-auto">
+                        <div class="mt-3">
+                            <p class="mb-3"><i data-lucide="star" class="inline-block text-yellow-500 align-middle size-4 ltr:mr-1 rtl:ml-1"></i> (4.8)</p>
+                            <h5><a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}">{{ $list->name }}</a></h5>
 
-                        <div class="flex items-center gap-3 mt-3">
-                            <h6 class="text-16 grow">${{ $list->variant->first()->price_sale }}</h6>
-                            <div class="shrink-0">
-                                <button type="button" class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Add to Cart</button>
+                            <div class="flex items-center gap-3 mt-3">
+                                <h6 class="text-16 grow">${{ $list->variant->first()->price_sale }}</h6>
+                                <div class="shrink-0">
+                                    <button type="button" class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Add to Cart</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div><!--end-->
+                    </div><!--end-->
                 @endforeach
             </div><!--end grid-->
         </div><!--end container-->
     </section><!--end -->
 
-    <section class="relative py-24 xl:py-32" id="features">
-        <div class="absolute top-0 left-0 size-64 bg-purple-500/10 blur-3xl"></div>
-        <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
-            <div class="grid items-center grid-cols-1 gap-6 mt-20 lg:grid-cols-12">
-                <div class="lg:col-span-5">
-                    <h1 class="mb-3 leading-normal capitalize" data-aos="fade-right" data-aos-delay="400">Explore our flagship product and discover its unique features</h1>
-                    <p class="mb-5 text-lg text-slate-500 dark:text-zinc-400" data-aos="fade-right" data-aos-delay="500">Whatever your running gait, a good pair of running shoes will provide flexibility, durability, and support.</p>
-                    <ul class="flex flex-col gap-2 mb-6 list-disc list-inside text-15" data-aos="fade-right" data-aos-delay="500">
-                        <li>Matches Your Foot Shape & Type</li>
-                        <li>Easy to Wear</li>
-                        <li>Heels That You Can Wear</li>
-                        <li>Good Quality & Condition</li>
-                        <li>Segments of Solid Rubber</li>
-                    </ul>
-                    <a href="#!" class="text-custom-500 text-16" data-aos="fade-right" data-aos-delay="600">Shopping Now <i data-lucide="move-right" class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180"></i></a>
-                </div><!--end col-->
-                <div class="relative lg:col-start-8 lg:col-span-7">
-                    <div class="absolute right-0 bg-center bg-cover bottom-40 w-52 h-96 bg-[url('../images/product/cta-2.png')] rounded-md" data-aos="fade-left" data-aos-delay="400">
-                        <div class="absolute inset-0 bg-gradient-to-b from-purple-500/30 to-white dark:to-zinc-900 from-30%"></div>
+    <section class="relative py-100 xl:py-100" id="features">
+            <h1 class="mb-12 text-center text-3xl font-bold leading-normal capitalize" data-aos="fade-down">
+                Khám Phá Các Sản Phẩm Nổi Bật Của Chúng Tôi
+            </h1>
+            <p class="mb-16 text-center text-lg text-slate-500 dark:text-zinc-400" data-aos="fade-down" data-aos-delay="100">
+                Khám phá những tính năng độc đáo của bộ sưu tập chủ lực, được thiết kế cho phong cách và hiệu suất tối ưu.
+            </p>
+        <div class="grid grid-cols-1 gap-4 mt-12 md:grid-cols-3 xl:grid-cols-3" style="margin-left: 70px">
+            @foreach($viewProduct as $list)
+                <div class="p-5 rounded-md bg-gradient-to-b from-slate-100 to-white dark:from-zinc-800 dark:to-zinc-900">
+                    <div class="" data-aos="fade-up" data-aos-delay="200">
+                        <img src="{{ Storage::url($list->image) }}" alt="Sản phẩm 1" class="object-contain mb-4" style="width: 300px; height: auto; align-items: center">
+                        <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}" class="text-xl font-bold mb-3">{{ $list->name }}</a>
+                        <p class="text-slate-500 dark:text-zinc-400 mb-4">{{ $list->content }}.</p>
+                        <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 mb-6">
+                            <li>{{ $list->description }}</li>
+                            <li>Category : {{ $list->category->name }}</li>
+                            <li>Brand : {{ $list->brand->name }}</li>
+                        </ul>
+                        <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}" class="text-custom-500 text-sm font-semibold">Mua Ngay <i data-lucide="move-right" class="inline-block align-middle ml-1"></i></a>
                     </div>
-                    <div class="mr-16">
-                        <img src="../assets/images/cta.png" alt="" class="relative inline-block" data-aos="fade-up-right">
-                    </div>
-                </div><!--end col-->
-            </div><!--end grid-->
-        </div><!--end container-->
-    </section><!--end -->
+                </div>
+            @endforeach
+        </div>
+    </section>
 
     <section class="relative py-24 xl:py-32" id="about">
         <div class="absolute bottom-0 right-0 size-64 bg-custom-500/10 blur-3xl"></div>
