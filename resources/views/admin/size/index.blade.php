@@ -5,14 +5,14 @@
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Size</h5>
+                    <h5 class="text-16">Kích thước</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
                         <a href="#!" class="text-slate-400 dark:text-zink-200">Admin</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Color
+                        Kích cỡ
                     </li>
                 </ul>
             </div>
@@ -32,14 +32,14 @@
                                 </div>
                             @enderror
                             <div class="flex items-center">
-                                <h6 class="text-15 grow">Users List</h6>
+                                <h6 class="text-15 grow"></h6>
                                 <div class="shrink-0">
-                                    <button data-modal-target="addUserModal" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Add User</span></button>
+                                    <button data-modal-target="addUserModal" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Thêm mới</span></button>
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                 <div class="xl:col-span-7 mt-3">
-                                    <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Product Title</label>
+                                    <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Kích cỡ</label>
                                     <form action="../admin/size/update" method="post">
                                         @csrf
                                         @method('PUT')
@@ -52,7 +52,7 @@
                                             </div>
                                         @endforeach
                                         <div class="flex justify-start gap-2 mt-5">
-                                            <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Update</button>
+                                            <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Cập nhật</button>
                                         </div>
                                     </form>
                                 </div><!--end col-->

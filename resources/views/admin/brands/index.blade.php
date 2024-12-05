@@ -10,9 +10,9 @@ Danh mục sản phẩm
         <div class="container-fluid mx-auto">
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">List Brand</h5>
+                    <h5 class="text-16">Danh sách</h5>
                 </div>
-                <a href="{{route('brands.create')}}" data-modal-target="addCustomerModal" class="btn bg-custom-500 text-white">Add Customer</a>
+                <a href="{{route('brands.create')}}" data-modal-target="addCustomerModal" class="btn bg-custom-500 text-white">Thêm mới</a>
             </div>
 
             <div class="overflow-x-auto">
@@ -23,9 +23,9 @@ Danh mục sản phẩm
                                 <input class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" id="checkAll" value="option">
                             </th>
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="customer_name">STT</th>
-                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="email">Name brands</th>
-                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="phone">Image</th>
-                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="action">Action</th>
+                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="email">Tên</th>
+                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="phone">Ảnh</th>
+                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="action">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody class="list form-check-all">
@@ -43,14 +43,14 @@ Danh mục sản phẩm
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                 <div class="flex gap-2">
                                     <div class="edit">
-                                        <a href="{{route('brands.edit',$brand)}}" data-modal-target="showModal" class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn">Edit</a>
+                                        <a href="{{route('brands.edit',$brand)}}" data-modal-target="showModal" class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn">Sửa</a>
                                     </div>
                                     <div class="remove">
                                         <form action="{{route('brands.destroy',$brand)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" data-modal-target="deleteRecordModal" id="delete-record" class="py-1 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20 remove-item-btn"
-                                            onclick="return confirm('bạn có muốn xóa')">Delete</button>
+                                            onclick="return confirm('bạn có muốn xóa')">Xóa</button>
                                         </form>
 
                                     </div>

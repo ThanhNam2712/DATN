@@ -34,24 +34,24 @@
 <nav class="fixed inset-x-0 top-0 z-50 flex items-center justify-center h-20 py-3 [&.is-sticky]:bg-white dark:[&.is-sticky]:bg-zinc-900 border-b border-slate-200 dark:border-zinc-800 [&.is-sticky]:shadow-lg [&.is-sticky]:shadow-slate-200/25 dark:[&.is-sticky]:shadow-zinc-700/30 navbar" id="navbar">
     <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto flex items-center self-center w-full">
         <div class="shrink-0">
-            <a href="#!">
-                <img src="../assets/images/logo-dark.png" alt="" class="block h-6 dark:hidden">
-                <img src="../assets/images/logo-light.png" alt="" class="hidden h-6 dark:block">
+            <a href="../client/home/">
+                <img src="../assets/images/aeboutique.png" alt="" class="block h-6 dark:hidden">
+                <img src="../assets/images/aeboutique.png" alt="" class="hidden h-6 dark:block">
             </a>
         </div>
         <div class="mx-auto">
             <ul id="navbar7" class="absolute inset-x-0 z-20 items-center hidden py-3 mt-px bg-white shadow-lg md:mt-0 dark:bg-zinc-800 dark:md:bg-transparent md:z-0 navbar-menu rounded-b-md md:shadow-none md:flex top-full ltr:ml-auto rtl:mr-auto md:relative md:bg-transparent md:rounded-none md:top-auto md:py-0">
                 <li>
-                    <a href="../client/home/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 active">Home</a>
+                    <a href="../client/home/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'home') ? 'active' : ''}}">Home</a>
                 </li>
                 <li>
-                    <a href="../client/shop" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Shop Product</a>
+                    <a href="../client/shop/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'shop') ? 'active' : ''}}" >Shop Product</a>
                 </li>
                 <li>
-                    <a href="#features" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Features</a>
+                    <a href="../client/shop/introduce/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(3) == 'introduce') ? 'active' : ''}}" >Introduce</a>
                 </li>
                 <li>
-                    <a href="#about" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">About Us</a>
+                    <a href="../client/wishlist/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'wishList') ? 'active' : ''}}">WishList</a>
                 </li>
                 <li>
                     <a href="#feedback" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Feedback</a>
@@ -126,7 +126,7 @@
             <div class="col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-4">
                 <div class="mb-5">
                     <a href="#!"><img src="../assets/images/logo-light.png" alt="" class="hidden h-7 dark:block"></a>
-                    <a href="#!"><img src="../assets/images/logo-dark.png" alt="" class="block h-7 dark:hidden"></a>
+                    <a href="#!"><img src="../assets/images/aeboutique.png" alt="" class="block h-7 dark:hidden"></a>
                 </div>
                 <p class="mb-5 text-slate-500 dark:text-zinc-400">Premium Multipurpose Admin & Dashboard Template You can build any type of web application like eCommerce, CRM, CMS, Project management apps, Admin Panels, etc using starcode.</p>
                 <ul class="flex items-center gap-3">

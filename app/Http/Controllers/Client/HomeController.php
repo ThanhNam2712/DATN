@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -17,10 +18,10 @@ class HomeController extends Controller
     public function index()
     {
         $product = Product::paginate(4);
-        $brandLimit = Brand::orderBy('id', 'asc')->limit(1)->get();
+        $cateLimit = Category::orderBy('id', 'asc')->limit(1)->get();
         $comment = Review::limit(5)->get();
         $viewProduct = Product::orderBy('view', 'desc')->limit(3)->get();
-        return view('client.home.index', compact('product', 'brandLimit', 'comment', 'viewProduct'));
+        return view('client.home.index', compact('product', 'cateLimit', 'comment', 'viewProduct'));
     }
 
     public function detail(Request $request ,$id)
