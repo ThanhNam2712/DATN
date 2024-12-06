@@ -22,7 +22,7 @@
                         <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
                             <div class="xl:col-span-12">
                                 <div class="flex gap-1 px-4 py-3 mb-5 text-sm text-green-500 border border-green-200 rounded-md md:items-center bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
-                                    <i data-lucide="shopping-bag" class="h-4 shrink-0"></i> <p>The minimum order requirement is <b>$1,800</b>. To meet this threshold, please add additional products with a combined value of <b>$300</b>.</p>
+                                    <i data-lucide="shopping-bag" class="h-4 shrink-0"></i> <p>Cảm ơn bạn đã đặt hàng tại <b>AE BOUTIQUE</b>. Đơn hàng đã được đặt thành công vui lòng kiểm thông tin trong email của bạn hoặc bạn có thể xem chi tiết trong đơn hàng.</p>
                                 </div>
                             </div><!--end col-->
                         </div>
@@ -60,7 +60,7 @@
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 delivery_date">{{ $order->status }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $order->payment->payment_method }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method">{{ $order->total_amount }}</td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount">${{ $order->coupon ?? "Không Dùng Mã" }}</td>
+                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount">{{ $order->coupon ?? "Không Dùng Mã" }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                             <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">{{ $order->shipmentOrder->shipments_1 }}</span>
                                         </td>

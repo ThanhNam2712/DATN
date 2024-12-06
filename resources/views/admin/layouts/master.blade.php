@@ -402,7 +402,9 @@
 <script src="../assets/js/cart/cartAddCart.js"></script>
 <script src="../assets/js/order/coupon.js"></script>
 <script src="../assets/js/image.js"></script>
+<script src="assets/libs/%40ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
 
+<script src="assets/js/pages/form-editor-classic.init.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -16,14 +16,14 @@
 
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Order Overview</h5>
+                        <h5 class="text-16">Chi Tiết Đơn Hàng</h5>
                     </div>
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                            <a href="#!" class="text-slate-400 dark:text-zink-200">Ecommerce</a>
+                            <a href="#!" class="text-slate-400 dark:text-zink-200">Trang chủ</a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
-                            Order Overview
+                            Chi Tiết Đơn Hàng
                         </li>
                     </ul>
                 </div>
@@ -37,7 +37,7 @@
                                 <div class="card">
                                     <div class="text-center card-body">
                                         <h6 class="mb-1 underline">{{ $order->barcode }}</h6>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">Order ID</p>
+                                        <p class="uppercase text-slate-500 dark:text-zink-200">Mã Đơn Hàng</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -45,15 +45,15 @@
                                 <div class="card">
                                     <div class="text-center card-body">
                                         <h6 class="mb-1">{{ $order->updated_at }}</h6>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">Order Date</p>
+                                        <p class="uppercase text-slate-500 dark:text-zink-200">Ngày Đặt Hàng</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1">09 Nov, 2023</h6>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">Delivery Date</p>
+                                        <h6 class="mb-1">{{ $order->payment->payment_method }}</h6>
+                                        <p class="uppercase text-slate-500 dark:text-zink-200">Thanh Toán BẰng</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -61,15 +61,15 @@
                                 <div class="card">
                                     <div class="text-center card-body">
                                         <h6 class="mb-1">${{ $order->total_amount }}</h6>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">Order Amount</p>
+                                        <p class="uppercase text-slate-500 dark:text-zink-200">Tổng Tiền</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-purple-100 border-purple-200 text-purple-500 dark:bg-purple-500/20 dark:border-purple-500/20">Shipping</span>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">{{ $order->status }}</p>
+                                        <h6 class="mb-1">{{ $order->status }}</h6>
+                                        <p class="uppercase text-slate-500 dark:text-zink-200">Trạng Thái Đơn</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -91,7 +91,7 @@
                                                             <img src="{{ Storage::url($list->products->image) }}" alt="" class="h-8">
                                                         </div>
                                                         <div class="grow">
-                                                            <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->products->name }}</a></h6>
+                                                            <h6 class="mb-1 text-15"><a class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->products->name }}</a></h6>
                                                             <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variants->price_sale }} x {{ $list->quantity }}</p>
                                                         </div>
                                                     </div>
@@ -228,29 +228,40 @@
                                         <h6 class="mb-4 text-15">Thông Tin Đặt Hàng</h6>
 
                                         <h6 class="mb-1">{{ $order->user->name }}</h6>
-                                        <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $order->user->email }}</p>
-                                        <p class="text-slate-500 dark:text-zink-200">{{ $order->user->sdt }}</p>
+                                        <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $order->email }}</p>
+                                        <p class="text-slate-500 dark:text-zink-200">{{ $order->phone_number }}</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
                         </div>
                         <div class="card">
-                            <div class="card-body">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <h6 class="text-15 grow">QR code order</h6>
-
-                                </div>
-                                <div class="flex gap-4">
-                                    <div class="shrink-0">
-
-                                    </div>
-                                    <div class="grow">
-                                        <p class="text-slate-500 dark:text-zink-200">ID: EDTW{{ $order->barcode }}</p>
+                            <div class="2xl:col-span-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="mb-4 text-15">Thông Tin Thanh Toán</h6>
+                                        <h6 class="mb-1">Phương Thức: {{ $order->payment->payment_method }}</h6>
+                                        <p class="mb-1 text-slate-500 dark:text-zink-200">Tổng Tiền : {{ $order->payment->amount }}</p>
+                                        <p class="text-slate-500 dark:text-zink-200">Trạng Thái : {{ $order->payment->status == '1' ? 'Đã Thanh Toán' : 'Thanh Toán Sau'}}</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div><!--end col-->
+                        </div>
+                        <div class="card">
+                            <div class="2xl:col-span-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="mb-4 text-15">Thông Tin Vận Chuyển</h6>
+
+                                        <h6 class="mb-1">Thành Phố: {{ $order->province }}</h6>
+                                        <p class="mb-1 text-slate-500 dark:text-zink-200">Quận Huyện : {{ $order->user->email }}</p>
+                                        <p class="text-slate-500 dark:text-zink-200">Ngõ : {{ $order->ward }}</p>
+                                        <p class="text-slate-500 dark:text-zink-200">Số Nhà : {{ $order->address_detail }}</p>
+                                    </div>
+                                </div>
+                            </div><!--end col-->
                         </div>
                     </div><!--end col-->
+
                 </div><!--end grid-->
 
             </div>

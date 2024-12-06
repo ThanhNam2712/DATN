@@ -91,7 +91,7 @@ Route::get('/blocked', function () {
         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
-        Route::get('confirm/{id}', [ClientOrderController::class, 'confirm'])->name('confirm');
+        Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
         Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
         Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
         Route::put('cancel/{id}', [OrderControllerClient::class, 'cancel'])->name('cancel');
