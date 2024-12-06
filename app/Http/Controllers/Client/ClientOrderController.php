@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Stripe\Stripe;
 use Stripe\Webhook;
 use function Laravel\Prompts\alert;
@@ -63,10 +64,10 @@ class ClientOrderController extends Controller
         }
         elseif ($request->input('payments') == 'Thẻ Tín Dụng'){
             Stripe::setApiKey(env('STRIPE_SECRET'));
-            $data = [
+            $orderSession = session([
                 'user_id' => Auth::id(),
                 'total_amount' => $request->total_amount,
-                'email' => Auth::user()->email,
+                'email' => $request->email,
                 'status' => 'pending',
                 'province' => $request->province,
                 'district' => $request->district,
@@ -74,42 +75,6 @@ class ClientOrderController extends Controller
                 'address_detail' => $request->address_detail,
                 'phone_number' => $request->phone_number,
                 'coupon' => $request->coupon,
-            ];
-
-            $number = mt_rand(1000000000, 9999999999);
-
-            $data['barcode'] = $number;
-            if ($this->barcodeOrder($number)){
-                $number = mt_rand(1000000000, 9999999999);
-            }
-
-            $order = Order::create($data);
-
-            $cart = Cart::where('user_id', Auth::id())
-                ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
-                ->first();
-
-            foreach ($cart->cartDetail as $key => $list){
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_variant_id' => $list->product_variant_id,
-                    'quantity' => $list->quantity,
-                    'price' => $list->product_variant->price_sale,
-                    'color_id' => $list->color_id,
-                    'size_id' => $list->size_id,
-                    'product_id' => $list->product_id,
-                ]);
-                $productVariant = ProductVariant::find($list->product_variant_id);
-                if ($productVariant) {
-                    $productVariant->decrement('quantity', $list->quantity);
-                }
-            }
-            $total = $order->total_amount;
-
-            $cart->cartDetail()->delete();
-            $this->updateTotal($cart->id, 0);
-            ShipmentOrder::create([
-                'order_id' => $order->id,
             ]);
             $session = \Stripe\Checkout\Session::create([
                 'customer_email' => Auth::user()->email,
@@ -121,14 +86,14 @@ class ClientOrderController extends Controller
                                 "name" => Auth::user()->name,
                                 "description" => "Price: " . $request->total_amount . " USD Quantity :" . $request->allQuantity
                             ],
-                            'unit_amount'  => $request->total_amount * 25397,
+                            'unit_amount'  => ceil($request->total_amount * 25397),
 
                         ],
                         'quantity'   => 1,
                     ],
                 ],
                 'mode'        => 'payment',
-                'success_url' => url('client/order/confirm/'. $order->id. '?session_id={CHECKOUT_SESSION_ID}'),
+                'success_url' => url('client/order/confirm/?session_id={CHECKOUT_SESSION_ID}'),
                 'cancel_url'  => url('client/order/'),
             ]);
             return redirect()->away($session->url);
@@ -184,17 +149,20 @@ class ClientOrderController extends Controller
             ->where('number', '>', 0)
             ->first();
 
-        $couponUsed = Coupon_user::where('user_id', Auth::id())
-        ->where('coupon_id', $coupon->id)
-        ->first();
+        if ($coupon){
+            $couponUsed = Coupon_user::where('user_id', Auth::id())
+                ->where('coupon_id', $coupon->id)
+                ->first();
 
 
-        if (!$couponUsed) {
-            Coupon_user::create([
-                'user_id' => Auth::id(),
-                'coupon_id' => $coupon->id,
-            ]);
+            if (!$couponUsed) {
+                Coupon_user::create([
+                    'user_id' => Auth::id(),
+                    'coupon_id' => $coupon->id,
+                ]);
+            }
         }
+
         $total = $order->total_amount;
 
         $cart->cartDetail()->delete();
@@ -208,19 +176,87 @@ class ClientOrderController extends Controller
 
     }
 
-    public function confirm(Request $request, $id)
+    public function confirm(Request $request)
     {
         Stripe::setApiKey(env('STRIPE_SECRET'));
         $session = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
-        $order = Order::find($id);
+//        $order = Order::find($id);
         $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
         $status = $paymentIntent->status;
 
         if ($status == 'succeeded'){
             $paymentMethodType = $paymentIntent->payment_method_types[0];
-            $order->update([
-                'status' => 'pending',
-            ]);
+
+            $userId = session('user_id');
+            $totalAmount = session('total_amount');
+            $email = session('email');
+            $status = 'pending';
+            $province = session('province');
+            $district = session('district');
+            $ward = session('ward');
+            $addressDetail = session('address_detail');
+            $phoneNumber = session('phone_number');
+            $coupon = session('coupon');
+
+            $data = [
+                'user_id' => $userId,
+                'total_amount' => $totalAmount,
+                'email' => $email,
+                'status' => $status,
+                'province' => $province,
+                'district' => $district,
+                'ward' => $ward,
+                'address_detail' => $addressDetail,
+                'phone_number' => $phoneNumber,
+                'coupon' => $coupon,
+            ];
+
+            $number = mt_rand(1000000000, 9999999999);
+            $data['barcode'] = $number;
+            if ($this->barcodeOrder($number)) {
+                $number = mt_rand(1000000000, 9999999999);
+            }
+
+            $order = Order::create($data);
+
+            $cart = Cart::where('user_id', Auth::id())
+                ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
+                ->first();
+
+            foreach ($cart->cartDetail as $key => $list){
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_variant_id' => $list->product_variant_id,
+                    'quantity' => $list->quantity,
+                    'price' => $list->product_variant->price_sale,
+                    'color_id' => $list->color_id,
+                    'size_id' => $list->size_id,
+                    'product_id' => $list->product_id,
+                ]);
+                $productVariant = ProductVariant::find($list->product_variant_id);
+                if ($productVariant) {
+                    $productVariant->decrement('quantity', $list->quantity);
+                }
+            }
+
+            $coupon = Coupon::where('code', $coupon)
+                ->where('start_end', '<=', now())
+                ->where('expiration_date', '>=', now())
+                ->where('number', '>', 0)
+                ->first();
+
+            if ($coupon) {
+                $couponUsed = Coupon_user::where('user_id', $userId)
+                    ->where('coupon_id', $coupon->id)
+                    ->first();
+
+                if (!$couponUsed) {
+                    Coupon_user::create([
+                        'user_id' => $userId,
+                        'coupon_id' => $coupon->id,
+                    ]);
+                }
+            }
 
             Payment::create([
                 'order_id' => $order->id,
@@ -228,7 +264,27 @@ class ClientOrderController extends Controller
                 'amount' => $order->total_amount,
                 'status' => 1,
             ]);
+
+            $total = $order->total_amount;
+
+            $cart->cartDetail()->delete();
+            $this->updateTotal($cart->id, 0);
+            ShipmentOrder::create([
+                'order_id' => $order->id,
+            ]);
             $this->sendMail($order, $order->total_amount);
+            session()->forget([
+                'user_id',
+                'total_amount',
+                'email',
+                'status',
+                'province',
+                'district',
+                'ward',
+                'address_detail',
+                'phone_number',
+                'coupon',
+            ]);
             return view('client.order.success' ,compact('order'));
         }
         return view('client.order.confirm', compact('status'));
