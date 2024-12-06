@@ -9,15 +9,15 @@
 
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16">List User</h5>
+                <h5 class="text-16">Danh sách tài khoản</h5>
             </div>
             <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                 <li
                     class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                    <a href="#!" class="text-slate-400 dark:text-zink-200">Users</a>
+                    <a href="#!" class="text-slate-400 dark:text-zink-200">Tài khoản</a>
                 </li>
                 <li class="text-slate-700 dark:text-zink-100">
-                    List User
+                    Danh sách tài khoản
                 </li>
             </ul>
         </div>
@@ -31,7 +31,7 @@
                                 <div class="relative xl:col-span-2">
                                     <input type="text"
                                         class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        placeholder="Search for name, email, phone number etc..." autocomplete="off">
+                                        placeholder="Tìm theo email..." autocomplete="off">
                                     <i data-lucide="search"
                                         class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
                                 </div>
@@ -53,9 +53,9 @@
                                             </div>
                                         </th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="user-id">User ID</th>
+                                            data-sort="user-id"> ID</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="name">Name</th>
+                                            data-sort="name">Tên người dùng</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="location">Địa chỉ</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
@@ -64,7 +64,7 @@
                                             data-sort="phone-number">Số điện thoại</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="status">Vai trò</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Hành động</th>
+                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
@@ -95,7 +95,7 @@
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 location">
                                             @if($user->addresses->isNotEmpty())
                                             @foreach($user->addresses as $address)
-                                            <div>
+                                            <div>-
                                                 {{ $address->Apartment }}, {{ $address->Neighborhood }}, {{
                                                 $address->district }}, {{ $address->Province }}
                                             </div>
@@ -131,12 +131,12 @@
                                                             <div class="mb-3">
                                                                 <textarea name="block_reason" id="block_reason"
                                                                     class=" border-gray-300 form-control"
-                                                                    placeholder="---- NHẬP LÝ DO BLOCK ----"
+                                                                    placeholder="---- NHẬP LÝ DO CHẶN ----"
                                                                     required></textarea>
                                                             </div>
                                                             <button type="submit" class="btn btn-danger">
                                                                 <i class="ri-lock-2-line"></i>
-                                                                Block</button>
+                                                                Chặn tài khoản</button>
                                                         </form>
                                                         <a href="{{ route('admin.users.edit', $user->id) }}"
                                                             class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200">
@@ -259,9 +259,9 @@
                         </div>
                         <div class="flex flex-col items-center mt-8 md:flex-row">
                             <div class="mb-4 grow md:mb-0">
-                                <p class="text-slate-500 dark:text-zink-200">Showing <b>10</b> of <b>57</b> Results</p>
+                                {{-- <p class="text-slate-500 dark:text-zink-200">Showing <b>10</b> of <b>57</b> Results</p> --}}
                             </div>
-                            <ul class="flex flex-wrap items-center gap-2">
+                            {{-- <ul class="flex flex-wrap items-center gap-2">
                                 <li>
                                     <a href="#!"
                                         class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i
@@ -287,7 +287,7 @@
                                         class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i
                                             class="size-4 rtl:rotate-180" data-lucide="chevrons-right"></i></a>
                                 </li>
-                            </ul>
+                            </ul> --}}
                         </div>
                     </div>
                 </div>

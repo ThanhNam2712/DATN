@@ -24,15 +24,15 @@ Danh mục sản phẩm
 
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16">List User</h5>
+                <h5 class="text-16">Tài khoản đã chặn</h5>
             </div>
             <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                 <li
                     class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                    <a href="#!" class="text-slate-400 dark:text-zink-200">Users</a>
+                    <a href="#!" class="text-slate-400 dark:text-zink-200">Người dùng</a>
                 </li>
                 <li class="text-slate-700 dark:text-zink-100">
-                    List User
+                    Tài khoản đã chặn
                 </li>
             </ul>
         </div>
@@ -60,13 +60,7 @@ Danh mục sản phẩm
                                 <thead class="text-left">
                                     <tr
                                         class="relative rounded-md bg-slate-100 dark:bg-zink-600 after:absolute ltr:after:border-l-2 rtl:after:border-r-2 ltr:after:left-0 rtl:after:right-0 after:top-0 after:bottom-0 after:border-transparent [&.active]:after:border-custom-500 [&.active]:bg-slate-100 dark:[&.active]:bg-zink-600">
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">
-                                            <div class="flex items-center h-full">
-                                                <input id="CheckboxAll"
-                                                    class="size-4 bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800 cursor-pointer"
-                                                    type="checkbox">
-                                            </div>
-                                        </th>
+
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="user-id">User ID</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
@@ -74,24 +68,18 @@ Danh mục sản phẩm
 
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="email">Email</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="phone-number">Số điện thoại</th>
+
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="status">Trạng thái</th>
                                             <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="status">Lý do</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Hành động</th>
+                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
                                     @foreach($users as $user)
                                     <tr class="relative rounded-md after:absolute ...">
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            <div class="flex items-center h-full">
-                                                <input id="Checkbox{{ $user->id }}" class="size-4 bg-white border ..."
-                                                    type="checkbox">
-                                            </div>
-                                        </td>
+
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <a href="#!" class="transition-all duration-150 ease-linear ...">#{{
                                                 $user->id }}</a>
@@ -110,8 +98,7 @@ Danh mục sản phẩm
                                         </td>
 
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 email">{{ $user->email }}</td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 phone-number">{{ $user->sdt ??
-                                            'N/A' }}</td>
+
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <span class="badge badge-soft-primary" style="color: red">{{ $user->status }}</span>
                                         </td>
@@ -131,7 +118,7 @@ Danh mục sản phẩm
                                                         <form action="{{ route('admin.users.unblock', $user->id) }}" method="POST" style="display:inline-block;">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button type="submit" class="btn btn-success"><i class="ri-lock-unlock-line"></i>UnBlock</button>
+                                                            <button type="submit" class="btn btn-success"><i class="ri-lock-unlock-line"></i>Mở khóa</button>
                                                         </form>
                                                     @endif
                                                     </li>
@@ -146,65 +133,7 @@ Danh mục sản phẩm
 
 
                             </table>
-                            <div id="editUserModal" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
-                                <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
-                                    <div class="flex items-center justify-between p-4 border-b dark:border-zink-300/20">
-                                        <h5 class="text-16">Edit User</h5>
-                                        <button data-modal-close="editUserModal" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
-                                    </div>
-                                    <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                                        <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
 
-                                            <div class="mb-3">
-                                                <label for="userId" class="inline-block mb-2 text-base font-medium">User ID</label>
-                                                <input type="text" id="userId" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" disabled="" value="{{ $user->id }}" required="">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Joining Date</label>
-                                                <input type="text" id="joiningDateInput" name="joining_date" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" value="{{ $user->joining_date }}" placeholder="Select date" data-provider="flatpickr" data-date-format="d M, Y">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="userNameInput" class="inline-block mb-2 text-base font-medium">Name</label>
-                                                <input type="text" id="userNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Enter name" value="{{ $user->name }}" required="">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="emailInput" class="inline-block mb-2 text-base font-medium">Email</label>
-                                                <input type="email" id="emailInput" name="email" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Enter email" value="{{ $user->email }}" required="">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Phone Number</label>
-                                                <input type="text" id="phoneNumberInput" name="phone" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="12345 67890" value="{{ $user->phone }}" required="">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="statusSelect" class="inline-block mb-2 text-base font-medium">Status</label>
-                                                <select class="form-input border-slate-300 focus:outline-none focus:border-custom-500" name="status" id="statusSelect" required>
-                                                    <option value="">Select Status</option>
-                                                    <option value="Verified" {{ $user->status == 'Verified' ? 'selected' : '' }}>Verified</option>
-                                                    <option value="Waiting" {{ $user->status == 'Waiting' ? 'selected' : '' }}>Waiting</option>
-                                                    <option value="Rejected" {{ $user->status == 'Rejected' ? 'selected' : '' }}>Rejected</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="locationInput" class="inline-block mb-2 text-base font-medium">Location</label>
-                                                <input type="text" id="locationInput" name="location" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Location" value="{{ $user->location }}" required="">
-                                            </div>
-
-                                            <div class="flex justify-end gap-2 mt-4">
-                                                <button type="reset" data-modal-close="editUserModal" class="text-red-500 transition-all duration-200 ease-linear bg-white border-white btn hover:text-red-600 focus:text-red-600 active:text-red-600 dark:bg-zink-500 dark:border-zink-500">Cancel</button>
-                                                <button type="submit" class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Update User</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="noresult" style="display: none">
                                 <div class="py-6 text-center">

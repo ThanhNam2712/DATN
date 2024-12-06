@@ -223,7 +223,7 @@
                         @else
                         <div class="absolute z-50 hidden p-4 ltr:text-left rtl:text-right bg-white rounded-md shadow-md !top-4 dropdown-menu min-w-[14rem] dark:bg-zink-600"
                             aria-labelledby="dropdownMenuButton">
-                            <h6 class="mb-2 text-sm font-normal text-slate-500 dark:text-zink-300">Welcome to starcode
+                            <h6 class="mb-2 text-sm font-normal text-slate-500 dark:text-zink-300">Chào mừng bạn
                             </h6>
                             <a href="#!" class="flex gap-3 mb-3">
                                 <div class="relative inline-block shrink-0">
@@ -244,7 +244,7 @@
                                         href="pages-account.html"><i data-lucide="user-2"
                                             class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Profile</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500"
                                         href="apps-mailbox.html"><i data-lucide="mail"
                                             class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Inbox <span
@@ -260,7 +260,7 @@
                                         href="pages-pricing.html"><i data-lucide="gem"
                                             class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Upgrade <span
                                             class="inline-flex items-center justify-center w-auto h-5 ltr:ml-2 rtl:mr-2 px-1 text-[12px] font-medium border rounded text-white bg-sky-500 border-sky-500">Pro</span></a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500"
                                         href="../login/resister"> Sign In </a>
