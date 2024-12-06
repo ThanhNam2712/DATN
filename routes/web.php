@@ -326,6 +326,7 @@ Route::group([
         Route::post('/product/{id}/create/', [GalleryController::class, 'store'])->name('store');
         Route::put('/update/{id}', [GalleryController::class, 'update'])->name('update');
     });
+    
 
     Route::group([
         'prefix' => 'variant',

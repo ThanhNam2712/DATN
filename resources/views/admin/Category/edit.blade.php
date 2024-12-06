@@ -36,7 +36,7 @@ Chỉnh Sửa Danh Mục Sản Phẩm
                                 <input type="file" id="imageInput" name="image" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                                 <p id="imageError" class="mt-1 text-sm text-red-500"></p>
                                 @if($category->image)
-                                    <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="mt-2 w-32 h-32">
+                                    <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" width="100px" class="mt-2 w-32 h-32">
                                 @endif
                             </div>
 
