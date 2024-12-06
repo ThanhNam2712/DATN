@@ -40,12 +40,12 @@
                                             <input id="CheckboxAll" class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800" type="checkbox">
                                         </div>
                                     </th>
-                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="order_id">Order ID</th>
-                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="order_date">Order Email</th>
-                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="delivery_date">Customer Name</th>
-                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="customer_name">Customer Payment</th>
-                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="amount">Amount</th>
-                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="delivery_status">Delivery Status</th>
+                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="order_id">Mã Đơn Hàng</th>
+                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="order_date">Trạng Thái</th>
+                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="delivery_date">Phương Thức Thanh Toán</th>
+                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="customer_name">Tổng Tiền</th>
+                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="amount">Mã Giảm Giá</th>
+                                    <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200 sort" data-sort="delivery_status">Trạng Thái Giao Hàng</th>
                                     <th class="px-3.5 py-2.5 font-semibold text-slate-500 border-b border-slate-200 dark:border-zink-500 dark:text-zink-200">Action</th>
                                 </tr>
                                 </thead>
@@ -56,16 +56,16 @@
                                                 <input id="Checkbox1" class="size-4 cursor-pointer bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800" type="checkbox">
                                             </div>
                                         </td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear order_id text-custom-500 hover:text-custom-600">#TWT50151003{{ $order->id }}</a></td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 delivery_date">{{ $order->user->email }}</td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $order->user->name }}</td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method">Credit Card</td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount">${{ $order->total_amount }}</td>
+                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a class="transition-all duration-150 ease-linear order_id text-custom-500 hover:text-custom-600">{{ $order->barcode }}</a></td>
+                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 delivery_date">{{ $order->status }}</td>
+                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $order->payment->payment_method }}</td>
+                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method">{{ $order->total_amount }}</td>
+                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount">${{ $order->coupon ?? "Không Dùng Mã" }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                            <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">Delivered</span>
+                                            <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">{{ $order->shipmentOrder->shipments_1 }}</span>
                                         </td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                            <a class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20" href="../client/order/detail/{{ $order->id }}"><i data-lucide="eye" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Overview</span></a>
+                                            <a class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20" href="../client/order/detail/{{ $order->id }}"><i data-lucide="eye" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Chi Tiết</span></a>
                                         </td>
                                     </tr>
                                 </tbody>

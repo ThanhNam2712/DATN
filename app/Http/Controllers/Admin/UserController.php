@@ -105,6 +105,10 @@ class UserController extends Controller
     if ($user->role_id === 2) {
         return redirect()->route('admin.users.index')->with('error', 'Bạn không thể khóa người dùng có quyền admin.');
     }
+
+    if ($user->role_id === 4) {
+        return redirect()->route('admin.users.index')->with('error', 'Bạn không thể khóa người giao hàng.');
+    }
     $user->status = 'block';
     $user->block_reason = $request->input('block_reason');
     $user->save();

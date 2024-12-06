@@ -266,7 +266,7 @@
                                     </div>
                                     <div class="card-body !pt-0 md:group-[.gridView]:flex group-[.gridView]:!p-5 group-[.gridView]:gap-3 group-[.gridView]:grow">
                                         <div class="group-[.gridView]:grow">
-                                            <h6 class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500"><a href="../client/detail/product-detail/{{ $list->id }}/color/{{ $list->firstId }}">{{ $list->name }}</a></h6>
+                                            <h6 class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500"><a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}">{{ $list->name }}</a></h6>
 
                                             <div class="flex items-center text-slate-500 dark:text-zink-200">
 {{--                                                <div class="mr-1 text-yellow-500 shrink-0 text-15">--}}
@@ -283,7 +283,6 @@
 
                                         <div class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
                                             <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}" class="w-full bg-white border-dashed text-slate-500 btn border-slate-500 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-600 focus:text-slate-600 focus:bg-slate-50 focus:border-slate-600 active:text-slate-600 active:bg-slate-50 active:border-slate-600 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-400 dark:ring-zink-400/20 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:focus:bg-zink-600 dark:focus:text-zink-100 dark:active:bg-zink-600 dark:active:text-zink-100"><i data-lucide="shopping-cart" class="inline-block w-3 h-3 leading-none"></i> <span class="align-middle">Chi Tiết Sản Phẩm</span></a>
-
                                         </div>
                                     </div>
                                 </div><!--end col & card-->

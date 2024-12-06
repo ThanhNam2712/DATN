@@ -44,14 +44,16 @@ class OrderController extends Controller
                         ->whereIn('orders.status', ['completed', 'Giao Thành công'])
                         ->orderBy('orders.id', 'desc')
                         ->paginate(5);
-        return view('admin.orders.completed', compact('orders'));
+        $sumOrder = Order::whereIn('status', ['completed', 'Giao thành công'])->sum('total_amount');
+        return view('admin.orders.completed', compact('orders', 'sumOrder'));
     }
 
 
     public function cancelled()
     {
         $orders = Order::where('status', '=' , 'cancelled')
-            ->get();
+                        ->orderBy('id', 'desc')
+                        ->paginate(4);
         return view('admin.orders.cancelled', compact('orders'));
     }
 

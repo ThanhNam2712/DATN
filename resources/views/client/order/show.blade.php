@@ -36,7 +36,7 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1 underline">#TWT50151003{{ $order->id }}</h6>
+                                        <h6 class="mb-1 underline">{{ $order->barcode }}</h6>
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Order ID</p>
                                     </div>
                                 </div>
@@ -77,8 +77,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
-                                    <h6 class="text-15 grow">Order Summary</h6>
-                                    <a href="#!" class="text-red-500 underline shrink-0">Cancelled Order</a>
+                                    <h6 class="text-15 grow">Chi Tiết Đơn Hàng</h6>
+                                    <a href="../client/order/view" class="text-red-500 underline shrink-0">Quay Lại</a>
                                 </div>
                                 <div class="overflow-x-auto">
                                     <table class="w-full">
@@ -100,32 +100,14 @@
                                             </tr>
                                         @endforeach
                                         <tr>
-                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                Sub Total
-                                            </td>
-                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $order->total_amount }}</td>
-                                        </tr>
-                                        {{--                                        <tr>--}}
-                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">--}}
-                                        {{--                                                Estimated Tax (18%)--}}
-                                        {{--                                            </td>--}}
-                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">$167.79</td>--}}
-                                        {{--                                        </tr>--}}
-                                        {{--                                        <tr>--}}
-                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">--}}
-                                        {{--                                                Item Discounts (12%)--}}
-                                        {{--                                            </td>--}}
-                                        {{--                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">-$111.86</td>--}}
-                                        {{--                                        </tr>--}}
-                                        <tr>
                                             <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                Shipping Charge
+                                                Mã Giảm Giá
                                             </td>
-                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ $order->coupon }}</td>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ $order->coupon ?? 'Đơn Hàng Này Bạn Không Sử Dụng Mã'}}</td>
                                         </tr>
                                         <tr class="font-semibold">
                                             <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                Total Amount (USD)
+                                                Tổng Tiền
                                             </td>
                                             <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $order->total_amount }}</td>
                                         </tr>
@@ -143,9 +125,7 @@
                                         @if ($order->status != 'completed' && $order->status != 'cancelled' && $order->status != 'return order' && $order->shipmentOrder->shipments_3 != 'Đã Đến Điểm Giao' && $order->status != 'Giao Thành công')
                                             <button type="button" data-modal-target="addressModal" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Hủy Đơn Hàng</button>
                                         @endif
-                                        @if($order->status == 'completed')
-                                            <a href="../client/refund/{{ $order->id }}"  class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Hoàn Trả Hàng</a>
-                                        @endif
+
                                         @if($order->status === 'Giao Thành công')
                                             <form action="../client/order/submit/{{ $order->id }}" method="post">
                                                 @csrf
@@ -262,7 +242,7 @@
                                 </div>
                                 <div class="flex gap-4">
                                     <div class="shrink-0">
-                                        {!! DNS2D::getBarcodeHTML("$order->barcode", 'QRCODE', 4, 4) !!}
+
                                     </div>
                                     <div class="grow">
                                         <p class="text-slate-500 dark:text-zink-200">ID: EDTW{{ $order->barcode }}</p>

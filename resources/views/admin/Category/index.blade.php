@@ -8,14 +8,14 @@ Danh mục sản phẩm
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16">List View</h5>
+                <h5 class="text-16">Danh sách</h5>
             </div>
             <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                 <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                    <a href="#!" class="text-slate-400 dark:text-zink-200">Category</a>
+                    <a href="#!" class="text-slate-400 dark:text-zink-200">Danh mục</a>
                 </li>
                 <li class="text-slate-700 dark:text-zink-100">
-                    List View
+                    Danh sách
                 </li>
             </ul>
         </div>
@@ -34,7 +34,7 @@ Danh mục sản phẩm
                     <div class="lg:col-span-2 ltr:lg:text-right rtl:lg:text-left xl:col-span-2 xl:col-start-11">
                         <a href="{{ route("admin.categories.create") }}" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                             <i data-lucide="plus" class="inline-block size-4"></i>
-                            <span class="align-middle">Add Product</span>
+                            <span class="align-middle">Thêm mới</span>
                         </a>
                     </div>
                 </div><!--end grid-->
@@ -44,10 +44,10 @@ Danh mục sản phẩm
                     <table class="w-full whitespace-nowrap" id="productTable">
                         <thead class="ltr:text-left rtl:text-right bg-slate-100 dark:bg-zink-600">
                         <tr>
-                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_code" data-sort="product_code">Category Code</th>
-                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Category Name</th>
-                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort status" data-sort="status">Category Product</th>
-                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Actions</th>
+                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_code" data-sort="product_code">Mã</th>
+                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Tên</th>
+                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort status" data-sort="status">Số sản phẩm</th>
+                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody class="list">
@@ -68,7 +68,7 @@ Danh mục sản phẩm
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                     <a href="{{ route('admin.categories.edit', $category->id) }}"
                                        class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn">
-                                        Edit
+                                        Sửa
                                     </a>
                                     <a href="{{ route('admin.categories.destroy', $category->id) }}"
                                        class="py-1 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20 remove-item-btn"
@@ -84,13 +84,7 @@ Danh mục sản phẩm
                         @endforeach
                         </tbody>
                     </table>
-                    <div class="noresult" style="display: none">
-                        <div class="py-6 text-center">
-                            <i data-lucide="search" class="w-6 h-6 mx-auto mb-3 text-sky-500 fill-sky-100 dark:fill-sky-500/20"></i>
-                            <h5 class="mt-2 mb-1">Sorry! No Result Found</h5>
-                            <p class="mb-0 text-slate-500 dark:text-zink-200">We've searched more than 199+ product We did not find any product for you search.</p>
-                        </div>
-                    </div>
+
                 </div>
 
                 <nav aria-label="..." style="margin-top: 10px">

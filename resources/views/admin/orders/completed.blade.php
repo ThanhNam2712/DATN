@@ -70,12 +70,9 @@
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="order-id">Mã đơn hàng</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="name">Tên khách hàng</th>
-
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="email">Email</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="phone-number">Số điện thoại</th>
+                                            data-sort="phone-number">Tổng Tiền</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="phone-number">Thời gian đặt</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
@@ -92,17 +89,13 @@
                                                            type="checkbox">
                                                 </div>
                                             </td>
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->id }}</td>
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->name }}</td>
+                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->barcode }}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->email }}</td>
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->phone_number ?? 'sđt
-                                            đặt hàng chưa có' }}</td>
+                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">${{ $order->total_amount }}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->created_at ?? 'N/A' }}
                                             </td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-
-                                                    <p style="color: red">{{ $order->status }}</p>
-
+                                                <p style="color: red">{{ $order->status }}</p>
                                             </td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                                 <div class="relative dropdown">
@@ -126,14 +119,12 @@
                                     </tbody>
 
                                 </table>
-                                <div class="noresult" style="display: none">
-                                    <div class="py-6 text-center">
-                                        <i data-lucide="search"
-                                           class="w-6 h-6 mx-auto text-sky-500 fill-sky-100 dark:fill-sky-500/20"></i>
-                                        <h5 class="mt-2">Sorry! No Result Found</h5>
-                                        <p class="mb-0 text-slate-500 dark:text-zink-200">We've searched more than 199+
-                                            users We did not find any users for you search.</p>
-                                    </div>
+                                <div class="noresult" style="display: block; margin-bottom: 10px; float: inline-end;">
+                                    <table>
+                                        <tr class="">
+                                            <td><span class="text-red-500">Tổng Tiền Đơn Hàng Thành Công: </span>${{ $sumOrder }}</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                             <nav aria-label="..." style="margin-top: 10px">

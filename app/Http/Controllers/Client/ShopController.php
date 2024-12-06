@@ -73,7 +73,7 @@ class ShopController extends Controller
     private function sortAndPagination($products, Request $request)
     {
         $perPage = $request->show ?? 3;
-        $sortBy = $request->sort_by ?? 'latest';
+        $sortBy = $request->sort_by ?? 'oldest';
 
         switch ($sortBy)
         {
@@ -156,5 +156,10 @@ class ShopController extends Controller
     public function introduce()
     {
         return view('client.profileShop.index');
+    }
+
+    public function map()
+    {
+        return view('client.profileShop.map');
     }
 }

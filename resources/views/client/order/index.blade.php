@@ -125,7 +125,7 @@
                                                                 <img src="{{ Storage::url($list->product->image) }}" alt="">
                                                             </div>
                                                             <div class="grow">
-                                                                <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
+                                                                <h6 class="mb-1 text-15"><a href="../client/home/detail/{{ $list->product_id }}/color/{{ $list->product_variant_id }}" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
                                                                 <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variant->price_sale }} x {{$list->quantity}}</p>
                                                             </div>
                                                         </div>
@@ -133,9 +133,24 @@
                                                     <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
                                                 </tr>
                                             @else
-                                                <div class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
-                                                    <span class="font-bold">Sản phẩm Đang Được Quản Trị Thay Đổi, Bạn Vẫn Có Thể Mua Hàng Bình Thường</span>
-                                                </div>
+                                                <tr>
+                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
+                                                        <div style="width: auto" class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                                                            <span class="font-bold">Sản phẩm {{ $list->product->name }} Đang Thay Đổi, Vui Lòng Xóa Khỏi Giỏ Hàng và tải lại trang</span>
+                                                        </div>
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="flex items-center justify-center rounded-md size-12 bg-slate-100 shrink-0">
+                                                                <img src="{{ Storage::url($list->product->image) }}" alt="">
+                                                            </div>
+                                                            <div class="grow">
+                                                                <h6 class="mb-1 text-15"><a class="text-red-500 transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
+                                                                <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variant->price_sale }} x {{$list->quantity}}</p>
+                                                                <a data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="flex items-center justify-center size-[37.5px] p-0 text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20 remove-button"><i data-lucide="trash-2" class="w-4 h-4"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
+                                                </tr>
                                             @endif
 
                                         @endforeach
@@ -167,7 +182,7 @@
                                         </tr>
                                         <tr class="font-semibold">
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                            Tổng Tiền Cần Trả(USD)
+                                            Tổng Tiền Cần Trả
                                         </td>
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">${{ $cart->total_amuont}}</td>
                                         <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $cart->total_amuont }}">
@@ -201,9 +216,16 @@
 
                                 <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
                                 <input type="hidden" name="allQuantity" value="{{ $cart->cartDetail->sum('quantity') }}">
-                                <button type="submit" class="mt-3 w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
-                                    Place Order
-                                </button>
+                                @if(!$hasDeletedProduct)
+                                    <button type="submit" class="mt-3 w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
+                                        Place Order
+                                    </button>
+                                @else
+                                    <div style="width: auto; text-align: center" class="px-4 py-3 mb-4 text-sm border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                                        <span class="font-bold">Bạn Vui Lòng Thực Hiện Thao Tác Yêu Cầu Trên</span>
+                                    </div>
+                                @endif
+
                             </div>
                         </div>
                     </div>

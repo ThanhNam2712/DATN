@@ -31,22 +31,24 @@
                                 <input class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" id="checkAll" value="option">
                             </th>
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="customer_name">STT</th>
-                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="email">Name User</th>
+                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="email">Tên Khách Hàng</th>
+                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="email">Tên Sản Phẩm</th>
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="phone">Comment</th>
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="phone">Rating</th>
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="action">Action</th>
                         </tr>
                         </thead>
                         <tbody class="list form-check-all">
-                        @foreach ($reviews as $review)
+                        @foreach ($reviews as $key => $review)
                             <tr>
                                 <th class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500" scope="row">
                                     <input class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" name="chk_child">
                                 </th>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 id" >
-                                    <a href="javascript:void(0);" class="fw-medium link-primary id">#VZ210{{ $review->id }}</a>
+                                    <a href="javascript:void(0);" class="fw-medium link-primary id">{{ $key + 1 }}</a>
                                 </td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{$review->user->name}}</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $review->user->email }}</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $review->product->name }}</td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">{{ $review->comment }}</td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                     <div class="flex items-center gap-2 mt-4 mb-2 text-yellow-500">
