@@ -23,7 +23,7 @@ class ColorController extends Controller
         $data = $request->all();
         ProductColor::create($data);
         return redirect()->back()->with([
-            'message' => 'Create Color Success'
+            'success' => 'Thêm thành công'
         ]);
     }
 
@@ -40,7 +40,7 @@ class ColorController extends Controller
         }
 
         return redirect()->back()->with([
-            'message' => 'Update Color Success'
+            'success' => 'Cập nhật thành công'
         ]);
     }
 
@@ -49,7 +49,7 @@ class ColorController extends Controller
         $color = ProductColor::find($id);
         $color->delete();
         return redirect()->back()->with([
-            'message' => 'Delete Color Success'
+            'success' => 'Xóa thành công'
         ]);
     }
 }

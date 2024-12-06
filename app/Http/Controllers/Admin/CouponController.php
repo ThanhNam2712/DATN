@@ -44,7 +44,7 @@ class CouponController extends Controller
         }
 
         return redirect('admin/coupon/')->with([
-            'message' => 'Create Coupon Success'
+            'success' => 'Tạo thành công'
         ]);
     }
 
@@ -78,7 +78,7 @@ class CouponController extends Controller
         }
         $coupon->update($data);
         return redirect()->back()->with([
-            'message' => 'Update Coupon Success',
+            'success' => 'Cập nhật thành công'
         ]);
     }
 
@@ -88,7 +88,7 @@ class CouponController extends Controller
 
         $coupon->delete();
         return redirect()->back()->with([
-            'message' => 'Update Coupon Success',
+            'success' => 'Xóa thành công'
         ]);
     }
 }

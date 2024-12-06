@@ -6,14 +6,14 @@
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Add New</h5>
+                    <h5 class="text-16">Thêm mới</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="#!" class="text-slate-400 dark:text-zink-200">Products</a>
+                        <a href="#!" class="text-slate-400 dark:text-zink-200">Sản phẩm</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Add New
+                        Thêm mới
                     </li>
                 </ul>
             </div>
@@ -22,15 +22,15 @@
                 <div class="xl:col-span-12">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Create Product</h6>
+                            {{-- <h6 class="mb-4 text-15">Create Product</h6> --}}
                             <form action="../admin/products/create" method="post" id="form-product" enctype="multipart/form-data">
                                 @csrf
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     {{-- Product creare --}}
                                     <div class="xl:col-span-6">
-                                        <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Product Title</label>
-                                        <input type="text" id="productNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
-                                        <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
+                                        <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Tên sản phẩm</label>
+                                        <input type="text" id="productNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Tên sản phẩm" >
+                                        {{-- <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p> --}}
                                         @error('name')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
@@ -38,9 +38,9 @@
                                         @enderror
                                     </div><!--end col-->
                                     <div class="xl:col-span-6">
-                                        <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Product Description</label>
-                                        <input type="text" id="productNameInput" name="description" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
-                                        <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
+                                        <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Mô tả</label>
+                                        <input type="text" id="productNameInput" name="description" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Mô tả" >
+                                        {{-- <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p> --}}
                                         @error('description')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
@@ -48,9 +48,9 @@
                                         @enderror
                                     </div><!--end col-->
                                     <div class="xl:col-span-4">
-                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Brand</label>
+                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Thương hiệu</label>
                                         <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="brand_id" id="categorySelect">
-                                            <option value="">Select Brand</option>
+                                            <option value="">Chọn thương hiệu</option>
                                             @foreach($brand as $list)
                                                 <option value="{{ $list->id }}">{{ $list->name }}</option>
                                             @endforeach
@@ -62,9 +62,9 @@
                                         @enderror
                                     </div><!--end col-->
                                     <div class="xl:col-span-4">
-                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Category</label>
+                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Danh mục</label>
                                         <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="category_id" id="categorySelect">
-                                            <option value="">Select Category</option>
+                                            <option value="">Chọn danh mục</option>
                                             @foreach($category as $list)
                                                 <option value="{{ $list->id }}">{{ $list->name }}</option>
                                             @endforeach
@@ -78,7 +78,7 @@
                                     <div class="xl:col-span-4">
                                         <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Tag</label>
                                         <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="tags[]" id="categorySelect" multiple>
-                                            <option value=""  >Select Tag</option>
+                                            <option value=""  >Chọn Tag</option>
                                             @foreach ($tags as $id => $name)
                                                 <option value="{{$id}}">{{$name}}</option>
                                             @endforeach
@@ -91,35 +91,35 @@
                                     </div><!--end col-->
                                     {{-- active --}}
                                     <div class="xl:col-span-4">
-                                        <label for="yellowIconSwitch" class="inline-block text-base font-medium cursor-pointer">Trending Products</label>
+                                        <label for="yellowIconSwitch" class="inline-block text-base font-medium cursor-pointer">Sản phẩm xu hướng</label>
                                         <div class="relative inline-block w-10 align-middle transition duration-200 ease-in ltr:mr-2 rtl:ml-2">
                                             <input type="checkbox" name="is_trending" id="is_trending" class="absolute block size-5 transition duration-300 ease-linear border-2 border-slate-200 dark:border-zink-500 rounded-full appearance-none cursor-pointer bg-white/80 dark:bg-zink-600 peer/published checked:bg-white dark:checked:bg-white ltr:checked:right-0 rtl:checked:left-0 checked:bg-none checked:border-yellow-500 dark:checked:border-yellow-500 arrow-none after:absolute after:text-slate-500 dark:after:text-zink-200 after:content-['\eb99'] after:text-xs after:inset-0 after:flex after:items-center after:justify-center after:font-remix after:leading-none checked:after:text-yellow-500 dark:checked:after:text-yellow-500 checked:after:content-['\eb7b']">
                                             <label for="yellowIconSwitch" class="block h-5 overflow-hidden duration-300 ease-linear border rounded-full cursor-pointer cursor-pointertransition border-slate-200 dark:border-zink-500 bg-slate-200 dark:bg-zink-600 peer-checked/published:bg-yellow-500 peer-checked/published:border-yellow-500"></label>
                                         </div>
                                     </div>
                                     <div class="xl:col-span-4">
-                                        <label for="customIconSwitch" class="inline-block text-base font-medium cursor-pointer">Sale Products</label>
+                                        <label for="customIconSwitch" class="inline-block text-base font-medium cursor-pointer">Sản phẩm giảm giá</label>
                                         <div class="relative inline-block w-10 align-middle transition duration-200 ease-in ltr:mr-2 rtl:ml-2">
                                             <input type="checkbox" name="is_sale" id="customIconSwitch" class="absolute block size-5 transition duration-300 ease-linear border-2 border-slate-200 dark:border-zink-500 rounded-full appearance-none cursor-pointer bg-white/80 dark:bg-zink-600 peer/published checked:bg-white dark:checked:bg-white ltr:checked:right-0 rtl:checked:left-0 checked:bg-none checked:border-custom-500 dark:checked:border-custom-500 arrow-none after:absolute after:text-slate-500 dark:after:text-zink-200 after:content-['\eb99'] after:text-xs after:inset-0 after:flex after:items-center after:justify-center after:font-remix after:leading-none checked:after:text-custom-500 dark:checked:after:text-custom-500 checked:after:content-['\eb7b']" >
                                             <label for="customIconSwitch" class="block h-5 overflow-hidden duration-300 ease-linear border rounded-full cursor-pointer cursor-pointertransition border-slate-200 dark:border-zink-500 bg-slate-200 dark:bg-zink-600 peer-checked/published:bg-custom-500 peer-checked/published:border-custom-500"></label>
                                         </div>
                                     </div>
                                     <div class="xl:col-span-4">
-                                        <label for="orangeIconSwitch" class="inline-block text-base font-medium cursor-pointer">New Prroducts</label>
+                                        <label for="orangeIconSwitch" class="inline-block text-base font-medium cursor-pointer">Sản phẩm mới</label>
                                         <div class="relative inline-block w-10 align-middle transition duration-200 ease-in ltr:mr-2 rtl:ml-2">
                                             <input type="checkbox" name="is_new" id="orangeIconSwitch" class="absolute block size-5 transition duration-300 ease-linear border-2 border-slate-200 dark:border-zink-500 rounded-full appearance-none cursor-pointer bg-white/80 dark:bg-zink-600 peer/published checked:bg-white dark:checked:bg-white ltr:checked:right-0 rtl:checked:left-0 checked:bg-none checked:border-orange-500 dark:checked:border-orange-500 arrow-none after:absolute after:text-slate-500 dark:after:text-zink-200 after:content-['\eb99'] after:text-xs after:inset-0 after:flex after:items-center after:justify-center after:font-remix after:leading-none checked:after:text-orange-500 dark:checked:after:text-orange-500 checked:after:content-['\eb7b']" >
                                             <label for="orangeIconSwitch" class="block h-5 overflow-hidden duration-300 ease-linear border rounded-full cursor-pointer cursor-pointertransition border-slate-200 dark:border-zink-500 bg-slate-200 dark:bg-zink-600 peer-checked/published:bg-orange-500 peer-checked/published:border-orange-500"></label>
                                         </div>
                                     </div>
                                     <div class="xl:col-span-4">
-                                        <label for="yellowIconSwitch" class="inline-block text-base font-medium cursor-pointer">Show Home Client</label>
+                                        <label for="yellowIconSwitch" class="inline-block text-base font-medium cursor-pointer">Hiện trên trang chủ</label>
                                         <div class="relative inline-block w-10 align-middle transition duration-200 ease-in ltr:mr-2 rtl:ml-2">
                                             <input type="checkbox" name="is_show_home" id="yellowIconSwitch" class="absolute block size-5 transition duration-300 ease-linear border-2 border-slate-200 dark:border-zink-500 rounded-full appearance-none cursor-pointer bg-white/80 dark:bg-zink-600 peer/published checked:bg-white dark:checked:bg-white ltr:checked:right-0 rtl:checked:left-0 checked:bg-none checked:border-yellow-500 dark:checked:border-yellow-500 arrow-none after:absolute after:text-slate-500 dark:after:text-zink-200 after:content-['\eb99'] after:text-xs after:inset-0 after:flex after:items-center after:justify-center after:font-remix after:leading-none checked:after:text-yellow-500 dark:checked:after:text-yellow-500 checked:after:content-['\eb7b']" >
                                             <label for="yellowIconSwitch" class="block h-5 overflow-hidden duration-300 ease-linear border rounded-full cursor-pointer cursor-pointertransition border-slate-200 dark:border-zink-500 bg-slate-200 dark:bg-zink-600 peer-checked/published:bg-yellow-500 peer-checked/published:border-yellow-500"></label>
                                         </div>
                                     </div>
                                     <div class="xl:col-span-4">
-                                        <label for="redIconSwitch" class="inline-block text-base font-medium cursor-pointer">Active Products</label>
+                                        <label for="redIconSwitch" class="inline-block text-base font-medium cursor-pointer">Kích hoạt sản phẩm</label>
                                         <div class="relative inline-block w-10 align-middle transition duration-200 ease-in ltr:mr-2 rtl:ml-2">
                                             <input type="checkbox" name="is_active" id="redIconSwitch" class="absolute block size-5 transition duration-300 ease-linear border-2 border-slate-200 dark:border-zink-500 rounded-full appearance-none cursor-pointer bg-white/80 dark:bg-zink-600 peer/published checked:bg-white dark:checked:bg-white ltr:checked:right-0 rtl:checked:left-0 checked:bg-none checked:border-red-500 dark:checked:border-red-500 arrow-none after:absolute after:text-slate-500 dark:after:text-zink-200 after:content-['\eb99'] after:text-xs after:inset-0 after:flex after:items-center after:justify-center after:font-remix after:leading-none checked:after:text-red-500 dark:checked:after:text-red-500 checked:after:content-['\eb7b']" >
                                             <label for="redIconSwitch" class="block h-5 overflow-hidden duration-300 ease-linear border rounded-full cursor-pointer cursor-pointertransition border-slate-200 dark:border-zink-500 bg-slate-200 dark:bg-zink-600 peer-checked/published:bg-red-500 peer-checked/published:border-red-500"></label>
@@ -127,15 +127,15 @@
                                     </div>
                                     {{-- end active --}}
                                     <div class="lg:col-span-2 xl:col-span-12">
-                                        <label for="genderSelect" class="inline-block mb-2 text-base font-medium">Product Images</label>
+                                        <label for="genderSelect" class="inline-block mb-2 text-base font-medium">Ảnh sản phẩm</label>
                                         <div class="flex items-center justify-center bg-white border border-dashed rounded-md cursor-pointer dropzone border-slate-300 dark:bg-zink-700 dark:border-zink-500">
                                             <div class="w-full py-5 text-lg text-center ">
                                                 <div class="dropzone needsclick p-0 dz-clickable" id="dropzone-basic">
                                                     <div class="dz-message needsclick">
-                                                        <p class="h4 needsclick pt-4 mb-2">Drag and drop your image here</p>
-                                                        <p class="h6 text-muted d-block fw-normal mb-2">or</p>
+                                                        <p class="h4 needsclick pt-4 mb-2">Kéo và thả hình ảnh của bạn vào đây</p>
+                                                        <p class="h6 text-muted d-block fw-normal mb-2">hoặc</p>
                                                         <span class="note needsclick btn btn-sm btn-label-primary" id="btnBrowse">
-                                                            Browse image
+                                                            Duyệt hình ảnh
                                                             <input type="file" name="image" id="fileInput">
                                                         </span>
                                                     </div>
@@ -159,7 +159,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="dz-filename" id="fileName"></div>
-                                                    <div class="dz-size" id="fileSize"><strong>0.8</strong> MB</div>
+                                                    {{-- <div class="dz-size" id="fileSize"><strong>0.8</strong> MB</div> --}}
                                                 </div>
                                                 <a class="dz-remove px-2 py-1.5 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20" href="javascript:void(0);" id="removeFile">Remove file</a>
                                             </div>
@@ -173,7 +173,7 @@
                                     </div>
                                     <div class="lg:col-span-2 xl:col-span-12">
                                         <div>
-                                            <label for="productDescription" class="inline-block mb-2 text-base font-medium">Content</label>
+                                            <label for="productDescription" class="inline-block mb-2 text-base font-medium">Nội dung</label>
                                             <textarea name="content" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Enter Description" rows="5"></textarea>
                                         </div>
                                         @error('content')
@@ -184,13 +184,13 @@
                                     </div>
                                     {{-- End Product creare --}}
                                 </div><!--end grid-->
-                                <h6 class="mb-4 text-30 mt-5 mb-5" style="text-align: center">Products Variants</h6>
+                                <h6 class="mb-4 text-30 mt-5 mb-5" style="text-align: center">Biến thể sản phẩm</h6>
                                 <div id="variants" >
                                     <div style="margin-top: 38px" class="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     {{-- Products variants --}}
                                         <div class="xl:col-span-4">
-                                            <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
-                                            <input type="number" name="variants[0][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="$0.00">
+                                            <label for="productPrice" class="inline-block mb-2 text-base font-medium">Giá</label>
+                                            <input type="number" name="variants[0][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="..Vnđ">
                                             @error('price')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
@@ -199,8 +199,8 @@
                                         </div>
 
                                         <div class="xl:col-span-4">
-                                            <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Discounts</label>
-                                            <input type="number" name="variants[0][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="0%">
+                                            <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Giảm giá</label>
+                                            <input type="number" name="variants[0][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="">
                                             @error('price_sale')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
@@ -209,8 +209,8 @@
                                         </div>
 
                                         <div class="xl:col-span-4">
-                                            <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Quantity</label>
-                                            <input type="number" id="qualityInput" name="variants[0][quantity]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Quantity">
+                                            <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Số lượng</label>
+                                            <input type="number" id="qualityInput" name="variants[0][quantity]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Số lượng">
                                             @error('quantity')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
@@ -220,9 +220,9 @@
 
                                         {{-- color--}}
                                         <div class="xl:col-span-4">
-                                            <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Color</label>
+                                            <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Màu sắc</label>
                                             <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[0][product_color_id]" id="categorySelect">
-                                                <option value="">Select Color</option>
+                                                <option value="">Chọn màu</option>
                                                 @foreach($color as $list)
                                                     <option value="{{ $list->id }}">{{ $list->name }}</option>
                                                 @endforeach
@@ -237,9 +237,9 @@
                                         <!--end col-->
                                         {{-- size --}}
                                         <div class="xl:col-span-4">
-                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Size</label>
+                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Kích cỡ</label>
                                         <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[0][product_size_id]" id="categorySelect">
-                                            <option value="">Select Size</option>
+                                            <option value="">Chọn kích cỡ</option>
                                             @foreach($size as $list)
                                                 <option value="{{ $list->id }}">{{ $list->name }}</option>
                                             @endforeach
@@ -254,9 +254,9 @@
                                 </div>
                                 </div>
                                 <div class="flex justify-end gap-2 mt-4">
-                                    <button type="reset" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Reset</button>
-                                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Create Product</button>
-                                    <button type="button" onclick="addVariant()" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Add Variant</button>
+                                    <button type="reset" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Đặt lại</button>
+                                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Lưu</button>
+                                    <button type="button" onclick="addVariant()" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Thêm biến thể</button>
                                 </div>
                             </form>
                         </div>

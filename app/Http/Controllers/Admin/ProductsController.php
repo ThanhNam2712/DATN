@@ -160,7 +160,7 @@ class ProductsController extends Controller
         $product = Product::find($id);
         $product->delete();
         return redirect()->back()->with([
-            'message' => 'Destroy Products Success'
+            'success' => 'Ẩn thành công'
         ]);
     }
 
@@ -177,7 +177,7 @@ class ProductsController extends Controller
         $product->restore();
 
         return redirect()->back()->with([
-            'message' => 'Connect Success'
+            'success' => 'Bỏ ẩn thành công'
         ]);
     }
 }

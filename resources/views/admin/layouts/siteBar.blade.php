@@ -5,19 +5,19 @@
         <a href="../dashboard/statistic/"
             class="group-data-[sidebar=dark]:hidden group-data-[sidebar=brand]:hidden group-data-[sidebar=modern]:hidden">
             <span class="hidden group-data-[sidebar-size=sm]:block">
-                <img src="assets/images/logo.png" alt="" class="h-6 mx-auto">
+                {{-- <img src="assets/images/logo.png" alt="" class="h-6 mx-auto"> --}}
             </span>
             <span class="group-data-[sidebar-size=sm]:hidden">
-                <img src="assets/images/logo-dark.png" alt="" class="h-6 mx-auto">
+                {{-- <img src="assets/images/logo-dark.png" alt="" class="h-6 mx-auto"> --}}
             </span>
         </a>
         <a href="../dashboard/statistic/"
             class="hidden group-data-[sidebar=dark]:block group-data-[sidebar=brand]:block group-data-[sidebar=modern]:block">
             <span class="hidden group-data-[sidebar-size=sm]:block">
-                <img src="assets/images/logo.png" alt="" class="h-6 mx-auto">
+                {{-- <img src="assets/images/logo.png" alt="" class="h-6 mx-auto"> --}}
             </span>
             <span class="group-data-[sidebar-size=sm]:hidden">
-                <img src="assets/images/logo-light.png" alt="" class="h-6 mx-auto">
+                {{-- <img src="assets/images/logo-light.png" alt="" class="h-6 mx-auto"> --}}
             </span>
         </a>
         <button type="button" class="hidden p-0 float-end" id="vertical-hover">
