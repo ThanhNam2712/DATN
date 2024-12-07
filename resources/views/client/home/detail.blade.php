@@ -140,7 +140,7 @@
 
                                         <div class="mb-4">
                                             <p class="mb-1 text-green-500">Giá Tiền Sản Phẩm</p>
-                                            <h4>Giá Giảm :${{ $priceVariant->price_sale }} <small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">Giá Gốc : ${{ $priceVariant->price }}</small> <small class="text-green-500 align-middle">Tổng Giảm{{ round(($priceVariant->price - $priceVariant->price_sale) / $priceVariant->price * 100) }}% ON</small></h4>
+                                            <h4>Giá Giảm : {{ number_format($priceVariant->price_sale) }} VND<small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">Giá Gốc : {{ number_format($priceVariant->price) }}VND</small> <small class="text-green-500 align-middle">Tổng Giảm : {{ number_format(round(($priceVariant->price - $priceVariant->price_sale) / $priceVariant->price * 100)) }}%</small></h4>
                                         </div>
                                         <form action="../client/cart/add" method="post">
                                             @csrf

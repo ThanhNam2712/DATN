@@ -59,7 +59,7 @@
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a class="transition-all duration-150 ease-linear order_id text-custom-500 hover:text-custom-600">{{ $order->barcode }}</a></td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 delivery_date">{{ $order->status }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $order->payment->payment_method }}</td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method">{{ $order->total_amount }}</td>
+                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method">{{ number_format($order->total_amount) }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount">{{ $order->coupon ?? "Không Dùng Mã" }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                             <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">{{ $order->shipmentOrder->shipments_1 }}</span>

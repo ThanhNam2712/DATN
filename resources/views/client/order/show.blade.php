@@ -53,14 +53,14 @@
                                 <div class="card">
                                     <div class="text-center card-body">
                                         <h6 class="mb-1">{{ $order->payment->payment_method }}</h6>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">Thanh Toán BẰng</p>
+                                        <p class="uppercase text-slate-500 dark:text-zink-200">Thanh Toán Bằng</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1">${{ $order->total_amount }}</h6>
+                                        <h6 class="mb-1">{{ number_format($order->total_amount) }}VND</h6>
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Tổng Tiền</p>
                                     </div>
                                 </div>
@@ -92,11 +92,11 @@
                                                         </div>
                                                         <div class="grow">
                                                             <h6 class="mb-1 text-15"><a class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->products->name }}</a></h6>
-                                                            <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variants->price_sale }} x {{ $list->quantity }}</p>
+                                                            <p class="text-slate-500 dark:text-zink-200">{{ number_format($list->product_variants->price_sale) }}VND x {{ $list->quantity }}</p>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variants->price_sale * $list->quantity) }}</td>
+                                                <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">{{ number_format($list->product_variants->price_sale * $list->quantity) }} VND</td>
                                             </tr>
                                         @endforeach
                                         <tr>
@@ -107,9 +107,9 @@
                                         </tr>
                                         <tr class="font-semibold">
                                             <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                Tổng Tiền
+                                                Tổng Tiền Trả
                                             </td>
-                                            <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $order->total_amount }}</td>
+                                            <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ number_format($order->total_amount) }} VND</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -119,11 +119,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
-                                    <h6 class="text-15 grow">Order Status</h6>
+                                    <h6 class="text-15 grow">Trạng Thái Giao Hàng</h6>
                                     <div class="shrink-0" style="display: flex">
                                         <button onclick="window.print()" type="button" class="me-3 text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="save" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Save & Print</span></button>
-                                        @if ($order->status != 'completed' && $order->status != 'cancelled' && $order->status != 'return order' && $order->shipmentOrder->shipments_3 != 'Đã Đến Điểm Giao' && $order->status != 'Giao Thành công')
+                                        @if($order->shipmentOrder->shipments_1 != 'Đã Nhận Đơn')
                                             <button type="button" data-modal-target="addressModal" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Hủy Đơn Hàng</button>
+                                        @else
+
                                         @endif
 
                                         @if($order->status === 'Giao Thành công')
@@ -240,7 +242,7 @@
                                     <div class="card-body">
                                         <h6 class="mb-4 text-15">Thông Tin Thanh Toán</h6>
                                         <h6 class="mb-1">Phương Thức: {{ $order->payment->payment_method }}</h6>
-                                        <p class="mb-1 text-slate-500 dark:text-zink-200">Tổng Tiền : {{ $order->payment->amount }}</p>
+                                        <p class="mb-1 text-slate-500 dark:text-zink-200">Tổng Tiền : {{ number_format($order->payment->amount) }}VND</p>
                                         <p class="text-slate-500 dark:text-zink-200">Trạng Thái : {{ $order->payment->status == '1' ? 'Đã Thanh Toán' : 'Thanh Toán Sau'}}</p>
                                     </div>
                                 </div>
@@ -253,7 +255,7 @@
                                         <h6 class="mb-4 text-15">Thông Tin Vận Chuyển</h6>
 
                                         <h6 class="mb-1">Thành Phố: {{ $order->province }}</h6>
-                                        <p class="mb-1 text-slate-500 dark:text-zink-200">Quận Huyện : {{ $order->user->email }}</p>
+                                        <p class="mb-1 text-slate-500 dark:text-zink-200">Quận Huyện : {{ $order->district }}</p>
                                         <p class="text-slate-500 dark:text-zink-200">Ngõ : {{ $order->ward }}</p>
                                         <p class="text-slate-500 dark:text-zink-200">Số Nhà : {{ $order->address_detail }}</p>
                                     </div>

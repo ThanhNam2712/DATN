@@ -46,59 +46,91 @@ class ClientOrderController extends Controller
         $user = auth()->user();
         $is_default = Address::where('user_id', $user->id);
         $address = $is_default->where('is_default', 1)->first();
-        return view('client.order.index', compact('cart', 'address', 'user', 'hasDeletedProduct'));
+
+        $usedCouponIds = Coupon_user::where('user_id', $user->id)->pluck('coupon_id');
+        $coupons = Coupon::whereNotIn('id', $usedCouponIds)
+            ->where('expiration_date', '>=', now())
+            ->where(function ($query) use ($user) {
+                $query->whereNull('user_id')
+                    ->orWhere('user_id', $user->id);
+            })
+            ->get();
+
+        return view('client.order.index', compact('cart', 'address', 'user', 'hasDeletedProduct', 'coupons'));
     }
 
     public function create(Request $request)
     {
-
-        if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
-            $order = $this->createOrder($request);
-            Payment::create([
-                'order_id' => $order->id,
-                'payment_method' => $request->input('payments'),
-                'amount' => $order->total_amount,
-                'status' => 0,
-            ]);
-            return view('client.order.success', compact('order'));
+        $cart = Cart::where('user_id', Auth::id())
+            ->with([
+                'cartDetail' => function ($query) {
+                    $query->with(['product' => function ($productQuery) {
+                        $productQuery->withTrashed();
+                    }, 'cart' ,'product_variant', 'color', 'size']);
+                }
+            ])
+            ->first();
+        $hasDeletedProduct = false;
+        foreach ($cart->cartDetail as $detail) {
+            if ($detail->product && $detail->product->trashed()) {
+                $hasDeletedProduct = true;
+                break;
+            }
         }
-        elseif ($request->input('payments') == 'Thẻ Tín Dụng'){
-            Stripe::setApiKey(env('STRIPE_SECRET'));
-            $orderSession = session([
-                'user_id' => Auth::id(),
-                'total_amount' => $request->total_amount,
-                'email' => $request->email,
-                'status' => 'pending',
-                'province' => $request->province,
-                'district' => $request->district,
-                'ward' => $request->ward,
-                'address_detail' => $request->address_detail,
-                'phone_number' => $request->phone_number,
-                'coupon' => $request->coupon,
-            ]);
-            $session = \Stripe\Checkout\Session::create([
-                'customer_email' => Auth::user()->email,
-                'line_items'  => [
-                    [
-                        'price_data' => [
-                            'currency'     => 'VND',
-                            'product_data' => [
-                                "name" => Auth::user()->name,
-                                "description" => "Price: " . $request->total_amount . " USD Quantity :" . $request->allQuantity
+
+        if (!$hasDeletedProduct){
+            if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
+                $order = $this->createOrder($request);
+                Payment::create([
+                    'order_id' => $order->id,
+                    'payment_method' => $request->input('payments'),
+                    'amount' => $order->total_amount,
+                    'status' => 0,
+                ]);
+                return view('client.order.success', compact('order'));
+            }
+            elseif ($request->input('payments') == 'Thẻ Tín Dụng'){
+                Stripe::setApiKey(env('STRIPE_SECRET'));
+                $orderSession = session([
+                    'user_id' => Auth::id(),
+                    'total_amount' => $request->total_amount,
+                    'email' => $request->email,
+                    'status' => 'pending',
+                    'province' => $request->province,
+                    'district' => $request->district,
+                    'ward' => $request->ward,
+                    'address_detail' => $request->address_detail,
+                    'phone_number' => $request->phone_number,
+                    'coupon' => $request->coupon,
+                ]);
+                $session = \Stripe\Checkout\Session::create([
+                    'customer_email' => Auth::user()->email,
+                    'line_items'  => [
+                        [
+                            'price_data' => [
+                                'currency'     => 'VND',
+                                'product_data' => [
+                                    "name" => Auth::user()->name,
+                                    "description" => "Price: " . number_format($request->total_amount) . " VND Quantity :" . $request->allQuantity
+                                ],
+                                'unit_amount'  => ceil($request->total_amount),
+
                             ],
-                            'unit_amount'  => ceil($request->total_amount * 25397),
-
+                            'quantity'   => 1,
                         ],
-                        'quantity'   => 1,
                     ],
-                ],
-                'mode'        => 'payment',
-                'success_url' => url('client/order/confirm/?session_id={CHECKOUT_SESSION_ID}'),
-                'cancel_url'  => url('client/order/'),
+                    'mode'        => 'payment',
+                    'success_url' => url('client/order/confirm/?session_id={CHECKOUT_SESSION_ID}'),
+                    'cancel_url'  => url('client/order/'),
+                ]);
+                return redirect()->away($session->url);
+            }
+        }else{
+            return back()->with([
+                'message' => 'Đã Có lỗi sảy ra vui lòng thử lại',
             ]);
-            return redirect()->away($session->url);
-
         }
+
     }
 
     private function createOrder(Request $request)
@@ -161,6 +193,7 @@ class ClientOrderController extends Controller
                     'coupon_id' => $coupon->id,
                 ]);
             }
+            $coupon->decrement('number', 1);
         }
 
         $total = $order->total_amount;
@@ -256,6 +289,7 @@ class ClientOrderController extends Controller
                         'coupon_id' => $coupon->id,
                     ]);
                 }
+                $coupon->decrement('number', 1);
             }
 
             Payment::create([
@@ -355,7 +389,7 @@ class ClientOrderController extends Controller
         }
 
         $final_total = $total - $discount;
-        $coupon->decrement('number', 1);
+
         return response()->json([
             'success' => true,
             'discount' => $discount,

@@ -60,9 +60,9 @@
                                                         </div><!--end col-->
                                                         <div class="flex justify-between w-full lg:flex-col lg:col-end-13 lg:col-span-2">
                                                             <div class="mb-auto ltr:lg:text-right rtl:lg:text-left">
-                                                                <h6 class="text-16 products-price">$<span>{{ $list->product_variant->price_sale }}</span> <small class="font-normal line-through text-slate-500 dark:text-zink-200">${{ $list->product_variant->price }}</small></h6>
+                                                                <h6 class="text-16 products-price"><span>{{ number_format($list->product_variant->price_sale) }}</span>VND <small class="font-normal line-through text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price) }}VND</small></h6>
                                                             </div>
-                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left">$<span class="products-line-price">{{ $list->product_variant->price_sale * $list->quantity }}</span></h6>
+                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left"><span class="products-line-price">{{ number_format($list->product_variant->price_sale * $list->quantity) }}</span>VND</h6>
                                                         </div><!--end col-->
                                                     </div><!--end grid-->
                                                 </div>
@@ -95,9 +95,9 @@
                                                         </div><!--end col-->
                                                         <div class="flex justify-between w-full lg:flex-col lg:col-end-13 lg:col-span-2">
                                                             <div class="mb-auto ltr:lg:text-right rtl:lg:text-left">
-                                                                <h6 class="text-16 products-price">$<span>{{ $list->product_variant->price_sale }}</span> <small class="font-normal line-through text-slate-500 dark:text-zink-200">${{ $list->product_variant->price }}</small></h6>
+                                                                <h6 class="text-16 products-price"><span>{{ number_format($list->product_variant->price_sale) }}</span>VND <small class="font-normal line-through text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price) }}</small>VND</h6>
                                                             </div>
-                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left">$<span class="products-line-price">{{ $list->product_variant->price_sale * $list->quantity }}</span></h6>
+                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left"><span class="products-line-price">{{ number_format($list->product_variant->price_sale * $list->quantity) }}</span>VND</h6>
                                                         </div><!--end col-->
                                                     </div><!--end grid-->
                                                 </div>
@@ -119,7 +119,7 @@
                                                             Tổng Tiền
                                                         </td>
                                                         <td class="pt-2 cart-total">
-                                                            ${{ $cart->total_amuont }}
+                                                            {{ number_format($cart->total_amuont) }}VND
                                                         </td>
                                                     </tr>
                                                     </tbody>

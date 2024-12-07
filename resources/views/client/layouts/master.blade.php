@@ -42,19 +42,19 @@
         <div class="mx-auto">
             <ul id="navbar7" class="absolute inset-x-0 z-20 items-center hidden py-3 mt-px bg-white shadow-lg md:mt-0 dark:bg-zinc-800 dark:md:bg-transparent md:z-0 navbar-menu rounded-b-md md:shadow-none md:flex top-full ltr:ml-auto rtl:mr-auto md:relative md:bg-transparent md:rounded-none md:top-auto md:py-0">
                 <li>
-                    <a href="../client/home/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'home') ? 'active' : ''}}">Home</a>
+                    <a href="../client/home/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'home') ? 'active' : ''}}">Trang Chủ</a>
                 </li>
                 <li>
-                    <a href="../client/shop/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'shop') ? 'active' : ''}}" >Shop Product</a>
+                    <a href="../client/shop/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'shop') ? 'active' : ''}}" >Trang Sản Phẩm</a>
                 </li>
                 <li>
-                    <a href="../client/shop/introduce/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(3) == 'introduce') ? 'active' : ''}}" >Introduce</a>
+                    <a href="../client/shop/introduce/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(3) == 'introduce') ? 'active' : ''}}" >Giới Thiệu</a>
                 </li>
                 <li>
-                    <a href="../client/wishlist/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'wishList') ? 'active' : ''}}">WishList</a>
+                    <a href="../client/wishlist/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'wishList') ? 'active' : ''}}">Sản Phẩm Yêu Thích</a>
                 </li>
                 <li>
-                    <a href="../client/shop/map/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Shop Map</a>
+                    <a href="../client/shop/map/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Địa Chỉ</a>
                 </li>
             </ul>
         </div>
@@ -219,17 +219,18 @@
 
 @php
     $cart = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())
-    ->with([
-        'cartDetail' => function ($query) {
-            $query->with(['product' => function ($productQuery) {
-                $productQuery->withTrashed();
-            }, 'cart' ,'product_variant', 'color', 'size']);
-        }
-    ])
-    ->first();
+        ->with([
+            'cartDetail' => function ($query) {
+                $query->with(['product' => function ($productQuery) {
+                    $productQuery->withTrashed();
+                }, 'cart', 'product_variant', 'color', 'size']);
+            }
+        ])
+        ->first();
+
     $hasDeletedProduct = false;
 
-    if (\Illuminate\Support\Facades\Auth::check()){
+    if ($cart && \Illuminate\Support\Facades\Auth::check()) {
         foreach ($cart->cartDetail as $detail) {
             if ($detail->product && $detail->product->trashed()) {
                 $hasDeletedProduct = true;
@@ -237,14 +238,13 @@
             }
         }
     }
-
 @endphp
 
 
 <div id="cartSidePenal" drawer-end="" class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow dark:bg-zink-600 ltr:right-0 rtl:left-0 md:w-96 z-drawer show">
     <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
         <div class="grow">
-            <h5 class="mb-0 text-16">Shopping Cart <span class="inline-flex items-center justify-center w-5 h-5 ml-1 text-[11px] font-medium border rounded-full text-white bg-custom-500 border-custom-500">3</span></h5>
+            <h5 class="mb-0 text-16">Shopping Cart</h5>
         </div>
         <div class="shrink-0">
             <button data-drawer-close="cartSidePenal" class="transition-all duration-150 ease-linear text-slate-500 hover:text-slate-800"><i data-lucide="x" class="size-4"></i></button>
@@ -264,11 +264,11 @@
                                     <div class="ltr:float-right rtl:float-left">
                                         <button data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
                                     </div>
-                                    <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
+                                    <a class="transition-all duration-200 ease-linear hover:text-custom-500">
                                         <h6 class="mb-1 text-15">{{ $list->product->name }}</h6>
                                     </a>
                                     <div class="flex items-center mb-3">
-                                        <h5 class="text-base product-price"> $<span>{{ $list->product_variant->price_sale }}</span></h5>
+                                        <h5 class="text-base product-price"><span>{{ number_format($list->product_variant->price_sale) }}</span>VND</h5>
                                         <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }}, {{ $list->color->name }}, {{ $list->size->name }})</div>
                                     </div>
                                     <div class="flex items-center justify-between gap-3">
@@ -277,7 +277,7 @@
                                             <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 products-quantity dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
                                             <button type="button" onclick="increaseCart('{{ $list->id }}')" class="transition-all duration-200 ease-linear border rounded border-slate-200 bg-slate-200 dark:bg-zink-600 dark:border-zink-600 w-7 plus-value text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block w-4 h-4"></i></button>
                                         </div>
-                                        <h6 class="products-line-price">${{ $list->product_variant->price_sale * $list->quantity }}</h6>
+                                        <h6 class="products-line-price">{{ number_format($list->product_variant->price_sale * $list->quantity) }}VND</h6>
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +290,7 @@
                                     <div class="ltr:float-right rtl:float-left">
                                         <button data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
                                     </div>
-                                    <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
+                                    <a class="transition-all duration-200 ease-linear hover:text-custom-500">
                                         <h6 style="color: red" class="mb-1 text-15">{{ $list->product->name }}</h6>
                                     </a>
                                     <div class="flex items-center mb-3">
@@ -321,7 +321,7 @@
                     <tbody class="table-total">
                     <tr class="font-semibold">
                         <td class="py-2">Tổng Tiền : </td>
-                        <td class="text-right cart-total">${{ $cart->total_amuont }}</td>
+                        <td class="text-right cart-total">{{ number_format($cart->total_amuont) }}VND</td>
                     </tr>
                     </tbody>
                 </table>
@@ -358,6 +358,8 @@
 <script src="../assets/js/cart/cartAddCart.js"></script>
 <script src="../assets/js/order/coupon.js"></script>
 <script src="../assets/js/pages/swiper.init.js"></script>
+<script src="assets/libs/clipboard/clipboard.min.js"></script>
+<script src="assets/js/pages/clipbord.init.js"></script>
 {{--<script src="../assets/js/apiAddress/api.js"></script>--}}
 {{--<script src="../assets/js/apiAddress/api2.js"></script>--}}
 <script src="../assets/js/pages/landing-product.init.js"></script>

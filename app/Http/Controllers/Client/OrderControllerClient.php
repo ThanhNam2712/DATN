@@ -57,7 +57,7 @@ class OrderControllerClient extends Controller
 
         $order = Order::find($id);
         $shipment = ShipmentOrder::where('order_id' ,$order->id)->first();
-        if ($order->status != "completed" && $shipment->shipments_5 != "completed"){
+        if ($order->status != "completed" && $shipment->shipments_5 != "completed" && $shipment->shipments_1 != "Đã Nhận Đơn"){
             $order->status = 'cancelled';
             $shipment->cancel = $request->input('cancel_8');
             $order->save();
