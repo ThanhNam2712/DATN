@@ -211,7 +211,8 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::get('verify/{user}', [VerifyEmailController::class, 'verify'])
         ->name('verify.email')
         ->middleware('signed');
-        Route::get('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('resendVerification');
+        Route::get('resend-verification', [VerifyEmailController::class, 'showResendForm'])->name('resendVerification');
+        Route::post('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('processResendVerification');
 
 
 });

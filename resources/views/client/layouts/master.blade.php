@@ -216,29 +216,28 @@
         </p>
     </div>
 </footer>
-
 @php
-    $cart = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())
-    ->with([
-        'cartDetail' => function ($query) {
-            $query->with(['product' => function ($productQuery) {
-                $productQuery->withTrashed();
-            }, 'cart' ,'product_variant', 'color', 'size']);
-        }
-    ])
-    ->first();
-    $hasDeletedProduct = false;
+        $cart = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())
+            ->with([
+                'cartDetail' => function ($query) {
+                    $query->with(['product' => function ($productQuery) {
+                        $productQuery->withTrashed();
+                    }, 'cart', 'product_variant', 'color', 'size']);
+                }
+            ])
+            ->first();
 
-    if (\Illuminate\Support\Facades\Auth::check()){
-        foreach ($cart->cartDetail as $detail) {
-            if ($detail->product && $detail->product->trashed()) {
-                $hasDeletedProduct = true;
-                break;
+        $hasDeletedProduct = false;
+
+        if ($cart && \Illuminate\Support\Facades\Auth::check()) {
+            foreach ($cart->cartDetail as $detail) {
+                if ($detail->product && $detail->product->trashed()) {
+                    $hasDeletedProduct = true;
+                    break;
+                }
             }
         }
-    }
-
-@endphp
+    @endphp
 
 
 <div id="cartSidePenal" drawer-end="" class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow dark:bg-zink-600 ltr:right-0 rtl:left-0 md:w-96 z-drawer show">
@@ -384,6 +383,29 @@
         }
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if(session('success'))
+        Swal.fire({
+            title: 'Thành công!',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    @endif
+    @if(session('error'))
+        Swal.fire({
+            title: 'Thất bại!',
+            text: '{{ session('error') }}',
+            icon: 'error',
+            timer: 4000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    @endif
+    </script>
 </body>
 
 </html>

@@ -1,31 +1,62 @@
 @extends('client.layouts.master')
 @section('title', 'Home')
 @section('body')
+<style>
+    .card-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow: hidden;
+}
 
+.swiper-slide img {
+    width: 100%;
+    max-width: 1479px;
+    height: auto;
+    object-fit: cover;
+}.card-body {
+    padding: 0 15px;
+}
+
+.swiper {
+    width: 100%;
+    max-width: 1479px;
+    height: 460px;
+    margin: 0 auto;
+}
+
+</style>
 {{-- brand controller --}}
 <section class="relative pb-10 xl:pb-36 pt-44 xl:pt-52" id="home">
     <div class="absolute top-0 left-0 size-64 bg-custom-500 opacity-10 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 size-64 bg-purple-500/10 blur-3xl"></div>
     <div style="margin-top: -130px" class="card">
-            <div class="card-body">
-                <!-- Swiper -->
-                <div class="swiper navigation-swiper" style="height: 460px">
-                    <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img style="width: 1479px;" src="../assets/images/3eba0a63-ec4a-4195-994a-fede3d7b1d25.jpeg" alt="">
-                            </div>
-                            <div class="swiper-slide" >
-                                <img style="width: 1479px;" src="../assets/images/pngtree-yellow-background-autumn-and-winter-new-product-promotion-poster-banner-men-image_900086.jpg" alt="">
-                                </div>
-                            <div class="swiper-slide" style="display: flex;width: 1479px;">
-                                <img style="width: 1479px;" src="../assets/images/banner-thoi-trang.jpg" alt="">
-                            </div>
+        <div class="card-body">
+            <!-- Swiper -->
+            <div class="swiper navigation-swiper" style="height: 460px;">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="../assets/images/3eba0a63-ec4a-4195-994a-fede3d7b1d25.jpeg" alt="">
                     </div>
-                    <div class="swiper-button-next after:hidden text-custom-500"><i data-lucide="chevron-right"></i></div>
-                    <div class="swiper-button-prev after:hidden text-custom-500"><i data-lucide="chevron-left"></i></div>
+                    <div class="swiper-slide">
+                        <img src="../assets/images/pngtree-yellow-background-autumn-and-winter-new-product-promotion-poster-banner-men-image_900086.jpg" alt="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="../assets/images/banner-thoi-trang.jpg" alt="">
+                    </div>
+                </div>
+                <div class="swiper-button-next after:hidden text-custom-500">
+                    <i data-lucide="chevron-right"></i>
+                </div>
+                <div class="swiper-button-prev after:hidden text-custom-500">
+                    <i data-lucide="chevron-left"></i>
                 </div>
             </div>
-        </div><!--end card-->
+        </div>
+    </div>
+
 </section>
 <!--end -->
 {{-- brand controller --}}
