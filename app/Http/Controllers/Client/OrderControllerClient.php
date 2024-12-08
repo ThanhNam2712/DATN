@@ -64,7 +64,7 @@ class OrderControllerClient extends Controller
             $shipment->save();
             return back()->with('message', 'Hủy Đơn Thành Công');
         }else{
-            return back()->with('message', 'Hủy Đơn Thất Bại');
+            return back()->with('error', 'Hủy Đơn Thất Bại');
         }
     }
 }

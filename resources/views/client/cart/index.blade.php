@@ -46,8 +46,8 @@
                                                             <div>
                                                                 <h5 class="mb-1 text-16"><a href="../client/home/detail/{{ $list->product->id }}/color/{{ $list->product_variant_id }}">{{ $list->product->name }}</a></h5>
                                                                 <p class="mb-2 text-slate-500 dark:text-zink-200"><a >Danh Mục : {{ $list->product->category->name }}</a></p>
-                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Size: <span class="text-slate-800 dark:text-zink-50">{{ $list->color->name }}</span></p>
-                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Size: <span class="text-slate-800 dark:text-zink-50">{{ $list->size->name }}</span></p>
+                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Màu: <span class="text-slate-800 dark:text-zink-50">{{ $list->color->name }}</span></p>
+                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Kích Thước: <span class="text-slate-800 dark:text-zink-50">{{ $list->size->name }}</span></p>
                                                             </div>
                                                             <div class="flex items-center gap-2 mt-auto">
                                                                 <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
@@ -81,8 +81,8 @@
                                                             <div>
                                                                 <h5 class="mb-1 text-16 text-red-500"><a href="../client/home/detail/{{ $list->product->id }}/color/{{ $list->product_variant_id }}">{{ $list->product->name }}</a></h5>
                                                                 <p class="mb-2 text-slate-500 text-red-500"><a href="#!">Danh Mục : {{ $list->product->category->name }}</a></p>
-                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Size: <span class="text-slate-800 dark:text-zink-50">{{ $list->color->name }}</span></p>
-                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Size: <span class="text-slate-800 dark:text-zink-50">{{ $list->size->name }}</span></p>
+                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Màu: <span class="text-slate-800 dark:text-zink-50">{{ $list->color->name }}</span></p>
+                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Kích Thước: <span class="text-slate-800 dark:text-zink-50">{{ $list->size->name }}</span></p>
                                                             </div>
                                                             <div class="flex items-center gap-2 mt-auto">
                                                                 <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">

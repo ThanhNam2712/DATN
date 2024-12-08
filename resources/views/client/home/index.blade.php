@@ -58,7 +58,7 @@
                     alt="" class="mx-auto">
                 <div class="mt-3">
                     <p class="mb-3"><i data-lucide="star"
-                            class="inline-block text-yellow-500 align-middle size-4 ltr:mr-1 rtl:ml-1"></i> (4.8)</p>
+                            class="inline-block text-yellow-500 align-middle size-4 ltr:mr-1 rtl:ml-1"></i>{{ $list->category->name }}</p>
                     <h5><a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}">{{
                             $list->name }}</a></h5>
 

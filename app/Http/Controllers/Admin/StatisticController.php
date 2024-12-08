@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -22,8 +23,9 @@ class StatisticController extends Controller
         $orderProduct = $this->getProductTopSale();
         $category = $this->getCategory();
         $categoryChart = $this->getCategoryChart();
+        $countShipment = $this->countShipment();
         return view('admin.Statistic.index', compact('order', 'orderCancel',
-            'orderChart', 'orderPayments', 'orderUser', 'orderProduct', 'category', 'categoryChart', 'orderChartYear'));
+            'orderChart', 'orderPayments', 'orderUser', 'orderProduct', 'category', 'categoryChart', 'orderChartYear', 'countShipment'));
     }
 
     public function chart(Request $request)
@@ -314,5 +316,10 @@ class StatisticController extends Controller
             'labels' => $labels,
             'datasets' => $datasets,
         ];
+    }
+
+    private function countShipment()
+    {
+        return ShipmentOrder::where('shipments_5', 'completed')->count();
     }
 }

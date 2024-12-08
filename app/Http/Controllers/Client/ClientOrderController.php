@@ -127,7 +127,7 @@ class ClientOrderController extends Controller
             }
         }else{
             return back()->with([
-                'message' => 'Đã Có lỗi sảy ra vui lòng thử lại',
+                'error' => 'Đã Có lỗi sảy ra vui lòng thử lại',
             ]);
         }
 
