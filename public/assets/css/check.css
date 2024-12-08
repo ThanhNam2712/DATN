@@ -1,0 +1,6 @@
+.checkA{
+    background-repeat: no-repeat;
+    background-image: url(../images/check-arrow.svg);
+    background-size: .9rem .9rem;
+    background-position: 50%;
+}

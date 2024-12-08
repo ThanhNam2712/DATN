@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AE Boutique</title>
+    <link rel="stylesheet" href="Home.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+  <div class="logo">
+    <a href="Home.html"><img src="../anh/logo.png" alt="Logo" /></a>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="Home.html">Trang chủ</a></li>
+      <li><a href="../gioithieu/gioithieu.html">Giới thiệu</a></li>
+      <li><a href="../lienhe/lienhe.html">Liên hệ</a></li>  
+      <li class="dropdown">
+        <a href="#">Bộ sưu tập</a>
+        <ul class="dropdown-menu">
+          <li><a href="../danhmuc/polo/polo.html">Áo Polo</a></li>
+          <li><a href="../danhmuc/phong/phong.html">Áo phông</a></li>
+          <li><a href="../danhmuc/quanaobo/quanaobo.html">Quần áo bộ</a></li>
+          <li><a href="../danhmuc/somi/somi.html"> Áo sơ mi</a></li>
+        </ul>
+      </li>
+      
+    </ul>
+  </nav>
+  <!-- Phần tìm kiếm, đăng ký, giỏ hàng nha các bé -->
+  <div class="header-icons">
+   
+    <form id="searchForm" style="display: flex; align-items: center; gap: 10px; border: 1px solid #ddd; padding: 8px; border-radius: 5px;">
+      <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." style="border: none; outline: none;" />
+
+      <button type="submit" style="background: none; border: none; cursor: pointer;">
+        🔍
+      </button>
+      <a href="../Register/register.html" style="display: flex; align-items: center; justify-content: center;">
+        <svg width="24" height="24" fill="#007bff" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.86 0-7 3.14-7 7 0 .553.447 1 1 1h12c.553 0 1-.447 1-1 0-3.86-3.14-7-7-7z"/>
+        </svg>
+      </a>
+      <a href="../DonHang/donhang.html" style="display: flex; align-items: center; justify-content: center;">
+        <svg width="24" height="24" fill="#007bff" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 18c-1.104 0-2 .897-2 2s.896 2 2 2 2-.897 2-2-.896-2-2-2zm10 0c-1.104 0-2 .897-2 2s.896 2 2 2 2-.897 2-2-.896-2-2-2zM7 6h13c.553 0 1 .447 1 1s-.447 1-1 1h-1.333l-1.085 4.86c-.168.754-.855 1.285-1.625 1.285h-5.358c-.77 0-1.457-.531-1.625-1.285L5.333 8H4C3.447 8 3 7.553 3 7s.447-1 1-1h3c.48 0 .897.34.98.807L7 6zm0 0z"/>
+        </svg>
+      </a>
+    </form>
+  </div>
+</header>
+
+
+    <!-- Slide show -->
+    <section class="banner">
+      <div class="banner-container">
+        <div class="banner-slide">
+          <img src="../anh/banner/banner1.jpg" alt="Banner 1" />
+        </div>
+        <div class="banner-slide">
+          <img src="../anh/banner/banner2.jpg" alt="Banner 2" />
+        </div>
+        <div class="banner-slide">
+          <img src="../anh/banner/banner3.jpg" alt="Banner 3" />
+        </div>
+        <div class="banner-slide">
+          <img src="../anh/banner/banner4.jpg" alt="Banner 4" />
+        </div>
+        <div class="banner-slide">
+          <img src="../anh/banner/banner5.jpg" alt="Banner 5" />
+        </div>
+        <div class="banner-slide">
+          <img src="../anh/banner/banner6.jpg" alt="Banner 6" />
+        </div>
+        <div class="banner-slide">
+          <img src="../anh/banner/banner7.jpg" alt="Banner 7" />
+        </div>
+        <div class="banner-slide">
+          <img src="../anh/banner/banner8.jpg" alt="Banner 8" />
+        </div>
+        <div class="banner-slide">
+          <img src="../anh/banner/banner9.jpg" alt="Banner 9" />
+        </div>
+        <div class="banner-slide">
+          <img src="../anh/banner/banner10.jpg" alt="Banner 10" />
+        </div>
+      </div>
+      <div class="banner-controls">
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+      </div>
+    </section>
+
+    <!-- Sản phẩm mới -->
+      <section class="new-products">
+    <h3>Sản Phẩm Mới</h3>
+    <hr>
+    <div class="product-container">
+   <!-- Product 1 -->
+   <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Áo</p>
+       
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+         <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+  <!-- Product 1 -->
+  <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+       
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+         <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+    </div>
+</section>
+      </section>
+
+    <!-- Cửa hàng -->
+    <section class="store">
+      <h3>Cửa Hàng</h3>
+      <hr>
+      <div class="product-container">
+         <!-- Product 1 -->
+  <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+  <!-- Product 1 -->
+  <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+       
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+         <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+      </div>
+    </section>
+
+    <!-- Sản phẩm nổi bật -->
+    <section class="new-products">
+  <h3>Sản Phẩm Nổi Bật</h3>
+  <hr>
+  <div class="product-container">
+       <!-- Product 1 -->
+  <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+  <!-- Product 1 -->
+  <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+       
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+         <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+   <!-- Product 1 -->
+   <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+  <!-- Product 1 -->
+  <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+<!-- 12/11 -->
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+       
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+         <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+</div>
+    
+</section>
+
+<!-- Áo thời trang -->
+<section class="new-products">
+  <h3>Áo Polo thời trang</h3>
+  <hr>
+  <div class="product-container">
+       <!-- Product 1 -->
+  <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+  <!-- Product 1 -->
+  <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+       
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+         <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+   <!-- Product 1 -->
+   <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+  <!-- Product 1 -->
+  <div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Xanh Đen Vân Caro Xuống To Likeauth</p>
+        
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+        <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+    <div class="product-image" id="product-image-1">
+      <img src="../anh/1.1.jpg" alt="">
+    </div>
+    <div class="product-details">
+        <p class="product-name">Quần Bò Dài LV Nâu Vân Caro Xuống To Likeauth</p>
+       
+        <div class="price">
+            <span class="old-price">1.600.000đ</span>
+            <span class="new-price">1.500.000đ</span>
+        </div>
+         <div class="star-rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+    </div>
+    <div class="icons">
+        <button class="cart-icon">
+            <a href="../ChiTietSp/chitiet.html"><img src="../anh/cart.png" alt="Giỏ hàng" width="20" height="20"></a>
+        </button>
+    </div>
+</div>
+</div>
+    
+</section>
+
+    <!-- Footer -->
+    <footer>
+      <hr>
+  <div class="footer-container">
+    <div class="footer-item">
+      <h5>Shop AE Boutique</h5>
+      <h6>Shop AE Boutique chuyên buôn, sỉ, lẻ, order hàng thời trang, giá tốt nhất thị trường. Nơi mua sắm mới nhất cho những khách hàng yêu quý.</h6>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/aeboutique69"><img src="../anh/fb.png" alt="Facebook"></a>
+        <a href="#"><img src="../anh/youtube.png" alt="YouTube"></a>
+      </div>
+    </div>
+    
+    <div class="footer-item">
+      <h5>Liên kết nhanh</h5>
+      <ul>
+        <li><a href="#">Hướng dẫn đặt hàng</a></li>
+        <li><a href="#">Hướng dẫn thanh toán</a></li>
+        <li><a href="#">Chính sách đổi trả hàng</a></li>
+        <li><a href="#">Liên hệ với chúng tôi</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-item">
+      <h5>Hotline hỗ trợ 24/7</h5>
+      <div class="hotline">
+        <span>0975986096</span>
+      </div>
+      <h5>Chấp nhận thanh toán</h5>
+      <div class="payment-icons">
+        <img src="../anh/momo.png" alt="Momo">
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script src="Home.js"></script>
+  </body>
+</html>
