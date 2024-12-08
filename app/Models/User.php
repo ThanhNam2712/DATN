@@ -79,8 +79,15 @@ class User extends Authenticatable
     return $this->belongsTo(Role::class);
 }
 
+<<<<<<< HEAD
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+=======
+public function sendPasswordResetNotification($token)
+{
+    $this->notify(new ResetPasswordNotification($token));
+}
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 }

@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\User;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Mail;
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 
 class CouponController extends Controller
 {
@@ -24,6 +27,7 @@ class CouponController extends Controller
 
     public function store(Request $request)
     {
+<<<<<<< HEAD
         $request->validate([
             'code' => 'required|max:30',
             'discount_type' => 'required',
@@ -36,11 +40,27 @@ class CouponController extends Controller
         $data = $request->all();
         Coupon::create($data);
 
+=======
+        $data = $request->all();
+
+
+        $dateStart = $request->input('start_end');
+        $dateEnd = $request->input('expiration_date');
+
+        if ($dateStart >= $dateEnd){
+            return redirect()->back()->with([
+                'message' => 'Ngày Bắt đầu không được lớn hơn ngày kết thúc',
+            ]);
+        }
+
+        Coupon::create($data);
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
         return redirect('admin/coupon/')->with([
             'message' => 'Create Coupon Success'
         ]);
     }
 
+<<<<<<< HEAD
     private function sendmail($user, $coupon, $email_to)
     {
         Mail::send('client.mail.coupon', compact('user', 'coupon'), function ($message) use ($email_to) {
@@ -50,6 +70,8 @@ class CouponController extends Controller
         });
     }
 
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
     public function update($id)
     {
         $user = User::all();

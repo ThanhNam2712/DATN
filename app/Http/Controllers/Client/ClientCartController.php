@@ -24,6 +24,7 @@ class ClientCartController extends Controller
         // lấy id người dùng
         $id_user = Auth::id();
 
+<<<<<<< HEAD
 
         $cart = Cart::where('user_id', $id_user)->first();
 
@@ -31,6 +32,18 @@ class ClientCartController extends Controller
 
         $product_variant = ProductVariant::find($request->product_variant_id);
 
+=======
+        // Kiểm Tra người dùng đã có giỏ hàng chưa
+        $cart = Cart::where('user_id', $id_user)->first();
+        // lấy id của product
+        $product = $request->product_id;
+
+        // lấy biến thể của product
+        $product_variant = ProductVariant::where('product_id', $product)->first();
+        // dd($request->size_id,$request->color_id,$product,$request->quantity);
+
+        // kiểm tra nếu người dùng chưa có giỏ hàng thì thêm
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
         if (!$cart) {
             $cart = Cart::create([
                 'user_id' => $id_user,
@@ -42,8 +55,12 @@ class ClientCartController extends Controller
         $cart_item = CartItem::where('cart_id', $cart->id)
             ->where('product_id', $product)
             ->where('product_variant_id', $product_variant->id)
+<<<<<<< HEAD
             ->where('color_id', $request->color_id)
             ->where('size_id', $request->size_id)
+=======
+            ->where('quantity', $request->quantity)
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
             ->first();
 
         // nếu trong giỏ hàng đã có cart item sẽ công thêm số lượng người dùng chọn

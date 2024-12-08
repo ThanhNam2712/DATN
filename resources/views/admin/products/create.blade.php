@@ -23,7 +23,11 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4 text-15">Create Product</h6>
+<<<<<<< HEAD
                             <form action="../admin/products/create" method="post" id="form-product" enctype="multipart/form-data">
+=======
+                            <form action="../admin/products/create" method="post" enctype="multipart/form-data">
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                 @csrf
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     {{-- Product creare --}}
@@ -34,6 +38,10 @@
                                         @error('name')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
+<<<<<<< HEAD
+=======
+                                              
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                             </div>
                                         @enderror
                                     </div><!--end col-->
@@ -42,9 +50,15 @@
                                         <input type="text" id="productNameInput" name="description" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
                                         <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
                                         @error('description')
+<<<<<<< HEAD
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
                                             </div>
+=======
+                                        <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">{{ $message }}</span>
+                                        </div>
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                         @enderror
                                     </div><!--end col-->
                                     <div class="xl:col-span-4">
@@ -75,6 +89,7 @@
                                             </div>
                                         @enderror
                                     </div><!--end col-->
+<<<<<<< HEAD
                                     <div class="xl:col-span-4">
                                         <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Tag</label>
                                         <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="tags[]" id="categorySelect" multiple>
@@ -89,6 +104,8 @@
                                             </div>
                                         @enderror
                                     </div><!--end col-->
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                     {{-- active --}}
                                     <div class="xl:col-span-4">
                                         <label for="yellowIconSwitch" class="inline-block text-base font-medium cursor-pointer">Trending Products</label>

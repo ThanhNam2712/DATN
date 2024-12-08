@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AE Boutique</title>
+<<<<<<< HEAD
     
     <link rel="stylesheet" href="/Front-end/Home/Home.css" />
     <link rel="stylesheet" href="/Front-end/ThanhCong/succes.css">
@@ -18,6 +19,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../assets/js/common.js"></script>
     <script src="../assets/js/apivn.js"></script>
+=======
+    <link rel="stylesheet" href="/Front-end/Home/Home.css" />
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 </head>
 <body>
     <!-- Header -->

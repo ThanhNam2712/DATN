@@ -38,7 +38,11 @@ return [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
+<<<<<<< HEAD
             'port' => env('MAIL_PORT', 587),
+=======
+            'port' => env('MAIL_PORT', 2525),
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
             'encryption' => env('MAIL_ENCRYPTION', 'null'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),

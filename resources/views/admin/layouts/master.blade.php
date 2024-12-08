@@ -23,7 +23,11 @@
     <script src="../assets/js/common.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
             crossorigin="anonymous"></script>
+<<<<<<< HEAD
 
+=======
+           
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 </head>
 
 <body class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
@@ -399,6 +403,7 @@
 <script src="../assets/js/cart/quantity.js"></script>
 <script src="../assets/js/cart/cartAddCart.js"></script>
 <script src="../assets/js/order/coupon.js"></script>
+<<<<<<< HEAD
 <script src="../assets/js/image.js"></script>
 <script>
     let variantIndex = 1;
@@ -417,6 +422,10 @@
             }
         });
     });
+=======
+<script>
+    let variantIndex = 1;
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
     function addVariant(){
         const variantTemplate = `
             <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
@@ -500,6 +509,7 @@
 });
 
 </script>
+<<<<<<< HEAD
 <script>
     document.getElementById('form-coupon').addEventListener('submit', function(e) {
         // Lấy giá trị ngày bắt đầu và ngày kết thúc từ input
@@ -514,6 +524,8 @@
     });
 </script>
 
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 </body>
 
 </html>

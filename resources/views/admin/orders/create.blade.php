@@ -255,7 +255,11 @@
                                             Total Amount (USD)
                                         </td>
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">${{ $cart->total_amuont}}</td>
+<<<<<<< HEAD
                                         <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
+=======
+                                        <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $cart->total_amuont }}">
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                     </tr>
 
                                     </tbody>

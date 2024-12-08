@@ -25,6 +25,7 @@
 
             <div class="row"
                  style="height: 100px; padding: 10px 20px; line-height: 90px; background-color: white; box-sizing: border-box;">
+<<<<<<< HEAD
 {{--                <h1 class="pl-3"--}}
 {{--                    style="color: orange; line-height: 00px; float: left; padding-left: 20px; padding-top: 5px;">--}}
 {{--                    <img src="{{$message->embed(asset('front/img/logo.png'))}}"--}}
@@ -33,6 +34,16 @@
                 <h1 class="pl-2"
                     style="color: orange; line-height: 30px; float: left; padding-left: 20px; font-size: 40px; font-weight: 500;">
                     Clothing Store
+=======
+                <h1 class="pl-3"
+                    style="color: orange; line-height: 00px; float: left; padding-left: 20px; padding-top: 5px;">
+                    <img src="{{$message->embed(asset('front/img/logo.png'))}}"
+                         height="40" alt="logo">
+                </h1>
+                <h1 class="pl-2"
+                    style="color: orange; line-height: 30px; float: left; padding-left: 20px; font-size: 40px; font-weight: 500;">
+                    CodeLean eCommerce
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                 </h1>
             </div>
 
@@ -104,7 +115,10 @@
                                 <tr>
                                     <td style="border-top: 1px solid #dee2e6; padding: 5px 0;">
                                         {{ $orderDetail->products->name . ' (x' . $orderDetail->quantity . ')'}}
+<<<<<<< HEAD
                                         <img src="{{ \Illuminate\Support\Facades\Storage::url($orderDetail->products->image) }}" height="40" alt="logo">
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                     </td>
 
                                     <td style="border-top: 1px solid #dee2e6; padding: 5px 0;">
@@ -139,7 +153,11 @@
                                 <tr>
                                     <td class="">Shipping fee</td>
                                     <td class="pr-3 text-right" style="text-align: right; padding-right: 20px;">
+<<<<<<< HEAD
                                         ${{ $order->total_amount }}
+=======
+                                        0.0 $
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                     </td>
                                 </tr>
                                 <tr>
@@ -151,7 +169,11 @@
                                 <tr style="font-size: 18px;">
                                     <td><b>TOTAL</b></td>
                                     <td class="pr-3 text-right" style="text-align: right; padding-right: 20px;">
+<<<<<<< HEAD
                                         <b>${{ $order->total_amount }}</b>
+=======
+                                        <b>{{ $order->total }} $</b>
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                     </td>
                                 </tr>
                             </table>

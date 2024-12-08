@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+=======
+use Illuminate\Http\Request;
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,6 +27,7 @@ class ForgotPasswordController extends Controller
         return view('client.account.email_confirm');
     }
 
+<<<<<<< HEAD
     public function postNotPass(Request $request)
     {
         $user = User::where('email', '=' ,$request->email)->first();
@@ -70,12 +75,15 @@ class ForgotPasswordController extends Controller
         }
     }
 
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
     /**
      * Gửi email reset mật khẩu.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
+<<<<<<< HEAD
 
 
 
@@ -101,4 +109,28 @@ class ForgotPasswordController extends Controller
 //
 //        return back()->withErrors(['email' => 'Có lỗi xảy ra, vui lòng thử lại sau.']);
 //    }
+=======
+    public function sendResetLinkEmail(Request $request)
+    {
+        // Validate email input
+        $validator = Validator::make($request->all(), [
+            'email' => 'email|exists:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Gửi email reset mật khẩu
+        $response = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($response == Password::RESET_LINK_SENT) {
+            return back()->with('status', 'Đã gửi email reset mật khẩu!');
+        }
+
+        return back()->withErrors(['email' => 'Có lỗi xảy ra, vui lòng thử lại sau.']);
+    }
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 }

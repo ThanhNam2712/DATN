@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+<<<<<<< HEAD
 use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Category;
@@ -16,6 +17,13 @@ use App\Models\ProductColor;
 use App\Models\ProductSize;
 use App\Models\ProductVariant;
 use App\Utilities\VNPay;
+=======
+use App\Models\Cart;
+use App\Models\Coupon;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\ProductVariant;
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -65,6 +73,7 @@ class ClientOrderController extends Controller
             }
         }
         $total = $order->total_amount;
+<<<<<<< HEAD
         if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
             $cart->cartDetail()->delete();
             $this->updateTotal($cart->id, 0);
@@ -105,6 +114,13 @@ class ClientOrderController extends Controller
         }
     }
 
+=======
+        $cart->cartDetail()->delete();
+        $this->updateTotal($cart->id, 0);
+//        $this->sendMail($order, $total);
+        return view('client.order.confirm');
+    }
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
     private function sendMail($order, $total){
         $email_to = $order->email;
 
@@ -123,6 +139,7 @@ class ClientOrderController extends Controller
             ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
             ->first();
 
+<<<<<<< HEAD
 
 
         $coupon = Coupon::where('code', $couponCode)
@@ -140,6 +157,19 @@ class ClientOrderController extends Controller
 
 
 
+=======
+        $coupon = Coupon::where('code', $couponCode)
+            ->where('start_end', '<=', now())
+            ->where('expiration_date', '>=', now())
+            ->first();
+
+        if (!$coupon) {
+            return response()->json([
+                'error' => 'Thằng ranh này nhập không đúng mã voucher'
+            ]);
+        }
+
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
         $discount = 0;
         $total = $cart->total_amuont;
 
@@ -151,6 +181,7 @@ class ClientOrderController extends Controller
             }
         } else {
             return response()->json([
+<<<<<<< HEAD
                 'error' => 'coupon không hợp lệ'
             ]);
         }
@@ -173,6 +204,12 @@ class ClientOrderController extends Controller
 
         $final_total = $total - $discount;
         $coupon->decrement('number', 1);
+=======
+                'error' => 'Thằng ranh con này đơn hàng không đủ điều kiện'
+            ]);
+        }
+        $final_total = $total - $discount;
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
         return response()->json([
             'success' => true,
             'discount' => $discount,
@@ -188,6 +225,7 @@ class ClientOrderController extends Controller
             $cart->save();
         }
     }
+<<<<<<< HEAD
     public function listOrders()
     {
         $orders = auth()->user()->Orders()->with('Order_Items.product_variants')->get();
@@ -204,5 +242,8 @@ class ClientOrderController extends Controller
             $address = $user->addresses;
         return view('client.order.show', compact('order','user', 'address'));
     }
+=======
+
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 
 }

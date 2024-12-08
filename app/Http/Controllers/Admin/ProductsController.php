@@ -44,6 +44,7 @@ class ProductsController extends Controller
         return view('client.home', compact('products', 'trends'));
     }
 
+<<<<<<< HEAD
     public function index(Request $request)
     {
         $search = $request->search;
@@ -55,6 +56,11 @@ class ProductsController extends Controller
                             ->orWhere('categories.name', 'like', '%' . $search . '%')
                             ->orderBy('products.id', 'asc')
                             ->get();
+=======
+    public function index()
+    {
+        $product = Product::with('tags')->latest('id')->get();
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 
         return view('admin.products.index', compact('product'));
     }
@@ -68,8 +74,12 @@ class ProductsController extends Controller
         $brand = Brand::all();
         $color = ProductColor::all();
         $size = ProductSize::all();
+<<<<<<< HEAD
         $tags = Tag::query()->pluck('name', 'id')->all();
         return view('admin.products.create', compact('category', 'brand', 'color', 'size','tags'));
+=======
+        return view('admin.products.create', compact('category', 'brand', 'color', 'size'));
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
     }
 
     /**
@@ -120,6 +130,7 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
+<<<<<<< HEAD
     public function show($id)
     {
         $product = Product::find($id);
@@ -128,6 +139,19 @@ class ProductsController extends Controller
         $color = ProductColor::all();
         $size = ProductSize::all();
         return view('admin.products.show', compact('product', 'category', 'brand', 'color', 'size'));
+=======
+    public function show(string $id)
+    {
+        $products = Product::with(['tags', 'variant'])->orderBy('id')->limit(12)->get();
+        $product = Product::find($id);
+        $trends = Product::with(['tags', 'variant'])
+            ->where('is_trending', 1) // Lọc những sản phẩm đang trending
+            ->orderBy('id', 'desc') // Sắp xếp theo ID (hoặc theo cột khác nếu cần)
+            ->limit(4) // Giới hạn chỉ lấy 4 sản phẩm
+            ->get();
+        // dd($product);
+        return view('client.detail', compact('products', 'trends', 'product'));
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
     }
 
     /**
@@ -236,6 +260,7 @@ class ProductsController extends Controller
             'message' => 'Destroy Products Success'
         ]);
     }
+<<<<<<< HEAD
 
     public function soft()
     {
@@ -253,4 +278,6 @@ class ProductsController extends Controller
             'message' => 'Connect Success'
         ]);
     }
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 }

@@ -13,7 +13,10 @@ class ReviewsController extends Controller
     public function index($id)
     {
         $product = Product::find($id);
+<<<<<<< HEAD
         
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
         return view('admin.reviews.index', compact('product'));
     }
 

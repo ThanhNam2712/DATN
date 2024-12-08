@@ -16,6 +16,9 @@ class Coupon extends Model
         'start_end',
         'user_id',
         'minimum_order_amount',
+<<<<<<< HEAD
         'number',
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
     ];
 }

@@ -7,6 +7,7 @@
 
                 <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
                     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
+<<<<<<< HEAD
                         @if(session('message'))
                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                 <span class="font-bold">{{ session('message') }}</span>
@@ -18,11 +19,22 @@
                                 <span class="font-bold">{{ session('error') }}</span>
                             </div>
                         @endif
+=======
+
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                             <div class="grow">
                                 <h5 class="text-16">Overview</h5>
                             </div>
+<<<<<<< HEAD
 
+=======
+                            @if(session('message'))
+                                <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                    <span class="font-bold">{{ session('message') }}</span>
+                                </div>
+                            @endif
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                             <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                                 <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
                                     <a href="#!" class="text-slate-400 dark:text-zink-200">Products</a>
@@ -41,12 +53,30 @@
                                                 <div class="rounded-md md:col-span-8 md:row-span-2 bg-slate-100 dark:bg-zink-600">
                                                     <img src="{{ Storage::url($product->image) }}" style="width: 271px;" alt="">
                                                 </div>
+<<<<<<< HEAD
                                                 @foreach($image as $img)
                                                     <div class="rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
                                                         <img src="{{ Storage::url($img->file_path) }}" alt="">
                                                     </div>
                                                 @endforeach
 
+=======
+                                                <div class="rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
+                                                    <img src="assets/images/overview-02.png" alt="">
+                                                </div>
+                                                <div class="p-4 rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
+                                                    <img src="assets/images/img-012.png" alt="">
+                                                </div>
+                                                <div class="p-4 rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
+                                                    <img src="assets/images/img-09.png" alt="">
+                                                </div>
+                                                <div class="p-4 rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
+                                                    <img src="assets/images/img-12.png" alt="">
+                                                </div>
+                                                <div class="p-4 rounded-md md:col-span-4 bg-slate-100 dark:bg-zink-600">
+                                                    <img src="assets/images/img-13.png" alt="">
+                                                </div>
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                             </div>
 
                                             <div class="flex gap-2 mt-4 shrink-0">
@@ -125,17 +155,26 @@
 
                                         <div class="mb-4">
                                             <p class="mb-1 text-green-500">Special Price</p>
+<<<<<<< HEAD
                                             <h4>${{ $priceVariant->price_sale }} <small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">${{ $priceVariant->price }}</small> <small class="text-green-500 align-middle">{{ round(($priceVariant->price - $priceVariant->price_sale) / $priceVariant->price * 100) }}% ON</small></h4>
+=======
+                                            <h4>${{ $product->variant->first()->price_sale }} <small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">${{ $product->variant->first()->price }}</small> <small class="text-green-500 align-middle">{{ round(($product->variant->first()->price - $product->variant->first()->price_sale) / $product->variant->first()->price * 100) }}% ON</small></h4>
+
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                         </div>
                                         <form action="../client/cart/add" method="post">
                                             @csrf
                                             <h6 class="mb-3 text-15">Select Color</h6>
                                             <div class="flex flex-wrap items-center gap-2">
                                                 @foreach($product->variant as $key => $color)
+<<<<<<< HEAD
                                                     <a href="../client/home/detail/{{ $product->id }}/color/{{ $color->id }}" class="color inline-block align-middle {{ $colorClasses[$color->color->name]  ?? '' }} border border-orange-500 rounded-sm appearance-none cursor-pointer size-5  checked:{{ $colorClasses[$color->color->name] ?? '' }} disabled:opacity-75 disabled:cursor-default @if($variant == $color->id) checkA @endif"></a>
                                                     @if($variant == $color->id)
                                                         <input type="hidden" name="color_id" value="{{ $color->color->id }}">
                                                     @endif
+=======
+                                                    <input id="color{{ $key }}" class="border rounded-sm appearance-none cursor-pointer size-5 border-custom-500 {{ $colorClasses[$color->color->name]  ?? '' }} checked:{{ $colorClasses[$color->color->name] ?? '' }} checked:border-custom-500 disabled:opacity-75 disabled:cursor-default" type="radio" name="color_id" value="{{ $color->color->id }}">
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                                 @endforeach
                                             </div>
 
@@ -159,8 +198,12 @@
 
                                             <div class="flex gap-2 mt-4 shrink-0">
 
+<<<<<<< HEAD
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                 <input type="hidden" name="product_variant_id" value="{{ $priceVariant->id }}">
+=======
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                             <button type="submit" id="add-to-cart" data-product-id="{{ $product->id }}" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">
                                                 <i data-lucide="shopping-cart" class="inline-block align-middle size-3 ltr:mr-1 rtl:ml-1"></i>
                                                 <span class="align-middle">Add to Cart</span>
@@ -397,7 +440,11 @@
                 <button data-modal-close="addReviewsModal" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
             </div>
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
+<<<<<<< HEAD
                 <form action="../client/home/post" method="post">
+=======
+                <form action="../client/post" method="post">
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                     <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                         @csrf
                         <div class="xl:col-span-4">

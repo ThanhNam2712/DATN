@@ -20,7 +20,11 @@ class LoginController extends Controller
         // Xác thực đầu vào
         $data = $request->validate([
             'email' => 'required|email',
+<<<<<<< HEAD
             'password' => 'required|min:4|max:20',
+=======
+            'password' => 'required|min:1|max:20',
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
         ]);
         $user = User::where('email', $data['email'])->first();
 
@@ -28,7 +32,11 @@ class LoginController extends Controller
         if ($user && Hash::check($data['password'], $user->password)) {
             Auth::loginUsingId($user->id);
             $request->session()->regenerate();
+<<<<<<< HEAD
             return redirect()->intended('client/home');
+=======
+            return redirect()->intended('/');
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
         }
         return back()->withErrors([
             'email' => 'Thông tin đăng nhập không chính xác.',

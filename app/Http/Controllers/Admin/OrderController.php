@@ -26,6 +26,7 @@ class OrderController extends Controller
         $address = $user->addresses;
 
         // dd($address);
+<<<<<<< HEAD
         // return view('client.order');
         return view('client.order', compact('cart', 'user', 'address'));
     }
@@ -36,6 +37,11 @@ class OrderController extends Controller
         return view('admin.orders.detail', compact('order'));
     }
 
+=======
+
+        return view('admin.orders.create', compact('cart', 'user', 'address'));
+    }
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
     public function create(Request $request)
     {
         try {
@@ -94,8 +100,12 @@ class OrderController extends Controller
                 $cart->cartDetail()->delete();
                 $cart->delete();
 
+<<<<<<< HEAD
                 return redirect()->route('admin.order.show', ['id' => $order->id])
                 ->with('success', 'Đơn hàng được tạo thành công!');
+=======
+                return response()->json(['message' => 'Đơn hàng được tạo thành công!', 'order' => $order]);
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
             });
 
         } catch (\Throwable $th) {
@@ -108,6 +118,7 @@ class OrderController extends Controller
     {
         $orders = auth()->user()->Orders()->with('Order_Items.product_variants')->get();
         // dd($orders);
+<<<<<<< HEAD
         return view('client.list', compact('orders'));
 
     }
@@ -120,6 +131,11 @@ class OrderController extends Controller
             $address = $user->addresses;
         return view('client.chitietorder', compact('order','user', 'address'));
     }
+=======
+        return view('admin.orders.list', compact('orders'));
+
+    }
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 
 
     public function coupon(Request $request)

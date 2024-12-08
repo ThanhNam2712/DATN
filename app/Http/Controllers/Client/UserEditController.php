@@ -8,7 +8,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Http;
+=======
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 
 class UserEditController extends Controller
 {

@@ -27,12 +27,17 @@
                                     <span class="font-bold">{{ session('message') }}</span>
                                 </div>
                             @endif
+<<<<<<< HEAD
                             <form action="../admin/coupon/create" method="post" id="form-coupon">
+=======
+                            <form action="../admin/coupon/create" method="post">
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                             @csrf
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     {{-- Product creare --}}
                                     <div class="xl:col-span-12">
                                         <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Coupon Name</label>
+<<<<<<< HEAD
                                         <input type="text" id="productNameInput" name="code" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title">
                                         <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
                                         @error('code')
@@ -64,16 +69,35 @@
                                             <span class="font-bold">{{ $message }}</span>
                                         </div>
                                         @enderror
+=======
+                                        <input type="text" id="productNameInput" name="code" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" required="">
+                                        <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
+                                    </div><!--end col-->
+
+
+                                    <div class="xl:col-span-4">
+                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Discount Type</label>
+                                        <input type="text" name="discount_type" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Sale" required="">
+                                    </div>
+
+                                    <div class="xl:col-span-4">
+                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Discount Type</label>
+                                        <input type="number" name="discount_value" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder=" < 100" required="">
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                     </div>
 
                                     <div class="xl:col-span-4">
                                         <label for="productPrice" class="inline-block mb-2 text-base font-medium">Minimum amount</label>
+<<<<<<< HEAD
                                         <input type="number" name="minimum_order_amount" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Minimum amount">
                                         @error('minimum_order_amount')
                                         <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                             <span class="font-bold">{{ $message }}</span>
                                         </div>
                                         @enderror
+=======
+                                        <input type="number" name="minimum_order_amount" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Minimum amount" required="">
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                     </div>
 
                                     <div class="xl:col-span-4">
@@ -87,6 +111,7 @@
                                     </div><!--end col-->
 
                                     <div class="xl:col-span-4">
+<<<<<<< HEAD
                                         <label for="dateCouponSt" class="inline-block mb-2 text-base font-medium">Date Start</label>
                                         <input type="date" name="start_end" id="dateCouponSt" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" >
                                         @error('start_end')
@@ -114,6 +139,15 @@
                                             <span class="font-bold">{{ $message }}</span>
                                         </div>
                                         @enderror
+=======
+                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Date Start</label>
+                                        <input type="date" name="start_end" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" >
+                                    </div>
+
+                                    <div class="xl:col-span-4">
+                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Date End</label>
+                                        <input type="date" name="expiration_date" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                     </div>
                                 </div>
                                 <div class="flex justify-end gap-2 mt-4">

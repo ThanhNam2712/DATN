@@ -30,18 +30,31 @@
                                     {{-- Product creare --}}
                                     <div class="xl:col-span-6">
                                         <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Product Title</label>
+<<<<<<< HEAD
                                         <input type="text" value="{{$product->name}}" id="productNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
                                         <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
                                         @error('name')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
 
+=======
+                                        <input value="{{$product->name}}" type="text" id="productNameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
+                                        <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
+                                         @error('name')
+                                            <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                                <span class="font-bold">{{ $message }}</span>
+                                              
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                             </div>
                                         @enderror
                                     </div><!--end col-->
                                     <div class="xl:col-span-6">
                                         <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Product Title</label>
+<<<<<<< HEAD
                                         <input type="text" value="{{$product->description}}"  id="productNameInput" name="description" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
+=======
+                                        <input type="text" value="{{$product->name}}"  id="productNameInput" name="description" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" >
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                         <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
                                         @error('description')
                                         <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
@@ -54,7 +67,11 @@
                                         <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="brand_id" id="categorySelect">
                                             <option value="">Select Brand</option>
                                             @foreach($brand as $id => $name)
+<<<<<<< HEAD
                                                 <option @selected($product->brand_id == $id)
+=======
+                                                <option @selected($product->brand_id == $id) 
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                                     value="{{ $id }}">{{$name}}</option>
                                             @endforeach
                                         </select>
@@ -139,11 +156,16 @@
                                                             <input type="file" name="image" id="fileInput">
                                                         </span>
                                                     </div>
+<<<<<<< HEAD
                                                 </div>
+=======
+                                                </div> 
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                                 @if ($product->image && \Storage::exists($product->image))
                                                 <img src="{{\Storage::url($product->image)}}" width="100px" alt="">
                                                 @endif
                                             </div>
+<<<<<<< HEAD
 
                                         </div>
                                         <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width: 100px; height: 200px">
@@ -151,15 +173,40 @@
                                                 <div class="dz-details">
                                                     <div class="dz-thumbnail">
                                                         <img src="{{ Storage::url($product->image) }}" alt="Image Preview">
+=======
+                                           
+                                        </div>
+                                        <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" id="dzPreview" style="display: none; width: 100px; height: 200px">
+                                            <div class="border rounded border-slate-200 dark:border-zink-500">
+                                                <div class="dz-details">
+                                                    <div class="dz-thumbnail">
+                                                        <img id="imageThumbnail" data-dz-thumbnail="" alt="Image Preview">
+                                                        <span class="dz-nopreview">No preview</span>
+                                                        <div class="dz-success-mark"></div>
+                                                        <div class="dz-error-mark"></div>
+                                                        <div class="dz-error-message">
+                                                            <span data-dz-errormessage=""></span>
+                                                        </div>
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                                         <div class="progress">
                                                             <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
                                                         </div>
                                                     </div>
+<<<<<<< HEAD
                                                     <div class="dz-size" id="fileSize"><strong>0.8</strong> MB</div>
                                                 </div>
                                             </div>
                                         </div>
 
+=======
+                                                    <div class="dz-filename" id="fileName"></div>
+                                                    <div class="dz-size" id="fileSize"><strong>0.8</strong> MB</div>
+                                                </div>
+                                                <a class="dz-remove px-2 py-1.5 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20" href="javascript:void(0);" id="removeFile">Remove file</a>
+                                            </div>
+
+                                        </div>
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                         @error('image')
                                         <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                             <span class="font-bold">{{ $message }}</span>
@@ -189,7 +236,11 @@
                                             @if(isset($list->id))
                                             <input type="hidden" name="variants[{{ $index }}][id]" value="{{ $list->id }}">
                                             @endif
+<<<<<<< HEAD
 
+=======
+                                
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                             <div class="xl:col-span-4">
                                                 <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
                                                 <input type="number" name="variants[{{ $index ?? variants[0]}}][price]" id="productPrice" class="form-input ..." value="{{ $list->price }}" required="">
@@ -199,7 +250,11 @@
                                                 </div>
                                                 @enderror
                                             </div>
+<<<<<<< HEAD
 
+=======
+                                
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                             <div class="xl:col-span-4">
                                                 <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Discounts</label>
                                                 <input type="number" name="variants[{{ $index ?? variants[0] }}][price_sale]" id="productDiscounts" class="form-input ..." value="{{ $list->price_sale }}" required="">
@@ -209,7 +264,11 @@
                                                 </div>
                                                 @enderror
                                             </div>
+<<<<<<< HEAD
 
+=======
+                                
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                             <div class="xl:col-span-4">
                                                 <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Quantity</label>
                                                 <input type="number" id="qualityInput" name="variants[{{ $index ?? variants[0] }}][quantity]" class="form-input ..." value="{{ $list->quantity }}" required="">
@@ -219,7 +278,11 @@
                                                 </div>
                                                 @enderror
                                             </div>
+<<<<<<< HEAD
 
+=======
+                                
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                             {{-- color --}}
                                             <div class="xl:col-span-4">
                                                 <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Color</label>
@@ -235,7 +298,11 @@
                                                 </div>
                                                 @enderror
                                             </div>
+<<<<<<< HEAD
 
+=======
+                                
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                             {{-- size --}}
                                             <div class="xl:col-span-4">
                                                 <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Size</label>
@@ -255,7 +322,11 @@
                                     </div>
                                     @endforeach
                                 </div>
+<<<<<<< HEAD
 
+=======
+                               
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
                                 <div class="flex justify-end gap-2 mt-4">
                                     <button type="reset" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Reset</button>
                                     <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Product</button>

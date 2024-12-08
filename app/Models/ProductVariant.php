@@ -32,11 +32,15 @@ class ProductVariant extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+<<<<<<< HEAD
     }
 
     public function image()
     {
         return $this->hasMany(Gallery::class, 'variant_id');
     }
+=======
+    }   
+>>>>>>> 83969eb20678122d948ebcc42d9e6ec02f52cd71
 }
 
