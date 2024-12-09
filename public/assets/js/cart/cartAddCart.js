@@ -44,6 +44,10 @@ function deleteCart(cartDetail){
             $('.products-line-price').text(response.totalResponse);
             $('.sumQuantity').text('Shopping Cart (' + response.sumQuantity + ')');
             cart_exitsItem.remove();
+
+            var cart_master = $('.product-trashed');
+            var cart_body_mas = cart_master.find("div[data-cartDetail='" + cartDetail +"']");
+            cart_body_mas.remove();
             alert('Delete Cart Success!');
         },
 

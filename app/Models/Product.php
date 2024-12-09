@@ -54,10 +54,10 @@ class Product extends Model
         return $this->hasMany(Review::class, 'product_id');
     }
 
-    // public function variants()
-    // {
-    //     return $this->belongsToMany(ProductVariant::class, 'product_variants', 'product_id', 'variant_id');
-    // }
+    public function averageRating()
+    {
+        return $this->review()->avg('rating');
+    }
 
     public function sizes()
     {

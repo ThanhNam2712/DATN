@@ -54,7 +54,7 @@
                     <a href="../client/wishlist/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'wishList') ? 'active' : ''}}">WishList</a>
                 </li>
                 <li>
-                    <a href="#feedback" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Feedback</a>
+                    <a href="../client/shop/map/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Shop Map</a>
                 </li>
             </ul>
         </div>
@@ -219,9 +219,27 @@
 
 @php
     $cart = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())
-            ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
-            ->first();
+    ->with([
+        'cartDetail' => function ($query) {
+            $query->with(['product' => function ($productQuery) {
+                $productQuery->withTrashed();
+            }, 'cart' ,'product_variant', 'color', 'size']);
+        }
+    ])
+    ->first();
+    $hasDeletedProduct = false;
+
+    if (\Illuminate\Support\Facades\Auth::check()){
+        foreach ($cart->cartDetail as $detail) {
+            if ($detail->product && $detail->product->trashed()) {
+                $hasDeletedProduct = true;
+                break;
+            }
+        }
+    }
+
 @endphp
+
 
 <div id="cartSidePenal" drawer-end="" class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow dark:bg-zink-600 ltr:right-0 rtl:left-0 md:w-96 z-drawer show">
     <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
@@ -232,29 +250,26 @@
             <button data-drawer-close="cartSidePenal" class="transition-all duration-150 ease-linear text-slate-500 hover:text-slate-800"><i data-lucide="x" class="size-4"></i></button>
         </div>
     </div>
-    <div class="px-4 py-3 text-sm text-green-500 border border-transparent bg-green-50 dark:bg-green-400/20">
-        <span class="font-bold underline">starcode50</span> Coupon code applied successfully.
-    </div>
     <div>
         @if($cart && $cart->cartDetail->count() > 0)
             <div class="h-[calc(100vh_-_370px)] p-4 overflow-y-auto product-list">
-                <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-4 product-trashed">
                      @foreach($cart->cartDetail as $key => $list)
                         @if($list->product && !$list->product->trashed())
-                            <div class="flex gap-2 product">
+                            <div class="flex gap-2 product" data-cartDetail="{{ $list->id }}">
                                 <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
                                     <img src="{{ Storage::url($list->product->image) }}" alt="" class="h-8">
                                 </div>
                                 <div class="overflow-hidden grow">
                                     <div class="ltr:float-right rtl:float-left">
-                                        <button class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
+                                        <button data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
                                     </div>
                                     <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
                                         <h6 class="mb-1 text-15">{{ $list->product->name }}</h6>
                                     </a>
                                     <div class="flex items-center mb-3">
                                         <h5 class="text-base product-price"> $<span>{{ $list->product_variant->price_sale }}</span></h5>
-                                        <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }})</div>
+                                        <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }}, {{ $list->color->name }}, {{ $list->size->name }})</div>
                                     </div>
                                     <div class="flex items-center justify-between gap-3">
                                         <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
@@ -266,36 +281,62 @@
                                     </div>
                                 </div>
                             </div>
-
                         @else
-                            <div class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
-                                <span class="font-bold">Sản phẩm Đang Được Quản Trị Thay Đổi, Bạn Vẫn Có Thể Mua Hàng Bình Thường</span>
+                            <div data-cartDetail="{{ $list->id }}" class="flex gap-2 product">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
+                                    <img src="{{ Storage::url($list->product->image) }}" alt="" class="h-8">
+                                </div>
+                                <div class="overflow-hidden grow">
+                                    <div class="ltr:float-right rtl:float-left">
+                                        <button data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
+                                    </div>
+                                    <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
+                                        <h6 style="color: red" class="mb-1 text-15">{{ $list->product->name }}</h6>
+                                    </a>
+                                    <div class="flex items-center mb-3">
+                                        <h5 class="text-base product-price"> $<span>{{ $list->product_variant->price_sale }}</span></h5>
+                                        <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }}, {{ $list->color->name }}, {{ $list->size->name }})</div>
+                                    </div>
+                                    <div class="flex items-center justify-between gap-3">
+                                        <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
+                                            <button type="button" disabled onclick="reduce('{{ $list->id }}')" class="border w-7 leading-[15px] minus-value bg-slate-200 dark:bg-zink-600 dark:border-zink-600 rounded transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block w-4 h-4"></i></button>
+                                            <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 products-quantity dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
+                                            <button type="button" disabled onclick="increaseCart('{{ $list->id }}')" class="transition-all duration-200 ease-linear border rounded border-slate-200 bg-slate-200 dark:bg-zink-600 dark:border-zink-600 w-7 plus-value text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block w-4 h-4"></i></button>
+                                        </div>
+                                        <h6 class="products-line-price">${{ $list->product_variant->price_sale * $list->quantity }}</h6>
+                                    </div>
+                                </div>
                             </div>
-                         @endif
+                        @endif
                     @endforeach
                 </div>
             </div>
+            @if($hasDeletedProduct)
+                <div class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                    <span class="font-bold">Đã Có Sản Phẩm Đang Được Thay Đổi, Vui Lòng Xóa Các Sản phẩm Tên Màu Đỏ, Và Tải lại trang</span>
+                </div>
+            @endif
             <div class="p-4 border-t border-slate-200 dark:border-zink-500">
-
                 <table class="w-full mb-3 ">
                     <tbody class="table-total">
-                    <tr>
-                        <td class="py-2">Sub Total :</td>
-                        <td class="text-right cart-subtotal">${{ $cart->total_amuont }}</td>
-                    </tr>
                     <tr class="font-semibold">
-                        <td class="py-2">Total : </td>
+                        <td class="py-2">Tổng Tiền : </td>
                         <td class="text-right cart-total">${{ $cart->total_amuont }}</td>
                     </tr>
                     </tbody>
                 </table>
                 <div class="flex items-center justify-between gap-3">
-                    <a href="apps-ecommerce-product-grid.html" class="w-full text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">Continue Shopping</a>
-                    <a href="../client/cart/" class="w-full text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Checkout</a>
+                    <a href="../client/shop" class="w-full text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">Tiếp Tục Mua Hàng</a>
+                    @if($hasDeletedProduct)
+                        <button type="button" class="w-full text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Vui long</button>
+                    @else
+                        <a href="../client/cart/" class="w-full text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">mua</a>
+
+                    @endif
                 </div>
             </div>
         @else
-            <a href="../account/show-login" class="font-bold underline">Đăng Nhập để mua cart nhanh</a>
+            <a href="../client/shop" class="font-bold underline">Vui lòng thêm sản phẩm vào giỏ hàng</a>
         @endif
     </div>
 </div>
@@ -317,6 +358,7 @@
 <script src="../assets/js/cart/quantity.js"></script>
 <script src="../assets/js/cart/cartAddCart.js"></script>
 <script src="../assets/js/order/coupon.js"></script>
+<script src="../assets/js/pages/swiper.init.js"></script>
 {{--<script src="../assets/js/apiAddress/api.js"></script>--}}
 {{--<script src="../assets/js/apiAddress/api2.js"></script>--}}
 <script src="../assets/js/pages/landing-product.init.js"></script>

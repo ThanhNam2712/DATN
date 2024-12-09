@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+    @extends('admin.layouts.master')
 @section('title', 'Products')
 @section('body')
     <div class="card">
@@ -74,13 +74,9 @@
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="order-id">Mã đơn hàng</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="name">Tên khách hàng</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="location">Code</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="email">Email</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="phone-number">Số điện thoại</th>
+                                            data-sort="phone-number">Tổng Tiền</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="phone-number">Thời gian đặt</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
@@ -97,40 +93,13 @@
                                                            type="checkbox">
                                                 </div>
                                             </td>
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->id }}</td>
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->name }}</td>
-                                            {{--                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">--}}
-                                            {{--                                                {{ $order->province ?? 'tỉnh chưa có' }} - {{ $order->district ?? 'huyện--}}
-                                            {{--                                            chưa có'}} - {{ $order->ward ?? 'xã chưa có' }} - {{ $order->address_detail--}}
-                                            {{--                                            ?? 'dchi ctiet chưa có' }}<br>--}}
-                                            {{--                                            </td>--}}
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{!! DNS2D::getBarcodeHTML("$order->barcode", 'QRCODE', 4, 4) !!}</td>
+                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->barcode }}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->email }}</td>
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->phone_number ?? 'sđt
-                                            đặt hàng chưa có' }}</td>
+                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">${{ $order->total_amount }}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->created_at ?? 'N/A' }}
                                             </td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                                @if($order->status != 'completed' && $order->status != 'cancelled')
-                                                    <form action="{{ route('admin.orders.updateStatus', $order->id) }}"
-                                                          method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <select name="status" style="color: red" class="form-select">
-                                                            <option value="pending" {{ $order->status == 'pending' ? 'selected'
-                                                        : '' }}>Chờ xử lý</option>
-                                                            <option value="processing" {{ $order->status == 'processing' ?
-                                                        'selected' : '' }}>Đang xử lý</option>
-                                                            <option value="delivery person" {{ $order->status == 'delivery person' ?
-                                                        'selected' : '' }}>Giao bên vận chuyển</option>
-                                                        </select>
-                                                        <button style="color: green" type="submit"
-                                                                class="btn btn-primary mt-2">Cập nhật</button>
-                                                    </form>
-                                                @else
-                                                    <p style="color: red">{{ $order->status }}</p>
-                                                @endif
-
+                                                <p style="color: red">{{ $order->status }}</p>
                                             </td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                                 <div class="relative dropdown">
@@ -145,20 +114,6 @@
                                                                href="../admin/orders/detail/{{ $order->id }}">
                                                                 <i data-lucide="eye" class="inline-block size-3"></i> Xem
                                                             </a>
-                                                        </li>
-                                                        <li>
-                                                            <form
-                                                                action="{{-- {{ route('admin.orders.destroy', $order->id) }} --}}"
-                                                                method="POST"
-                                                                onsubmit="return confirm('Bạn có chắc muốn xóa?');">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit"
-                                                                        class="block px-4 py-1.5 text-base text-slate-600">
-                                                                    <i data-lucide="trash-2"
-                                                                       class="inline-block size-3"></i> Xóa
-                                                                </button>
-                                                            </form>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -178,38 +133,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col items-center mt-8 md:flex-row">
-                                <div class="mb-4 grow md:mb-0">
-                                    <p class="text-slate-500 dark:text-zink-200">Showing <b>10</b> of <b>57</b> Results</p>
-                                </div>
-                                <ul class="flex flex-wrap items-center gap-2">
-                                    <li>
-                                        <a href="#!"
-                                           class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i
-                                                class="size-4 rtl:rotate-180" data-lucide="chevrons-left"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#!"
-                                           class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i
-                                                class="size-4 rtl:rotate-180" data-lucide="chevron-left"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#!"
-                                           class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">1</a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#!"
-                                           class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i
-                                                class="size-4 rtl:rotate-180" data-lucide="chevron-right"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#!"
-                                           class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i
-                                                class="size-4 rtl:rotate-180" data-lucide="chevrons-right"></i></a>
-                                    </li>
+                            <nav aria-label="..." style="margin-top: 10px">
+                                <ul class="pagination pagination-sm">
+                                    {{ $orders->links() }}
                                 </ul>
-                            </div>
+                            </nav>
                         </div>
                     </div>
                     <!--end card-->

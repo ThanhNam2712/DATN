@@ -32,7 +32,7 @@ class ShipmentController extends Controller
     {
         $shipment = Shipment::where('shiper_id', Auth::id())->whereHas('order', function ($query) {
             $query->whereIn('status', ['Giao Thành công', 'completed']);
-        })->paginate(5);
+        })->paginate(4);
 
         return view('admin.shipment.success', compact('shipment'));
     }

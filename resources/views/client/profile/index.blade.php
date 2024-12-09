@@ -10,7 +10,7 @@
 
                         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                             <div class="grow">
-                                <h5 class="text-16">Account Settings</h5>
+                                <h5 class="text-16">Tài Khoản Người Dùng</h5>
                             </div>
                             <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                                 <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
@@ -42,8 +42,8 @@
                                         </div>
                                         <ul class="flex flex-wrap gap-3 mt-4 text-center divide-x divide-slate-200 dark:divide-zink-500 rtl:divide-x-reverse">
                                             <li class="px-5">
-                                                <h5>${{ Auth::user()->order->sum('total_amount') }}</h5>
-                                                <p class="text-slate-500 dark:text-zink-200">Total</p>
+                                                <h5>${{ number_format(Auth::user()->order->sum('total_amount') * 25397) }}</h5>
+                                                <p class="text-slate-500 dark:text-zink-200">Tổng Tiền Đặt Hàng</p>
                                             </li>
                                             <li class="px-5">
                                                 <h5>10.65k</h5>
@@ -108,19 +108,19 @@
                             <div class="card-body !py-0">
                                 <ul class="flex flex-wrap w-full text-sm font-medium text-center nav-tabs">
                                     <li class="group active">
-                                        <a href="javascript:void(0);" data-tab-toggle="" data-target="personalTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Personal Info</a>
+                                        <a href="javascript:void(0);" data-tab-toggle="" data-target="personalTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Thông Tin Tài Khoản</a>
                                     </li>
                                     <li class="group">
                                         <a href="javascript:void(0);" data-tab-toggle="" data-target="integrationTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Integration</a>
                                     </li>
                                     <li class="group">
-                                        <a href="javascript:void(0);" data-tab-toggle="" data-target="changePasswordTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Change Password</a>
+                                        <a href="javascript:void(0);" data-tab-toggle="" data-target="changePasswordTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Đổi Mật Khẩu</a>
                                     </li>
                                     <li class="group">
-                                        <a href="javascript:void(0);" data-tab-toggle="" data-target="privacyPolicyTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Address Client</a>
+                                        <a href="javascript:void(0);" data-tab-toggle="" data-target="privacyPolicyTabs" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Địa Chỉ Người Dùng</a>
                                     </li>
                                     <li class="group">
-                                        <a href="javascript:void(0);" data-tab-toggle="" data-target="couponProfile" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Coupon Client</a>
+                                        <a href="javascript:void(0);" data-tab-toggle="" data-target="couponProfile" class="inline-block px-4 py-2 text-base transition-all duration-300 ease-linear rounded-t-md text-slate-500 dark:text-zink-200 border-b border-transparent group-[.active]:text-custom-500 dark:group-[.active]:text-custom-500 group-[.active]:border-b-custom-500 hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]">Phiếu Giảm Giá</a>
                                     </li>
                                 </ul>
                             </div>
@@ -135,20 +135,20 @@
                                                 <span class="font-bold">{{ session('message') }}</span>
                                             </div>
                                         @endif
-                                        <h6 class="mb-1 text-15">Personal Information</h6>
+                                        <h6 class="mb-1 text-15">Cập Nhật Thông Tin</h6>
                                         <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details here easily.</p>
                                         <form action="../client/profile/update/{{ Auth::id() }}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                                                 <div class="xl:col-span-6" style="display: flex">
-                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Avatar User</label>
+                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Ảnh Đại Diện</label>
                                                     <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="" style="width: 112px; height: 112px" class="object-cover border-0 rounded-full img-thumbnail user-profile-image">
                                                     <input name="avatar" type="file">
                                                     <input type="hidden" name="file_old" value="{{ Auth::user()->avatar }}">
                                                 </div><!--end col-->
                                                 <div class="xl:col-span-6">
-                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Full Name</label>
+                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Tên Người Dùng</label>
                                                     <input type="text" id="inputValue" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ Auth::user()->name }}">
                                                 </div><!--end col-->
                                                 <div class="xl:col-span-6">
@@ -156,7 +156,7 @@
                                                     <input type="email" id="inputValue" disabled name="email" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter your value" value="{{ Auth::user()->email }}">
                                                 </div><!--end col-->
                                                 <div class="xl:col-span-6">
-                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Phone Number</label>
+                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Số Điện Thoại</label>
                                                     <input type="number" id="inputValue" name="sdt" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="+855 8456 5555 23" value="{{ Auth::user()->sdt }}">
                                                 </div><!--end col-->
                                             </div><!--end grid-->
@@ -221,34 +221,34 @@
                             <div class="hidden tab-pane" id="changePasswordTabs">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h6 class="mb-4 text-15">Changes Password</h6>
+                                        <h6 class="mb-4 text-15">Thay Đổi Mật Khẩu</h6>
                                         <form action="../client/profile/changePass" method="post">
                                             @csrf
                                             @method('PUT')
                                             <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                                                 <div class="xl:col-span-4">
-                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Old Password*</label>
+                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Mật Khẩu Cũ*</label>
                                                     <div class="relative">
                                                         <input type="password" name="passOld" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="oldpasswordInput" placeholder="Enter current password">
                                                         <button class="absolute top-2 ltr:right-4 rtl:left-4 " type="button"><i class="align-middle ri-eye-fill text-slate-500 dark:text-zink-200"></i></button>
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="xl:col-span-4">
-                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">New Password*</label>
+                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Mật Khẩu Mới*</label>
                                                     <div class="relative">
                                                         <input type="password" name="passNew" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="oldpasswordInput" placeholder="Enter new password">
                                                         <button class="absolute top-2 ltr:right-4 rtl:left-4 " type="button"><i class="align-middle ri-eye-fill text-slate-500 dark:text-zink-200"></i></button>
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="xl:col-span-4">
-                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Confirm Password*</label>
+                                                    <label for="inputValue" class="inline-block mb-2 text-base font-medium">Xác Thực Mật Khẩu*</label>
                                                     <div class="relative">
                                                         <input type="password" name="pass_confirm" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="oldpasswordInput" placeholder="Confirm password">
                                                         <button class="absolute top-2 ltr:right-4 rtl:left-4 " type="button"><i class="align-middle ri-eye-fill text-slate-500 dark:text-zink-200"></i></button>
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="flex items-center xl:col-span-6">
-                                                    <a href="../client/reset/" class="underline text-custom-500 text-13">Forgot Password ?</a>
+                                                    <a href="../client/reset/" class="underline text-custom-500 text-13">Quên Mật Khẩu ?</a>
                                                 </div>
                                                 <div class="flex justify-end xl:col-span-6">
                                                     <button type="submit" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Change Password</button>
@@ -261,14 +261,14 @@
                             <div class="hidden tab-pane" id="privacyPolicyTabs">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h6 class="mb-4 text-15">Default Address</h6>
+                                        <h6 class="mb-4 text-15">Thông Tin Địa Chỉ</h6>
                                         <div class="space-y-6">
                                             <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                                                 <div class="xl:col-span-12">
                                                     <div class="card" >
                                                         <div class="card-body" id="usersTable">
                                                             <div style="display: flex ;justify-content: space-between;">
-                                                                <h6 class="mb-4 text-15">List Address & Create Address</h6>
+                                                                <h6 class="mb-4 text-15">Các Địa Chỉ Và Thêm Địa chỉ</h6>
                                                                 <div class="shrink-0">
                                                                     <button data-modal-target="addressModal" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Add User</span></button>
                                                                 </div>
@@ -280,12 +280,12 @@
                                                                         <table class="w-full whitespace-nowrap mt-5" id="productTable">
                                                                             <thead class="ltr:text-left rtl:text-right bg-slate-100 dark:bg-zink-600">
                                                                             <tr>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Address Name</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Province</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">district</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort revenue" data-sort="revenue">Neighborhood</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">Apartment</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Actions</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Tên</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Tỉnh</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">Huyện</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort revenue" data-sort="revenue">Địa Chỉ Cụ Thể</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">Căn Hộ</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Hành Động</th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody class="list">
@@ -394,14 +394,14 @@
                             <div class="hidden tab-pane" id="couponProfile">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h6 class="mb-4 text-15">Coupon Client</h6>
+                                        <h6 class="mb-4 text-15">Phiếu Giảm Giá</h6>
                                         <div class="space-y-6">
                                             <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                                                 <div class="xl:col-span-12">
                                                     <div class="card" >
                                                         <div class="card-body" id="usersTable">
                                                             <div style="display: flex ;justify-content: space-between;">
-                                                                <h6 class="mb-4 text-15">List Coupon Client</h6>
+                                                                <h6 class="mb-4 text-15">Các Phiếu Giảm Giá</h6>
                                                             </div>
                                                             <div class="!pt-1 card-body mt-4">
                                                                 <div class="overflow-x-auto">
@@ -410,13 +410,13 @@
                                                                         <table class="w-full whitespace-nowrap mt-5" id="productTable">
                                                                             <thead class="ltr:text-left rtl:text-right bg-slate-100 dark:bg-zink-600">
                                                                             <tr>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Coupon Code</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Coupon Name</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">Promotion</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort revenue" data-sort="revenue">Value</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">Condition</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">Start</th>
-                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">End</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Mã Giảm Giá</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Tên Giảm Giá</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">Giá Trị</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort revenue" data-sort="revenue">Tên Giá Trị</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">Đơn Tối Thiểu</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">Ngày Bắt Đầu</th>
+                                                                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">Ngày Kết Thúc</th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody class="list">

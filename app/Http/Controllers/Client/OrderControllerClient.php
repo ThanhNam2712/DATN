@@ -15,7 +15,9 @@ class OrderControllerClient extends Controller
     {
         $search = $request->search;
         $orders = Order::where('user_id', Auth::id())
-            ->where('orders.barcode', 'like', '%'. $search . '%')->get();
+                        ->where('orders.barcode', 'like', '%'. $search . '%')
+                        ->orderBy('id', 'desc')
+                        ->paginate(5);
         return view('client.order.list', compact('orders'));
     }
 

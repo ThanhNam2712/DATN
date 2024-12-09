@@ -30,7 +30,7 @@ class ProductsController extends Controller
                             ->where('products.id', 'like', '%'. $search . '%')
                             ->orWhere('products.name', 'like', '%' . $search . '%')
                             ->orWhere('categories.name', 'like', '%' . $search . '%')
-                            ->orderBy('products.id', 'asc')
+                            ->orderBy('products.id', 'desc')
                             ->paginate(4);
 
         return view('admin.products.index', compact('product'));

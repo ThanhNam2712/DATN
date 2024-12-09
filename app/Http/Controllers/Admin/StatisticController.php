@@ -129,7 +129,7 @@ class StatisticController extends Controller
     }
     private function getOrderSuccess()
     {
-        return Order::where('status', '=', 'completed')->get();
+        return Order::whereIn('status',['completed', 'Giao thành công'])->get();
     }
 
     private function getOrderCancel()

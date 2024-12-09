@@ -6,14 +6,14 @@
 
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Order</h5>
+                    <h5 class="text-16">Mua Hàng</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="" class="text-slate-400 dark:text-zink-200">Cart</a>
+                        <a href="../client/cart" class="text-slate-400 dark:text-zink-200">Giỏ hàng</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Order
+                        Mua hàng
                     </li>
                 </ul>
             </div>
@@ -29,33 +29,32 @@
                     <div class="xl:col-span-8">
                         <div class="flex items-center gap-3 mb-5">
                             <div class="grow">
-                                <a href="../client/cart" class="transition-all duration-300 ease-linear text-custom-500 hover:text-custom-600"><i data-lucide="chevron-left" class="inline-block align-middle size-4 ltr:mr-1 rtl:ml-1 rtl:rotate-180"></i> <span class="align-middle">Back to Cart</span></a>
+                                <a href="../client/cart" class="transition-all duration-300 ease-linear text-custom-500 hover:text-custom-600"><i data-lucide="chevron-left" class="inline-block align-middle size-4 ltr:mr-1 rtl:ml-1 rtl:rotate-180"></i> <span class="align-middle">Quay lại giỏ hàng</span></a>
                             </div>
                             <div class="shrink-0">
-                                <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span> <i data-lucide="move-right" class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180"></i></button>
+{{--                                <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span> <i data-lucide="move-right" class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180"></i></button>--}}
                             </div>
                         </div>
 
                         <div class="card">
                             <div class="card-body">
-                                {{--  @dd($address ->Province );    --}}
-                                <h6 class="mb-4 text-15">Shipping Information</h6>
+                                <h6 class="mb-4 text-15">Thông Tin Vận Chuyển</h6>
                                 <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-12">
                                         <!-- First Name -->
                                         <div class="xl:col-span-4">
-                                            <label for="firstNameInput" class="inline-block mb-2 text-base font-medium">First Name</label>
+                                            <label for="firstNameInput" class="inline-block mb-2 text-base font-medium">Tên Đầy Đủ</label>
                                             <input type="text" id="firstNameInput" name="first_name" value="{{ $user->name }}" class="form-input" placeholder="Enter First Name">
                                         </div>
 
                                         <!-- Phone Number -->
                                         <div class="xl:col-span-4">
-                                            <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Phone Number</label>
+                                            <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Số Điện Thoại</label>
                                             <input type="text" id="phoneNumberInput" name="phone_number" value="{{ $user->sdt ?? 'Chưa có thông tin' }}" class="form-input" placeholder="(012) 345 678 9010">
                                         </div>
 
                                         <!-- Email Address -->
                                         <div class="xl:col-span-4">
-                                            <label for="emailAddressInput" class="inline-block mb-2 text-base font-medium">Email Address</label>
+                                            <label for="emailAddressInput" class="inline-block mb-2 text-base font-medium">Địa Chỉ Email</label>
                                             <input type="email" id="emailAddressInput" name="email" value="{{ $user->email }}" class="form-input" placeholder="Enter email">
                                         </div>
 
@@ -73,7 +72,7 @@
                                                 </div>
 
                                                 <div class="xl:col-span-6">
-                                                    <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
+                                                    <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Số Nhà</label>
                                                     <input type="text" id="neighborhoodInput" name="address_detail" value="{{ $add->Neighborhood }}" class="form-input" placeholder="Enter Neighborhood">
                                                 </div>
 
@@ -127,7 +126,7 @@
                                                                 <img src="{{ Storage::url($list->product->image) }}" alt="">
                                                             </div>
                                                             <div class="grow">
-                                                                <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
+                                                                <h6 class="mb-1 text-15"><a href="../client/home/detail/{{ $list->product_id }}/color/{{ $list->product_variant_id }}" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
                                                                 <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variant->price_sale }} x {{$list->quantity}}</p>
                                                             </div>
                                                         </div>
@@ -135,16 +134,31 @@
                                                     <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
                                                 </tr>
                                             @else
-                                                <div class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
-                                                    <span class="font-bold">Sản phẩm Đang Được Quản Trị Thay Đổi, Bạn Vẫn Có Thể Mua Hàng Bình Thường</span>
-                                                </div>
+                                                <tr>
+                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
+                                                        <div style="width: auto" class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                                                            <span class="font-bold">Sản phẩm {{ $list->product->name }} Đang Thay Đổi, Vui Lòng Xóa Khỏi Giỏ Hàng và tải lại trang</span>
+                                                        </div>
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="flex items-center justify-center rounded-md size-12 bg-slate-100 shrink-0">
+                                                                <img src="{{ Storage::url($list->product->image) }}" alt="">
+                                                            </div>
+                                                            <div class="grow">
+                                                                <h6 class="mb-1 text-15"><a class="text-red-500 transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
+                                                                <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variant->price_sale }} x {{$list->quantity}}</p>
+                                                                <a data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="flex items-center justify-center size-[37.5px] p-0 text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20 remove-button"><i data-lucide="trash-2" class="w-4 h-4"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
+                                                </tr>
                                             @endif
 
                                         @endforeach
                                         <div>
                                         <tr>
                                             <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                Sub Total
+                                                Giá
                                             </td>
                                             {{--  @dd($cart);  --}}
                                             <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $cart->total_amuont}}</td>
@@ -161,15 +175,15 @@
                                                 <input type="text" name="coupon" id="couponApply" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Coupon Client">
                                             </td>
 
-                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">
+                                            <td class="px-4.5 py-4 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">
                                                 <a href="javascript:couponApply()">
-                                                    <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span></button>
+                                                    <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Thêm mã giảm giá</span></button>
                                                 </a>
                                             </td>
                                         </tr>
                                         <tr class="font-semibold">
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                            Total Amount (USD)
+                                            Tổng Tiền Cần Trả
                                         </td>
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">${{ $cart->total_amuont}}</td>
                                         <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $cart->total_amuont }}">
@@ -203,9 +217,16 @@
 
                                 <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
                                 <input type="hidden" name="allQuantity" value="{{ $cart->cartDetail->sum('quantity') }}">
-                                <button type="submit" class="mt-3 w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
-                                    Place Order
-                                </button>
+                                {{--  @if()
+                                    <button type="submit" class="mt-3 w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
+                                        Place Order
+                                    </button>
+                                @else
+                                    <div style="width: auto; text-align: center" class="px-4 py-3 mb-4 text-sm border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                                        <span class="font-bold">Bạn Vui Lòng Thực Hiện Thao Tác Yêu Cầu Trên</span>
+                                    </div>
+                                @endif  --}}
+
                             </div>
                         </div>
                     </div>

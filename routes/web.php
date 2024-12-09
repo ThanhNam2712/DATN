@@ -106,6 +106,7 @@ Route::get('/blocked', function () {
         Route::get('/', [ShopController::class, 'index'])->name('index');
         Route::get('category/{name}', [ShopController::class, 'category'])->name('category');
         Route::get('introduce', [ShopController::class, 'introduce'])->name('introduce');
+        Route::get('map', [ShopController::class, 'map'])->name('map');
     });
 
     Route::group([

@@ -18,19 +18,39 @@ use App\Utilities\VNPay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Stripe\Stripe;
+use Stripe\Webhook;
+use function Laravel\Prompts\alert;
 
 class ClientOrderController extends Controller
 {
     public function index()
     {
+
         $cart = Cart::where('user_id', Auth::id())
-            ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
+            ->with([
+                'cartDetail' => function ($query) {
+                    $query->with(['product' => function ($productQuery) {
+                        $productQuery->withTrashed();
+                    }, 'cart' ,'product_variant', 'color', 'size']);
+                }
+            ])
             ->first();
+        $hasDeletedProduct = false;
+        foreach ($cart->cartDetail as $detail) {
+            if ($detail->product && $detail->product->trashed()) {
+                $hasDeletedProduct = true;
+                break;
+            }
+        }
 
         $user = auth()->user();
         $address = $user->addresses;
         
         return view('client.order.index', compact('cart', 'address', 'user'));
+        $is_default = Address::where('user_id', $user->id);
+        $address = $is_default->where('is_default', 1)->first();
+        return view('client.order.index', compact('cart', 'address', 'user', 'hasDeletedProduct'));
     }
 
     public function create(Request $request)
@@ -63,6 +83,24 @@ class ClientOrderController extends Controller
             if ($productVariant) {
                 $productVariant->decrement('quantity', $list->quantity);
             }
+        }
+
+        $coupon = Coupon::where('code', $order->coupon)
+            ->where('start_end', '<=', now())
+            ->where('expiration_date', '>=', now())
+            ->where('number', '>', 0)
+            ->first();
+
+        $couponUsed = Coupon_user::where('user_id', Auth::id())
+        ->where('coupon_id', $coupon->id)
+        ->first();
+
+
+        if (!$couponUsed) {
+            Coupon_user::create([
+                'user_id' => Auth::id(),
+                'coupon_id' => $coupon->id,
+            ]);
         }
         $total = $order->total_amount;
         if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng') {
@@ -156,6 +194,11 @@ class ClientOrderController extends Controller
             ]);
         }
 
+        if ($coupon->discount_value > $total){
+            return response()->json([
+                'error' => 'Coupon không phù hợp với giá tiền, Vui lòng Mua Thêm'
+            ]);
+        }
         $couponUsed = Coupon_user::where('user_id', Auth::id())
             ->where('coupon_id', $coupon->id)
             ->first();
@@ -169,6 +212,7 @@ class ClientOrderController extends Controller
             Coupon_user::create([
                 'user_id' => Auth::id(),
                 'coupon_id' => $coupon->id,
+                'error' => 'Mã giảm giá đã được sử dụng trước đó, Vui Lòng Chọn Mã Khác'
             ]);
         }
 

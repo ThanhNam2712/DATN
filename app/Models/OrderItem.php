@@ -25,7 +25,7 @@ class OrderItem extends Model
     }
 
     public function products(){
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id')->withTrashed();
     }
 
     public function color(){

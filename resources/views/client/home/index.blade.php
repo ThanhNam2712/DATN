@@ -3,50 +3,36 @@
 @section('body')
 
 {{-- brand controller --}}
-<section class="relative pb-28 xl:pb-36 pt-44 xl:pt-52" id="home">
+<section class="relative pb-10 xl:pb-36 pt-44 xl:pt-52" id="home">
     <div class="absolute top-0 left-0 size-64 bg-custom-500 opacity-10 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 size-64 bg-purple-500/10 blur-3xl"></div>
-    @foreach($cateLimit as $cate)
-    <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
-        <div class="grid items-center grid-cols-12 gap-5 2xl:grid-cols-12">
-            <div class="col-span-12 xl:col-span-5 2xl:col-span-5">
-                <h1 class="mb-4 !leading-normal lg:text-5xl 2xl:text-6xl dark:text-zinc-100" data-aos="fade-right"
-                    data-aos-delay="300">{{ $cate->name }} 2024</h1>
-                <p class="text-lg mb-7 text-slate-500 dark:text-zinc-400" data-aos="fade-right" data-aos-delay="600">In
-                    2024, metallics will be taking over the sneaker world. I love this trend because there are so many
-                    different ways to wear it. You can wear sequined sneakers, white sneakers with metallic accents, or
-                    all-over silver.</p>
-                <div class="flex items-center gap-2" data-aos="fade-right" data-aos-delay="800">
-                    <button type="button"
-                        class="px-8 py-3 text-white border-0 text-15 btn bg-gradient-to-r from-custom-500 to-purple-500 hover:text-white hover:from-purple-500 hover:to-custom-500">Shop
-                        Now <i data-lucide="shopping-cart"
-                            class="inline-block align-middle size-4 rtl:mr-1 ltr:ml-1"></i></button>
+    <div style="margin-top: -130px" class="card">
+            <div class="card-body">
+                <!-- Swiper -->
+                <div class="swiper navigation-swiper" style="height: 460px">
+                    <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img style="width: 1479px;" src="../assets/images/3eba0a63-ec4a-4195-994a-fede3d7b1d25.jpeg" alt="">
+                            </div>
+                            <div class="swiper-slide" >
+                                <img style="width: 1479px;" src="../assets/images/pngtree-yellow-background-autumn-and-winter-new-product-promotion-poster-banner-men-image_900086.jpg" alt="">
+                                </div>
+                            <div class="swiper-slide" style="display: flex;width: 1479px;">
+                                <img style="width: 1479px;" src="../assets/images/banner-thoi-trang.jpg" alt="">
+                            </div>
+                    </div>
+                    <div class="swiper-button-next after:hidden text-custom-500"><i data-lucide="chevron-right"></i></div>
+                    <div class="swiper-button-prev after:hidden text-custom-500"><i data-lucide="chevron-left"></i></div>
                 </div>
             </div>
-            <div class="col-span-12 xl:col-span-7 2xl:col-start-8 2xl:col-span-6">
-                <div class="relative mt-10 xl:mt-0">
-                    <div class="absolute text-center -top-20 xl:-right-40 lg:text-[10rem] 2xl:text-[14rem] text-slate-100 dark:text-zinc-800/60 font-tourney"
-                        data-aos="zoom-in-down" data-aos-delay="1400">
-                        Unique Fashion
-                    </div>
-                    <div class="relative" data-aos="zoom-in" data-aos-delay="500">
-                        <button data-tooltip="default" data-tooltip-content="$199.99"
-                            class="absolute items-center justify-center hidden bg-white rounded-full size-8 xl:flex bottom-20 text-slate-800 left-20"></button>
-                        <img src="{{ Storage::url($cate->image) }}" alt="" class="mx-auto">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
+        </div><!--end card-->
 </section>
 <!--end -->
 {{-- brand controller --}}
-
-<section class="relative py-24 xl:py-32" id="product">
+<section style="margin-top: -180px" class="relative py-24 xl:py-32" id="product">
     <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
         <div class="mx-auto text-center xl:max-w-3xl">
-            <h1 class="mb-0 leading-normal capitalize">Our Latest Product</h1>
+            <h1 class="mb-0 leading-normal capitalize">Sản Phẩm Nổi Bật</h1>
         </div>
         @if(Session::has('success'))
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -81,7 +67,7 @@
                         <div class="shrink-0">
                             <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}"
                                 class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
-                                View Product</a>
+                                Chi Tiết</a>
                         </div>
                     </div>
                 </div>
@@ -168,7 +154,7 @@
 <section class="relative py-24 xl:py-32" id="feedback">
     <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
         <div class="mx-auto mb-8 text-center xl:max-w-3xl">
-            <h1 class="mb-0 leading-normal capitalize">What Our Customer Says</h1>
+            <h1 class="mb-0 leading-normal capitalize">Khách hàng nói gì về chúng tôi</h1>
         </div>
         <!-- Swiper -->
         <div class="pb-6 swiper feedback-slider">
@@ -177,7 +163,7 @@
                 <div class="swiper-slide">
                     <div class="p-5 text-center" data-aos="fade-up" data-aos-easing="linear">
                         <div class="mx-auto rounded-full size-20 bg-custom-500/10">
-                            <img src="../assets/images/avatar-2.png" alt="" class="rounded-full size-20">
+                            <img src="{{ $list->avatar ? Storage::url($list->avatar) : asset('assets/images/avatar-2.png') }}" alt="" class="rounded-full size-20">
                         </div>
                         <p class="mt-6 text-16">" {{ $list->comment }}. "</p>
                         <h6 class="mt-4 mb-1 text-15">{{ $list->user->name }}</h6>

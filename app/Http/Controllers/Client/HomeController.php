@@ -17,8 +17,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $product = Product::paginate(4);
-        $cateLimit = Category::orderBy('id', 'asc')->limit(1)->get();
+        $product = Product::orderBy('id', 'desc')->paginate(4);
+        $cateLimit = Category::orderBy('id', 'asc')->limit(3)->get();
         $comment = Review::limit(5)->get();
         $viewProduct = Product::orderBy('view', 'desc')->limit(3)->get();
         return view('client.home.index', compact('product', 'cateLimit', 'comment', 'viewProduct'));
@@ -58,7 +58,11 @@ class HomeController extends Controller
                         ->where('id', '!=', $product->id)
                         ->limit(4)
                         ->get();
-        return view('client.home.detail', compact('product', 'image' ,'colorClasses', 'variant', 'priceVariant', 'productRelated', 'imageFirst'));
+        $averageRating = round($product->averageRating(), 1);
+        $avgRating = $this->countAvgRating($product);
+        $ratingDistribution = $avgRating['ratingDistribution'];
+        return view('client.home.detail', compact('product', 'image', 'averageRating' ,
+            'colorClasses', 'variant', 'priceVariant', 'productRelated', 'imageFirst', 'ratingDistribution'));
     }
 
     public function postReview(Request $request)
@@ -98,6 +102,34 @@ class HomeController extends Controller
         return redirect()->back()->with([
             'message' => 'Đánh giá sản phẩm thành công!',
         ]);
+    }
+
+    private function countAvgRating($product)
+    {
+        $totalRatings = $product->review->count();
+        $ratings = $product->review()
+            ->selectRaw('rating, COUNT(*) as count')
+            ->groupBy('rating')
+            ->pluck('count', 'rating');
+
+        // Tính phần trăm từng mức sao (từ 1 đến 5)
+        $ratingDistribution = [];
+        for ($i = 5; $i >= 1; $i--) {
+            $ratingDistribution[$i] = [
+                'count' => $ratings->get($i, 0), // Số đánh giá cho mức sao
+                'percent' => $totalRatings > 0 ? ($ratings->get($i, 0) / $totalRatings) * 100 : 0, // Tỷ lệ phần trăm
+            ];
+        }
+
+        // Tính điểm trung bình
+        $averageRating = $product->review->avg('rating');
+
+        // Trả về cả điểm trung bình và phân bố đánh giá
+        return [
+            'averageRating' => $averageRating,
+            'ratingDistribution' => $ratingDistribution,
+            'totalRatings' => $totalRatings,
+        ];
     }
 
 }
