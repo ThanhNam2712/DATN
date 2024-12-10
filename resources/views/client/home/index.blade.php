@@ -100,7 +100,6 @@
                     style="width: 300px; height: auto; align-items: center">
                 <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}"
                     class="text-xl font-bold mb-3">{{ $list->name }}</a>
-                <p class="text-slate-500 dark:text-zinc-400 mb-4">{{ $list->content }}.</p>
                 <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 mb-6">
                     <li>{{ $list->description }}</li>
                     <li>Category : {{ $list->category->name }}</li>

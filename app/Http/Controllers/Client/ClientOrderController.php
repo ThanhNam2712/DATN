@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Coupon;
 use App\Models\Coupon_user;
 use App\Models\Order;
@@ -23,42 +24,61 @@ use function Laravel\Prompts\alert;
 
 class ClientOrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        $cart = Cart::where('user_id', Auth::id())
-            ->with([
-                'cartDetail' => function ($query) {
-                    $query->with(['product' => function ($productQuery) {
-                        $productQuery->withTrashed();
-                    }, 'cart' ,'product_variant', 'color', 'size']);
-                }
-            ])
-            ->first();
-        $hasDeletedProduct = false;
-        foreach ($cart->cartDetail as $detail) {
-            if ($detail->product && $detail->product->trashed()) {
-                $hasDeletedProduct = true;
-                break;
-            }
-        }
-
         $user = auth()->user();
-        $is_default = Address::where('user_id', $user->id);
-        $address = $is_default->where('is_default', 1)->first();
+        $selectedProducts = session('selected_carts', []);
+        if (empty($selectedProducts)) {
+            return redirect()->back()->with('error', 'Vui lòng chọn ít nhất một sản phẩm để thanh toán.');
+        }
+        $cartDetails = CartItem::whereHas('cart', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+            ->whereIn('id', $selectedProducts)
+            ->with([
+                'product' => function ($productQuery) {
+                    $productQuery->withTrashed();
+                },
+                'product_variant',
+                'color',
+                'size',
+            ])
+            ->get();
+
+        $hasDeletedProduct = $cartDetails->contains(function ($detail) {
+            return $detail->product && $detail->product->trashed();
+        });
+
+        $address = Address::where('user_id', $user->id)
+            ->where('is_default', 1)
+            ->first();
 
         $usedCouponIds = Coupon_user::where('user_id', $user->id)->pluck('coupon_id');
         $coupons = Coupon::whereNotIn('id', $usedCouponIds)
             ->where('expiration_date', '>=', now())
+            ->where('number', '>', 0)
             ->where(function ($query) use ($user) {
                 $query->whereNull('user_id')
                     ->orWhere('user_id', $user->id);
             })
             ->get();
-
-        return view('client.order.index', compact('cart', 'address', 'user', 'hasDeletedProduct', 'coupons'));
+        $totalAmount = $cartDetails->sum(function ($detail) {
+            return $detail->product_variant->price_sale * $detail->quantity;
+        });
+        return view('client.order.index', compact('cartDetails', 'address', 'user',
+            'hasDeletedProduct', 'coupons', 'totalAmount'));
     }
 
+    public function checkBox(Request $request)
+    {
+
+        $selectedCarts = $request->input('selected_carts', []);
+        if (empty($selectedCarts)) {
+            return response()->json(['success' => false, 'message' => 'Vui lòng chọn ít nhất một sản phẩm.']);
+        }
+        session(['selected_carts' => $selectedCarts]);
+        return response()->json(['success' => true, 'message' => 'Sản phẩm đã được lưu vào Đơn Hàng.']);
+    }
     public function create(Request $request)
     {
         $cart = Cart::where('user_id', Auth::id())
@@ -80,42 +100,24 @@ class ClientOrderController extends Controller
 
         if (!$hasDeletedProduct){
             if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
-
-                $coupon = Coupon::where('code', $request->coupon)
-                    ->where('start_end', '<=', now())
-                    ->where('expiration_date', '>=', now())
-                    ->where('number', '>', 0)
-                    ->first();
-
-                if (!$coupon){
-                    return redirect()->back()->with([
-                        'error' => 'Mã Giảm Giá không hợp lệ hoặc đã hết số lượng, vui lòng chọn mã khác.',
+                $order = $this->createOrder($request);
+                if ($order instanceof \Illuminate\Http\RedirectResponse) {
+                    return $order;
+                }
+                if ($order){
+                    Payment::create([
+                        'order_id' => $order->id,
+                        'payment_method' => $request->input('payments'),
+                        'amount' => $order->total_amount,
+                        'status' => 0,
                     ]);
+                    return view('client.order.success', compact('order'));
+                }else{
+                    return redirect()->back()->with('error', 'Đã có lỗi xảy ra khi tạo đơn hàng.');
                 }
 
-                $order = $this->createOrder($request);
-
-                Payment::create([
-                    'order_id' => $order->id,
-                    'payment_method' => $request->input('payments'),
-                    'amount' => $order->total_amount,
-                    'status' => 0,
-                ]);
-
-                return view('client.order.success', compact('order'));
             }
             elseif ($request->input('payments') == 'Thẻ Tín Dụng'){
-                $coupon = Coupon::where('code', $request->coupon)
-                    ->where('start_end', '<=', now())
-                    ->where('expiration_date', '>=', now())
-                    ->where('number', '>', 0)
-                    ->first();
-
-                if (!$coupon){
-                    return redirect()->back()->with([
-                        'error' => 'Mã Giảm Giá không hợp lệ hoặc đã hết số lượng, vui lòng chọn mã khác.',
-                    ]);
-                }
                 Stripe::setApiKey(env('STRIPE_SECRET'));
 
                 $orderSession = session([
@@ -174,7 +176,27 @@ class ClientOrderController extends Controller
             'phone_number' => $request->phone_number,
             'coupon' => $request->coupon,
         ];
+        $coupon = Coupon::where('code', $data['coupon'])
+            ->where('start_end', '<=', now())
+            ->where('expiration_date', '>=', now())
+            ->first();
 
+        if ($coupon){
+            if ($coupon->number <= 0){
+                return redirect()->back()->with('error', 'Mã Đã Hết số lượng vui lòng chọn mã khác');
+            }
+            $couponUsed = Coupon_user::where('user_id', Auth::id())
+                ->where('coupon_id', $coupon->id)
+                ->first();
+
+            if (!$couponUsed) {
+                Coupon_user::create([
+                    'user_id' => Auth::id(),
+                    'coupon_id' => $coupon->id,
+                ]);
+                $coupon->decrement('number', 1);
+            }
+        }
         $number = mt_rand(1000000000, 9999999999);
         $data['barcode'] = $number;
         if ($this->barcodeOrder($number)){
@@ -182,67 +204,58 @@ class ClientOrderController extends Controller
         }
         $order = Order::create($data);
 
+        $selectedProducts = session('selected_carts', []);
+        if (empty($selectedProducts)) {
+            return redirect()->back()->with('error', 'Vui lòng chọn ít nhất một sản phẩm để thanh toán.');
+        }
+
         $cart = Cart::where('user_id', Auth::id())
             ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
             ->first();
-
+        $totalAmount = 0;
         foreach ($cart->cartDetail as $key => $list){
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_variant_id' => $list->product_variant_id,
-                'quantity' => $list->quantity,
-                'price' => $list->product_variant->price_sale,
-                'color_id' => $list->color_id,
-                'size_id' => $list->size_id,
-                'product_id' => $list->product_id,
-            ]);
-            $productVariant = ProductVariant::find($list->product_variant_id);
-            if ($productVariant) {
-                $productVariant->decrement('quantity', $list->quantity);
-            }
-        }
-
-        $coupon = Coupon::where('code', $order->coupon)
-            ->where('start_end', '<=', now())
-            ->where('expiration_date', '>=', now())
-            ->where('number', '>', 0)
-            ->first();
-
-        if ($coupon){
-            $couponUsed = Coupon_user::where('user_id', Auth::id())
-                ->where('coupon_id', $coupon->id)
-                ->first();
-            if (!$couponUsed) {
-                Coupon_user::create([
-                    'user_id' => Auth::id(),
-                    'coupon_id' => $coupon->id,
+            if (in_array($list->id, $selectedProducts)) {
+                $productVariant = ProductVariant::find($list->product_variant_id);
+                if ($productVariant && $productVariant->quantity < $list->quantity) {
+                    return redirect()->back()->with('error', 'Sản phẩm ' . $list->product->name . ' không đủ số lượng để đặt hàng.');
+                }
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_variant_id' => $list->product_variant_id,
+                    'quantity' => $list->quantity,
+                    'price' => $list->product_variant->price_sale,
+                    'color_id' => $list->color_id,
+                    'size_id' => $list->size_id,
+                    'product_id' => $list->product_id,
                 ]);
+                $productVariant = ProductVariant::find($list->product_variant_id);
+                if ($productVariant) {
+                    $productVariant->decrement('quantity', $list->quantity);
+                }
+                $totalAmount += $list->product_variant->price_sale * $list->quantity;
             }
-            $coupon->decrement('number', 1);
-        }else{
-            return redirect()->back()->with([
-                'error' => 'Mã Giảm Giá Đã Hết Số Lượng, Vui Lòng Chọn Mã Khác',
-            ]);
         }
+
 
         $total = $order->total_amount;
-
-        $cart->cartDetail()->delete();
-        $this->updateTotal($cart->id, 0);
+        foreach ($selectedProducts as $selectedProductId) {
+            $cart->cartDetail()->where('id', $selectedProductId)->delete();
+        }
+        $totalAmountRemaining = $cart->total_amuont - $totalAmount;
+        $this->updateTotal($cart->id, $totalAmountRemaining);
 
         $this->sendMail($order, $total);
         ShipmentOrder::create([
             'order_id' => $order->id,
         ]);
+        session()->forget('selected_carts');
         return $order;
-
     }
 
     public function confirm(Request $request)
     {
         Stripe::setApiKey(env('STRIPE_SECRET'));
         $session = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
-//        $order = Order::find($id);
         $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
         $status = $paymentIntent->status;
 
@@ -272,7 +285,27 @@ class ClientOrderController extends Controller
                 'phone_number' => $phoneNumber,
                 'coupon' => $coupon,
             ];
+            $coupon = Coupon::where('code', $data['coupon'])
+                ->where('start_end', '<=', now())
+                ->where('expiration_date', '>=', now())
+                ->first();
 
+            if ($coupon){
+                if ($coupon->number <= 0){
+                    return redirect()->back()->with('error', 'Mã Đã Hết số lượng vui lòng chọn mã khác');
+                }
+                $couponUsed = Coupon_user::where('user_id', Auth::id())
+                    ->where('coupon_id', $coupon->id)
+                    ->first();
+
+                if (!$couponUsed) {
+                    Coupon_user::create([
+                        'user_id' => Auth::id(),
+                        'coupon_id' => $coupon->id,
+                    ]);
+                    $coupon->decrement('number', 1);
+                }
+            }
             $number = mt_rand(1000000000, 9999999999);
             $data['barcode'] = $number;
             if ($this->barcodeOrder($number)) {
@@ -281,49 +314,40 @@ class ClientOrderController extends Controller
 
             $order = Order::create($data);
 
+            $selectedProducts = session('selected_carts', []);
+            if (empty($selectedProducts)) {
+                return redirect()->back()->with('error', 'Vui lòng chọn ít nhất một sản phẩm để thanh toán.');
+            }
+
             $cart = Cart::where('user_id', Auth::id())
                 ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
                 ->first();
 
+            $totalAmount = 0;
+
             foreach ($cart->cartDetail as $key => $list){
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_variant_id' => $list->product_variant_id,
-                    'quantity' => $list->quantity,
-                    'price' => $list->product_variant->price_sale,
-                    'color_id' => $list->color_id,
-                    'size_id' => $list->size_id,
-                    'product_id' => $list->product_id,
-                ]);
-                $productVariant = ProductVariant::find($list->product_variant_id);
-                if ($productVariant) {
-                    $productVariant->decrement('quantity', $list->quantity);
-                }
-            }
-
-            $coupon = Coupon::where('code', $coupon)
-                ->where('start_end', '<=', now())
-                ->where('expiration_date', '>=', now())
-                ->where('number', '>', 0)
-                ->first();
-
-            if ($coupon) {
-                $couponUsed = Coupon_user::where('user_id', $userId)
-                    ->where('coupon_id', $coupon->id)
-                    ->first();
-
-                if (!$couponUsed) {
-                    Coupon_user::create([
-                        'user_id' => $userId,
-                        'coupon_id' => $coupon->id,
+                if (in_array($list->id, $selectedProducts)) {
+                    $productVariant = ProductVariant::find($list->product_variant_id);
+                    if ($productVariant && $productVariant->quantity < $list->quantity) {
+                        return redirect()->back()->with('error', 'Sản phẩm ' . $list->product->name . ' không đủ số lượng để đặt hàng.');
+                    }
+                    OrderItem::create([
+                        'order_id' => $order->id,
+                        'product_variant_id' => $list->product_variant_id,
+                        'quantity' => $list->quantity,
+                        'price' => $list->product_variant->price_sale,
+                        'color_id' => $list->color_id,
+                        'size_id' => $list->size_id,
+                        'product_id' => $list->product_id,
                     ]);
+                    $productVariant = ProductVariant::find($list->product_variant_id);
+                    if ($productVariant) {
+                        $productVariant->decrement('quantity', $list->quantity);
+                    }
+                    $totalAmount += $list->product_variant->price_sale * $list->quantity;
                 }
-                $coupon->decrement('number', 1);
-            }else{
-                return back()->with([
-                    'error' => 'Mã Giảm Giá Đã Hết Số Lượng, Vui Lòng Chọn Mã Khác'
-                ]);
             }
+
 
             Payment::create([
                 'order_id' => $order->id,
@@ -334,8 +358,11 @@ class ClientOrderController extends Controller
 
             $total = $order->total_amount;
 
-            $cart->cartDetail()->delete();
-            $this->updateTotal($cart->id, 0);
+            foreach ($selectedProducts as $selectedProductId) {
+                $cart->cartDetail()->where('id', $selectedProductId)->delete();
+            }
+            $totalAmountRemaining = $cart->total_amuont - $totalAmount;
+            $this->updateTotal($cart->id, $totalAmountRemaining);
             ShipmentOrder::create([
                 'order_id' => $order->id,
             ]);
@@ -352,6 +379,7 @@ class ClientOrderController extends Controller
                 'phone_number',
                 'coupon',
             ]);
+            session()->forget('selected_carts');
             return view('client.order.success' ,compact('order'));
         }
         return view('client.order.confirm', compact('status'));
@@ -370,10 +398,22 @@ class ClientOrderController extends Controller
     public function coupon(Request $request)
     {
         $couponCode = $request->input('coupon');
+        $user = auth()->user();
+        $selectedProducts = session('selected_carts', []);
 
-        $cart = Cart::where('user_id', Auth::id())
-            ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
-            ->first();
+        $cartDetails = CartItem::whereHas('cart', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+            ->whereIn('id', $selectedProducts)
+            ->with([
+                'product' => function ($productQuery) {
+                    $productQuery->withTrashed();
+                },
+                'product_variant',
+                'color',
+                'size',
+            ])
+            ->get();
 
         $coupon = Coupon::where('code', $couponCode)
             ->where('start_end', '<=', now())
@@ -389,9 +429,11 @@ class ClientOrderController extends Controller
         }
 
 
-
+        $totalAmount = $cartDetails->sum(function ($detail) {
+            return $detail->product_variant->price_sale * $detail->quantity;
+        });
         $discount = 0;
-        $total = $cart->total_amuont;
+        $total = $totalAmount;
 
         if ($total > $coupon->minimum_order_amount) {
             if ($coupon->discount_type == 'Phần Trăm') {
@@ -430,11 +472,11 @@ class ClientOrderController extends Controller
         ]);
     }
 
-    private function updateTotal($id, $amount)
+    private function updateTotal($id, $totalAmount)
     {
         $cart = Cart::find($id);
         if ($cart){
-            $cart->total_amuont = $amount;
+            $cart->total_amuont = $totalAmount;
             $cart->save();
         }
     }

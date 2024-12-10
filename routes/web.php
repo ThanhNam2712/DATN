@@ -88,6 +88,7 @@ Route::get('/blocked', function () {
         'prefix' => 'order',
         'as' => 'order.',
     ], function (){
+        Route::post('checkBox', [ClientOrderController::class, 'checkBox'])->name('checkBox');
         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
