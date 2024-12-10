@@ -42,16 +42,13 @@
                                         </div>
                                         <ul class="flex flex-wrap gap-3 mt-4 text-center divide-x divide-slate-200 dark:divide-zink-500 rtl:divide-x-reverse">
                                             <li class="px-5">
-                                                <h5>${{ number_format(Auth::user()->order->sum('total_amount') * 25397) }}</h5>
+                                                <h5>${{ number_format(Auth::user()->order->sum('total_amount')) }}</h5>
                                                 <p class="text-slate-500 dark:text-zink-200">Tổng Tiền Đặt Hàng</p>
                                             </li>
-                                            <li class="px-5">
-                                                <h5>10.65k</h5>
-                                                <p class="text-slate-500 dark:text-zink-200">Followers</p>
-                                            </li>
+
                                             <li class="px-5">
                                                 <h5>{{ Auth::user()->order->count() }}+</h5>
-                                                <p class="text-slate-500 dark:text-zink-200">Order Products</p>
+                                                <p class="text-slate-500 dark:text-zink-200">Số Lần Đặt hàng Thành Công</p>
                                             </li>
                                         </ul>
                                         <p class="mt-4 text-slate-500 dark:text-zink-200">Strong leader and negotiator adept at driving collaboration and innovation. Highly accomplished Web Developer with 10+ years of experience creating, launching and leading successful business ventures. Proven ability to build relationships, drive customer loyalty and increase profitability.</p>
@@ -248,7 +245,7 @@
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="flex items-center xl:col-span-6">
-                                                    <a href="../client/reset/" class="underline text-custom-500 text-13">Quên Mật Khẩu ?</a>
+                                                    <a href="../client/reset/password" class="underline text-custom-500 text-13">Quên Mật Khẩu ?</a>
                                                 </div>
                                                 <div class="flex justify-end xl:col-span-6">
                                                     <button type="submit" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Change Password</button>
@@ -406,7 +403,7 @@
                                                             <div class="!pt-1 card-body mt-4">
                                                                 <div class="overflow-x-auto">
                                                                     @foreach($coupon as $key => $list)
-                                                                        <span class="mt-4 status px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">Address :  {{ $key + 1 }}</span>
+                                                                        <span class="mt-4 status px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">Coupon :  {{ $key + 1 }}</span>
                                                                         <table class="w-full whitespace-nowrap mt-5" id="productTable">
                                                                             <thead class="ltr:text-left rtl:text-right bg-slate-100 dark:bg-zink-600">
                                                                             <tr>

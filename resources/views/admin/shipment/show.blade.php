@@ -6,7 +6,7 @@
             <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Order Overview</h5>
+                        <h5 class="text-16">Đơn Giao</h5>
                     </div>
                     @if(Session::has('message'))
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -19,10 +19,10 @@
                     @endif
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                            <a href="#!" class="text-slate-400 dark:text-zink-200">Ecommerce</a>
+                            <a href="#!" class="text-slate-400 dark:text-zink-200">AE BOUTIQUE</a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
-                            Order Overview
+                            Đơn giao hàng thành công
                         </li>
                     </ul>
                 </div>
@@ -47,19 +47,19 @@
                                                             <img src="{{ Storage::url($list->products->image) }}" alt="" class="h-8">
                                                         </div>
                                                         <div class="grow">
-                                                            <h6 class="mb-1 text-15"><a href="apps-ecommerce-product-overview.html" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->products->name }}</a></h6>
-                                                            <p class="text-slate-500 dark:text-zink-200">${{ $list->price }} x 0{{ $list->quantity }}</p>
+                                                            <h6 class="mb-1 text-15"><a class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->products->name }}</a></h6>
+                                                            <p class="text-slate-500 dark:text-zink-200">{{ $list->price }}VND x 0{{ $list->quantity }}</p>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">{{ number_format($list->price * $list->quantity * 25422) }} VND</td>
+                                                <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">{{ number_format($list->price * $list->quantity) }} VND</td>
                                             </tr>
                                         @endforeach
                                         <tr class="font-semibold">
                                             <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                Total Amount (USD)
+                                                Tổng Tiền Cần Thu Lại
                                             </td>
-                                            <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">@if($shipment->order->payment->status == 1) Khác hàng đã thanh toán, Vui lòng không thu tiền khách! @else Vui Lòng Thu KHách : {{ number_format($shipment->order->total_amount * 25422) }} VND @endif</td>
+                                            <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">@if($shipment->order->payment->status == 1) Khác hàng đã thanh toán, Vui lòng không thu tiền khách! @else Vui Lòng Thu Khách : {{ number_format($shipment->order->total_amount) }} VND @endif</td>
                                         </tr>
                                         </tbody>
                                     </table>

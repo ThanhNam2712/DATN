@@ -42,19 +42,19 @@
         <div class="mx-auto">
             <ul id="navbar7" class="absolute inset-x-0 z-20 items-center hidden py-3 mt-px bg-white shadow-lg md:mt-0 dark:bg-zinc-800 dark:md:bg-transparent md:z-0 navbar-menu rounded-b-md md:shadow-none md:flex top-full ltr:ml-auto rtl:mr-auto md:relative md:bg-transparent md:rounded-none md:top-auto md:py-0">
                 <li>
-                    <a href="../client/home/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'home') ? 'active' : ''}}">Home</a>
+                    <a href="../client/home/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'home') ? 'active' : ''}}">Trang Chủ</a>
                 </li>
                 <li>
-                    <a href="../client/shop/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'shop') ? 'active' : ''}}" >Shop Product</a>
+                    <a href="../client/shop/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'shop') ? 'active' : ''}}" >Trang Sản Phẩm</a>
                 </li>
                 <li>
-                    <a href="../client/shop/introduce/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(3) == 'introduce') ? 'active' : ''}}" >Introduce</a>
+                    <a href="../client/shop/introduce/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(3) == 'introduce') ? 'active' : ''}}" >Giới Thiệu</a>
                 </li>
                 <li>
-                    <a href="../client/wishlist/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'wishList') ? 'active' : ''}}">WishList</a>
+                    <a href="../client/wishlist/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500 {{ (request()->segment(2) == 'wishList') ? 'active' : ''}}">Sản Phẩm Yêu Thích</a>
                 </li>
                 <li>
-                    <a href="../client/shop/map/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Shop Map</a>
+                    <a href="../client/shop/map/" class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">Địa Chỉ</a>
                 </li>
             </ul>
         </div>
@@ -71,7 +71,7 @@
                         </div>
                     </button>
                     <div class="absolute z-50 hidden p-4 ltr:text-left rtl:text-right bg-white rounded-md shadow-md !top-4 dropdown-menu min-w-[14rem] dark:bg-zink-600" aria-labelledby="dropdownMenuButton">
-                        <h6 class="mb-2 text-sm font-normal text-slate-500 dark:text-zink-300">Welcome to starcode</h6>
+                        {{-- <h6 class="mb-2 text-sm font-normal text-slate-500 dark:text-zink-300">Welcome to starcode</h6> --}}
                         <a href="#!" class="flex gap-3 mb-3">
 
                             <div class="relative inline-block shrink-0">
@@ -87,31 +87,29 @@
                         </a>
                         <ul>
                             <li>
-                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/profile/"><i data-lucide="user-2" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Profile</a>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/profile/"><i data-lucide="user-2" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Tài khoản</a>
                             </li>
                             <li>
-                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/order/view"><i data-lucide="store" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>My Order</a>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/order/view"><i data-lucide="store" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Đơn hàng</a>
                             </li>
                             <li>
-                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/email/"><i data-lucide="mail" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Change Email</a>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/email/"><i data-lucide="mail" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Đổi email</a>
+                            </li>
+
+                            <li>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="{{ route('client.wishlist.index') }}"><i data-lucide="heart" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Yêu thích </a>
                             </li>
                             <li>
-                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="apps-chat.html"><i data-lucide="messages-square" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Chat</a>
-                            </li>
-                            <li>
-                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="{{ route('client.wishlist.index') }}"><i data-lucide="heart" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> WishList </a>
-                            </li>
-                            <li>
-                                <a  class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/reset/password"><i data-lucide="lock" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Reset Pass</a>
+                                <a  class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/reset/password"><i data-lucide="lock" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Thay mật khâu</a>
                             </li>
                             <li class="pt-2 mt-2 border-t border-slate-200 dark:border-zink-500">
-                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../account/logout"><i data-lucide="log-out" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Sign Out</a>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../account/logout"><i data-lucide="log-out" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Đăng xuất</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             @else
-                <a href="../account/show-login" class="text-white border-0 btn bg-gradient-to-r from-custom-500 to-purple-500 hover:text-white hover:from-purple-500 hover:to-custom-500"><span class="align-middle">Sign In</span> <i data-lucide="log-in" class="inline-block size-4 ltr:ml-1 rtl:mr-1"></i></a>
+                <a href="../account/show-login" class="text-white border-0 btn bg-gradient-to-r from-custom-500 to-purple-500 hover:text-white hover:from-purple-500 hover:to-custom-500"><span class="align-middle">Đăng nhập</span> <i data-lucide="log-in" class="inline-block size-4 ltr:ml-1 rtl:mr-1"></i></a>
             @endif
         </div>
     </div>
@@ -128,7 +126,7 @@
                     <a href="#!"><img src="../assets/images/logo-light.png" alt="" class="hidden h-7 dark:block"></a>
                     <a href="#!"><img src="../assets/images/aeboutique.png" alt="" class="block h-7 dark:hidden"></a>
                 </div>
-                <p class="mb-5 text-slate-500 dark:text-zinc-400">Premium Multipurpose Admin & Dashboard Template You can build any type of web application like eCommerce, CRM, CMS, Project management apps, Admin Panels, etc using starcode.</p>
+                <p class="mb-5 text-slate-500 dark:text-zinc-400">Chúng tôi là nơi bạn tìm thấy phong cách thời trang độc đáo, đa dạng từ trang phục dạo phố năng động, công sở thanh lịch đến những bộ đồ thời thượng phù hợp với mọi xu hướng hiện đại.</p>
                 <ul class="flex items-center gap-3">
                     <li>
                         <a href="#!" class="flex items-center justify-center transition-all duration-200 ease-linear border rounded-full size-10 text-slate-500 border-slate-200 dark:text-zinc-400 dark:border-zinc-800 hover:text-custom-500 dark:hover:text-custom-500"><i data-lucide="facebook" class="size-4"></i></a>
@@ -210,40 +208,36 @@
         </div><!--end grid-->
 
     </div>
-    <div class="pt-10 mt-16 text-center border-t text-slate-500 dark:text-zinc-400 dark:border-zinc-800 text-16">
-        <p>
-            <script>document.write(new Date().getFullYear())</script> StarCode Kh Design & Develop by <a href="#!" class="underline text-slate-800 dark:text-zinc-100">StarCode Kh</a>
-        </p>
-    </div>
+
 </footer>
 @php
-        $cart = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())
-            ->with([
-                'cartDetail' => function ($query) {
-                    $query->with(['product' => function ($productQuery) {
-                        $productQuery->withTrashed();
-                    }, 'cart', 'product_variant', 'color', 'size']);
-                }
-            ])
-            ->first();
+    $cart = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())
+        ->with([
+            'cartDetail' => function ($query) {
+                $query->with(['product' => function ($productQuery) {
+                    $productQuery->withTrashed();
+                }, 'cart', 'product_variant', 'color', 'size']);
+            }
+        ])
+        ->first();
 
-        $hasDeletedProduct = false;
+    $hasDeletedProduct = false;
 
-        if ($cart && \Illuminate\Support\Facades\Auth::check()) {
-            foreach ($cart->cartDetail as $detail) {
-                if ($detail->product && $detail->product->trashed()) {
-                    $hasDeletedProduct = true;
-                    break;
-                }
+    if ($cart && \Illuminate\Support\Facades\Auth::check()) {
+        foreach ($cart->cartDetail as $detail) {
+            if ($detail->product && $detail->product->trashed()) {
+                $hasDeletedProduct = true;
+                break;
             }
         }
-    @endphp
+    }
+@endphp
 
 
 <div id="cartSidePenal" drawer-end="" class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow dark:bg-zink-600 ltr:right-0 rtl:left-0 md:w-96 z-drawer show">
     <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
         <div class="grow">
-            <h5 class="mb-0 text-16">Shopping Cart <span class="inline-flex items-center justify-center w-5 h-5 ml-1 text-[11px] font-medium border rounded-full text-white bg-custom-500 border-custom-500">3</span></h5>
+            <h5 class="mb-0 text-16">Giỏ hàng</h5>
         </div>
         <div class="shrink-0">
             <button data-drawer-close="cartSidePenal" class="transition-all duration-150 ease-linear text-slate-500 hover:text-slate-800"><i data-lucide="x" class="size-4"></i></button>
@@ -263,11 +257,11 @@
                                     <div class="ltr:float-right rtl:float-left">
                                         <button data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
                                     </div>
-                                    <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
+                                    <a class="transition-all duration-200 ease-linear hover:text-custom-500">
                                         <h6 class="mb-1 text-15">{{ $list->product->name }}</h6>
                                     </a>
                                     <div class="flex items-center mb-3">
-                                        <h5 class="text-base product-price"> $<span>{{ $list->product_variant->price_sale }}</span></h5>
+                                        <h5 class="text-base product-price"><span>{{ number_format($list->product_variant->price_sale) }}</span>VND</h5>
                                         <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }}, {{ $list->color->name }}, {{ $list->size->name }})</div>
                                     </div>
                                     <div class="flex items-center justify-between gap-3">
@@ -276,7 +270,7 @@
                                             <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 products-quantity dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
                                             <button type="button" onclick="increaseCart('{{ $list->id }}')" class="transition-all duration-200 ease-linear border rounded border-slate-200 bg-slate-200 dark:bg-zink-600 dark:border-zink-600 w-7 plus-value text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block w-4 h-4"></i></button>
                                         </div>
-                                        <h6 class="products-line-price">${{ $list->product_variant->price_sale * $list->quantity }}</h6>
+                                        <h6 class="products-line-price">{{ number_format($list->product_variant->price_sale * $list->quantity) }}VND</h6>
                                     </div>
                                 </div>
                             </div>
@@ -289,7 +283,7 @@
                                     <div class="ltr:float-right rtl:float-left">
                                         <button data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500"><i data-lucide="x" class="size-4"></i></button>
                                     </div>
-                                    <a href="#!" class="transition-all duration-200 ease-linear hover:text-custom-500">
+                                    <a class="transition-all duration-200 ease-linear hover:text-custom-500">
                                         <h6 style="color: red" class="mb-1 text-15">{{ $list->product->name }}</h6>
                                     </a>
                                     <div class="flex items-center mb-3">
@@ -320,7 +314,7 @@
                     <tbody class="table-total">
                     <tr class="font-semibold">
                         <td class="py-2">Tổng Tiền : </td>
-                        <td class="text-right cart-total">${{ $cart->total_amuont }}</td>
+                        <td class="text-right cart-total">{{ number_format($cart->total_amuont) }}VND</td>
                     </tr>
                     </tbody>
                 </table>
@@ -357,6 +351,8 @@
 <script src="../assets/js/cart/cartAddCart.js"></script>
 <script src="../assets/js/order/coupon.js"></script>
 <script src="../assets/js/pages/swiper.init.js"></script>
+<script src="assets/libs/clipboard/clipboard.min.js"></script>
+<script src="assets/js/pages/clipbord.init.js"></script>
 {{--<script src="../assets/js/apiAddress/api.js"></script>--}}
 {{--<script src="../assets/js/apiAddress/api2.js"></script>--}}
 <script src="../assets/js/pages/landing-product.init.js"></script>

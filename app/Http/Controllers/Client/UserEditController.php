@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\ChangeEmail;
 use App\Models\Coupon;
+use App\Models\Coupon_user;
 use App\Models\User;
 use App\Utilities\Common;
 use Illuminate\Http\Request;
@@ -20,11 +21,16 @@ class UserEditController extends Controller
     {
         $id = Auth::id();
         $address = Address::where('user_id', $id)->get();
-        $coupon = Coupon::where('number', '>=', 1)->get();
 
-//        $provinces = collect($this->location(''));
-//        $districts = $this->location('d/');
-//        $wards = $this->location('w/');
+        $usedCouponIds = Coupon_user::where('user_id', $id)->pluck('coupon_id');
+        $coupon = Coupon::whereNotIn('id', $usedCouponIds)
+            ->where('expiration_date', '>=', now())
+            ->where(function ($query) use ($id) {
+                $query->whereNull('user_id')
+                ->orWhere('user_id', $id);
+            })
+            ->get();
+
         return view('client.profile.index', compact('address', 'coupon'));
     }
 

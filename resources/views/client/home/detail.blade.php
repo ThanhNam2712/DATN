@@ -140,7 +140,7 @@
 
                                         <div class="mb-4">
                                             <p class="mb-1 text-green-500">Giá Tiền Sản Phẩm</p>
-                                            <h4>${{ $priceVariant->price_sale }} <small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">${{ $priceVariant->price }}</small> <small class="text-green-500 align-middle">{{ round(($priceVariant->price - $priceVariant->price_sale) / $priceVariant->price * 100) }}% ON</small></h4>
+                                            <h4>Giá Giảm : {{ number_format($priceVariant->price_sale) }} VND<small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">Giá Gốc : {{ number_format($priceVariant->price) }}VND</small> <small class="text-green-500 align-middle">Tổng Giảm : {{ number_format(round(($priceVariant->price - $priceVariant->price_sale) / $priceVariant->price * 100)) }}%</small></h4>
                                         </div>
                                         <form action="../client/cart/add" method="post">
                                             @csrf
@@ -158,16 +158,20 @@
                                             <div class="flex flex-wrap items-center gap-2">
                                                 @foreach($product->variant as $key => $size)
                                                     <div>
-                                                        <input id="selectSize{{ $size->size->name }}" class="hidden peer" type="radio" value="{{ $size->size->id }}" name="size_id">
+                                                        <input id="selectSize{{ $size->size->name }}" class="hidden peer size-selector-hahah" type="radio" value="{{ $size->size->id }}" name="size_id">
                                                         <label for="selectSize{{ $size->size->name }}" class="flex items-center justify-center w-8 h-8 text-xs border rounded-md cursor-pointer border-slate-200 dark:border-zink-500 peer-checked:bg-custom-50 dark:peer-checked:bg-custom-500/20 peer-checked:border-custom-300 dark:peer-checked:border-custom-700 peer-disabled:bg-slate-50 dark:peer-disabled:bg-slate-500/20 peer-disabled:border-slate-100 dark:peer-disabled:border-slate-800 peer-disabled:cursor-default peer-disabled:text-slate-500 dark:peer-disabled:text-zink-200">{{ $size->size->name }}</label>
                                                     </div>
                                                 @endforeach
+
+                                                <div>
+                                                    <span class="text-red-500" id="quantityVariantPro" style="display: none">Sản phẩm đơn hàng Còn {{ $priceVariant->quantity }}</span>
+                                                </div>
                                             </div>
                                             <h6 class="mt-5 mb-3 text-15">Chọn số lượng sản phẩm</h6>
                                             <div class="flex gap-2 mt-4 shrink-0">
                                                 <div class="inline-flex text-center input-step">
                                                     <button type="button" onclick="decrease()" class="border size-9 leading-[15px] minusBtn bg-white dark:bg-zink-700 dark:border-zink-500 ltr:rounded-l rtl:rounded-r transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block size-4"></i></button>
-                                                    <input type="number" name="quantity" id="numberCounter" class="w-12 text-center ltr:pl-2 rtl:pr-2 h-9 border-y product-quantity dark:bg-zink-700 focus:shadow-none dark:border-zink-500" value="1" min="1" max="{{ $product->variant->first()->quantity }}" readonly="">
+                                                    <input type="number" name="quantity" id="numberCounter" class="w-12 text-center ltr:pl-2 rtl:pr-2 h-9 border-y product-quantity dark:bg-zink-700 focus:shadow-none dark:border-zink-500" value="1" min="1" max="{{ $priceVariant->quantity }}" readonly="">
                                                     <button type="button" onclick="increase()" class="transition-all duration-200 ease-linear bg-white border dark:bg-zink-700 dark:border-zink-500 ltr:rounded-r rtl:rounded-l size-9 border-slate-200 plusBtn text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block size-4"></i></button>
                                                 </div>
                                             </div>
@@ -185,12 +189,9 @@
                                         </div>
                                         </form>
 
-                                        <h6 class="mt-5 mb-3 text-15">Các ưu đãi của hàng (4)</h6>
+                                        <h6 class="mt-5 mb-3 text-15">Các Thông Tin Sản Phẩm</h6>
                                         <ul class="flex flex-col gap-2">
-                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Mua hàng trực tiếp</span> 10% Instant Discount on Paypal, up to $1250 on orders of $5,000 and above <a href="#!" class="underline text-custom-500">T&C</a></li>
-                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Giá Đặc biệt</span> Get at flat $199 <a href="#!" class="underline text-custom-500">T&C</a></li>
-                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Ưu đãi đối tác</span> Purchase now & get 1 surprise cashback coupon in Future <a href="#!" class="underline text-custom-500">Know More</a></li>
-                                            <li><i data-lucide="tag" class="inline-block text-green-500 size-4 ltr:mr-1 rtl:ml-1 fill-green-200 dark:fill-green-500/20"></i> <span class="font-semibold">Bank Offer</span> UPI Offer Men's Clothing <a href="#!" class="underline text-custom-500">T&C</a></li>
+                                            {!! $product->content !!}
                                         </ul>
 
                                         <div class="grid grid-cols-1 gap-5 my-5 xl:grid-cols-3">
@@ -217,7 +218,6 @@
                                         <div class="mt-5">
                                             <h6 class="mb-3 text-15">Mô Tả Sản Phẩm:</h6>
                                             <p class="mb-2 text-slate-500 dark:text-zink-200">{{ $product->description }}.</p>
-                                            <p class="text-slate-500 dark:text-zink-200"><b>Mô Tả Ngắn Sản Phẩm</b>. {{ $product->content }}!</p>
                                         </div>
 
                                         <div class="mt-5">
@@ -238,14 +238,6 @@
                                                         <td class="px-3.5 py-2.5 border-b border-transparent">@if($product->is_trending == 1)
                                                                 <span class="px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-sky-100 border-sky-100 text-sky-500 dark:bg-sky-400/20 dark:border-transparent"> New Arrivals</span>
                                                             @endif</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">Fabric</th>
-                                                        <td class="px-3.5 py-2.5 border-b border-transparent">Cotton Blend</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">Pack of</th>
-                                                        <td class="px-3.5 py-2.5 border-b border-transparent">1</td>
                                                     </tr>
                                                     <tr>
                                                         <th class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">Product Code</th>
@@ -428,5 +420,16 @@
             </div>
         </div>
     </div><!--end modal-->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sizeSelectors = document.querySelectorAll('.size-selector-hahah');
+        const quantityVariantPro = document.getElementById('quantityVariantPro');
+        sizeSelectors.forEach(selector => {
+            selector.addEventListener('click', function (){
+                quantityVariantPro.style.display = 'block';
+            });
+        });
+    });
 
+</script>
 @endsection

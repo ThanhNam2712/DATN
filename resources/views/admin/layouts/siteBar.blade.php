@@ -8,7 +8,7 @@
                 {{-- <img src="assets/images/logo.png" alt="" class="h-6 mx-auto"> --}}
             </span>
             <span class="group-data-[sidebar-size=sm]:hidden">
-                {{-- <img src="assets/images/logo-dark.png" alt="" class="h-6 mx-auto"> --}}
+                <img src="../assets/images/aeboutique.png" alt="" class="h-6 mx-auto">
             </span>
         </a>
         <a href="../dashboard/statistic/"

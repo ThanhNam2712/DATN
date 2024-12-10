@@ -27,11 +27,10 @@ class CouponController extends Controller
         $request->validate([
             'code' => 'required|max:30',
             'discount_type' => 'required',
-            'discount_value' => 'required|numeric|max:50',
             'expiration_date' => 'required',
             'start_end' => 'required',
             'minimum_order_amount' => 'required',
-            'number' => 'required',
+            'number' => 'required|numeric|min:1',
         ]);
         $data = $request->all();
         $coupon = Coupon::create($data);

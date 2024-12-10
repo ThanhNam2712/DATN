@@ -94,7 +94,7 @@
                             $list->name }}</a></h5>
 
                     <div class="flex items-center gap-3 mt-3">
-                        <h6 class="text-16 grow">${{ $list->variant->first()->price_sale }}</h6>
+                        <h6 class="text-16 grow">{{ number_format($list->variant->first()->price_sale) }}VND</h6>
                         <div class="shrink-0">
                             <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}"
                                 class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
@@ -153,26 +153,21 @@
             <div class="relative lg:col-span-5">
                 <div class="relative before:absolute before:h-full before:w-full before:border-[15px] before:border-double before:border-green-500/10 before:-top-16 lg:before:-right-16"
                     data-aos="zoom-out-up">
-                    <img src="../assets/images/about.jpg" alt="" class="relative inline-block rounded-md"
+                    <img src="../assets/images/imgbottom.jpg" alt="" class="relative inline-block rounded-md"
                         data-aos="zoom-out-up" data-aos-delay="500">
                 </div>
             </div>
             <!--end col-->
             <div class="ml-auto lg:col-span-5 lg:col-start-8">
-                <p class="mb-2 text-purple-500 text-15" data-aos="fade-left" data-aos-delay="300">About Us</p>
-                <h1 class="mb-3 leading-normal capitalize" data-aos="fade-left" data-aos-delay="400">We Provide high
-                    Quality shoes</h1>
-                <p class="mb-5 text-lg text-slate-500 dark:text-zinc-400" data-aos="fade-left" data-aos-delay="500">Look
-                    for a shoe with solid construction that will give your feet the support they need. Next, look for
-                    quality materials that will make your feet comfortable and keep them healthy.</p>
+                <p class="mb-2 text-purple-500 text-15" data-aos="fade-left" data-aos-delay="300">Giới thiệu về chúng tôi</p>
+                <h1 class="mb-3 leading-normal capitalize" data-aos="fade-left" data-aos-delay="400">Chúng tôi cam kết</h1>
+                <p class="mb-5 text-lg text-slate-500 dark:text-zinc-400" data-aos="fade-left" data-aos-delay="500">AE Boutique cam kết tạo ra các sản phẩm thời trang bền vững và độc đáo, thể hiện tinh thần sáng tạo của người Việt. Từng sản phẩm được thiết kế với sự tỉ mỉ để mang đến giá trị và phong cách riêng biệt cho khách hàng.</p>
                 <p class="mb-5 text-lg text-slate-500 dark:text-zinc-400" data-aos="fade-left" data-aos-delay="500">
-                    Low-quality shoes may skimp on stitching, or use low quality glue that's prone to coming apart. A
-                    higher-quality shoe will use advanced construction to ensure that the shoe holds up over time, and
-                    also eliminate any spots.</p>
+                    AE Boutique đi đầu trong thời trang bền vững. Bằng cách áp dụng các kỹ thuật tiết kiệm nước, sử dụng vật liệu tái chế và thúc đẩy các hoạt động lao động công bằng, chúng tôi hướng đến mục tiêu xây dựng một tương lai tốt đẹp hơn cho mọi người.</p>
                 <button type="button"
                     class="px-8 py-3 text-white border-0 text-15 btn bg-gradient-to-r from-custom-500 to-purple-500 hover:text-white hover:from-purple-500 hover:to-custom-500"
-                    data-aos="fade-left" data-aos-delay="600">Explore Now <i data-lucide="move-right"
-                        class="inline-block align-middle size-4 rtl:mr-1 ltr:ml-1"></i></button>
+                    data-aos="fade-left" data-aos-delay="600"> <a href="../client/shop/introduce/">Xem ngay<i data-lucide="move-right"
+                        class="inline-block align-middle size-4 rtl:mr-1 ltr:ml-1"></i></a></button>
             </div>
             <!--end col-->
         </div>
@@ -216,27 +211,5 @@
 </section>
 <!--end -->
 
-<section class="relative py-20 border-t border-slate-200 dark:border-zinc-800">
-    <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
-        <div class="grid items-center grid-cols-1 gap-5 lg:grid-cols-12">
-            <div class="lg:col-span-8" data-aos="fade-right">
-                <h1 class="mb-4 leading-normal capitalize">Sign up for update & newsletter</h1>
-                <p class="text-lg text-slate-500 dark:text-zinc-400">Tell us which describes you, and we'll get in touch
-                    with next steps.</p>
-            </div>
-            <div class="ltr:lg:text-right rtl:lg:text-left lg:col-span-4">
-                <form action="#!" class="relative" data-aos="fade-left">
-                    <input type="email" id="subscribeInput"
-                        class="py-3 ltr:pr-40 rtl:pl-40 bg-slate-100 dark:bg-zinc-800/40 form-input text-slate-200 border-slate-200 dark:border-zinc-800 focus:outline-none focus:border-custom-500 dark:focus:border-custom-500 placeholder:text-slate-500 dark:placeholder:text-zinc-400 backdrop-blur-md"
-                        autocomplete="off" placeholder="starcode@starcodekh.com" required="">
-                    <button type="submit"
-                        class="absolute px-6 py-2 text-base transition-all duration-200 ease-linear border-0 ltr:right-1 rtl:left-1 text-custom-50 btn top-1 bottom-1 bg-gradient-to-r from-custom-500 to-purple-500 hover:text-white hover:from-purple-500 hover:to-custom-500">Subscribe
-                        Now</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--end container-->
-</section>
 
 @endsection
