@@ -38,9 +38,16 @@
                 @csrf
                 <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
                 <div class="xl:col-span-12">
-                    <div class="flex gap-1 px-4 py-3 mb-5 text-sm text-green-500 border border-green-200 rounded-md md:items-center bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
-                        <i data-lucide="shopping-bag" class="h-4 shrink-0"></i> <p>Vui Lòng Điền Đầy Đủ thông tin nhận hàng trước khi mua hàng.</p>
-                    </div>
+                    @if($hasDeletedProduct)
+                        <div style="width: auto" class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                            <span class="font-bold">Đã Có Một Số Sản phẩm Đang Thay Đổi, Vui Lòng Xóa Các Sản Phẩm Được Chỉ Định Ra Khỏi Giỏ Hàng và tải lại trang</span>
+                        </div>
+                    @else
+                        <div class="flex gap-1 px-4 py-3 mb-5 text-sm text-green-500 border border-green-200 rounded-md md:items-center bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
+                            <i data-lucide="shopping-bag" class="h-4 shrink-0"></i> <p>Vui Lòng Điền Đầy Đủ thông tin nhận hàng trước khi mua hàng.</p>
+                        </div>
+                    @endif
+
                 </div><!--end col-->
 
                     <div class="xl:col-span-8">

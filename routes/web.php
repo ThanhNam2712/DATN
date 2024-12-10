@@ -158,10 +158,6 @@ Route::get('/admin/dashboard', function () {
 });
 
 
-Route::resource('admin/brands', BrandController::class);
-
-
-
 Route::middleware(['auth', 'check.status'])->group(function () {
     //thông tin tk
     Route::get('/user/account', [UserEditController::class, 'index'])->name('auth.user.account');
@@ -250,6 +246,23 @@ Route::group([
         Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
         Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+        Route::get('softDelete', [CategoryController::class, 'soft'])->name('soft');
+        Route::delete('softDelete/{id}', [CategoryController::class, 'restore'])->name('restore');
+
+    });
+
+    Route::group([
+        'prefix' => 'brands',
+        'as' => 'brands.',
+    ], function (){
+        Route::get('/', [BrandController::class, 'index'])->name('index');
+        Route::get('create', [BrandController::class, 'create'])->name('create');
+        Route::get('update/{id}', [BrandController::class, 'edit'])->name('edit');
+        Route::post('store', [BrandController::class, 'store'])->name('store');
+        Route::put('update/{id}', [BrandController::class, 'update'])->name('update');
+        Route::delete('destroy/{id}', [BrandController::class, 'destroy'])->name('destroy');
+        Route::get('softDelete', [BrandController::class, 'soft'])->name('soft');
+        Route::delete('softDelete/{id}', [BrandController::class, 'restore'])->name('restore');
     });
 
     Route::group(

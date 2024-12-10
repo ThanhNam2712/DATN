@@ -101,11 +101,11 @@
                     <div>
                         <script>
                             document.write(new Date().getFullYear())
-                        </script> StarCode Kh
+                        </script> AE BOUTIQUE
                     </div>
                     <div class="hidden lg:block">
                         <div class="ltr:text-right rtl:text-left">
-                            Design & Develop by StarCode Kh
+                            Design & Develop by AE BOUTIQUE
                         </div>
                     </div>
                 </div>

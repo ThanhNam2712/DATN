@@ -103,7 +103,7 @@ class BrandController extends Controller
             $data['image'] = $brand->image;
         }
         $brand->update($data);
-        return redirect()->route('brands.index')
+        return redirect()->back()
             ->with('success', 'Sửa thành công');
     }
 
@@ -113,11 +113,25 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         //
-        $brand = Brand::findOrFail($id);
+        $brand = Brand::find($id);
         $brand->delete();
-        if ($brand->image && $brand->image && file_exists(public_path($brand->image))) {
-            unlink(public_path($brand->image));
-        }
-        return redirect()->route('brands.index');
+        return redirect()->back()->with([
+            'message' => 'Ẩn Thương Hiệu Thành Công'
+        ]);
+    }
+
+    public function soft()
+    {
+        $brands = Brand::onlyTrashed()->paginate(5);
+        return view('admin.brands.soft', compact('brands'));
+    }
+
+    public function restore($id)
+    {
+        $brands = Brand::onlyTrashed()->find($id);
+        $brands->restore();
+        return back()->with([
+            'message' => 'Xóa ẩn Thương Hiệu Thành Công'
+        ]);
     }
 }

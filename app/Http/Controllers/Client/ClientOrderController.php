@@ -80,17 +80,44 @@ class ClientOrderController extends Controller
 
         if (!$hasDeletedProduct){
             if ($request->input('payments') == 'Thanh Toán Khi Nhận Hàng'){
+
+                $coupon = Coupon::where('code', $request->coupon)
+                    ->where('start_end', '<=', now())
+                    ->where('expiration_date', '>=', now())
+                    ->where('number', '>', 0)
+                    ->first();
+
+                if (!$coupon){
+                    return redirect()->back()->with([
+                        'error' => 'Mã Giảm Giá không hợp lệ hoặc đã hết số lượng, vui lòng chọn mã khác.',
+                    ]);
+                }
+
                 $order = $this->createOrder($request);
+
                 Payment::create([
                     'order_id' => $order->id,
                     'payment_method' => $request->input('payments'),
                     'amount' => $order->total_amount,
                     'status' => 0,
                 ]);
+
                 return view('client.order.success', compact('order'));
             }
             elseif ($request->input('payments') == 'Thẻ Tín Dụng'){
+                $coupon = Coupon::where('code', $request->coupon)
+                    ->where('start_end', '<=', now())
+                    ->where('expiration_date', '>=', now())
+                    ->where('number', '>', 0)
+                    ->first();
+
+                if (!$coupon){
+                    return redirect()->back()->with([
+                        'error' => 'Mã Giảm Giá không hợp lệ hoặc đã hết số lượng, vui lòng chọn mã khác.',
+                    ]);
+                }
                 Stripe::setApiKey(env('STRIPE_SECRET'));
+
                 $orderSession = session([
                     'user_id' => Auth::id(),
                     'total_amount' => $request->total_amount,
@@ -185,8 +212,6 @@ class ClientOrderController extends Controller
             $couponUsed = Coupon_user::where('user_id', Auth::id())
                 ->where('coupon_id', $coupon->id)
                 ->first();
-
-
             if (!$couponUsed) {
                 Coupon_user::create([
                     'user_id' => Auth::id(),
@@ -194,6 +219,10 @@ class ClientOrderController extends Controller
                 ]);
             }
             $coupon->decrement('number', 1);
+        }else{
+            return redirect()->back()->with([
+                'error' => 'Mã Giảm Giá Đã Hết Số Lượng, Vui Lòng Chọn Mã Khác',
+            ]);
         }
 
         $total = $order->total_amount;
@@ -290,6 +319,10 @@ class ClientOrderController extends Controller
                     ]);
                 }
                 $coupon->decrement('number', 1);
+            }else{
+                return back()->with([
+                    'error' => 'Mã Giảm Giá Đã Hết Số Lượng, Vui Lòng Chọn Mã Khác'
+                ]);
             }
 
             Payment::create([
@@ -368,7 +401,7 @@ class ClientOrderController extends Controller
             }
         } else {
             return response()->json([
-                'error' => 'coupon không hợp lệ'
+                'error' => 'Số Tiền Không Phù Hợp Với Mã Giảm Giá, Vui Lòng Mua Thêm'
             ]);
         }
 
