@@ -33,12 +33,15 @@
     <div class="absolute top-0 left-0 size-64 bg-custom-500 opacity-10 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 size-64 bg-purple-500/10 blur-3xl"></div>
     <div style="margin-top: -130px" class="card">
-        <div class="card-body">
-            <!-- Swiper -->
-            <div class="swiper navigation-swiper" style="height: 460px;">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="../assets/images/3eba0a63-ec4a-4195-994a-fede3d7b1d25.jpeg" alt="">
+            <div class="card-body">
+                <!-- Swiper -->
+                <div class="swiper navigation-swiper" style="height: 460px">
+                    <div class="swiper-wrapper">
+                        @foreach($slides as $key => $list)
+                            <div class="swiper-slide">
+                                <img style="width: 1479px;" src="{{ Storage::url($list->image) }}" alt="">
+                            </div>
+                        @endforeach
                     </div>
                     <div class="swiper-slide">
                         <img src="../assets/images/pngtree-yellow-background-autumn-and-winter-new-product-promotion-poster-banner-men-image_900086.jpg" alt="">
@@ -131,7 +134,6 @@
                     style="width: 300px; height: auto; align-items: center">
                 <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}"
                     class="text-xl font-bold mb-3">{{ $list->name }}</a>
-                <p class="text-slate-500 dark:text-zinc-400 mb-4">{{ $list->content }}.</p>
                 <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 mb-6">
                     <li>{{ $list->description }}</li>
                     <li>Category : {{ $list->category->name }}</li>

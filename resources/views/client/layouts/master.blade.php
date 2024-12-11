@@ -85,7 +85,12 @@
                             <p class="text-slate-500 dark:text-zink-300">{{ Auth::user()->email }}</p>
                             </div>
                         </a>
+                        @if (Auth::user()->role_id === 2)
+
                         <ul>
+                            <li>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../admin/statistic"><i data-lucide="user-2" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Trang quản trị</a>
+                            </li>
                             <li>
                                 <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/profile/"><i data-lucide="user-2" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Tài khoản</a>
                             </li>
@@ -105,7 +110,34 @@
                             <li class="pt-2 mt-2 border-t border-slate-200 dark:border-zink-500">
                                 <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../account/logout"><i data-lucide="log-out" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Đăng xuất</a>
                             </li>
+
                         </ul>
+                        @else
+                        <ul>
+
+                            <li>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/profile/"><i data-lucide="user-2" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Tài khoản</a>
+                            </li>
+                            <li>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/order/view"><i data-lucide="store" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Đơn hàng</a>
+                            </li>
+                            <li>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/email/"><i data-lucide="mail" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Đổi email</a>
+                            </li>
+
+                            <li>
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="{{ route('client.wishlist.index') }}"><i data-lucide="heart" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Yêu thích </a>
+                            </li>
+                            <li>
+                                <a  class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../client/reset/password"><i data-lucide="lock" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Thay mật khâu</a>
+                            </li>
+                            <li class="pt-2 mt-2 border-t border-slate-200 dark:border-zink-500">
+                                <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500" href="../account/logout"><i data-lucide="log-out" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>Đăng xuất</a>
+                            </li>
+
+                        </ul>
+                        @endif
+
                     </div>
                 </div>
             @else

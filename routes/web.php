@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\RefundController;
 use App\Http\Controllers\Admin\ShipmentController;
+use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\VariantProductController;
 use App\Http\Controllers\Client\ClientRefundController;
 use App\Http\Controllers\Client\ForgotPasswordController;
@@ -89,6 +90,7 @@ Route::get('/blocked', function () {
         'prefix' => 'order',
         'as' => 'order.',
     ], function (){
+        Route::post('checkBox', [ClientOrderController::class, 'checkBox'])->name('checkBox');
         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
@@ -436,6 +438,16 @@ Route::group([
         Route::put('view/{id}', [UserController::class, 'change'])->name('change');
         Route::put('view/{id}', [UserController::class, 'updateEmail'])->name('updateEmail');
         Route::get('success', [UserController::class, 'success'])->name('success');
+    });
+
+    Route::group([
+        'prefix' => 'slide',
+        'as' => 'slide.'
+    ], function (){
+        Route::get('/', [SlideController::class, 'index'])->name('index');
+        Route::post('create', [SlideController::class, 'store'])->name('store');
+        Route::put('update/{id}', [SlideController::class, 'update'])->name('update');
+        Route::delete('delete/{id}', [SlideController::class, 'delete'])->name('delete');
     });
 });
 

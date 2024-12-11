@@ -353,7 +353,7 @@
                     <section class="relative py-24 xl:py-32" id="product">
                         <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
                             <div class="mx-auto text-center xl:max-w-3xl">
-                                <h1 class="mb-0 leading-normal capitalize">Similar Products</h1>
+                                <h1 class="mb-0 leading-normal capitalize">Sản Phẩm Tương Tự</h1>
                             </div>
                             <div class="grid grid-cols-1 gap-5 mt-12 md:grid-cols-2 xl:grid-cols-4">
                                 @foreach($productRelated as $key => $list)
@@ -364,9 +364,9 @@
                                             <h5><a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}">{{ $list->name }}</a></h5>
 
                                             <div class="flex items-center gap-3 mt-3">
-                                                <h6 class="text-16 grow">${{ $list->variant->first()->price_sale }}</h6>
+                                                <h6 class="text-16 grow">{{ number_format($list->variant->first()->price_sale) }} VND</h6>
                                                 <div class="shrink-0">
-                                                    <button type="button" class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Add to Cart</button>
+                                                    <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}" class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Chi Tiết Sản Phẩm</a>
                                                 </div>
                                             </div>
                                         </div>

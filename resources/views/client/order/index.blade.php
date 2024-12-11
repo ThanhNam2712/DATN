@@ -139,7 +139,7 @@
 
                                 <table class="w-full">
                                     <tbody>
-                                        @foreach($cart->cartDetail as $key => $list)
+                                        @foreach($cartDetails as $key => $list)
                                             @if($list->product && !$list->product->trashed())
                                                 <tr>
                                                     <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
@@ -183,7 +183,7 @@
                                                 Giá
                                             </td>
                                             {{--  @dd($cart);  --}}
-                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ number_format($cart->total_amuont) }}VND</td>
+                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ number_format($totalAmount) }}VND</td>
                                         </tr>
                                     </div>
                                         <tr>
@@ -212,8 +212,8 @@
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
                                             Tổng Tiền Cần Trả
                                         </td>
-                                        <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">{{ number_format($cart->total_amuont) }}VND</td>
-                                        <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $cart->total_amuont }}">
+                                        <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">{{ number_format($totalAmount) }}VND</td>
+                                        <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $totalAmount }}">
                                     </tr>
                                     </tbody>
                                 </table>
@@ -242,8 +242,8 @@
                                     </label>
                                 </div>
 
-                                <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
-                                <input type="hidden" name="allQuantity" value="{{ $cart->cartDetail->sum('quantity') }}">
+                                <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $totalAmount }}">
+                                <input type="hidden" name="allQuantity" value="{{ $cartDetails->sum('quantity') }}">
                                 @if(!$hasDeletedProduct)
                                     <button type="submit" class="mt-3 w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
                                         Xác Nhận Đặt Hàng

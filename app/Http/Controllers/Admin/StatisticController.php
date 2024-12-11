@@ -307,6 +307,7 @@ class StatisticController extends Controller
         $labels = $category->pluck('nameC')->toArray();
         $dataChart = $category->pluck('countID')->toArray();
         $color = ['#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#FF5722', '#009688', '#795548', '#009688', '#795548', '#FE9800', '#CDDC39', '#607D8B'];
+
         $datasets = [
             [
                 'label' => "Count Products",
@@ -327,53 +328,54 @@ class StatisticController extends Controller
     }
 
 
-
-    // StatisticController.php
-
-public function revenuePrice()
-{
-    $priceChart = $this->getPriceChartByMonth();
-    return view('admin.Statistic.price', compact('priceChart'));
-}
-
-    private function getPriceChartByMonth()
+    public function revenuePrice(Request $request)
     {
-        $ordersSuccess = Order::selectRaw('YEAR(orders.created_at) as year, MONTH(orders.created_at) as month, SUM(order_items.price) as total')
-            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-            ->whereIn('orders.status', ['completed', 'Giao Thành công'])
-            ->whereBetween('orders.created_at', [now()->startOfYear(), now()->endOfYear()])
-            ->groupBy('year', 'month')
-            ->orderBy('month')
-            ->get()
-            ->keyBy(function ($item) {
-                return $item->year . '-' . str_pad($item->month, 2, '0', STR_PAD_LEFT);
-            });
-        $labels = [];
-        $dataChartSuccess = [];
-        $dataChartCancelled = [];
-        $monthsInYear = range(1, 12);
+        // Lấy năm và tháng từ request, nếu không có thì dùng năm và tháng hiện tại
+        $selectedYear = $request->get('year', now()->year);
+        $selectedMonth = $request->get('month', now()->month);
 
-        foreach ($monthsInYear as $month) {
-            $label = Carbon::createFromFormat('m', $month)->format('F');
-            $labels[] = $label;
-            $dataChartSuccess[] = $ordersSuccess->get(now()->year . '-' . str_pad($month, 2, '0', STR_PAD_LEFT))->total ?? 0;
-        }
+        // Lấy dữ liệu thống kê doanh thu cho tháng và năm đã chọn
+        $priceChart = $this->getPriceChartByMonth($selectedYear, $selectedMonth);
 
-        $datasets = [
-            [
-                'label' => 'Doanh thu ',
-                'data' => $dataChartSuccess,
-                'backgroundColor' => '#36A2EB'
-            ]
-        ];
-
-        return [
-            'labels' => $labels,
-            'datasets' => $datasets,
-        ];
+        return view('admin.Statistic.price', compact('priceChart', 'selectedYear', 'selectedMonth'));
     }
 
+public function getPriceChartByMonth($selectedYear)
+{
+    // Fetch the order statistics for the selected year
+    $ordersSuccess = Order::selectRaw('YEAR(orders.created_at) as year, MONTH(orders.created_at) as month, SUM(orders.total_amount) as total')
+        ->whereIn('orders.status', ['completed', 'Giao Thành công'])
+        ->whereYear('orders.created_at', $selectedYear)
+        ->groupBy('year', 'month')
+        ->orderBy('month')
+        ->get()
+        ->keyBy(function ($item) {
+            return $item->year . '-' . str_pad($item->month, 2, '0', STR_PAD_LEFT);
+        });
 
+    $labels = [];
+    $dataChartSuccess = [];
+    $monthsInYear = range(1, 12);
+
+    foreach ($monthsInYear as $month) {
+        $label = Carbon::createFromFormat('m', $month)->format('F');
+        $labels[] = $label;
+        $dataChartSuccess[] = $ordersSuccess->get($selectedYear . '-' . str_pad($month, 2, '0', STR_PAD_LEFT))->total ?? 0;
+    }
+
+    $datasets = [
+        [
+            'label' => 'Doanh thu',
+            'data' => $dataChartSuccess,
+            'backgroundColor' => '#36A2EB'
+        ]
+    ];
+
+    return [
+        'labels' => $labels,
+        'datasets' => $datasets,
+    ];
+}
 
 
 
