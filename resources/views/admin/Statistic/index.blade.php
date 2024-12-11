@@ -391,7 +391,7 @@
             <div class="col-span-12 card 2xl:col-span-4 2xl:row-span-2">
                 <div class="card-body">
                     <div class="flex items-center mb-3">
-                        <h6 class="grow text-15">Khách hàng thân thiết</h6>
+                        <h6 class="grow text-15">Khách hàng mua nhiều nhất</h6>
                         <div class="relative dropdown shrink-0">
 
 
