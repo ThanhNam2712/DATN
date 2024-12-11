@@ -10,6 +10,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Review;
+use App\Models\Slide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,8 @@ class HomeController extends Controller
         $cateLimit = Category::orderBy('id', 'asc')->limit(3)->get();
         $comment = Review::limit(5)->get();
         $viewProduct = Product::orderBy('view', 'desc')->limit(3)->get();
-        return view('client.home.index', compact('product', 'cateLimit', 'comment', 'viewProduct'));
+        $slides = Slide::limit(3)->get();
+        return view('client.home.index', compact('product', 'cateLimit', 'comment', 'viewProduct', 'slides'));
     }
 
     public function detail(Request $request ,$id)

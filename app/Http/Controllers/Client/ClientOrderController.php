@@ -294,17 +294,7 @@ class ClientOrderController extends Controller
                 if ($coupon->number <= 0){
                     return redirect()->back()->with('error', 'Mã Đã Hết số lượng vui lòng chọn mã khác');
                 }
-                $couponUsed = Coupon_user::where('user_id', Auth::id())
-                    ->where('coupon_id', $coupon->id)
-                    ->first();
 
-                if (!$couponUsed) {
-                    Coupon_user::create([
-                        'user_id' => Auth::id(),
-                        'coupon_id' => $coupon->id,
-                    ]);
-                    $coupon->decrement('number', 1);
-                }
             }
             $number = mt_rand(1000000000, 9999999999);
             $data['barcode'] = $number;
@@ -348,7 +338,19 @@ class ClientOrderController extends Controller
                 }
             }
 
+            if ($coupon){
+                $couponUsed = Coupon_user::where('user_id', Auth::id())
+                    ->where('coupon_id', $coupon->id)
+                    ->first();
 
+                if (!$couponUsed) {
+                    Coupon_user::create([
+                        'user_id' => Auth::id(),
+                        'coupon_id' => $coupon->id,
+                    ]);
+                    $coupon->decrement('number', 1);
+                }
+            }
             Payment::create([
                 'order_id' => $order->id,
                 'payment_method' => $paymentMethodType,

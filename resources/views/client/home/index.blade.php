@@ -11,15 +11,11 @@
                 <!-- Swiper -->
                 <div class="swiper navigation-swiper" style="height: 460px">
                     <div class="swiper-wrapper">
+                        @foreach($slides as $key => $list)
                             <div class="swiper-slide">
-                                <img style="width: 1479px;" src="../assets/images/3eba0a63-ec4a-4195-994a-fede3d7b1d25.jpeg" alt="">
+                                <img style="width: 1479px;" src="{{ Storage::url($list->image) }}" alt="">
                             </div>
-                            <div class="swiper-slide" >
-                                <img style="width: 1479px;" src="../assets/images/pngtree-yellow-background-autumn-and-winter-new-product-promotion-poster-banner-men-image_900086.jpg" alt="">
-                                </div>
-                            <div class="swiper-slide" style="display: flex;width: 1479px;">
-                                <img style="width: 1479px;" src="../assets/images/banner-thoi-trang.jpg" alt="">
-                            </div>
+                        @endforeach
                     </div>
                     <div class="swiper-button-next after:hidden text-custom-500"><i data-lucide="chevron-right"></i></div>
                     <div class="swiper-button-prev after:hidden text-custom-500"><i data-lucide="chevron-left"></i></div>
