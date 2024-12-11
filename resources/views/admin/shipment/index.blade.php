@@ -54,7 +54,7 @@
                                     @if($order->payment->status == 1)
                                         Khác hàng đã thanh toán,<br> Vui Lòng không Thu Tiền Khách
                                     @else
-                                        {{ number_format($order->payment->amount * 25422) }}VND
+                                        {{ number_format($order->payment->amount) }}VND
                                     @endif
                                 </td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
@@ -101,11 +101,11 @@
                     <div>
                         <script>
                             document.write(new Date().getFullYear())
-                        </script> StarCode Kh
+                        </script> AE BOUTIQUE
                     </div>
                     <div class="hidden lg:block">
                         <div class="ltr:text-right rtl:text-left">
-                            Design & Develop by StarCode Kh
+                            Design & Develop by AE BOUTIQUE
                         </div>
                     </div>
                 </div>

@@ -48,7 +48,7 @@
                                                         </div>
                                                         <div class="grow">
                                                             <h6 class="mb-1 text-15"><a class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->products->name }}</a></h6>
-                                                            <p class="text-slate-500 dark:text-zink-200">{{ $list->price }}VND x 0{{ $list->quantity }}</p>
+                                                            <p class="text-slate-500 dark:text-zink-200">{{ number_format($list->price) }}VND x 0{{ $list->quantity }}</p>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -69,10 +69,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
-                                    <h6 class="text-15 grow">Order Status</h6>
+                                    <h6 class="text-15 grow">Trạng Thái Đơn hàng</h6>
                                     <div class="shrink-0" style="display: flex">
+
                                         @if ($shipment->order->status != 'completed' && $shipment->order->status != 'cancelled' && $shipment->order->status != 'Giao Thành công')
-                                            <button type="button" data-modal-target="deleteModal" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại</button>
+                                            @if($shipment->order->shipmentOrder->shipments_3 == 'Đã Đến Điểm Giao')
+                                                <button type="button" data-modal-target="deleteModal" class="me-3 text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại</button>
+                                            @endif
                                             <form action="../admin/shipment/update/{{ $shipment->order->id }}" method="post">
                                                 @csrf
                                                 @method('PUT')
@@ -86,8 +89,6 @@
                                                     @elseif($shipment->order->shipmentOrder->shipments_3 == 'Đã Đến Điểm Giao' && $shipment->order->shipmentOrder->shipments_4 == 'Chưa xử lý')
                                                         Giao Thành Công
                                                     @endif
-
-
                                                 </button>
                                             </form>
                                         @endif
@@ -200,7 +201,7 @@
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
                                     <h6 class="text-15 grow">Logistics Details</h6>
-                                    <a href="#!" class="underline text-custom-500 shrink-0">Track Order</a>
+                                    <a class="underline text-custom-500 shrink-0">Track Order</a>
                                 </div>
                                 <div class="flex gap-4">
                                     <div class="shrink-0">
@@ -208,7 +209,7 @@
                                     </div>
                                     <div class="grow">
                                         <h6 class="mb-1 text-15">Express Delivery</h6>
-                                        <p class="text-slate-500 dark:text-zink-200">ID: EDTW1400457854</p>
+                                        <p class="text-slate-500 dark:text-zink-200">ID: EDTW{{ $shipment->order->barcode }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -234,6 +235,7 @@
                         <textarea name="cancel_8" class="mt-4 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Reason for Cancellation" rows="5" style="height: 80px;"></textarea>
                         <div class="flex justify-center gap-2 mt-6">
                             <button type="reset" data-modal-close="deleteModal" class="bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-600 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10">Cancel</button>
+
                             <button type="submit" class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại!</button>
                         </div>
                     </form>

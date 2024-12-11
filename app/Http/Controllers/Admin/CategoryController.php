@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::paginate(4);
+        $categories = Category::paginate(5);
         return view('admin.category.index', compact('categories'));
     }
     public function getCategories()//call api cho front
@@ -67,6 +67,21 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Danh mục đã được xóa thành công!');
+        return redirect()->back()->with('success', 'Danh mục đã được xóa mềm thành công!');
+    }
+
+    public function soft()
+    {
+        $categories = Category::onlyTrashed()->paginate(5);
+        return view('admin.Category.soft', compact('categories'));
+    }
+
+    public function restore($id)
+    {
+        $categories = Category::onlyTrashed()->find($id);
+        $categories->restore();
+        return back()->with([
+            'message' => 'Khôi phục Thành Công'
+        ]);
     }
 }

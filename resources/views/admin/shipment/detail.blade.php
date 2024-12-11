@@ -13,7 +13,7 @@
                     </div>
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                            <a href="#!" class="text-slate-400 dark:text-zink-200">Users</a>
+                            <a href="#!" class="text-slate-400 dark:text-zink-200">Shipment</a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
                             Grid View
@@ -21,15 +21,15 @@
                     </ul>
                 </div>
                 <form action="#!" class="mb-5">
-                    <div class="grid grid-cols-1 gap-5 lg:grid-cols-12">
-                        <div class="relative lg:col-span-4 xl:col-span-3">
-                            <input type="text" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search for name, email, phone number etc..." autocomplete="off">
-                            <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
-                        </div><!--end col-->
-                        <div class="lg:col-span-3 lg:col-start-10">
+{{--                    <div class="grid grid-cols-1 gap-5 lg:grid-cols-12">--}}
+{{--                        <div class="relative lg:col-span-4 xl:col-span-3">--}}
+{{--                            <input type="text" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search for name, email, phone number etc..." autocomplete="off">--}}
+{{--                            <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>--}}
+{{--                        </div><!--end col-->--}}
+{{--                        <div class="lg:col-span-3 lg:col-start-10">--}}
 
-                        </div><!--end col-->
-                    </div><!--end grid-->
+{{--                        </div><!--end col-->--}}
+{{--                    </div><!--end grid-->--}}
                 </form>
 
                 <div class="grid grid-cols-1 gap-x-5 md:grid-cols-2 xl:grid-cols-4">
@@ -40,7 +40,7 @@
                                     <h5 class="mb-1 text-16"><a href="pages-account.html">Người Nhận: {{ $list->order->user->name }}</a></h5>
                                     <p class="mb-3 text-slate-500 dark:text-zink-200">Mã Đơn hàng : {{ $list->order->barcode }}</p>
                                     <p class="text-slate-500 dark:text-zink-200">Số Lượng Đơn : {{ $list->order->orderDetail->count() }}</p>
-                                    <p class="text-slate-500 dark:text-zink-200">Tổng Thu : @if($list->order->payment->status == 1) Khách Hàng Đã Thanh Toán @else {{ number_format($list->order->payment->amount * 25422) }}VND @endif</p>
+                                    <p class="text-slate-500 dark:text-zink-200">Tổng Thu : @if($list->order->payment->status == 1) Khách Hàng Đã Thanh Toán @else {{ number_format($list->order->payment->amount) }}VND @endif</p>
                                     <p class="text-slate-500 dark:text-zink-200">Địa Chỉ : {{ $list->order->district ?? 'tỉnh chưa có' }} - {{ $list->order->address_detail ?? 'huyện'}}</p>
                                 </div>
                                 <div class="flex gap-2 mt-5">
@@ -106,11 +106,11 @@
             <div class="group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl w-full">
                 <div class="grid items-center grid-cols-1 text-center lg:grid-cols-2 text-slate-400 dark:text-zink-200 ltr:lg:text-left rtl:lg:text-right">
                     <div>
-                        <script>document.write(new Date().getFullYear())</script> StarCode Kh
+                        <script>document.write(new Date().getFullYear())</script> AE BOUTIQUE
                     </div>
                     <div class="hidden lg:block">
                         <div class="ltr:text-right rtl:text-left">
-                            Design & Develop by StarCode Kh
+                            Design & Develop by AE BOUTIQUE
                         </div>
                     </div>
                 </div>

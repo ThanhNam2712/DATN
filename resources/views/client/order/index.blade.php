@@ -12,6 +12,15 @@
                     })
                 </script>
             @endif
+                @if(Session::has('error'))
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                    <script>
+                        swal("Error", "{{ Session::get("error") }}", "error", {
+                            button:true,
+                            button:"OK",
+                        })
+                    </script>
+                @endif
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
                     <h5 class="text-16">Order</h5>
@@ -29,9 +38,16 @@
                 @csrf
                 <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
                 <div class="xl:col-span-12">
-                    <div class="flex gap-1 px-4 py-3 mb-5 text-sm text-green-500 border border-green-200 rounded-md md:items-center bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
-                        <i data-lucide="shopping-bag" class="h-4 shrink-0"></i> <p>Vui Lòng Điền Đầy Đủ thông tin nhận hàng trước khi mua hàng.</p>
-                    </div>
+                    @if($hasDeletedProduct)
+                        <div style="width: auto" class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                            <span class="font-bold">Đã Có Một Số Sản phẩm Đang Thay Đổi, Vui Lòng Xóa Các Sản Phẩm Được Chỉ Định Ra Khỏi Giỏ Hàng và tải lại trang</span>
+                        </div>
+                    @else
+                        <div class="flex gap-1 px-4 py-3 mb-5 text-sm text-green-500 border border-green-200 rounded-md md:items-center bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
+                            <i data-lucide="shopping-bag" class="h-4 shrink-0"></i> <p>Vui Lòng Điền Đầy Đủ thông tin nhận hàng trước khi mua hàng.</p>
+                        </div>
+                    @endif
+
                 </div><!--end col-->
 
                     <div class="xl:col-span-8">
@@ -151,12 +167,12 @@
                                                             </div>
                                                             <div class="grow">
                                                                 <h6 class="mb-1 text-15"><a class="text-red-500 transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
-                                                                <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variant->price_sale }} x {{$list->quantity}}</p>
+                                                                <p class="text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price_sale) }}VND x {{$list->quantity}}</p>
                                                                 <a data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="flex items-center justify-center size-[37.5px] p-0 text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20 remove-button"><i data-lucide="trash-2" class="w-4 h-4"></i></a>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
+                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">{{ number_format($list->product_variant->price_sale * $list->quantity) }}VND</td>
                                                 </tr>
                                             @endif
 
@@ -183,7 +199,7 @@
 
                                             <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">
                                                 <a href="javascript:couponApply()">
-                                                    <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span></button>
+                                                    <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Áp Mã</span></button>
                                                 </a>
                                             </td>
                                         </tr>
@@ -230,7 +246,7 @@
                                 <input type="hidden" name="allQuantity" value="{{ $cart->cartDetail->sum('quantity') }}">
                                 @if(!$hasDeletedProduct)
                                     <button type="submit" class="mt-3 w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
-                                        Place Order
+                                        Xác Nhận Đặt Hàng
                                     </button>
                                 @else
                                     <div style="width: auto; text-align: center" class="px-4 py-3 mb-4 text-sm border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">

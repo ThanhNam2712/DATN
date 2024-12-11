@@ -68,7 +68,7 @@
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="{{route('client.order.detail',$order)}}" class="transition-all duration-150 ease-linear order_id text-custom-500 hover:text-custom-600">#{{ $order->barcode }}</a></td>
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 delivery_date">{{ $order->status }}</td>
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method">{{ $order->payment->payment_method }}</td>
-                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount">${{ $order->total_amount }}</td>
+                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount">{{ number_format($order->total_amount) }}VND</td>
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                         <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">{{ $order->coupon ?? 'Không App Mã'}}</span>
                                     </td>
@@ -78,12 +78,6 @@
                                             <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="orderAction1">
                                                 <li>
                                                     <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="{{route('client.order.detail',$order)}}"><i data-lucide="eye" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle" >Overview</span></a>
-                                                </li>
-                                                <li>
-                                                    <a data-modal-target="addOrderModal" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!"><i data-lucide="file-edit" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Edit</span></a>
-                                                </li>
-                                                <li>
-                                                    <a data-modal-target="deleteModal" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!"><i data-lucide="trash-2" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Delete</span></a>
                                                 </li>
                                             </ul>
                                         </div>

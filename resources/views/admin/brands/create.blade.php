@@ -25,7 +25,7 @@ class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-
     <div class="card">
         <div class="card-body">
 
-            <form action="{{route('brands.store')}}" method="POST" enctype="multipart/form-data">
+            <form action="../admin/brands/store" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid ">
                     <div class="mb-4">

@@ -428,9 +428,9 @@
                                                                                         </a>
                                                                                     </td>
 
-                                                                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 price">{{ $list->discount_value }}%</td>
+                                                                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 price">{{ number_format($list->discount_value) }} {{ $list->discount_type == 'Phần Trăm' ? '%' : 'VND'}}</td>
                                                                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 revenue">{{ $list->discount_type }}</td>
-                                                                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 stock"> ${{ $list->minimum_order_amount }} </td>
+                                                                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 stock">{{ number_format($list->minimum_order_amount) }}VND </td>
                                                                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 stock"> {{ $list->start_end }} </td>
                                                                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 stock"> {{ $list->expiration_date }} </td>
                                                                             </tr>

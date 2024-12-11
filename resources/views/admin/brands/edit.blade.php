@@ -25,7 +25,7 @@ class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-
     <div class="card">
         <div class="card-body">
 
-            <form action="{{route('brands.update',$brand)}}" method="POST" enctype="multipart/form-data">
+            <form action="../admin/brands/update/{{ $brand->id }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="grid ">
@@ -48,7 +48,7 @@ class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-
                     </div>
                 </div>
                 <div class="flex justify-end gap-2">
-                    <a href="{{route('brands.index')}}" type="button"
+                    <a href="../admin/brands/" type="button"
                         class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10"><i
                             data-lucide="x" class="inline-block size-4"></i> <span
                             class="align-middle">Back</span></a>
