@@ -41,18 +41,18 @@ Danh mục sản phẩm
                 <div class="card" id="usersTable">
 
                     <div class="!py-3.5 card-body border-y border-dashed border-slate-200 dark:border-zink-500">
-                        <form action="#!">
+                        <form action="{{ route('admin.users.blocked') }}" method="GET">
                             <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                                 <div class="relative xl:col-span-2">
-                                    <input type="text"
+                                    <input type="text" name="email"
                                         class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        placeholder="Search for name, email, phone number etc..." autocomplete="off">
+                                        placeholder="Tìm email" autocomplete="off">
                                     <i data-lucide="search"
                                         class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
                                 </div>
-
                             </div>
                         </form>
+
                     </div>
                     <div class="card-body">
                         <div class="-mx-5 -mb-5 overflow-x-auto">

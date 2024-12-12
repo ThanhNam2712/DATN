@@ -6,14 +6,14 @@
             <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Update Product Variant : {{$product->name}}</h5>
+                        <h5 class="text-16">Cập nhật biến thể sản phẩm: {{$product->name}}</h5>
                     </div>
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                            <a class="text-slate-400 dark:text-zink-200">Products</a>
+                            <a class="text-slate-400 dark:text-zink-200">Sản phẩm</a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
-                            Update
+                            Cập nhật biến thể
                         </li>
                     </ul>
                 </div>
@@ -32,7 +32,7 @@
                                     <button data-modal-target="addVariantProduct" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                                     <span>
                                     <i data-lucide="plus" class="inline-block size-4"></i>
-                                        Add Variant
+                                       Thêm biến thể
                                     </span>
                                     </button>
                                 </div>
@@ -46,23 +46,23 @@
                                         <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                             <input type="hidden" name="id[]" value="{{ $list->id }}">
                                             <div class="xl:col-span-4">
-                                                <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
+                                                <label for="productPrice" class="inline-block mb-2 text-base font-medium">Giá</label>
                                                 <input type="number" name="price[]" id="productPrice" class="form-input ..." value="{{ $list->price }}" required="">
 
                                             </div>
                                             <div class="xl:col-span-4">
-                                                <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Discounts</label>
+                                                <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Giảm giá</label>
                                                 <input type="number" name="price_sale[]" id="productDiscounts" class="form-input ..." value="{{ $list->price_sale }}" required="">
 
                                             </div>
                                             <div class="xl:col-span-4">
-                                                <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Quantity</label>
+                                                <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Số lượng </label>
                                                 <input type="number" id="qualityInput" name="quantity[]" class="form-input ..." value="{{ $list->quantity }}" required="">
 
                                             </div>
                                             {{-- color --}}
                                             <div class="xl:col-span-4">
-                                                <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Color</label>
+                                                <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Màu sắc</label>
                                                 <select class="form-input ..." name="product_color_id[]" id="categorySelect">
                                                     <option value="">Select Color</option>
                                                     @foreach($color as $listColor)
@@ -77,7 +77,7 @@
                                             </div>
                                             {{-- size --}}
                                             <div class="xl:col-span-4">
-                                                <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Size</label>
+                                                <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Kích cỡ</label>
                                                 <select class="form-input ..." name="product_size_id[]" id="categorySelect">
                                                     <option value="">Select Size</option>
                                                     @foreach($size as $listSize)

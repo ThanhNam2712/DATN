@@ -16,13 +16,20 @@ use Illuminate\Support\Facades\Mail;
 class UserController extends Controller
 {
     //
-    function index()
+    function index(Request $request)
     {
-        $users =  User::where('status', '!=', 'block')->get();
+        $query = User::query();
+
+        if ($request->has('email')) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        $users = $query->where('status', '!=', 'block')->paginate(10);
         $roles = Role::all();
         $addresses = Address::all();
-        return view('admin.user.index', compact('users', 'roles','addresses'));
+        return view('admin.user.index', compact('users', 'roles', 'addresses'));
     }
+
     public function edit($id)
     {
         $user = User::findOrFail($id);
@@ -116,13 +123,19 @@ class UserController extends Controller
 }
 
 
-    public function blockedUsers()
-    {
-        $users = User::where('status', 'block')->get();
-        $roles = Role::all();
-        $addresses = Address::all();
-        return view('admin.user.block', compact('users', 'roles', 'addresses'));
-    }
+public function blockedUsers(Request $request)
+{
+    $searchEmail = $request->input('email');
+    $users = User::where('status', 'block')
+                    ->when($searchEmail, function($query) use ($searchEmail) {
+                        return $query->where('email', 'like', '%' . $searchEmail . '%');
+                    })
+                    ->get();
+    $roles = Role::all();
+    $addresses = Address::all();
+    return view('admin.user.block', compact('users', 'roles', 'addresses'));
+}
+
     public function unblock($id)
 {
     $user = User::findOrFail($id);

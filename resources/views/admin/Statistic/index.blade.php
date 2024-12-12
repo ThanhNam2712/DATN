@@ -232,7 +232,7 @@
                     <h5 class="mt-4 mb-2"><span class="counter-value"
                             data-target="{{ $order->sum('total_amount') }}">0</span>VND</h5>
                     <p class="text-slate-500 dark:text-zink-200">Doanh thu</p>
-                    <a href="{{ route('admin.statistic.price') }}" style="color: red; bottom: 1px; right: 1px;">-> Chi tiết</a>
+                    <a href="{{ route('admin.statistic.price') }}" style="color: red; bottom: 1px; right: 1px;">-> Chi tiết doanh thu</a>
 
                 </div>
             </div>

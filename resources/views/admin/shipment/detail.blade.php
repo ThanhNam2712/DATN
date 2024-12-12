@@ -9,15 +9,15 @@
 
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Grid View</h5>
+                        <h5 class="text-16">Đơn đã nhận</h5>
                     </div>
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
                             <a href="#!" class="text-slate-400 dark:text-zink-200">Shipment</a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
-                            Grid View
-                        </li>
+                            Đơn đã nhận
+                                                </li>
                     </ul>
                 </div>
                 <form action="#!" class="mb-5">
@@ -68,7 +68,7 @@
 
                 </div><!--end grid-->
 
-                <div class="flex flex-col items-center mb-5 md:flex-row">
+                {{-- <div class="flex flex-col items-center mb-5 md:flex-row">
                     <div class="mb-4 grow md:mb-0">
                         <p class="text-slate-500 dark:text-zink-200">Showing <b>12</b> of <b>44</b> Results</p>
                     </div>
@@ -95,7 +95,7 @@
                             <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 h-8 px-3 transition-all duration-150 ease-linear border rounded border-slate-200 dark:border-zink-500 text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-100 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-white dark:[&.active]:text-white [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.active]:hover:text-custom-700 dark:[&.active]:hover:text-custom-700 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">Next <i class="ml-1 size-4 rtl:rotate-180" data-lucide="chevron-right"></i></a>
                         </li>
                     </ul>
-                </div>
+                </div> --}}
 
             </div>
             <!-- container-fluid -->
