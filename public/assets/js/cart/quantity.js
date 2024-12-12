@@ -26,6 +26,7 @@ function increaseCart(cartDetail){
     if (currentValue < maxValue){
         input.value = currentValue + 1;
         updateCart(cartDetail, currentValue + 1);
+        calculateTotal();
     }else {
         alert('Không thể tăng số lượng dưới mức tối thiểu');
     }
@@ -42,6 +43,7 @@ function reduce(cartDetail){
         }
         input.value = currentValue - 1;
         updateCart(cartDetail, currentValue - 1);
+        calculateTotal();
     }else {
         console.error('fail');
     }

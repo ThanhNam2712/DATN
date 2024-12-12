@@ -340,7 +340,7 @@ class StatisticController extends Controller
         return view('admin.Statistic.price', compact('priceChart', 'selectedYear', 'selectedMonth'));
     }
 
-public function getPriceChartByMonth($selectedYear)
+    public function getPriceChartByMonth($selectedYear)
 {
     // Fetch the order statistics for the selected year
     $ordersSuccess = Order::selectRaw('YEAR(orders.created_at) as year, MONTH(orders.created_at) as month, SUM(orders.total_amount) as total')
@@ -376,7 +376,5 @@ public function getPriceChartByMonth($selectedYear)
         'datasets' => $datasets,
     ];
 }
-
-
 
 }

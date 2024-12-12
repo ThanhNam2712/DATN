@@ -99,6 +99,7 @@ Route::get('/blocked', function () {
         Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
         Route::put('cancel/{id}', [OrderControllerClient::class, 'cancel'])->name('cancel');
         Route::put('submit/{id}', [OrderControllerClient::class, 'submit'])->name('submit');
+        Route::put('address/{id}', [OrderControllerClient::class, 'address'])->name('address');
     });
 
     Route::group([
@@ -392,6 +393,7 @@ Route::group([
         Route::get('get-id-by-barcode', [OrderController::class, 'getById'])->name('getById');
         Route::get('completed', [OrderController::class, 'viewCompleted'])->name('viewCompleted');
         Route::get('cancelled', [OrderController::class, 'cancelled'])->name('cancelled');
+        Route::get('shipmentCom', [OrderController::class, 'shipmentCom'])->name('shipmentCom');
     });
 
     // reviews

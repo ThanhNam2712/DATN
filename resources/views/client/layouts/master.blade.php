@@ -5,7 +5,7 @@
     <base href="/">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
-    <title>Product Landing Page | StarCode & Dashboard Template</title>
+    <title>AE BOUTIQUE | BOUTIQUE & Dashboard Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta content="Minimal Admin & Dashboard Template" name="description">
     <meta content="StarCode Kh" name="author">
@@ -319,7 +319,7 @@
                                         <h6 style="color: red" class="mb-1 text-15">{{ $list->product->name }}</h6>
                                     </a>
                                     <div class="flex items-center mb-3">
-                                        <h5 class="text-base product-price"> $<span>{{ $list->product_variant->price_sale }}</span></h5>
+                                        <h5 class="text-base product-price"><span>{{ number_format($list->product_variant->price_sale) }}VND</span></h5>
                                         <div class="font-normal rtl:mr-1 ltr:ml-1 text-slate-500 dark:text-zink-200">({{ $list->product->category->name }}, {{ $list->color->name }}, {{ $list->size->name }})</div>
                                     </div>
                                     <div class="flex items-center justify-between gap-3">
@@ -328,7 +328,7 @@
                                             <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 products-quantity dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
                                             <button type="button" disabled onclick="increaseCart('{{ $list->id }}')" class="transition-all duration-200 ease-linear border rounded border-slate-200 bg-slate-200 dark:bg-zink-600 dark:border-zink-600 w-7 plus-value text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block w-4 h-4"></i></button>
                                         </div>
-                                        <h6 class="products-line-price">${{ $list->product_variant->price_sale * $list->quantity }}</h6>
+                                        <h6 class="products-line-price">{{ number_format($list->product_variant->price_sale * $list->quantity) }}VND</h6>
                                     </div>
                                 </div>
                             </div>
@@ -352,11 +352,7 @@
                 </table>
                 <div class="flex items-center justify-between gap-3">
                     <a href="../client/shop" class="w-full text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">Tiếp Tục Mua Hàng</a>
-                    @if($hasDeletedProduct)
-                        <div class=""></div>
-                    @else
-                        <a href="../client/cart/" class="w-full text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Chi Tiết</a>
-                    @endif
+                    <a href="../client/cart/" class="w-full text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Chi Tiết</a>
                 </div>
             </div>
         @else
@@ -419,16 +415,6 @@
             text: '{{ session('success') }}',
             icon: 'success',
             timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: false
-        });
-    @endif
-    @if(session('error'))
-        Swal.fire({
-            title: 'Thất bại!',
-            text: '{{ session('error') }}',
-            icon: 'error',
-            timer: 4000,
             timerProgressBar: true,
             showConfirmButton: false
         });

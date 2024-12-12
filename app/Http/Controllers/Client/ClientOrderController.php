@@ -52,7 +52,9 @@ class ClientOrderController extends Controller
         $address = Address::where('user_id', $user->id)
             ->where('is_default', 1)
             ->first();
-
+        $addressSelect = Address::where('user_id', $user->id)
+            ->whereNot('is_default', 1)
+            ->get();
         $usedCouponIds = Coupon_user::where('user_id', $user->id)->pluck('coupon_id');
         $coupons = Coupon::whereNotIn('id', $usedCouponIds)
             ->where('expiration_date', '>=', now())
@@ -66,7 +68,7 @@ class ClientOrderController extends Controller
             return $detail->product_variant->price_sale * $detail->quantity;
         });
         return view('client.order.index', compact('cartDetails', 'address', 'user',
-            'hasDeletedProduct', 'coupons', 'totalAmount'));
+            'hasDeletedProduct', 'coupons', 'totalAmount', 'addressSelect'));
     }
 
     public function checkBox(Request $request)

@@ -18,10 +18,20 @@ use function Laravel\Prompts\search;
 class OrderController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::whereIn('status', ['pending', 'processing', 'delivery person'])
+        $search = $request->search;
+        $orders = Order::select('orders.*')
+                        ->join('users', 'orders.user_id', 'users.id')
+                        ->where(function($check) use ($search) {
+                            $check->where('orders.barcode', 'like', '%' . $search . '%')
+                                ->orWhere('users.name', 'like', '%' . $search . '%')
+                                ->orWhere('users.email', 'like', '%' . $search . '%');
+                        })
+                        ->whereIn('orders.status', ['pending', 'processing', 'delivery person'])
+                        ->orderBy('orders.id', 'desc')
                         ->paginate(5);
+
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -41,10 +51,10 @@ class OrderController extends Controller
                                 ->orWhere('users.name', 'like', '%' . $search . '%')
                                 ->orWhere('users.email', 'like', '%' . $search . '%');
                         })
-                        ->whereIn('orders.status', ['completed', 'Giao Thành công'])
+                        ->where('orders.status', 'completed')
                         ->orderBy('orders.id', 'desc')
                         ->paginate(5);
-        $sumOrder = Order::whereIn('status', ['completed', 'Giao thành công'])->sum('total_amount');
+        $sumOrder = Order::where('status','completed')->sum('total_amount');
         return view('admin.orders.completed', compact('orders', 'sumOrder'));
     }
 
@@ -55,6 +65,22 @@ class OrderController extends Controller
                         ->orderBy('id', 'desc')
                         ->paginate(4);
         return view('admin.orders.cancelled', compact('orders'));
+    }
+
+    public function shipmentCom(Request $request)
+    {
+        $search = $request->search;
+        $orders = Order::select('orders.*')
+            ->join('users', 'orders.user_id', 'users.id')
+            ->where(function($check) use ($search) {
+                $check->where('orders.barcode', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->orWhere('users.email', 'like', '%' . $search . '%');
+            })
+            ->where('orders.status', 'Giao Thành công')
+            ->orderBy('orders.id', 'desc')
+            ->paginate(5);
+        return view('admin.orders.shipmentComplate', compact('orders'));
     }
 
     public function updateStatus(Request $request, $id)

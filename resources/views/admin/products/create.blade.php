@@ -193,7 +193,7 @@
                                     {{-- Products variants --}}
                                         <div class="xl:col-span-4">
                                             <label for="productPrice" class="inline-block mb-2 text-base font-medium">Giá</label>
-                                            <input type="number" name="variants[0][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="..Vnđ">
+                                            <input type="number" name="variants[0][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="VND">
                                             @error('price')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
@@ -203,7 +203,7 @@
 
                                         <div class="xl:col-span-4">
                                             <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Giảm giá</label>
-                                            <input type="number" name="variants[0][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="">
+                                            <input type="number" name="variants[0][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="VND">
                                             @error('price_sale')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
@@ -236,23 +236,22 @@
                                                 </div>
                                             @enderror
                                         </div>
-
                                         <!--end col-->
                                         {{-- size --}}
                                         <div class="xl:col-span-4">
-                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Kích cỡ</label>
-                                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[0][product_size_id]" id="categorySelect">
-                                            <option value="">Chọn kích cỡ</option>
-                                            @foreach($size as $list)
-                                                <option value="{{ $list->id }}">{{ $list->name }}</option>
-                                            @endforeach
-                                        </select>
+                                            <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Kích cỡ</label>
+                                            <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[0][product_size_id]" id="categorySelect">
+                                                <option value="">Chọn kích cỡ</option>
+                                                @foreach($size as $list)
+                                                    <option value="{{ $list->id }}">{{ $list->name }}</option>
+                                                @endforeach
+                                            </select>
                                             @error('product_size_id')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
                                             </div>
                                             @enderror
-                                    </div>
+                                        </div>
                                         <!--end col-->
                                 </div>
                                 </div>
@@ -277,6 +276,9 @@
             const priceInputs = document.querySelectorAll(`input[name^="variants"][name$="[price]"]`);
             const priceSaleInputs = document.querySelectorAll(`input[name^="variants"][name$="[price_sale]"]`);
 
+            const colors = document.querySelectorAll(`select[name^="variants"][name$="[product_color_id]"]`);
+            const sizes = document.querySelectorAll(`select[name^="variants"][name$="[product_size_id]"]`);
+
             priceInputs.forEach((priceInput, index) => {
                 const priceSaleInput = priceSaleInputs[index];
 
@@ -286,53 +288,82 @@
                     return;
                 }
             });
+
+            const selectedColors = Array.from(colors).map(select => select.value);
+            const selectedSizes = Array.from(sizes).map(select => select.value);
+
+            const colorSet = new Set(selectedColors.filter(val => val !== ""));
+            if (colorSet.size !== selectedColors.filter(val => val !== "").length) {
+                alert("Vui Lòng Không Chọn Trùng Màu Sắc!");
+                e.preventDefault();
+                return;
+            }
+
+            const sizeSet = new Set(selectedSizes.filter(val => val !== ""));
+            if (sizeSet.size !== selectedSizes.filter(val => val !== "").length) {
+                alert("Vui Lòng Không Chọn Trùng Kích Thước!");
+                e.preventDefault();
+                return;
+            }
+            return true;
         });
         function addVariant(){
             const variantTemplate = `
-            <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
+            <div class="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     {{-- Products variants --}}
-            <div class="xl:col-span-4">
-                <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
-                <input type="number" name="variants[${variantIndex}][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="$0.00" required="">
-        </div>
+                <div class="xl:col-span-4">
+                    <label for="productPrice" class="inline-block mb-2 text-base font-medium">Giá</label>
+                    <input type="number" name="variants[${variantIndex}][price]" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="VND" required="">
+                </div>
 
-        <div class="xl:col-span-4">
-            <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Discounts</label>
-            <input type="number" name="variants[${variantIndex}][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="0%" required="">
-        </div>
+                <div class="xl:col-span-4">
+                    <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Giảm Giá</label>
+                    <input type="number" name="variants[${variantIndex}][price_sale]" id="productDiscounts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="VND" required="">
+                </div>
 
-        <div class="xl:col-span-4">
-            <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Quantity</label>
-            <input type="number" id="qualityInput" name="variants[${variantIndex}][quantity]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Quantity" required="">
-        </div>
+                <div class="xl:col-span-4">
+                    <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Số Lượng</label>
+                    <input type="number" id="qualityInput" name="variants[${variantIndex}][quantity]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Quantity" required="">
+                </div>
 
-{{-- color--}}
-            <div class="xl:col-span-4">
-                <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Color</label>
-                <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[${variantIndex}][product_color_id]" id="categorySelect">
-                <option value="">Select Color</option>
-                @foreach($color as $list)
-            <option value="{{ $list->id }}">{{ $list->name }}</option>
-                @endforeach
-            </select>
-        </div>
+                {{-- color--}}
+                <div class="xl:col-span-4">
+                    <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Màu Sắc</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[${variantIndex}][product_color_id]" id="categorySelect">
+                        <option value="">Select Color</option>
+                        @foreach($color as $list)
+                            <option value="{{ $list->id }}">{{ $list->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-    <!--end col-->
-{{-- size --}}
-            <div class="xl:col-span-4">
-                <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Size</label>
-                <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[${variantIndex}][product_size_id]" id="categorySelect">
-                <option value="">Select Size</option>
-                    @foreach($size as $list)
-            <option value="{{ $list->id }}">{{ $list->name }}</option>
-                    @endforeach
-            </select>
-        </div>
-        <!--end col-->
+                <!--end col-->
+                {{-- size --}}
+                <div class="xl:col-span-4">
+                    <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Kích Thước</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="variants[${variantIndex}][product_size_id]" id="categorySelect">
+                    <option value="">Select Size</option>
+                        @foreach($size as $list)
+                    <option value="{{ $list->id }}">{{ $list->name }}</option>
+                            @endforeach
+                    </select>
+                </div>
+                <div class="xl:col-span-4">
+                    <button style="margin-top: 31px" type="button" class="flex items-center justify-center size-[37.5px] p-0 text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20 remove-button"><i class="ri-delete-bin-line w-4 h-4"></i></button>
+                </div>
+            <!--end col-->
 </div>
 `;
             document.getElementById('variants').insertAdjacentHTML('beforeend', variantTemplate);
+            const removeButtons = document.querySelectorAll('.remove-button');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Lấy phần tử cha của nút xóa và xóa nó
+                    this.closest('.grid').remove();
+                });
+            });
             variantIndex++;
         }
+
     </script>
 @endsection

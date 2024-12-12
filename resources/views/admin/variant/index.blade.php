@@ -63,7 +63,7 @@
                                             {{-- color --}}
                                             <div class="xl:col-span-4">
                                                 <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Color</label>
-                                                <select class="form-input ..." name="product_color_id[]" id="categorySelect">
+                                                <select class="form-input ..." name="product_color_id[]" id="colorIDSelect">
                                                     <option value="">Select Color</option>
                                                     @foreach($color as $listColor)
                                                         <option value="{{ $listColor->id }}" {{ $listColor->id == $list->product_color_id ? 'selected' : ''}}>{{ $listColor->name }}</option>
@@ -78,7 +78,7 @@
                                             {{-- size --}}
                                             <div class="xl:col-span-4">
                                                 <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Size</label>
-                                                <select class="form-input ..." name="product_size_id[]" id="categorySelect">
+                                                <select class="form-input ..." name="product_size_id[]" id="sizeIDSelect">
                                                     <option value="">Select Size</option>
                                                     @foreach($size as $listSize)
                                                         <option value="{{ $listSize->id }}" {{ $listSize->id == $list->product_size_id ? 'selected' : ''}}>{{ $listSize->name }}</option>
@@ -191,12 +191,36 @@
             const variantPriceNew = document.getElementById('variantPriceNew').value;
             const variantDiscountsNew = document.getElementById('variantDiscountsNew').value;
 
-
             if (variantDiscountsNew > variantPriceNew) {
-                e.preventDefault(); // Ngăn form gửi đi
+                e.preventDefault();
                 alert(`Giá giảm không được lớn hơn giá gốc`);
             }
-
         });
     </script>
+
+    <script>
+        document.getElementById('variants').addEventListener('submit', function (e) {
+            const colorSelects = document.querySelectorAll('select[name="product_color_id[]"]');
+            const sizeSelects = document.querySelectorAll('select[name="product_size_id[]"]');
+
+            const selectedColors = Array.from(colorSelects).map(select => select.value);
+            const selectedSizes = Array.from(sizeSelects).map(select => select.value);
+
+            // Kiểm tra trùng lặp màu sắc
+            const colorSet = new Set(selectedColors.filter(val => val !== ""));
+            if (colorSet.size !== selectedColors.filter(val => val !== "").length) {
+                alert("Vui Lòng Không Chọn Trùng Màu Sắc!");
+                e.preventDefault()
+            }
+
+            // Kiểm tra trùng lặp kích thước
+            const sizeSet = new Set(selectedSizes.filter(val => val !== ""));
+            if (sizeSet.size !== selectedSizes.filter(val => val !== "").length) {
+                alert("Vui Lòng Không Chọn Trùng Kích Thước!");
+                e.preventDefault()
+            }
+            return true;
+        });
+    </script>
+
 @endsection

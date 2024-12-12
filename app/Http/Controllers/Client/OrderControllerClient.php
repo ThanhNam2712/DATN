@@ -76,4 +76,26 @@ class OrderControllerClient extends Controller
             return back()->with('error', 'Đơn Hàng Đang Được Giao Bạn Không Thể Hủy Đơn!');
         }
     }
+
+    public function address($id)
+    {
+        $address = Address::find($id);
+
+        if ($address){
+            $address->update([
+                'is_default' => '1'
+            ]);
+            Address::where('user_id', Auth::id())
+                ->where('id', '!=', $id)
+                ->update(['is_default' => 0]);
+            return back()->with([
+                'message' => 'Thay Đổi Địa Chỉ Thành Công',
+            ]);
+        }else{
+            return back()->with([
+                'message' => 'Thay Đổi Địa Chỉ không Thành Công',
+            ]);
+        }
+
+    }
 }
