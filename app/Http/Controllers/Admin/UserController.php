@@ -24,7 +24,7 @@ class UserController extends Controller
             $query->where('email', 'like', '%' . $request->email . '%');
         }
 
-        $users = $query->where('status', '!=', 'block')->paginate(10);
+        $users = $query->where('status', '!=', 'block')->paginate(5);
         $roles = Role::all();
         $addresses = Address::all();
         return view('admin.user.index', compact('users', 'roles', 'addresses'));

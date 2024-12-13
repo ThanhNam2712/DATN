@@ -56,7 +56,7 @@ class ForgotPasswordController extends Controller
     public function confirmPass(Request $request, $id)
 {
     $request->validate([
-        'password' => 'required|min:6|max:40|confirmed',
+        'password' => 'required|min:4|max:40|confirmed',
         'password_confirmation' => 'required',
     ], [
         'password.confirmed' => 'Mật khẩu và mật khẩu xác nhận không khớp',
