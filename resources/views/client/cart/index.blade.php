@@ -32,13 +32,13 @@
                         <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
                             <div class="xl:col-span-9 products-list">
                                 <div class="flex items-center gap-3 mb-5">
-                                    <h5 class="underline text-16 grow">Shopping Cart ({{ $cart->cartDetail->sum('quantity') }})</h5>
+                                    <h5 class="underline text-16 grow">Số Lượng Sản Phẩm Giỏ Hàng ({{ $cart->cartDetail->sum('quantity') }})</h5>
                                 </div>
                                 @if($cart->cartDetail->count() == 0)
                                     <div class="flex items-center gap-3 mb-5">
                                         <h5 class="text-16 grow"></h5>
                                         <div>
-                                            <a href="#!" class="text-red-500 transition-all duration-300 ease-linear hover:text-red-600"><i data-lucide="trash-2" class="inline-block mr-1 align-middle size-4"></i> <span class="align-middle">Delete All</span></a>
+                                            <a class="text-red-500 transition-all duration-300 ease-linear hover:text-red-600"><i data-lucide="trash-2" class="inline-block mr-1 align-middle size-4"></i> <span class="align-middle">Delete All</span></a>
                                         </div>
                                     </div>
                                 @else
@@ -74,7 +74,7 @@
                                                         </div><!--end col-->
                                                         <div class="flex justify-between w-full lg:flex-col lg:col-end-13 lg:col-span-2">
                                                             <div class="mb-auto ltr:lg:text-right rtl:lg:text-left">
-                                                                <h6 class="text-16 products-price"><span>{{ number_format($list->product_variant->price_sale) }}</span>VND <small class="font-normal line-through text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price) }}VND</small></h6>
+                                                                <h6 class="text-16 products-price"><span class="price">{{ number_format($list->product_variant->price_sale) }}</span>VND <small class="font-normal line-through text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price) }}VND</small></h6>
                                                             </div>
                                                             <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left"><span class="products-line-price">{{ number_format($list->product_variant->price_sale * $list->quantity) }}</span>VND</h6>
                                                         </div><!--end col-->
@@ -93,7 +93,7 @@
                                                         </div><!--end col-->
                                                         <div class="flex flex-col lg:col-span-4">
                                                             <div>
-                                                                <h5 class="mb-1 text-16 text-red-500"><a href="../client/home/detail/{{ $list->product->id }}/color/{{ $list->product_variant_id }}">{{ $list->product->name }}</a></h5>
+                                                                <h5 class="mb-1 text-16 text-red-500"><a >{{ $list->product->name }}</a></h5>
                                                                 <p class="mb-2 text-slate-500 text-red-500"><a href="#!">Danh Mục : {{ $list->product->category->name }}</a></p>
                                                                 <p class="mb-3 text-slate-500 dark:text-zink-200">Màu: <span class="text-slate-800 dark:text-zink-50">{{ $list->color->name }}</span></p>
                                                                 <p class="mb-3 text-slate-500 dark:text-zink-200">Kích Thước: <span class="text-slate-800 dark:text-zink-50">{{ $list->size->name }}</span></p>
@@ -101,7 +101,7 @@
                                                             <div class="flex items-center gap-2 mt-auto">
                                                                 <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
                                                                     <button type="button" disabled onclick="reduce('{{ $list->id }}')" class="border w-7 leading-[15px] minus-value bg-slate-200 dark:bg-zink-600 dark:border-zink-600 rounded transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block w-4 h-4"></i></button>
-                                                                    <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 products-quantity dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
+                                                                    <input type="number" class="text-center ltr:pl-2 rtl:pr-2 w-15 h-7 dark:bg-zink-700 focus:shadow-none" value="{{ $list->quantity }}" min="1" max="{{ $list->product_variant->quantity }}" id="quantityInput-{{ $list->id }}" readonly="" data-cartDetail="{{ $list->id }}">
                                                                     <button type="button" disabled onclick="increaseCart('{{ $list->id }}')" class="transition-all duration-200 ease-linear border rounded border-slate-200 bg-slate-200 dark:bg-zink-600 dark:border-zink-600 w-7 plus-value text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block w-4 h-4"></i></button>
                                                                 </div>
                                                                 <button type="submit" data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="flex items-center justify-center size-[37.5px] p-0 text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20 remove-button"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
@@ -111,7 +111,7 @@
                                                             <div class="mb-auto ltr:lg:text-right rtl:lg:text-left">
                                                                 <h6 class="text-16 products-price"><span>{{ number_format($list->product_variant->price_sale) }}</span>VND <small class="font-normal line-through text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price) }}</small>VND</h6>
                                                             </div>
-                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left"><span class="products-line-price">{{ number_format($list->product_variant->price_sale * $list->quantity) }}</span>VND</h6>
+                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left"><span class="products-line">{{ number_format($list->product_variant->price_sale * $list->quantity) }}</span>VND</h6>
                                                         </div><!--end col-->
                                                     </div><!--end grid-->
                                                 </div>
@@ -124,10 +124,18 @@
                                 <div class="sticky top-[calc(theme('spacing.header')_*_1.3)] mb-5">
                                     <div class="card ">
                                         <div class="card-body">
-                                            <h6 class="mb-4 text-15">Số Tiền</h6>
+                                            <h6 class="mb-4 text-15">Tổng Tiền</h6>
                                             <div class="overflow-x-auto">
                                                 <table class="w-full">
                                                     <tbody class="table-total">
+                                                    <tr class="font-semibold">
+                                                        <td class="pt-2">
+                                                            Số Tiền Sản Phẩm Bạn Chọn
+                                                        </td>
+                                                        <td class="pt-2" id="total-amount-check">
+                                                            0 VND
+                                                        </td>
+                                                    </tr>
                                                     <tr class="font-semibold">
                                                         <td class="pt-2">
                                                             Tổng Tiền Các Sản Phẩm
@@ -143,7 +151,7 @@
                                     </div>
                                     <div class="flex gap-2 mt-5 shrink-0">
                                         <a href="../client/shop/" class="w-full text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20">Tiếp Tục Mua Hàng</a>
-                                        <a href="javascript:void(0);" id="submit-cart" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20" @if($hasDeletedProduct) style="display: none" @else style="display: block"  @endif>Đặt Hàng</a>
+                                        <a href="javascript:void(0);" id="submit-cart" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20" >Đặt Hàng</a>
                                     </div>
 
                                     <div class="flex items-center gap-5 p-4 mt-5 card">
@@ -212,5 +220,46 @@
         });
 
     </script>
+    <script>
+        function calculateTotal() {
+            let total = 0;
 
+            document.querySelectorAll('.cart-checkbox:checked').forEach(selected => {
+                let parent = selected.closest('.grid');
+
+                if (parent) {
+                    let priceElement = parent.querySelector('.price');
+                    let quantityElement = parent.querySelector('.products-quantity');
+
+                    if (priceElement && quantityElement) {
+                        let price = parseFloat(priceElement.textContent.replace(/,/g, '').replace(/VND/g, '').trim());
+                        let quantity = parseInt(quantityElement.value.trim());
+                        if (!isNaN(price) && !isNaN(quantity)) {
+                            total += price * quantity;
+                        }
+                        console.log('Price:', price);
+                        console.log('Quantity:', quantity);
+                    }
+                }
+            });
+
+            function formatCurrency(amount) {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + 'VND';
+            }
+            let totalFormatted = formatCurrency(total);
+            let totalElement = document.getElementById('total-amount-check');
+            if (totalElement) {
+                totalElement.textContent = totalFormatted;
+            }
+        }
+
+        document.querySelectorAll('.cart-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', calculateTotal);
+        });
+
+        document.querySelectorAll('.products-quantity').forEach(quantityInput => {
+            quantityInput.addEventListener('input', calculateTotal);
+        });
+
+    </script>
 @endsection

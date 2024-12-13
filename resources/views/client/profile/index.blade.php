@@ -42,12 +42,12 @@
                                         </div>
                                         <ul class="flex flex-wrap gap-3 mt-4 text-center divide-x divide-slate-200 dark:divide-zink-500 rtl:divide-x-reverse">
                                             <li class="px-5">
-                                                <h5>${{ number_format(Auth::user()->order->sum('total_amount')) }}</h5>
+                                                <h5>{{ number_format($total) }} VND</h5>
                                                 <p class="text-slate-500 dark:text-zink-200">Tổng Tiền Đặt Hàng</p>
                                             </li>
 
                                             <li class="px-5">
-                                                <h5>{{ Auth::user()->order->count() }}+</h5>
+                                                <h5>{{ $countOrder }}+</h5>
                                                 <p class="text-slate-500 dark:text-zink-200">Số Lần Đặt hàng Thành Công</p>
                                             </li>
                                         </ul>
@@ -133,7 +133,7 @@
                                             </div>
                                         @endif
                                         <h6 class="mb-1 text-15">Cập Nhật Thông Tin</h6>
-                                        <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details here easily.</p>
+                                        <p class="mb-4 text-slate-500 dark:text-zink-200">Cập nhật ảnh và thông tin cá nhân của bạn tại đây một cách dễ dàng.</p>
                                         <form action="../client/profile/update/{{ Auth::id() }}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
@@ -158,8 +158,8 @@
                                                 </div><!--end col-->
                                             </div><!--end grid-->
                                             <div class="flex justify-end mt-6 gap-x-4">
-                                                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Updates</button>
-                                                <a href="../client/home" class="text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20"><i data-lucide="arrow-left" class="inline-block size-4"></i><span class="align-middle">Back Home</span></a>
+                                                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Sửa Thông Tin</button>
+                                                <a href="../client/home" class="text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20"><i data-lucide="arrow-left" class="inline-block size-4"></i><span class="align-middle">Trang Chủ</span></a>
                                             </div>
                                         </form><!--end form-->
                                     </div>
@@ -248,7 +248,7 @@
                                                     <a href="../client/reset/password" class="underline text-custom-500 text-13">Quên Mật Khẩu ?</a>
                                                 </div>
                                                 <div class="flex justify-end xl:col-span-6">
-                                                    <button type="submit" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Change Password</button>
+                                                    <button type="submit" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Đổi Mặt Khẩu</button>
                                                 </div>
                                             </div><!--end grid-->
                                         </form>
@@ -267,7 +267,7 @@
                                                             <div style="display: flex ;justify-content: space-between;">
                                                                 <h6 class="mb-4 text-15">Các Địa Chỉ Và Thêm Địa chỉ</h6>
                                                                 <div class="shrink-0">
-                                                                    <button data-modal-target="addressModal" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Add User</span></button>
+                                                                    <button data-modal-target="addressModal" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Thêm Địa Chỉ</span></button>
                                                                 </div>
                                                             </div>
                                                             <div class="!pt-1 card-body mt-4">
@@ -309,13 +309,13 @@
                                                                                         <button class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20" id="productAction1" data-bs-toggle="dropdown"><i data-lucide="more-horizontal" class="size-3"></i></button>
                                                                                         <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="productAction1">
                                                                                             <li>
-                                                                                                <a data-modal-target="updateAddress{{ $key }}" style="cursor: pointer" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" ><i data-lucide="file-edit" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Edit</span></a>
+                                                                                                <a data-modal-target="updateAddress{{ $key }}" style="cursor: pointer" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" ><i data-lucide="file-edit" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Sửa Địa Chỉ</span></a>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <form action="../client/profile/delete/{{ $list->id }}" method="post">
                                                                                                     @csrf
                                                                                                     @method('DELETE')
-                                                                                                    <button onclick="return confirm('Do you want to delete address')" data-modal-target="deleteModal" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" ><i data-lucide="trash-2" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Delete</span></button>
+                                                                                                    <button onclick="return confirm('Do you want to delete address')" data-modal-target="deleteModal" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" ><i data-lucide="trash-2" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Xóa Địa Chỉ</span></button>
                                                                                                 </form>
                                                                                             </li>
                                                                                         </ul>
@@ -338,33 +338,33 @@
                                                                                         @method('PUT')
                                                                                         <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                                                                             <div class="xl:col-span-6">
-                                                                                                <label for="productNameInput{{ $key }}" class="inline-block mb-2 text-base font-medium">Product Title</label>
+                                                                                                <label for="productNameInput{{ $key }}" class="inline-block mb-2 text-base font-medium">Tên</label>
                                                                                                 <input type="text" id="productNameInput{{ $key }}" disabled name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $list->user->name }}">
                                                                                             </div><!--end col-->
                                                                                             <div class="xl:col-span-6">
-                                                                                                <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Phone</label>
+                                                                                                <label for="qualityInput" class="inline-block mb-2 text-base font-medium">Số Điện Thoại</label>
                                                                                                 <input type="number" id="qualityInput{{ $key }}" disabled name="phone" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $list->user->sdt }}" >
                                                                                             </div><!--end col-->
                                                                                             <div class="xl:col-span-6">
-                                                                                                <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Districts</label>
+                                                                                                <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Thành Phố</label>
                                                                                                 <input type="text" id="productNameInput" value="{{ $list->Province }}" name="Province" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="District" required="">
                                                                                             </div><!--end col-->
                                                                                             <div class="xl:col-span-6">
-                                                                                                <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Districts</label>
+                                                                                                <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Quận Huyện</label>
                                                                                                 <input type="text" id="productNameInput" value="{{ $list->district }}" name="district" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="District" required="">
                                                                                             </div><!--end col-->
                                                                                             <div class="xl:col-span-12">
-                                                                                                <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Districts</label>
+                                                                                                <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Ngõ</label>
                                                                                                 <input type="text" id="productNameInput" value="{{ $list->Apartment }}" name="Apartment" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="District" required="">
                                                                                             </div><!--end col-->
                                                                                             <div class="lg:col-span-2 xl:col-span-12">
                                                                                                 <div>
-                                                                                                    <label for="productDescription" class="inline-block mb-2 text-base font-medium">Specific Address</label>
+                                                                                                    <label for="productDescription" class="inline-block mb-2 text-base font-medium">Địa Chỉ Cụ Thể</label>
                                                                                                     <textarea name="Neighborhood" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" rows="5">{{ $list->Neighborhood }}</textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="xl:col-span-12">
-                                                                                                <label for="Checkbox1" class="inline-block mb-2 text-base font-medium">Default</label>
+                                                                                                <label for="Checkbox1" class="inline-block mb-2 text-base font-medium">Đặt Mặc Định</label>
                                                                                                 <input id="Checkbox1" name="is_default" class="size-4 bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800 cursor-pointer" type="checkbox" value="1" {{ $list->is_default == 1 ? 'checked' : ''}}>
                                                                                             </div>
                                                                                         </div>
@@ -519,25 +519,25 @@
                     @csrf
                     <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                         <div class="xl:col-span-6">
-                            <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Province</label>
+                            <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Thành Phố/Tỉnh</label>
                             <input type="text" id="productNameInput" name="Province" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Province" required="">
                         </div><!--end col-->
                         <div class="xl:col-span-6">
-                            <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Districts</label>
+                            <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Quận Huyện</label>
                             <input type="text" id="productNameInput" name="district" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="District" required="">
                         </div><!--end col-->
                         <div class="xl:col-span-6">
-                            <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Apartment</label>
+                            <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Ngõ</label>
                             <input type="text" id="productNameInput" name="Apartment" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Apartment" required="">
                         </div><!--end col-->
                         <div class="lg:col-span-2 xl:col-span-12">
                             <div>
-                                <label for="productDescription" class="inline-block mb-2 text-base font-medium">Specific Address</label>
+                                <label for="productDescription" class="inline-block mb-2 text-base font-medium">Số Nhà Cụ Thể</label>
                                 <textarea name="Neighborhood" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Enter Specific Address" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="xl:col-span-12">
-                            <label for="Checkbox1" class="inline-block mb-2 text-base font-medium">Default</label>
+                            <label for="Checkbox1" class="inline-block mb-2 text-base font-medium">Mặc Định</label>
                             <input id="Checkbox1" name="is_default" class="size-4 bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800 cursor-pointer" type="checkbox">
                         </div>
                     </div>

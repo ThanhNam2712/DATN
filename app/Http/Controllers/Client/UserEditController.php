@@ -31,7 +31,17 @@ class UserEditController extends Controller
             })
             ->get();
 
-        return view('client.profile.index', compact('address', 'coupon'));
+        $total = User::where('users.id', $id)
+            ->join('orders', 'users.id', '=' , 'orders.user_id')
+            ->where('orders.status', 'completed')
+            ->sum('orders.total_amount');
+
+        $countOrder = User::where('users.id', $id)
+        ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->where('orders.status', 'completed')
+            ->count('orders.id');
+
+        return view('client.profile.index', compact('address', 'coupon', 'total', 'countOrder'));
     }
 
     private function location($endpoint)

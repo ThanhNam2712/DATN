@@ -119,9 +119,9 @@
                                     </tbody>
 
                                 </table>
-                                <div class="noresult" style="display: block; margin-bottom: 10px; float: inline-end;">
+                                <div class="noresult" style="display: block; margin-bottom: 10px; float: inline-end; margin-top: 10px">
                                     <table>
-                                        <tr class="">
+                                        <tr class="mt-4">
                                             <td><span class="text-red-500">Tổng Tiền Đơn Hàng Thành Công: </span>{{ number_format($sumOrder) }}VND</td>
                                         </tr>
                                     </table>

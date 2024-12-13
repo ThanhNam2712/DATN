@@ -191,12 +191,36 @@
             const variantPriceNew = document.getElementById('variantPriceNew').value;
             const variantDiscountsNew = document.getElementById('variantDiscountsNew').value;
 
-
             if (variantDiscountsNew > variantPriceNew) {
-                e.preventDefault(); // Ngăn form gửi đi
+                e.preventDefault();
                 alert(`Giá giảm không được lớn hơn giá gốc`);
             }
-
         });
     </script>
+
+    <script>
+        document.getElementById('variants').addEventListener('submit', function (e) {
+            const colorSelects = document.querySelectorAll('select[name="product_color_id[]"]');
+            const sizeSelects = document.querySelectorAll('select[name="product_size_id[]"]');
+
+            const selectedColors = Array.from(colorSelects).map(select => select.value);
+            const selectedSizes = Array.from(sizeSelects).map(select => select.value);
+
+            // Kiểm tra trùng lặp màu sắc
+            const colorSet = new Set(selectedColors.filter(val => val !== ""));
+            if (colorSet.size !== selectedColors.filter(val => val !== "").length) {
+                alert("Vui Lòng Không Chọn Trùng Màu Sắc!");
+                e.preventDefault()
+            }
+
+            // Kiểm tra trùng lặp kích thước
+            const sizeSet = new Set(selectedSizes.filter(val => val !== ""));
+            if (sizeSet.size !== selectedSizes.filter(val => val !== "").length) {
+                alert("Vui Lòng Không Chọn Trùng Kích Thước!");
+                e.preventDefault()
+            }
+            return true;
+        });
+    </script>
+
 @endsection
