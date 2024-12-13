@@ -86,8 +86,13 @@ class OrderController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $orders = Order::findOrFail($id);
-        $orders->status = $request->status;
-        $orders->save();
+        if ($orders->status != "cancelled"){
+            $orders->status = $request->status;
+            $orders->save();
+        }else{
+            return back()->with('error', 'Đơn Hàng Đã Được Hủy Vui Lòng Quay Lại Chỗ Nhận Hàng');
+        }
+
 
         return redirect()->back()->with([
             'success' => 'Cập nhật trạng thái thành công.'

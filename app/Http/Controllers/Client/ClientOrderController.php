@@ -321,6 +321,7 @@ class ClientOrderController extends Controller
                 if (in_array($list->id, $selectedProducts)) {
                     $productVariant = ProductVariant::find($list->product_variant_id);
                     if ($productVariant && $productVariant->quantity < $list->quantity) {
+                        $order->delete();
                         return redirect()->back()->with('error', 'Sản phẩm ' . $list->product->name . ' không đủ số lượng để đặt hàng.');
                     }
                     OrderItem::create([

@@ -32,7 +32,7 @@
                     <div class="card" id="usersTable">
 
                         <div class="!py-3.5 card-body border-y border-dashed border-slate-200 dark:border-zink-500">
-                            <form action="../admin/orders/shipmentComplate/">
+                            <form action="../admin/orders/shipmentCom/">
                                 <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                                     <div class="relative xl:col-span-2">
                                         <input type="text"
