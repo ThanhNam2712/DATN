@@ -393,8 +393,7 @@
                     <div class="flex items-center mb-3">
                         <h6 class="grow text-15">Khách hàng thân thiết</h6>
                         <div class="relative dropdown shrink-0">
-
-
+                            <input type="text" id="loyal-customer-date" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-provider="flatpickr" data-date-format="d M, Y" readonly="readonly" placeholder="Select Date">
                         </div>
                     </div>
 
@@ -468,14 +467,12 @@
                     <div class="flex items-center mb-3">
                         <h6 class="grow text-15">Sản phẩm bán chạy</h6>
                         <div class="relative dropdown shrink-0">
-
-
-
+                            <input type="text" id="best-seller-date" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-provider="flatpickr" data-date-format="d M, Y" readonly="readonly" placeholder="Select Date">
                         </div>
                     </div>
                     <ul class="flex flex-col gap-5">
                         @forelse($orderProduct as $key => $list)
-                        <li class="flex items-center gap-3">
+                            <li class="flex items-center gap-3">
                             <div
                                 class="flex items-center justify-center w-10 h-10 rounded-md bg-slate-100 dark:bg-zink-600">
                                 <img src="{{ Storage::url($list->image) }}" alt="" class="h-6">
@@ -513,71 +510,94 @@
     </div>
     <!-- container-fluid -->
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-<script>
-    var ctx = document.getElementById('chartOrder').getContext('2d');
-        var orderChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode($orderChart['labels']) !!},
-                datasets: {!! json_encode($orderChart['datasets']) !!}
-            },
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script>
+        var ctx = document.getElementById('chartOrder').getContext('2d');
+            var orderChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($orderChart['labels']) !!},
+                    datasets: {!! json_encode($orderChart['datasets']) !!}
+                },
+            });
+    </script>
+
+    <script>
+        function updateChart() {
+                var selectedMonth = document.getElementById('monthPicker').value;
+                var url = `../admin/statistic/chart?month=${selectedMonth || ''}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        orderChart.data.labels = data.labels;
+                        orderChart.data.datasets = data.datasets;
+                        orderChart.update();
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+    </script>
+
+    <script>
+        var ctxYear = document.getElementById('chartOrderYear').getContext('2d');
+            var orderChartYear = new Chart(ctxYear, {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($orderChartYear['labels']) !!},
+                    datasets: {!! json_encode($orderChartYear['datasets']) !!}
+                },
+            });
+    </script>
+
+    <script>
+        function updateChartYear(){
+                var selectedYear = document.getElementById('yearPicker').value;
+                var url = `../admin/statistic/chartYear?year=${selectedYear || ''}`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        orderChartYear.data.labels = data.labels;
+                        orderChartYear.data.datasets = data.datasets;
+                        orderChartYear.update();
+                    })
+                    .catch(error => console.error('Error:', error));
+
+            }
+
+    </script>
+
+    <script>
+        var ctx = document.getElementById('categoryChart').getContext('2d');
+            var $categoryChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: {!! json_encode($categoryChart['labels']) !!},
+                    datasets: {!! json_encode($categoryChart['datasets']) !!}
+                },
+            });
+    </script>
+
+    <script>
+        document.getElementById('loyal-customer-date').addEventListener('change', function () {
+            const selectedDate = this.value;
+            if (selectedDate) {
+                const [day, month, year] = selectedDate.split(' ');
+                const monthNumber = new Date(Date.parse(month + " 1, 2024")).getMonth() + 1;
+                const queryString = `?month=${monthNumber}&year=${year}`;
+                window.location.href = window.location.pathname + queryString;
+            }
         });
-</script>
+    </script>
 
-<script>
-    function updateChart() {
-            var selectedMonth = document.getElementById('monthPicker').value;
-            var url = `../admin/statistic/chart?month=${selectedMonth || ''}`;
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    orderChart.data.labels = data.labels;
-                    orderChart.data.datasets = data.datasets;
-                    orderChart.update();
-                })
-                .catch(error => console.error('Error:', error));
-        }
-</script>
-
-<script>
-    var ctxYear = document.getElementById('chartOrderYear').getContext('2d');
-        var orderChartYear = new Chart(ctxYear, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode($orderChartYear['labels']) !!},
-                datasets: {!! json_encode($orderChartYear['datasets']) !!}
-            },
+    <script>
+        document.getElementById('best-seller-date').addEventListener('change', function () {
+            const selectedDate = this.value;
+            if (selectedDate) {
+                const [day, month, year] = selectedDate.split(' ');
+                const monthNumber = new Date(Date.parse(month + " 1, 2024")).getMonth() + 1;
+                const queryString = `?month=${monthNumber}&year=${year}`;
+                window.location.href = window.location.pathname + queryString;
+            }
         });
-</script>
-
-<script>
-    function updateChartYear(){
-            var selectedYear = document.getElementById('yearPicker').value;
-            var url = `../admin/statistic/chartYear?year=${selectedYear || ''}`;
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    orderChartYear.data.labels = data.labels;
-                    orderChartYear.data.datasets = data.datasets;
-                    orderChartYear.update();
-                })
-                .catch(error => console.error('Error:', error));
-
-        }
-
-</script>
-
-<script>
-    var ctx = document.getElementById('categoryChart').getContext('2d');
-        var $categoryChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: {!! json_encode($categoryChart['labels']) !!},
-                datasets: {!! json_encode($categoryChart['datasets']) !!}
-            },
-        });
-</script>
-
+    </script>
 @endsection

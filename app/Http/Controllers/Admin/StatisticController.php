@@ -15,15 +15,19 @@ use Illuminate\Support\Carbon;
 class StatisticController extends Controller
 
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filters = [
+            'month' => $request->input('month'),
+            'year' => $request->input('year')
+        ];
         $order = $this->getOrderSuccess();
         $orderCancel = $this->getOrderCancel();
         $orderChart = $this->getOrderChart();
         $orderChartYear = $this->getOrderChartByYear();
         $orderPayments = $this->getOrdersPay();
-        $orderUser = $this->getTopCustomer();
-        $orderProduct = $this->getProductTopSale();
+        $orderUser = $this->getTopCustomer($filters);
+        $orderProduct = $this->getProductTopSale($filters);
         $category = $this->getCategory();
         $categoryChart = $this->getCategoryChart();
         $countShipment = $this->countShipment();
@@ -247,35 +251,53 @@ class StatisticController extends Controller
         })->paginate(5);
     }
 
-    private function getTopCustomer()
+    private function getTopCustomer(array $filters = [])
     {
-        return Order::join('users', 'orders.user_id', '=' , 'users.id')
-                    ->selectRaw('users.id, users.name, users.avatar, users.email ,SUM(orders.total_amount) as total_spent')
-                    ->whereIn('orders.status', ['completed', 'Giao Thành công'])
-                    ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-                    ->orderBy('total_spent', 'desc')
-                    ->limit(4)
-                    ->get();
+        $query = Order::join('users', 'orders.user_id', '=', 'users.id')
+            ->selectRaw('users.id, users.name, users.avatar, users.email, SUM(orders.total_amount) as total_spent')
+            ->whereIn('orders.status', ['completed', 'Giao Thành công']);
+
+        if (!empty($filters['year'])) {
+            $query->whereYear('orders.created_at', $filters['year']);
+        }
+
+        if (!empty($filters['month'])) {
+            $query->whereMonth('orders.created_at', $filters['month']);
+        }
+
+        return $query->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+            ->orderBy('total_spent', 'desc')
+            ->limit(4)
+            ->get();
     }
 
-    private function getProductTopSale()
+    private function getProductTopSale(array $filters = [])
     {
-        return OrderItem::join('products', 'order_items.product_id', '=', 'products.id')
-                        ->selectRaw('order_items.product_id as productID,
-                                    MAX(products.name) as name,
-                                    MAX(product_colors.name) as color,
-                                    MAX(product_sizes.name) as size,
-                                    MAX(products.image) as image,
-                                    orders.status as status,
-                                    SUM(order_items.quantity) as quantity')
-                        ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')
-                        ->leftJoin('product_colors', 'order_items.color_id', '=', 'product_colors.id')
-                        ->leftJoin('product_sizes', 'order_items.size_id', '=', 'product_sizes.id')
-                        ->whereIn('orders.status', ['completed', 'Giao Thành công'])
-                        ->groupBy('order_items.product_id', 'orders.status')
-                        ->orderByDesc('quantity')
-                        ->limit(4)
-                        ->get();
+        $query = OrderItem::join('products', 'order_items.product_id', '=', 'products.id')
+            ->selectRaw('order_items.product_id as productID,
+                    MAX(products.name) as name,
+                    MAX(product_colors.name) as color,
+                    MAX(product_sizes.name) as size,
+                    MAX(products.image) as image,
+                    orders.status as status,
+                    SUM(order_items.quantity) as quantity')
+            ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')
+            ->leftJoin('product_colors', 'order_items.color_id', '=', 'product_colors.id')
+            ->leftJoin('product_sizes', 'order_items.size_id', '=', 'product_sizes.id')
+            ->whereIn('orders.status', ['completed', 'Giao Thành công']);
+
+        if (!empty($filters['year'])) {
+            $query->whereYear('orders.created_at', $filters['year']);
+        }
+
+        if (!empty($filters['month'])) {
+            $query->whereMonth('orders.created_at', $filters['month']);
+        }
+
+        return $query->groupBy('order_items.product_id', 'orders.status')
+            ->orderByDesc('quantity')
+            ->limit(4)
+            ->get();
     }
 
     private function getCategory()
