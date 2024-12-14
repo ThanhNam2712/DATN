@@ -250,6 +250,17 @@
                                 </div>
                             </div><!--end col-->
                         </div>
+                        <div class="card">
+                            <div class="2xl:col-span-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="mb-4 text-15">Thông Tin Cần Thêm Nếu Muốn</h6>
+                                        <h6 class="mb-1"><a href="../admin/orders/download-load/{{ $order->barcode }}">{{ QrCode::size(200)->generate($order->barcode) }}</a></h6>
+                                        <p class="text-slate-500 dark:text-zink-200">Tải Xuống Nếu Cần</p>
+                                    </div>
+                                </div>
+                            </div><!--end col-->
+                        </div>
                     </div><!--end col-->
                 </div><!--end grid-->
 

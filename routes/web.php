@@ -100,6 +100,8 @@ Route::get('/blocked', function () {
         Route::put('cancel/{id}', [OrderControllerClient::class, 'cancel'])->name('cancel');
         Route::put('submit/{id}', [OrderControllerClient::class, 'submit'])->name('submit');
         Route::put('address/{id}', [OrderControllerClient::class, 'address'])->name('address');
+        Route::get('download-load/{barcode}', [OrderControllerClient::class, 'download'])->name('download');
+        Route::get('get-id-by-barcode', [OrderControllerClient::class, 'getById'])->name('getById');
     });
 
     Route::group([
@@ -394,6 +396,7 @@ Route::group([
         Route::get('completed', [OrderController::class, 'viewCompleted'])->name('viewCompleted');
         Route::get('cancelled', [OrderController::class, 'cancelled'])->name('cancelled');
         Route::get('shipmentCom', [OrderController::class, 'shipmentCom'])->name('shipmentCom');
+        Route::get('download-load/{barcode}', [OrderController::class, 'download'])->name('download');
     });
 
     // reviews

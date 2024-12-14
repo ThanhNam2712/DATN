@@ -50,18 +50,18 @@
                             <div id="reader" style="width: 500px; margin-top: 20px;display: none; text-align: center"></div>
                             <div class="lg:col-span-2 ltr:lg:text-right rtl:lg:text-left xl:col-span-2 xl:col-start-11">
 
-{{--                                <button type="button" id="start-scan-btn" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">--}}
-{{--                                    <span>--}}
-{{--                                    <i data-lucide="scan" class="inline-block size-4"></i>--}}
-{{--                                    Start Scan--}}
-{{--                                    </span>--}}
-{{--                                </button>--}}
-{{--                                <button style="display: none" type="button" id="stop-scan-btn" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">--}}
-{{--                                    <span>--}}
-{{--                                    <i data-lucide="scan" class="inline-block size-4"></i>--}}
-{{--                                    Stop Scan--}}
-{{--                                    </span>--}}
-{{--                                </button>--}}
+                                <button type="button" id="start-scan-btn" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                                    <span>
+                                    <i data-lucide="scan" class="inline-block size-4"></i>
+                                    Start Scan
+                                    </span>
+                                </button>
+                                <button style="display: none" type="button" id="stop-scan-btn" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                                    <span>
+                                    <i data-lucide="scan" class="inline-block size-4"></i>
+                                    Stop Scan
+                                    </span>
+                                </button>
                             </div>
                         </div>
                         <div class="card-body">

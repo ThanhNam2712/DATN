@@ -10,6 +10,7 @@ use App\Models\ProductVariant;
 use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class OrderControllerClient extends Controller
 {
@@ -97,5 +98,42 @@ class OrderControllerClient extends Controller
             ]);
         }
 
+    }
+
+    public function download($barcode)
+    {
+        // Generate the QR code
+        $qrCode = QrCode::size(200)->generate($barcode);
+
+        // Create a temporary file to save the QR code
+        $path = public_path('qr_codes');
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true); // Create folder if it doesn't exist
+        }
+
+        $filename = 'qr_code_' . $barcode . '.png';
+        $filePath = $path . '/' . $filename;
+
+        // Save the QR code image to a file
+        QrCode::format('png')->size(500)->backgroundColor(255, 255, 255)->color(0, 0, 0)->generate($barcode, $filePath);
+        // Download the file
+        return response()->download($filePath, $filename)->deleteFileAfterSend(true);
+    }
+
+    public function getById(Request $request)
+    {
+        $barcode = $request->get('barcode');
+        $order = Order::where('barcode', $barcode)->first();
+        if ($order){
+            return response()->json([
+                'success' => true,
+                'id' => $order->id,
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Thằng ranh lấy mã tài xỉu à',
+            ]);
+        }
     }
 }
