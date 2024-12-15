@@ -60,8 +60,17 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1">{{ $order->status }}</h6>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">Trạng Thái Đơn</p>
+                                        @php
+                                        $statusMap = [
+                                            'pending' => 'Chờ xử lý',
+                                            'processing' => 'Đang xử lý',
+                                            'delivery person' => 'Giao bên vận chuyển',
+                                            'completed' => 'Hoàn thành',
+                                            'cancelled' => 'Đã hủy',
+                                        ];
+                                    @endphp
+                                                              <h6 class="mb-1">{{ $statusMap[$order->status] ?? $order->status }}</h6>
+                                                              <p style="color: red" class="uppercase text-slate-500 dark:text-zink-200">Trạng Thái Đơn</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -70,23 +79,18 @@
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
                                     <h6 class="text-15 grow">Chi Tiết Đơn Hàng</h6>
-                                    @if ($order->shipmentOrder->shipments_1 != 'Đã Nhận Đơn')
+                                    @if ($order->shipmentOrder->shipments_1 != 'Đã Nhận Đơn' && $order->status != 'delivery person')
                                         <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <select name="status" style="color: red" class="form-select">
-                                            <option value="pending" {{ $order->status == 'pending' ? 'selected'
-                                                        : '' }}>Chờ xử lý</option>
-                                            <option value="processing" {{ $order->status == 'processing' ?
-                                                        'selected' : '' }}>Đang xử lý</option>
-                                            <option value="delivery person" {{ $order->status == 'delivery person' ?
-                                                        'selected' : '' }}>Giao bên vận chuyển</option>
-                                        </select>
-                                        <button style="color: green" type="submit"
-                                                class="btn btn-primary mt-2">Cập nhật</button>
-                                    </form>
+                                            @csrf
+                                            @method('PUT')
+                                            <select name="status" style="color: red" class="form-select">
+                                                <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xử lý</option>
+                                                <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử lý</option>
+                                                <option value="delivery person" {{ $order->status == 'delivery person' ? 'selected' : '' }}>Giao bên vận chuyển</option>
+                                            </select>
+                                            <button style="color: green" type="submit" class="btn btn-primary mt-2">Cập nhật</button>
+                                        </form>
                                     @else
-
                                     @endif
                                 </div>
                                 <div class="overflow-x-auto">
@@ -284,8 +288,8 @@
                         @method('PUT')
                         <textarea name="cancel_8" class="mt-4 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Reason for Cancellation" rows="5" style="height: 80px;"></textarea>
                         <div class="flex justify-center gap-2 mt-6">
-                            <button type="reset" data-modal-close="deleteModal" class="bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-600 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10">Cancel</button>
-                            <button type="submit" class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại!</button>
+                            <button type="reset" data-modal-close="deleteModal" class="bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-600 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10">Thoát</button>
+                            <button type="submit" class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Lưu</button>
                         </div>
                     </form>
                 </div>

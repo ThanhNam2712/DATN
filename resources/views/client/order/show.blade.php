@@ -78,9 +78,19 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1">{{ $order->status }}</h6>
+                                        @php
+                                            $statusMap = [
+                                                'pending' => 'Chờ xử lý',
+                                                'processing' => 'Đang xử lý',
+                                                'delivery person' => 'Giao bên vận chuyển',
+                                                'completed' => 'Hoàn thành',
+                                                'cancelled' => 'Đã hủy',
+                                            ];
+                                        @endphp
+                                        <h6 class="mb-1">{{ $statusMap[$order->status] ?? $order->status }}</h6>
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Trạng Thái Đơn</p>
                                     </div>
+
                                 </div>
                             </div><!--end col-->
                         </div><!--end grid-->
