@@ -526,8 +526,15 @@
     <script>
         document.getElementById('postCartDetail').addEventListener('submit', function (e) {
             const sizeSelectors = document.querySelectorAll('.size-selector-hahah');
+            let isSelected = false;
 
-            if (sizeSelectors.checked){
+            sizeSelectors.forEach(selector => {
+                if (selector.checked) {
+                    isSelected = true;
+                }
+            });
+
+            if (!isSelected) {
                 e.preventDefault();
                 alert('Vui Lòng Chọn Kích Thước!');
             }

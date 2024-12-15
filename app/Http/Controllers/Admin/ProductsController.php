@@ -60,7 +60,7 @@ class ProductsController extends Controller
             'brand_id' => 'required',
             'image' => 'required|image',
             'description' => 'required|max:255',
-            'content' => 'required|max:255',
+            'content' => 'required',
         ]);
         $data = $request->all();
         $data['is_trending'] = $request->has('is_trending') ? 1 : 0;

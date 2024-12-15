@@ -3,17 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Address;
-use App\Models\Cart;
-use App\Models\Coupon;
 use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\ProductVariant;
 use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use function Laravel\Prompts\search;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class OrderController extends Controller
 {
@@ -86,8 +81,13 @@ class OrderController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $orders = Order::findOrFail($id);
-        $orders->status = $request->status;
-        $orders->save();
+        if ($orders->status != "cancelled"){
+            $orders->status = $request->status;
+            $orders->save();
+        }else{
+            return back()->with('error', 'Đơn Hàng Đã Được Hủy, Vui Lòng Xem Lí Do');
+        }
+
 
         return redirect()->back()->with([
             'success' => 'Cập nhật trạng thái thành công.'
@@ -131,5 +131,25 @@ class OrderController extends Controller
                 'message' => 'Thằng ranh lấy mã tài xỉu à',
             ]);
         }
+    }
+
+    public function download($barcode)
+    {
+        // Generate the QR code
+        $qrCode = QrCode::size(200)->generate($barcode);
+
+        // Create a temporary file to save the QR code
+        $path = public_path('qr_codes');
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true); // Create folder if it doesn't exist
+        }
+
+        $filename = 'qr_code_' . $barcode . '.png';
+        $filePath = $path . '/' . $filename;
+
+        // Save the QR code image to a file
+        QrCode::format('png')->size(500)->backgroundColor(255, 255, 255)->color(0, 0, 0)->generate($barcode, $filePath);
+        // Download the file
+        return response()->download($filePath, $filename)->deleteFileAfterSend(true);
     }
 }

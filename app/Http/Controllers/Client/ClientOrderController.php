@@ -134,6 +134,40 @@ class ClientOrderController extends Controller
                     'phone_number' => $request->phone_number,
                     'coupon' => $request->coupon,
                 ]);
+                $userId = session('user_id');
+                $totalAmount = session('total_amount');
+                $email = session('email');
+                $status = 'pending';
+                $province = session('province');
+                $district = session('district');
+                $ward = session('ward');
+                $addressDetail = session('address_detail');
+                $phoneNumber = session('phone_number');
+                $coupon = session('coupon');
+
+                $data = [
+                    'user_id' => $userId,
+                    'total_amount' => $totalAmount,
+                    'email' => $email,
+                    'status' => $status,
+                    'province' => $province,
+                    'district' => $district,
+                    'ward' => $ward,
+                    'address_detail' => $addressDetail,
+                    'phone_number' => $phoneNumber,
+                    'coupon' => $coupon,
+                ];
+                $coupon = Coupon::where('code', $data['coupon'])
+                    ->where('start_end', '<=', now())
+                    ->where('expiration_date', '>=', now())
+                    ->first();
+
+                if ($coupon){
+                    if ($coupon->number <= 0){
+                        return redirect()->back()->with('error', 'Mã Đã Hết số lượng vui lòng chọn mã khác');
+                    }
+
+                }
                 $session = \Stripe\Checkout\Session::create([
                     'customer_email' => Auth::user()->email,
                     'line_items'  => [
@@ -321,6 +355,7 @@ class ClientOrderController extends Controller
                 if (in_array($list->id, $selectedProducts)) {
                     $productVariant = ProductVariant::find($list->product_variant_id);
                     if ($productVariant && $productVariant->quantity < $list->quantity) {
+                        $order->delete();
                         return redirect()->back()->with('error', 'Sản phẩm ' . $list->product->name . ' không đủ số lượng để đặt hàng.');
                     }
                     OrderItem::create([

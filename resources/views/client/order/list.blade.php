@@ -27,17 +27,24 @@
                             <a href="javascript:void(0);" data-tab-toggle="" data-target="allOrders" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="boxes" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">All Orders</span></a>
                         </li>
                         <li class="group">
-                            <a href="javascript:void(0);" data-tab-toggle="" data-target="pendingOrder" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="loader" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Pending</span></a>
+                            <div id="reader" style="width: 500px; margin-top: 20px;display: none; text-align: center"></div>
+                            <div class="lg:col-span-2 ltr:lg:text-right rtl:lg:text-left xl:col-span-2 xl:col-start-11">
+
+                                <button type="button" id="start-scan-btn" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                                    <span>
+                                    <i data-lucide="scan" class="inline-block size-4"></i>
+                                    Start Scan
+                                    </span>
+                                </button>
+                                <button style="display: none" type="button" id="stop-scan-btn" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                                    <span>
+                                    <i data-lucide="scan" class="inline-block size-4"></i>
+                                    Stop Scan
+                                    </span>
+                                </button>
+                            </div>
                         </li>
-                        <li class="group">
-                            <a href="javascript:void(0);" data-tab-toggle="" data-target="deliveredOrder" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="package-check" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Delivered</span></a>
-                        </li>
-                        <li class="group">
-                            <a href="javascript:void(0);" data-tab-toggle="" data-target="returnsOrders" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="refresh-ccw" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Returns</span></a>
-                        </li>
-                        <li class="group">
-                            <a href="javascript:void(0);" data-tab-toggle="" data-target="cancelledOrders" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="package-x" class="inline-block size-4 ltr:mr-1 rtl:ml-1 "></i> <span class="align-middle">Cancelled</span></a>
-                        </li>
+
                     </ul>
 
                     <div class="mt-5 overflow-x-auto">
@@ -98,4 +105,42 @@
         </div>
         <!-- container-fluid -->
     </div>
+    <script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
+    <script>
+        const html5QrCode = new Html5Qrcode("reader");
+        const startCode = document.getElementById('start-scan-btn');
+        const stopCode = document.getElementById('stop-scan-btn');
+        startCode.addEventListener('click', () => {
+            const readerDiv = document.getElementById('reader');
+            const stopCode = document.getElementById('stop-scan-btn');
+            readerDiv.style.display = "block";
+            stopCode.style.display = "block";
+            const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+                fetch(`/client/order/get-id-by-barcode?barcode=${encodeURIComponent(decodedText)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success){
+                            window.location.href = `/client/order/detail/${data.id}`;
+                        }else {
+                            alert("Thằng ranh lấy mã tài xỉu à");
+                        }
+                    })
+                    .catch(error => console.error('Lỗi:', error));
+            };
+            html5QrCode.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: 250 },
+                qrCodeSuccessCallback
+            ).catch(err => console.error("Không thể khởi động camera: ", err));
+        });
+
+        stopCode.addEventListener('click', () => {
+            const readerDiv = document.getElementById('reader');
+            readerDiv.style.display = "none";
+            stopCode.style.display = "none";
+            html5QrCode.stop(
+
+            ).catch(err => console.error("Lỗi: ", err));
+        });
+    </script>
 @endsection
