@@ -19,12 +19,12 @@ function updateCart(cartDetail, quantity){
             $('.cart-total').text( numberFormat(response.total_amuont) + 'VND');
             cart_exitsItem.find('.products-line-price').text( numberFormat(response.totalResponse));
             $('.sumQuantity').text('Shopping Cart (' + response.sumQuantity + ')');
-            alert('Update Cart Success!');
+            alert('Cập Nhật Số Lượng Thành Công!');
         },
 
         error: function (response){
             console.log(response)
-            alert('Update Cart Fail!, ');
+            alert('Cập Nhật Thất Bại!, ');
         }
     });
 
@@ -56,12 +56,12 @@ function deleteCart(cartDetail){
             var cartOrder = $('.deleteOrder');
             var cartOrder_exits = cartOrder.find("tr[data-cartDetail='" + cartDetail +"']");
             cartOrder_exits.remove();
-            alert('Delete Cart Success!');
+            alert('Xóa Sản Phẩm Khỏi Giỏ Hàng Thành Công!');
         },
 
         error: function (response){
             console.log(response)
-            alert('Update Cart Fail!, ');
+            alert('Xóa Sản Phẩm Khỏi Giỏ Hàng Không Thành Công!, ');
         }
     });
 

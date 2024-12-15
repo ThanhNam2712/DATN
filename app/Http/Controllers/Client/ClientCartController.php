@@ -82,7 +82,7 @@ class ClientCartController extends Controller
 
         // trả về thông báo
         return redirect()->back()->with([
-            'message' => 'Add Cart Success'
+            'message' => 'Thêm Sản Phẩm Vào Giỏ Hàng Thành Công'
         ]);
     }
 

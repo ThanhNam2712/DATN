@@ -243,6 +243,7 @@
                                 </div>
 
                                 <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $totalAmount }}">
+                                <input type="hidden" class="order_total_amount" name="total_discount" value="0">
                                 <input type="hidden" name="allQuantity" value="{{ $cartDetails->sum('quantity') }}">
                                 @if(!$hasDeletedProduct)
                                     <button type="submit" class="mt-3 w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">

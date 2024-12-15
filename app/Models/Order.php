@@ -21,6 +21,7 @@ class Order extends Model
         'phone_number',
         'coupon',
         'barcode',
+        'total_discount',
         'confirmation_deadline',
     ];
     public function user(){

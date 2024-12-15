@@ -138,7 +138,7 @@ class StatisticController extends Controller
     }
     private function getOrderSuccess()
     {
-        return Order::whereIn('status',['completed', 'Giao thành công'])->get();
+        return Order::where('status','completed')->get();
     }
 
     private function getOrderCancel()
@@ -255,7 +255,7 @@ class StatisticController extends Controller
     {
         $query = Order::join('users', 'orders.user_id', '=', 'users.id')
             ->selectRaw('users.id, users.name, users.avatar, users.email, SUM(orders.total_amount) as total_spent')
-            ->whereIn('orders.status', ['completed', 'Giao Thành công']);
+            ->where('orders.status', 'completed');
 
         if (!empty($filters['year'])) {
             $query->whereYear('orders.created_at', $filters['year']);
@@ -363,7 +363,7 @@ class StatisticController extends Controller
     public function getPriceChartByDay($selectedYear, $selectedMonth)
     {
         $ordersSuccess = Order::selectRaw('DAY(orders.created_at) as day, SUM(orders.total_amount) as total')
-            ->whereIn('orders.status', ['completed', 'Giao Thành công'])
+            ->where('orders.status', 'completed')
             ->whereYear('orders.created_at', $selectedYear)
             ->whereMonth('orders.created_at', $selectedMonth)
             ->groupBy('day')
@@ -405,7 +405,7 @@ class StatisticController extends Controller
         ];
 
         $ordersSuccess = Order::selectRaw('YEAR(orders.created_at) as year, MONTH(orders.created_at) as month, SUM(orders.total_amount) as total')
-            ->whereIn('orders.status', ['completed', 'Giao Thành công'])
+            ->where('orders.status','completed')
             ->whereYear('orders.created_at', $selectedYear)
             ->groupBy('year', 'month')
             ->orderBy('month')

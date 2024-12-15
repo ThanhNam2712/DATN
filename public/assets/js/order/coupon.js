@@ -12,7 +12,8 @@ function couponApply(){
                 $('.response_discount').text('-' + numberFormat(response.discount) + 'VND');
                 $('.hidden_response_total').text(numberFormat(response.final_total) + ' VND');
                 $('input[name="total_amount"]').val(response.final_total);
-                alert('Apply Coupon Success')
+                $('input[name="total_discount"]').val(response.discount);
+                alert('Áp Mã Giảm Giá Thành Công')
             }else {
                 alert(response.error);
             }

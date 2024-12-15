@@ -133,6 +133,7 @@ class ClientOrderController extends Controller
                     'address_detail' => $request->address_detail,
                     'phone_number' => $request->phone_number,
                     'coupon' => $request->coupon,
+                    'total_discount' => $request->total_discount,
                 ]);
                 $userId = session('user_id');
                 $totalAmount = session('total_amount');
@@ -144,6 +145,7 @@ class ClientOrderController extends Controller
                 $addressDetail = session('address_detail');
                 $phoneNumber = session('phone_number');
                 $coupon = session('coupon');
+                $discount = session('total_discount');
 
                 $data = [
                     'user_id' => $userId,
@@ -211,6 +213,7 @@ class ClientOrderController extends Controller
             'address_detail' => $request->address_detail,
             'phone_number' => $request->phone_number,
             'coupon' => $request->coupon,
+            'total_discount' => $request->total_discount,
         ];
         $coupon = Coupon::where('code', $data['coupon'])
             ->where('start_end', '<=', now())
@@ -253,6 +256,7 @@ class ClientOrderController extends Controller
             if (in_array($list->id, $selectedProducts)) {
                 $productVariant = ProductVariant::find($list->product_variant_id);
                 if ($productVariant && $productVariant->quantity < $list->quantity) {
+                    $order->delete();
                     return redirect()->back()->with('error', 'Sản phẩm ' . $list->product->name . ' không đủ số lượng để đặt hàng.');
                 }
                 OrderItem::create([
@@ -308,7 +312,7 @@ class ClientOrderController extends Controller
             $addressDetail = session('address_detail');
             $phoneNumber = session('phone_number');
             $coupon = session('coupon');
-
+            $discount = session('total_discount');
             $data = [
                 'user_id' => $userId,
                 'total_amount' => $totalAmount,
@@ -320,6 +324,7 @@ class ClientOrderController extends Controller
                 'address_detail' => $addressDetail,
                 'phone_number' => $phoneNumber,
                 'coupon' => $coupon,
+                'total_discount' => $discount,
             ];
             $coupon = Coupon::where('code', $data['coupon'])
                 ->where('start_end', '<=', now())
@@ -417,6 +422,7 @@ class ClientOrderController extends Controller
                 'address_detail',
                 'phone_number',
                 'coupon',
+                'total_discount',
             ]);
             session()->forget('selected_carts');
             return view('client.order.success' ,compact('order'));

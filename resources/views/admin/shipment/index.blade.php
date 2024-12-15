@@ -39,12 +39,12 @@
                         <tbody class="list form-check-all">
                         @forelse ($orders as $order)
                             <tr>
-                               
+
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary id">#VZ2101</a></td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{$order->barcode}}</td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 email">{{$order->user->name}}</td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 phone" style="color: red">
-                                    {{ $order->status }}
+                                    {{ $order->status == 'delivery person' ? 'Giao bên vận chuyển' : ''}}
                                 </td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 phone">
                                     @if($order->payment->status == 1)
