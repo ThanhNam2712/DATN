@@ -98,7 +98,7 @@
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
                                     <h6 class="text-15 grow">Chi Tiết Đơn Hàng</h6>
-                                    <a href="../client/order/view" class="text-red-500 underline shrink-0">Quay Lại</a>
+                                    <a href="../client/order/view"  class="text-red-500 underline shrink-0">Quay Lại</a>
                                 </div>
                                 <div class="overflow-x-auto">
                                     <table class="w-full">
