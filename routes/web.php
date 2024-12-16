@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\RefundController;
 use App\Http\Controllers\Admin\ShipmentController;
+use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\VariantProductController;
 use App\Http\Controllers\Client\ClientRefundController;
 use App\Http\Controllers\Client\ForgotPasswordController;
@@ -31,6 +32,7 @@ use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\VerifyEmailController;
 use App\Http\Controllers\Client\WishlistController;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/client/404', 'client.404')->name('client.404');
@@ -98,6 +100,9 @@ Route::get('/blocked', function () {
         Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
         Route::put('cancel/{id}', [OrderControllerClient::class, 'cancel'])->name('cancel');
         Route::put('submit/{id}', [OrderControllerClient::class, 'submit'])->name('submit');
+        Route::put('address/{id}', [OrderControllerClient::class, 'address'])->name('address');
+        Route::get('download-load/{barcode}', [OrderControllerClient::class, 'download'])->name('download');
+        Route::get('get-id-by-barcode', [OrderControllerClient::class, 'getById'])->name('getById');
     });
 
     Route::group([
@@ -205,7 +210,8 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::get('verify/{user}', [VerifyEmailController::class, 'verify'])
         ->name('verify.email')
         ->middleware('signed');
-    Route::get('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('resendVerification');
+        Route::get('resend-verification', [VerifyEmailController::class, 'showResendForm'])->name('resendVerification');
+        Route::post('resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('processResendVerification');
 
 
 });
@@ -222,6 +228,8 @@ Route::group([
         Route::get('/', [StatisticController::class, 'index'])->name('index');
         Route::get('chart', [StatisticController::class, 'chart'])->name('chart');
         Route::get('chartYear', [StatisticController::class, 'chartYear'])->name('chartYear');
+        Route::get('price', [StatisticController::class, 'revenuePrice'])->name('price');
+
     });
 
     Route::group([
@@ -393,6 +401,8 @@ Route::group([
         Route::get('get-id-by-barcode', [OrderController::class, 'getById'])->name('getById');
         Route::get('completed', [OrderController::class, 'viewCompleted'])->name('viewCompleted');
         Route::get('cancelled', [OrderController::class, 'cancelled'])->name('cancelled');
+        Route::get('shipmentCom', [OrderController::class, 'shipmentCom'])->name('shipmentCom');
+        Route::get('download-load/{barcode}', [OrderController::class, 'download'])->name('download');
     });
 
     // reviews
@@ -439,6 +449,16 @@ Route::group([
         Route::put('view/{id}', [UserController::class, 'change'])->name('change');
         Route::put('view/{id}', [UserController::class, 'updateEmail'])->name('updateEmail');
         Route::get('success', [UserController::class, 'success'])->name('success');
+    });
+
+    Route::group([
+        'prefix' => 'slide',
+        'as' => 'slide.'
+    ], function (){
+        Route::get('/', [SlideController::class, 'index'])->name('index');
+        Route::post('create', [SlideController::class, 'store'])->name('store');
+        Route::put('update/{id}', [SlideController::class, 'update'])->name('update');
+        Route::delete('delete/{id}', [SlideController::class, 'delete'])->name('delete');
     });
 });
 

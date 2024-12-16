@@ -7,25 +7,32 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ShipmentOrder;
+use Carbon\CarbonPeriod;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class StatisticController extends Controller
+
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filters = [
+            'month' => $request->input('month'),
+            'year' => $request->input('year')
+        ];
         $order = $this->getOrderSuccess();
         $orderCancel = $this->getOrderCancel();
         $orderChart = $this->getOrderChart();
         $orderChartYear = $this->getOrderChartByYear();
         $orderPayments = $this->getOrdersPay();
-        $orderUser = $this->getTopCustomer();
-        $orderProduct = $this->getProductTopSale();
+        $orderUser = $this->getTopCustomer($filters);
+        $orderProduct = $this->getProductTopSale($filters);
         $category = $this->getCategory();
         $categoryChart = $this->getCategoryChart();
         $countShipment = $this->countShipment();
         return view('admin.Statistic.index', compact('order', 'orderCancel',
-            'orderChart', 'orderPayments', 'orderUser', 'orderProduct', 'category', 'categoryChart', 'orderChartYear', 'countShipment'));
+            'orderChart', 'orderPayments','orderUser', 'orderProduct', 'category', 'categoryChart', 'orderChartYear', 'countShipment'));
     }
 
     public function chart(Request $request)
@@ -63,12 +70,12 @@ class StatisticController extends Controller
 
         $datasets = [
             [
-                'label' => 'Total Revenue',
+                'label' => 'Số sản phẩm giao thành công',
                 'data' => $dataChartSuccess,
                 'backgroundColor' => '#36A2EB'
             ],
             [
-                'label' => 'Total Revenue Cancel',
+                'label' => 'Số sản phẩm giao thất bại',
                 'data' => $dataChartCancelled,
                 'backgroundColor' => '#FF6384'
             ]
@@ -113,12 +120,12 @@ class StatisticController extends Controller
 
         $datasets = [
             [
-                'label' => 'Total Revenue',
+                'label' => 'Số sản phẩm thành công',
                 'data' => $dataChartSuccess,
                 'backgroundColor' => '#36A2EB'
             ],
             [
-                'label' => 'Total Revenue Cancel',
+                'label' => 'Số sản phẩm giao thất bại',
                 'data' => $dataChartCancelled,
                 'backgroundColor' => '#FF6384'
             ]
@@ -131,7 +138,7 @@ class StatisticController extends Controller
     }
     private function getOrderSuccess()
     {
-        return Order::whereIn('status',['completed', 'Giao thành công'])->get();
+        return Order::where('status','completed')->get();
     }
 
     private function getOrderCancel()
@@ -171,12 +178,12 @@ class StatisticController extends Controller
 
         $datasets = [
             [
-                'label' => 'Total Revenue',
+                'label' => 'Số sản phẩm giao thành công',
                 'data' => $dataChartSuccess,
                 'backgroundColor' => '#36A2EB'
             ],
             [
-                'label' => 'Total Revenue Cancel',
+                'label' => 'Số sản phẩm giao thất bại',
                 'data' => $dataChartCancelled,
                 'backgroundColor' => '#FF6384'
             ]
@@ -219,12 +226,12 @@ class StatisticController extends Controller
 
         $datasets = [
             [
-                'label' => 'Total Revenue',
+                'label' => 'Số sản phẩm giao thành công',
                 'data' => $dataChartSuccess,
                 'backgroundColor' => '#36A2EB'
             ],
             [
-                'label' => 'Total Revenue Cancel',
+                'label' => 'Số sản phẩm giao thất bại',
                 'data' => $dataChartCancelled,
                 'backgroundColor' => '#FF6384'
             ]
@@ -244,35 +251,53 @@ class StatisticController extends Controller
         })->paginate(5);
     }
 
-    private function getTopCustomer()
+    private function getTopCustomer(array $filters = [])
     {
-        return Order::join('users', 'orders.user_id', '=' , 'users.id')
-                    ->selectRaw('users.id, users.name, users.avatar, users.email ,SUM(orders.total_amount) as total_spent')
-                    ->whereIn('orders.status', ['completed', 'Giao Thành công'])
-                    ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-                    ->orderBy('total_spent', 'desc')
-                    ->limit(4)
-                    ->get();
+        $query = Order::join('users', 'orders.user_id', '=', 'users.id')
+            ->selectRaw('users.id, users.name, users.avatar, users.email, SUM(orders.total_amount) as total_spent')
+            ->where('orders.status', 'completed');
+
+        if (!empty($filters['year'])) {
+            $query->whereYear('orders.created_at', $filters['year']);
+        }
+
+        if (!empty($filters['month'])) {
+            $query->whereMonth('orders.created_at', $filters['month']);
+        }
+
+        return $query->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+            ->orderBy('total_spent', 'desc')
+            ->limit(4)
+            ->get();
     }
 
-    private function getProductTopSale()
+    private function getProductTopSale(array $filters = [])
     {
-        return OrderItem::join('products', 'order_items.product_id', '=', 'products.id')
-                        ->selectRaw('order_items.product_id as productID,
-                                    MAX(products.name) as name,
-                                    MAX(product_colors.name) as color,
-                                    MAX(product_sizes.name) as size,
-                                    MAX(products.image) as image,
-                                    orders.status as status,
-                                    SUM(order_items.quantity) as quantity')
-                        ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')
-                        ->leftJoin('product_colors', 'order_items.color_id', '=', 'product_colors.id')
-                        ->leftJoin('product_sizes', 'order_items.size_id', '=', 'product_sizes.id')
-                        ->whereIn('orders.status', ['completed', 'Giao Thành công'])
-                        ->groupBy('order_items.product_id', 'orders.status')
-                        ->orderByDesc('quantity')
-                        ->limit(4)
-                        ->get();
+        $query = OrderItem::join('products', 'order_items.product_id', '=', 'products.id')
+            ->selectRaw('order_items.product_id as productID,
+                    MAX(products.name) as name,
+                    MAX(product_colors.name) as color,
+                    MAX(product_sizes.name) as size,
+                    MAX(products.image) as image,
+                    orders.status as status,
+                    SUM(order_items.quantity) as quantity')
+            ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')
+            ->leftJoin('product_colors', 'order_items.color_id', '=', 'product_colors.id')
+            ->leftJoin('product_sizes', 'order_items.size_id', '=', 'product_sizes.id')
+            ->whereIn('orders.status', ['completed', 'Giao Thành công']);
+
+        if (!empty($filters['year'])) {
+            $query->whereYear('orders.created_at', $filters['year']);
+        }
+
+        if (!empty($filters['month'])) {
+            $query->whereMonth('orders.created_at', $filters['month']);
+        }
+
+        return $query->groupBy('order_items.product_id', 'orders.status')
+            ->orderByDesc('quantity')
+            ->limit(4)
+            ->get();
     }
 
     private function getCategory()
@@ -304,6 +329,7 @@ class StatisticController extends Controller
         $labels = $category->pluck('nameC')->toArray();
         $dataChart = $category->pluck('countID')->toArray();
         $color = ['#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#FF5722', '#009688', '#795548', '#009688', '#795548', '#FE9800', '#CDDC39', '#607D8B'];
+
         $datasets = [
             [
                 'label' => "Count Products",
@@ -322,4 +348,93 @@ class StatisticController extends Controller
     {
         return ShipmentOrder::where('shipments_5', 'completed')->count();
     }
+
+
+    public function revenuePrice(Request $request)
+    {
+        $selectedYear = $request->get('year', now()->year);
+        $selectedMonth = $request->get('month', null);
+  if ($selectedMonth) {
+        $priceChart = $this->getPriceChartByDay($selectedYear, $selectedMonth);
+    } else {
+        $priceChart = $this->getPriceChartByMonth($selectedYear);
+    }        return view('admin.Statistic.price', compact('priceChart', 'selectedYear', 'selectedMonth'));
+    }
+    public function getPriceChartByDay($selectedYear, $selectedMonth)
+    {
+        $ordersSuccess = Order::selectRaw('DAY(orders.created_at) as day, SUM(orders.total_amount) as total')
+            ->where('orders.status', 'completed')
+            ->whereYear('orders.created_at', $selectedYear)
+            ->whereMonth('orders.created_at', $selectedMonth)
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get()
+            ->keyBy(function ($item) {
+                return str_pad($item->day, 2, '0', STR_PAD_LEFT);
+            });
+
+        $labels = [];
+        $dataChartSuccess = [];
+        $daysInMonth = Carbon::createFromDate($selectedYear, $selectedMonth, 1)->daysInMonth;
+
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $label = Carbon::createFromFormat('d', $day)->format('d');
+            $labels[] = $label;
+            $dataChartSuccess[] = $ordersSuccess->get(str_pad($day, 2, '0', STR_PAD_LEFT))->total ?? 0;
+        }
+
+        $datasets = [
+            [
+                'label' => 'Doanh thu',
+                'data' => $dataChartSuccess,
+                'backgroundColor' => '#36A2EB'
+            ]
+        ];
+
+        return [
+            'labels' => $labels,
+            'datasets' => $datasets,
+        ];
+    }
+    public function getPriceChartByMonth($selectedYear)
+    {
+        // Danh sách tên tháng bằng tiếng Việt
+        $monthNames = [
+            'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+            'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+        ];
+
+        $ordersSuccess = Order::selectRaw('YEAR(orders.created_at) as year, MONTH(orders.created_at) as month, SUM(orders.total_amount) as total')
+            ->where('orders.status','completed')
+            ->whereYear('orders.created_at', $selectedYear)
+            ->groupBy('year', 'month')
+            ->orderBy('month')
+            ->get()
+            ->keyBy(function ($item) {
+                return $item->year . '-' . str_pad($item->month, 2, '0', STR_PAD_LEFT);
+            });
+
+        $labels = [];
+        $dataChartSuccess = [];
+        $monthsInYear = range(1, 12);
+
+        foreach ($monthsInYear as $month) {
+            $labels[] = $monthNames[$month - 1];
+            $dataChartSuccess[] = $ordersSuccess->get($selectedYear . '-' . str_pad($month, 2, '0', STR_PAD_LEFT))->total ?? 0;
+        }
+
+        $datasets = [
+            [
+                'label' => 'Doanh thu',
+                'data' => $dataChartSuccess,
+                'backgroundColor' => '#36A2EB'
+            ]
+        ];
+
+        return [
+            'labels' => $labels,
+            'datasets' => $datasets,
+        ];
+    }
+
 }

@@ -19,7 +19,7 @@ class LoginController extends Controller
     {
         $data = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|min:4|max:20',
+            'password' => 'required|min:4|max:40',
         ]);
 
         $user = User::where('email', $data['email'])->first();
@@ -36,7 +36,7 @@ class LoginController extends Controller
 
             if (Hash::check($data['password'], $user->password)) {
                 Auth::loginUsingId($user->id);
-                $request->session()->regenerate();
+                $request->session()->flash('success', 'Đăng nhập thành công!');
                 return redirect()->intended('client/home');
             }
         }

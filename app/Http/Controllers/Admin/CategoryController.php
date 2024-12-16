@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Utilities\Common;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -24,19 +25,17 @@ class CategoryController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
-            'image' => 'nullable',
-        ]);
-        $category = new Category();
-        $category->name = $request->name;
+        // $request->validate([
+        //     'name' => 'required|string|max:255|unique:categories,name',
+        //     'image' => 'nullable',
+        // ]);
+        $data = $request->all();
+
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/categories', 'public');
-            $category->image = $path;
+            $data['image']  = Common::uploadFile($request->file('image'), 'admin/img/brands');
         }
-        $category->save();
-
+            Category::create($data);
         return redirect()->route('admin.categories.index')->with('success', 'Danh mục đã được thêm thành công!');
     }
 

@@ -19,8 +19,8 @@ class RegisterController extends Controller
     {
         $data = $request->validate([
             'email' => 'required|email|unique:users,email',
-            'name' => 'required|min:6|max:100',
-            'password' => 'required|min:4|max:100',
+            'name' => 'required|min:3|max:40',
+            'password' => 'required|min:4|max:16|confirmed',
         ]);
         $password = Hash::make($data['password']);
         $role = DB::table('roles')->where('name', 'Client')->first();
@@ -37,15 +37,15 @@ class RegisterController extends Controller
 
             $verificationUrl = URL::temporarySignedRoute(
                 'account.verify.email',
-                now()->addMinutes(60),  // Link hết hạn sau 60 phút
+                now()->addMinutes(60),
                 ['user' => $user->id ]
             );
 
             // Gửi email xác minh
             \Mail::to($user->email)->send(new \App\Mail\VerifyEmail($user, $verificationUrl));
-            session()->flash('status', 'Vui lòng kiểm tra email của bạn và nhấn vào liên kết để xác minh tài khoản.');
+            session()->flash('success', 'Vui lòng kiểm tra email của bạn và nhấn vào liên kết để xác minh tài khoản.');
 
-            return redirect()->route('account.showFormLogin')->with('status', 'Chúng tôi đã gửi email xác minh cho bạn. Vui lòng kiểm tra hộp thư của bạn!');
+            return redirect()->route('account.showFormLogin')->with('sucess', 'Chúng tôi đã gửi email xác minh cho bạn. Vui lòng kiểm tra hộp thư của bạn!');
         }
         return back()->with('error', "Có lỗi xảy ra");
     }

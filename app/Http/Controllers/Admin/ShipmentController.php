@@ -66,22 +66,29 @@ class ShipmentController extends Controller
         $order = Order::find($id);
         $shipment = ShipmentOrder::where('order_id' ,$order->id)->first();
         $payment = Payment::where('order_id' ,$order->id)->first();
-        if ($order->status === 'Đã Nhận Đơn' && $shipment->shipments_1 === 'Chưa nhận đơn') {
-            $shipment->shipments_1 = "Đã Nhận Đơn";
-        }elseif ($shipment->shipments_1 === 'Đã Nhận Đơn' && $shipment->shipments_2 === 'Chưa xử lý'){
-            $shipment->shipments_2 = "Bắt Đầu Giao Hàng";
-            $order->status = "Bắt Đầu Giao Hàng";
-        }elseif ($shipment->shipments_2 === 'Bắt Đầu Giao Hàng' && $shipment->shipments_3 === 'Chưa xử lý'){
-            $shipment->shipments_3 = "Đã Đến Điểm Giao";
-        }elseif ($shipment->shipments_3 === 'Đã Đến Điểm Giao' && $shipment->shipments_4 === 'Chưa xử lý'){
-            $shipment->shipments_4 = "Giao Thành công";
-            $order->status = "Giao Thành công";
-            $order->confirmation_deadline = $now->addMinutes(1);
-            $payment->status = '1';
+
+        if ($order->status != "cancelled"){
+            if ($order->status === 'Đã Nhận Đơn' && $shipment->shipments_1 === 'Chưa nhận đơn') {
+                $shipment->shipments_1 = "Đã Nhận Đơn";
+            }elseif ($shipment->shipments_1 === 'Đã Nhận Đơn' && $shipment->shipments_2 === 'Chưa xử lý'){
+                $shipment->shipments_2 = "Bắt Đầu Giao Hàng";
+                $order->status = "Bắt Đầu Giao Hàng";
+            }elseif ($shipment->shipments_2 === 'Bắt Đầu Giao Hàng' && $shipment->shipments_3 === 'Chưa xử lý'){
+                $shipment->shipments_3 = "Đã Đến Điểm Giao";
+            }elseif ($shipment->shipments_3 === 'Đã Đến Điểm Giao' && $shipment->shipments_4 === 'Chưa xử lý'){
+                $shipment->shipments_4 = "Giao Thành công";
+                $order->status = "Giao Thành công";
+                $order->confirmation_deadline = $now->addMinutes(1);
+                $payment->status = '1';
+            }
+            $shipment->save();
+            $order->save();
+            $payment->save();
+        }else{
+            return back()->with('error', 'Đơn Hàng Đã Được Hủy Vui Lòng Quay Lại Chỗ Nhận Hàng');
         }
-        $shipment->save();
-        $order->save();
-        $payment->save();
+
+
         return back()->with('message', 'Xác Nhận Đơn Thành Công');
     }
 

@@ -111,8 +111,8 @@
                                         <span class="px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-sky-100 border-sky-100 text-sky-500 dark:bg-sky-400/20 dark:border-transparent"> New Arrivals</span>
                                         <h5 class="mt-3 mb-1">{{ $product->name }}</h5>
                                         <ul class="flex flex-wrap items-center gap-4 mb-5 text-slate-500 dark:text-zink-200">
-                                            <li><a href="#!" class="font-medium underline text-custom-500">{{ $product->category->name }}</a></li>
-                                            <li>Thương Hiệu: <a href="#!" class="font-medium">{{ $product->brand->name }}</a></li>
+                                            <li><a href="../client/shop/category/{{ $product->category->name }}" class="font-medium underline text-custom-500">{{ $product->category->name }}</a></li>
+                                            <li>Thương Hiệu: <a class="font-medium">{{ $product->brand->name }}</a></li>
                                             <li>Ngày Sản Phẩm: <span class="font-medium">{{ $product->updated_at->format('d-m-Y') }}</span></li>
                                         </ul>
 
@@ -120,11 +120,11 @@
                                             <div class="flex items-center gap-2 text-yellow-500">
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     @if ($i <= floor($averageRating))
-                                                        <i class="ri-star-fill"></i> <!-- Sao đầy -->
+                                                        <i class="ri-star-fill"></i>
                                                     @elseif ($i - $averageRating < 1)
-                                                        <i class="ri-star-half-line"></i> <!-- Nửa sao -->
+                                                        <i class="ri-star-half-line"></i>
                                                     @else
-                                                        <i class="ri-star-line"></i> <!-- Sao rỗng -->
+                                                        <i class="ri-star-line"></i>
                                                     @endif
                                                 @endfor
 
@@ -142,7 +142,7 @@
                                             <p class="mb-1 text-green-500">Giá Tiền Sản Phẩm</p>
                                             <h4>Giá Giảm : {{ number_format($priceVariant->price_sale) }} VND<small class="font-normal line-through align-middle text-slate-500 dark:text-zink-200">Giá Gốc : {{ number_format($priceVariant->price) }}VND</small> <small class="text-green-500 align-middle">Tổng Giảm : {{ number_format(round(($priceVariant->price - $priceVariant->price_sale) / $priceVariant->price * 100)) }}%</small></h4>
                                         </div>
-                                        <form action="../client/cart/add" method="post">
+                                        <form action="../client/cart/add" method="post" id="postCartDetail">
                                             @csrf
                                             <h6 class="mb-3 text-15">Chọn màu sản phẩm</h6>
                                             <div class="flex flex-wrap items-center gap-2">
@@ -158,38 +158,44 @@
                                             <div class="flex flex-wrap items-center gap-2">
                                                 @foreach($product->variant as $key => $size)
                                                     <div>
-                                                        <input id="selectSize{{ $size->size->name }}" class="hidden peer size-selector-hahah" type="radio" value="{{ $size->size->id }}" name="size_id">
-                                                        <label for="selectSize{{ $size->size->name }}" class="flex items-center justify-center w-8 h-8 text-xs border rounded-md cursor-pointer border-slate-200 dark:border-zink-500 peer-checked:bg-custom-50 dark:peer-checked:bg-custom-500/20 peer-checked:border-custom-300 dark:peer-checked:border-custom-700 peer-disabled:bg-slate-50 dark:peer-disabled:bg-slate-500/20 peer-disabled:border-slate-100 dark:peer-disabled:border-slate-800 peer-disabled:cursor-default peer-disabled:text-slate-500 dark:peer-disabled:text-zink-200">{{ $size->size->name }}</label>
+                                                        <input id="selectSize{{ $size->size->name }}" @if($priceVariant->quantity <= 0) disabled  @endif class="hidden peer size-selector-hahah" type="radio" value="{{ $size->size->id }}" name="size_id">
+                                                        <label for="selectSize{{ $size->size->name }}"  class="flex items-center justify-center w-8 h-8 text-xs border rounded-md cursor-pointer border-slate-200 dark:border-zink-500 peer-checked:bg-custom-50 dark:peer-checked:bg-custom-500/20 peer-checked:border-custom-300 dark:peer-checked:border-custom-700 peer-disabled:bg-slate-50 dark:peer-disabled:bg-slate-500/20 peer-disabled:border-slate-100 dark:peer-disabled:border-slate-800 peer-disabled:cursor-default peer-disabled:text-slate-500 dark:peer-disabled:text-zink-200">{{ $size->size->name }}</label>
                                                     </div>
                                                 @endforeach
 
                                                 <div>
-                                                    <span class="text-red-500" id="quantityVariantPro" style="display: none">Sản phẩm đơn hàng Còn {{ $priceVariant->quantity }}</span>
+                                                    @if($priceVariant->quantity <= 0)
+                                                        <span class="text-red-500" id="quantityVariantPro">Số Lượng Của Màu Đã Hết, Vui Lòng Chọn Màu Khác</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <h6 class="mt-5 mb-3 text-15">Chọn số lượng sản phẩm</h6>
                                             <div class="flex gap-2 mt-4 shrink-0">
                                                 <div class="inline-flex text-center input-step">
                                                     <button type="button" onclick="decrease()" class="border size-9 leading-[15px] minusBtn bg-white dark:bg-zink-700 dark:border-zink-500 ltr:rounded-l rtl:rounded-r transition-all duration-200 ease-linear border-slate-200 text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="minus" class="inline-block size-4"></i></button>
-                                                    <input type="number" name="quantity" id="numberCounter" class="w-12 text-center ltr:pl-2 rtl:pr-2 h-9 border-y product-quantity dark:bg-zink-700 focus:shadow-none dark:border-zink-500" value="1" min="1" max="{{ $priceVariant->quantity }}" readonly="">
+                                                    <input type="number" name="quantity" id="numberCounter" class="w-12 text-center ltr:pl-2 rtl:pr-2 h-9 border-y product-quantity dark:bg-zink-700 focus:shadow-none dark:border-zink-500" value="1" min="1" max="{{ $priceVariant->quantity }}" readonly="" >
                                                     <button type="button" onclick="increase()" class="transition-all duration-200 ease-linear bg-white border dark:bg-zink-700 dark:border-zink-500 ltr:rounded-r rtl:rounded-l size-9 border-slate-200 plusBtn text-slate-500 dark:text-zink-200 hover:bg-custom-500 dark:hover:bg-custom-500 hover:text-custom-50 dark:hover:text-custom-50 hover:border-custom-500 dark:hover:border-custom-500 focus:bg-custom-500 dark:focus:bg-custom-500 focus:border-custom-500 dark:focus:border-custom-500 focus:text-custom-50 dark:focus:text-custom-50"><i data-lucide="plus" class="inline-block size-4"></i></button>
                                                 </div>
+                                                <span class="text-red-500" id="quantityVariantPro" style="display: none">Sản phẩm đơn hàng Còn {{ $priceVariant->quantity }}</span>
                                             </div>
 
                                             <div class="flex gap-2 mt-4 shrink-0">
 
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                 <input type="hidden" name="product_variant_id" value="{{ $priceVariant->id }}">
-                                            <button type="submit" id="add-to-cart" data-product-id="{{ $product->id }}" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">
-                                                <i data-lucide="shopping-cart" class="inline-block align-middle size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                <span class="align-middle">Thêm giỏ hàng</span>
-                                            </button>
+                                                <button @if(Auth::check()) type="submit" @else type="button" @endif  id="add-to-cart" data-product-id="{{ $product->id }}" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">
+                                                    <i data-lucide="shopping-cart" class="inline-block align-middle size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                    <span class="align-middle">Thêm giỏ hàng</span>
+                                                </button>
 
                                             <button type="button" class="w-full"></button>
                                         </div>
                                         </form>
+                                        <a data-modal-target="sizePostCart" class="flex flex-col gap-2 mt-4" style="cursor: pointer;">
+                                            Thông Tin Bảng Quy Đổi Kích Cỡ
+                                        </a>
+                                        <h6 class="mt-3 mb-3 text-15">Các Thông Tin Sản Phẩm</h6>
 
-                                        <h6 class="mt-5 mb-3 text-15">Các Thông Tin Sản Phẩm</h6>
                                         <ul class="flex flex-col gap-2">
                                             {!! $product->content !!}
                                         </ul>
@@ -420,7 +426,92 @@
             </div>
         </div>
     </div><!--end modal-->
-<script>
+    <div id="sizePostCart" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
+        <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600" style="width: 800px">
+            <div class="flex items-center justify-between p-4 border-b dark:border-zink-300/20">
+                <h5 class="text-16">Thông Số Chọn Size</h5>
+                <button data-modal-close="sizePostCart" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+            </div>
+            <div class="max-h-[calc(theme('height.screen')_-_380px)] p-4 overflow-y-auto">
+                <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
+                        <div class="xl:col-span-12">
+                            <table class="w-full whitespace-nowrap mt-5" id="productTable">
+                                <tbody class="list">
+                                    <tr class="bg-color">
+                                        <th class="my-2">US Sizes</th>
+                                        <td>6</td>
+                                        <td>6.5</td>
+                                        <td>7</td>
+                                        <td>8</td>
+                                        <td>8.5</td>
+                                        <td>9</td>
+                                        <td>9.5</td>
+                                        <td>10</td>
+                                        <td>10.5</td>
+                                        <td>11</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Euro Sizes</th>
+                                        <td>39</td>
+                                        <td>39</td>
+                                        <td>40</td>
+                                        <td>40-41</td>
+                                        <td>41</td>
+                                        <td>41-42</td>
+                                        <td>42</td>
+                                        <td>42-43</td>
+                                        <td>43</td>
+                                        <td>43-44</td>
+                                    </tr>
+                                    <tr class="bg-color">
+                                        <th>UK Sizes</th>
+                                        <td>5.5</td>
+                                        <td>6</td>
+                                        <td>6.5</td>
+                                        <td>7</td>
+                                        <td>7.5</td>
+                                        <td>8</td>
+                                        <td>8.5</td>
+                                        <td>9</td>
+                                        <td>10.5</td>
+                                        <td>11</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Inches</th>
+                                        <td>9.25"</td>
+                                        <td>9.5"</td>
+                                        <td>9.625"</td>
+                                        <td>9.75"</td>
+                                        <td>9.9735"</td>
+                                        <td>10.125"</td>
+                                        <td>10.25"</td>
+                                        <td>10.5"</td>
+                                        <td>10.765"</td>
+                                        <td>10.85</td>
+                                    </tr>
+                                    <tr class="bg-color">
+                                    <th>CM</th>
+                                    <td>23.5</td>
+                                    <td>24.1</td>
+                                    <td>24.4</td>
+                                    <td>25.4</td>
+                                    <td>25.7</td>
+                                    <td>26</td>
+                                    <td>26.7</td>
+                                    <td>27</td>
+                                    <td>27.3</td>
+                                    <td>27.5</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div><!--end add user-->
+
+    <script>
     document.addEventListener('DOMContentLoaded', function () {
         const sizeSelectors = document.querySelectorAll('.size-selector-hahah');
         const quantityVariantPro = document.getElementById('quantityVariantPro');
@@ -432,4 +523,21 @@
     });
 
 </script>
+    <script>
+        document.getElementById('postCartDetail').addEventListener('submit', function (e) {
+            const sizeSelectors = document.querySelectorAll('.size-selector-hahah');
+            let isSelected = false;
+
+            sizeSelectors.forEach(selector => {
+                if (selector.checked) {
+                    isSelected = true;
+                }
+            });
+
+            if (!isSelected) {
+                e.preventDefault();
+                alert('Vui Lòng Chọn Kích Thước!');
+            }
+        })
+    </script>
 @endsection

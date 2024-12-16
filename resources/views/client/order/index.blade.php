@@ -56,7 +56,7 @@
                                 <a href="../client/cart" class="transition-all duration-300 ease-linear text-custom-500 hover:text-custom-600"><i data-lucide="chevron-left" class="inline-block align-middle size-4 ltr:mr-1 rtl:ml-1 rtl:rotate-180"></i> <span class="align-middle">Quay lại giỏ hàng</span></a>
                             </div>
                             <div class="shrink-0">
-{{--                                <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span> <i data-lucide="move-right" class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180"></i></button>--}}
+                                <button type="button" data-modal-target="updateAddressOrder" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i class="ri-map-pin-5-fill"></i><span class="align-middle">Đổi Địa Chỉ</span></button>
                             </div>
                         </div>
 
@@ -109,7 +109,7 @@
                                             <!-- Form for adding new address -->
                                             <div class="xl:col-span-12">
                                                 <label for="provinceInput" class="inline-block mb-2 text-base font-medium">Tỉnh/Thành phố</label>
-                                                <input type="text" id="provinceInput" name="Province" class="form-input" placeholder="Enter Province">
+                                                <input type="text" id="provinceInput" name="province" class="form-input" placeholder="Enter Province">
                                             </div>
 
                                             <div class="xl:col-span-12">
@@ -119,12 +119,12 @@
 
                                             <div class="xl:col-span-6">
                                                 <label for="neighborhoodInput" class="inline-block mb-2 text-base font-medium">Neighborhood</label>
-                                                <input type="text" id="neighborhoodInput" name="Neighborhood" class="form-input" placeholder="Enter Neighborhood">
+                                                <input type="text" id="neighborhoodInput" name="address_detail" class="form-input" placeholder="Enter Neighborhood">
                                             </div>
 
                                             <div class="xl:col-span-6">
                                                 <label for="apartmentInput" class="inline-block mb-2 text-base font-medium">Địa chỉ cụ thể</label>
-                                                <input type="text" id="apartmentInput" name="Apartment" class="form-input" placeholder="Enter Apartment">
+                                                <input type="text" id="apartmentInput" name="ward" class="form-input" placeholder="Enter Apartment">
                                             </div>
                                         @endif
                                     </div><!--end grid-->
@@ -139,7 +139,7 @@
                             <div class="overflow-x-auto">
 
                                 <table class="w-full">
-                                    <tbody>
+                                    <tbody class="deleteOrder">
                                         @foreach($cartDetails as $key => $list)
                                             @if($list->product && !$list->product->trashed())
                                                 <tr>
@@ -157,7 +157,7 @@
                                                     <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">{{ number_format($list->product_variant->price_sale * $list->quantity) }} VND</td>
                                                 </tr>
                                             @else
-                                                <tr>
+                                                <tr data-cartDetail="{{ $list->id }}">
                                                     <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
                                                         <div style="width: auto" class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
                                                             <span class="font-bold">Sản phẩm {{ $list->product->name }} Đang Thay Đổi, Vui Lòng Xóa Khỏi Giỏ Hàng và tải lại trang</span>
@@ -184,7 +184,7 @@
                                                 Giá
                                             </td>
                                             {{--  @dd($cart);  --}}
-                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ number_format($totalAmount) }}VND</td>
+                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left response_discount_value">{{ number_format($totalAmount) }}VND</td>
                                         </tr>
                                     </div>
                                         <tr>
@@ -300,6 +300,56 @@
                             @endforeach
                         </div>
                     </div>
+            </div>
+        </div>
+    </div><!--end add user-->
+    <div id="updateAddressOrder" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
+        <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600" style="width: 800px">
+            <div class="flex items-center justify-between p-4 border-b dark:border-zink-300/20">
+                <h5 class="text-16">Chọn Địa Chỉ</h5>
+                <button data-modal-close="updateAddressOrder" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+            </div>
+            <div class="max-h-[calc(theme('height.screen')_-_380px)] p-4 overflow-y-auto">
+                <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
+                    @foreach($addressSelect as $key => $list)
+                        <div class="xl:col-span-12">
+                            <p>Địa Chỉ Nhận Hàng 0{{ $key + 1 }}.</p>
+                            <table class="w-full whitespace-nowrap mt-5" id="productTable">
+                                <thead class="ltr:text-left rtl:text-right bg-slate-100 dark:bg-zink-600">
+                                <tr>
+                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Tỉnh</th>
+                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">Huyện</th>
+                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort revenue" data-sort="revenue">Địa Chỉ Cụ Thể</th>
+                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Hành Động</th>
+                                </tr>
+                                </thead>
+                                <tbody class="list">
+                                <tr>
+                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 category">
+                                        <span class="category px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-slate-100 border-slate-200 text-slate-500 dark:bg-slate-500/20 dark:border-slate-500/20 dark:text-zink-200">
+                                            {{ $list->Province }}
+                                        </span>
+                                    </td>
+                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 price">
+                                        {{ $list->district }}
+                                    </td>
+                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 stock">
+                                        {{ $list->Neighborhood }}
+                                    </td>
+                                    <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 action">
+                                        <form action="../client/order/address/{{ $list->id }}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Chọn</span></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div><!--end add user-->

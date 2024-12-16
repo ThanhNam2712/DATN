@@ -78,9 +78,19 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1">{{ $order->status }}</h6>
+                                        @php
+                                            $statusMap = [
+                                                'pending' => 'Chờ xử lý',
+                                                'processing' => 'Đang xử lý',
+                                                'delivery person' => 'Giao bên vận chuyển',
+                                                'completed' => 'Hoàn thành',
+                                                'cancelled' => 'Đã hủy',
+                                            ];
+                                        @endphp
+                                        <h6 class="mb-1">{{ $statusMap[$order->status] ?? $order->status }}</h6>
                                         <p class="uppercase text-slate-500 dark:text-zink-200">Trạng Thái Đơn</p>
                                     </div>
+
                                 </div>
                             </div><!--end col-->
                         </div><!--end grid-->
@@ -114,6 +124,12 @@
                                                 Mã Giảm Giá
                                             </td>
                                             <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ $order->coupon ?? 'Đơn Hàng Này Bạn Không Sử Dụng Mã'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Tổng Tiền Được Giảm
+                                            </td>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">-{{ number_format($order->total_discount) }} VND</td>
                                         </tr>
                                         <tr class="font-semibold">
                                             <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
@@ -268,6 +284,17 @@
                                         <p class="mb-1 text-slate-500 dark:text-zink-200">Quận Huyện : {{ $order->district }}</p>
                                         <p class="text-slate-500 dark:text-zink-200">Ngõ : {{ $order->ward }}</p>
                                         <p class="text-slate-500 dark:text-zink-200">Số Nhà : {{ $order->address_detail }}</p>
+                                    </div>
+                                </div>
+                            </div><!--end col-->
+                        </div>
+                        <div class="card">
+                            <div class="2xl:col-span-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="mb-4 text-15">Thông Tin Cần Thêm Nếu Muốn</h6>
+                                        <h6 class="mb-1"><a href="../client/order/download-load/{{ $order->barcode }}">{{ QrCode::size(200)->generate($order->barcode) }}</a></h6>
+                                        <p class="text-slate-500 dark:text-zink-200">Tải Xuống Nếu Cần</p>
                                     </div>
                                 </div>
                             </div><!--end col-->

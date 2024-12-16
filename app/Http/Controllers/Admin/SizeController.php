@@ -27,7 +27,7 @@ class SizeController extends Controller
         }
         ProductSize::create($data);
         return redirect()->back()->with([
-            'message' => 'Size Color Success'
+            'success' => 'Thêm thành công'
         ]);
     }
 
@@ -44,7 +44,7 @@ class SizeController extends Controller
         }
 
         return redirect()->back()->with([
-            'message' => 'Update Size Success'
+            'success' => 'Cập nhật thành công'
         ]);
     }
 
@@ -53,7 +53,7 @@ class SizeController extends Controller
         $size = ProductSize::find($id);
         $size->delete();
         return redirect()->back()->with([
-            'message' => 'Delete Size Success'
+            'success' => 'Xóa thành công'
         ]);
     }
 }

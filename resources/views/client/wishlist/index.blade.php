@@ -16,7 +16,7 @@
                             <section class="relative py-24 xl:py-32" id="product">
                                 <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
                                     <div class="mx-auto text-center xl:max-w-3xl">
-                                        <h1 class="mb-0 leading-normal capitalize">Our Latest Product</h1>
+                                        <h1 class="mb-0 leading-normal capitalize">Sản Phẩm Được Thích</h1>
                                     </div>
                                     @if(Session::has('success'))
                                         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

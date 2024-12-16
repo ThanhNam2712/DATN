@@ -106,8 +106,7 @@
                         data-aos="fade-right"
                         data-aos-delay="600"
                     >
-                        Nằm Trên Đường Trịnh Văn Bô, Đối Diện Xuân Phương, Cổng 1 .
-                    </p>
+                    Cổng số 1, Tòa nhà FPT Polytechnic, 13 phố Trịnh Văn Bô, phường Phương Canh, quận Nam Từ Liêm, TP Hà Nội                    </p>
                 </div>
                 <div class="col-span-12 xl:col-span-7 2xl:col-start-8 2xl:col-span-6">
                     <div class="relative mt-10 xl:mt-0">

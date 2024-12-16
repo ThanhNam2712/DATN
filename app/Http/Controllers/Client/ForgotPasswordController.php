@@ -32,17 +32,17 @@ class ForgotPasswordController extends Controller
 
             $email_to = $user->email;
             Mail::send('client.mail.pass', compact('user'), function ($message) use ($email_to) {
-                $message->from('tuancdph43313@fpt.adu.vn', 'Tuan Clothing');
+                $message->from('tuancdph43313@fpt.adu.vn', 'AE Boutique');
                 $message->to($email_to, $email_to);
-                $message->subject("Forgot Notification");
+                $message->subject("Đặt lại mật khẩu");
             });
 
             return redirect()->back()->with([
-                'message' => 'Please check your mailbox'
+                'success' => 'Vui lòng kiểm tra hộp thư Email của bạn'
             ]);
         }else{
             return redirect()->back()->with([
-                'message' => 'Email Not is incorrect'
+                'error' => 'Không gửi được Email'
             ]);
         }
     }
@@ -54,21 +54,22 @@ class ForgotPasswordController extends Controller
     }
 
     public function confirmPass(Request $request, $id)
-    {
-        $user = User::where('id', '=' , $id)->first();
-        if ($request->password == $request->password_confirmation){
-            $user->password = Hash::make($request->password_confirmation);
-            $user->save();
+{
+    $request->validate([
+        'password' => 'required|min:4|max:40|confirmed',
+        'password_confirmation' => 'required',
+    ], [
+        'password.confirmed' => 'Mật khẩu và mật khẩu xác nhận không khớp',
+    ]);
 
-            return redirect('account/show-login')->with([
-                'message' => 'Change Password Success, Please login again'
-            ]);
-        }else{
-            return redirect()->back()->with([
-                'message' => 'New Password does Not Match'
-            ]);
-        }
-    }
+    $user = User::findOrFail($id);
+    $user->password = Hash::make($request->password);
+    $user->save();
+
+    return redirect('account/show-login')->with([
+        'success' => 'Thay đổi mật khẩu thành công, vui lòng đăng nhập lại.'
+    ]);
+}
 
     /**
      * Gửi email reset mật khẩu.

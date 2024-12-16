@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Sign In | StarCode & Dashboard Template</title>
+    <title>Đăng Nhập</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta content="Minimal Admin & Dashboard Template" name="description">
     <meta content="StarCode Kh" name="author">
@@ -24,18 +24,15 @@
 
 <div class="mb-0 border-none lg:w-[500px] card bg-white/70 shadow-none dark:bg-zink-500/70">
     <div class="!px-10 !py-12 card-body">
-        <a href="index-1.html">
-            <img src="../assets/images/logo-light.png" alt="" class="hidden h-6 mx-auto dark:block">
-            <img src="../assets/images/logo-dark.png" alt="" class="block h-6 mx-auto dark:hidden">
-        </a>
+
         @if(session('message'))
             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                 <span class="font-bold">{{ session('message') }}</span>
             </div>
         @endif
         <div class="mt-8 text-center">
-            <h4 class="mb-2 text-purple-500 dark:text-purple-500">Welcome Back !</h4>
-            <p class="text-slate-500 dark:text-zink-200">Sign in to continue to starcode.</p>
+            <h4 class="mb-2 text-purple-500 dark:text-purple-500">Đăng Nhập</h4>
+            <p class="text-slate-500 dark:text-zink-200">Đăng nhập trang quản trị</p>
         </div>
 
         <form action="../login/login" method="post" class="mt-10" id="signInForm">
@@ -44,27 +41,27 @@
                 You have <b>successfully</b> signed in.
             </div>
             <div class="mb-3">
-                <label for="username" class="inline-block mb-2 text-base font-medium">UserName/ Email ID</label>
-                <input type="email" name="email" id="username" class="form-input dark:bg-zink-600/50 border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter username or email">
+                <label for="username" class="inline-block mb-2 text-base font-medium">Email</label>
+                <input type="email" name="email" id="username" class="form-input dark:bg-zink-600/50 border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nhập email">
                 <div id="username-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email address.</div>
             </div>
             <div class="mb-3">
-                <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                <input type="password" id="password" name="password" class="form-input dark:bg-zink-600/50 border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter password">
+                <label for="password" class="inline-block mb-2 text-base font-medium">Mật khẩu</label>
+                <input type="password" id="password" name="password" class="form-input dark:bg-zink-600/50 border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nhập mật khẩu">
                 <div id="password-error" class="hidden mt-1 text-sm text-red-500">Password must be at least 8 characters long and contain both letters and numbers.</div>
             </div>
             <div>
-                <div class="flex items-center gap-2">
+                {{-- <div class="flex items-center gap-2">
                     <input id="checkboxDefault1" class="border rounded-sm appearance-none size-4 bg-slate-100 border-slate-200 dark:bg-zink-600/50 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" value="">
                     <label for="checkboxDefault1" class="inline-block text-base font-medium align-middle cursor-pointer">Remember me</label>
-                </div>
-                <div id="remember-error" class="hidden mt-1 text-sm text-red-500">Please check the "Remember me" before submitting the form.</div>
+                </div> --}}
+                {{-- <div id="remember-error" class="hidden mt-1 text-sm text-red-500">Please check the "Remember me" before submitting the form.</div> --}}
             </div>
             <div class="mt-10">
-                <button type="submit" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Sign In</button>
+                <button type="submit" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Đăng nhập</button>
             </div>
 
-            <div class="relative text-center my-9 before:absolute before:top-3 before:left-0 before:right-0 before:border-t before:border-t-slate-200 dark:before:border-t-zink-500">
+            {{-- <div class="relative text-center my-9 before:absolute before:top-3 before:left-0 before:right-0 before:border-t before:border-t-slate-200 dark:before:border-t-zink-500">
                 <h5 class="inline-block px-2 py-0.5 text-sm bg-white text-slate-500 dark:bg-zink-600 dark:text-zink-200 rounded relative">Sign In with</h5>
             </div>
 
@@ -73,11 +70,11 @@
                 <button type="button" class="flex items-center justify-center size-[37.5px] transition-all duration-200 ease-linear p-0 text-white btn bg-orange-500 border-orange-500 hover:text-white hover:bg-orange-600 hover:border-orange-600 focus:text-white focus:bg-orange-600 focus:border-orange-600 active:text-white active:bg-orange-600 active:border-orange-600"><i data-lucide="mail" class="size-4"></i></button>
                 <button type="button" class="flex items-center justify-center size-[37.5px] transition-all duration-200 ease-linear p-0 text-white btn bg-sky-500 border-sky-500 hover:text-white hover:bg-sky-600 hover:border-sky-600 focus:text-white focus:bg-sky-600 focus:border-sky-600 active:text-white active:bg-sky-600 active:border-sky-600"><i data-lucide="twitter" class="size-4"></i></button>
                 <button type="button" class="flex items-center justify-center size-[37.5px] transition-all duration-200 ease-linear p-0 text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 active:text-white active:bg-slate-600 active:border-slate-600"><i data-lucide="github" class="size-4"></i></button>
-            </div>
+            </div> --}}
 
-            <div class="mt-10 text-center">
+            {{-- <div class="mt-10 text-center">
                 <p class="mb-0 text-slate-500 dark:text-zink-200">Don't have an account ? <a href="auth-register-basic.html" class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500"> SignUp</a> </p>
-            </div>
+            </div> --}}
         </form>
     </div>
 </div>

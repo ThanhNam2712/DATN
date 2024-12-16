@@ -60,8 +60,17 @@
                             <div>
                                 <div class="card">
                                     <div class="text-center card-body">
-                                        <h6 class="mb-1">{{ $order->status }}</h6>
-                                        <p class="uppercase text-slate-500 dark:text-zink-200">Trạng Thái Đơn</p>
+                                        @php
+                                        $statusMap = [
+                                            'pending' => 'Chờ xử lý',
+                                            'processing' => 'Đang xử lý',
+                                            'delivery person' => 'Giao bên vận chuyển',
+                                            'completed' => 'Hoàn thành',
+                                            'cancelled' => 'Đã hủy',
+                                        ];
+                                    @endphp
+                                                              <h6 class="mb-1">{{ $statusMap[$order->status] ?? $order->status }}</h6>
+                                                              <p style="color: red" class="uppercase text-slate-500 dark:text-zink-200">Trạng Thái Đơn</p>
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -70,23 +79,18 @@
                             <div class="card-body">
                                 <div class="flex items-center gap-3 mb-4">
                                     <h6 class="text-15 grow">Chi Tiết Đơn Hàng</h6>
-                                    @if ($order->shipmentOrder->shipments_1 != 'Đã Nhận Đơn')
+                                    @if ($order->shipmentOrder->shipments_1 != 'Đã Nhận Đơn' && $order->status != 'delivery person')
                                         <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <select name="status" style="color: red" class="form-select">
-                                            <option value="pending" {{ $order->status == 'pending' ? 'selected'
-                                                        : '' }}>Chờ xử lý</option>
-                                            <option value="processing" {{ $order->status == 'processing' ?
-                                                        'selected' : '' }}>Đang xử lý</option>
-                                            <option value="delivery person" {{ $order->status == 'delivery person' ?
-                                                        'selected' : '' }}>Giao bên vận chuyển</option>
-                                        </select>
-                                        <button style="color: green" type="submit"
-                                                class="btn btn-primary mt-2">Cập nhật</button>
-                                    </form>
+                                            @csrf
+                                            @method('PUT')
+                                            <select name="status" style="color: red" class="form-select">
+                                                <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xử lý</option>
+                                                <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử lý</option>
+                                                <option value="delivery person" {{ $order->status == 'delivery person' ? 'selected' : '' }}>Giao bên vận chuyển</option>
+                                            </select>
+                                            <button style="color: green" type="submit" class="btn btn-primary mt-2">Cập nhật</button>
+                                        </form>
                                     @else
-
                                     @endif
                                 </div>
                                 <div class="overflow-x-auto">
@@ -113,6 +117,12 @@
                                                     Mã Giảm Giá
                                                 </td>
                                                 <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ $order->coupon ?? 'Đơn Hàng Này Bạn Không Sử Dụng Mã'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                    Tổng Tiền Được Giảm
+                                                </td>
+                                                <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">-{{ number_format($order->total_discount) }} VND</td>
                                             </tr>
                                             <tr class="font-semibold">
                                             <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
@@ -141,7 +151,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Cancel</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Hủy Đơn Hàng</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->cancel}}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0" >{{ $order->shipmentOrder->updated_at }}</p>
@@ -152,7 +162,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Placed</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Hoàn Thành</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_5 }}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -163,7 +173,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Order Processing</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Đã Điểm Giao</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_4 }}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -174,7 +184,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Shipped Order</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Đến Điểm Giao</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_3 }}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -185,7 +195,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Out for Delivery</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Trạng Thái Giao</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_2 }}.</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -196,7 +206,7 @@
                                         <div class="relative ltr:pl-6 rtl:pr-6 before:absolute ltr:before:border-l rtl:before:border-r ltr:before:left-[0.1875rem] rtl:before:right-[0.1875rem] before:border-slate-200 [&.done]:before:border-custom-500 before:top-1.5 before:-bottom-1.5 after:absolute after:size-2 after:bg-white after:border after:border-slate-200 after:rounded-full ltr:after:left-0 rtl:after:right-0 after:top-1.5 pb-4 last:before:hidden [&.done]:after:bg-custom-500 [&.done]:after:border-custom-500 done">
                                             <div class="flex gap-4">
                                                 <div class="grow">
-                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Delivered</h6>
+                                                    <h6 class="mb-2 text-gray-800 text-15 dark:text-zink-50">Trạng Thái Nhận</h6>
                                                     <p class="text-gray-400 dark:text-zink-200" style="color: red">{{ $order->shipmentOrder->shipments_1 }}</p>
                                                 </div>
                                                 <p class="text-sm text-gray-400 dark:text-zink-200 shrink-0">{{ $order->shipmentOrder->updated_at }}</p>
@@ -250,6 +260,17 @@
                                 </div>
                             </div><!--end col-->
                         </div>
+                        <div class="card">
+                            <div class="2xl:col-span-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="mb-4 text-15">Thông Tin Cần Thêm Nếu Muốn</h6>
+                                        <h6 class="mb-1"><a href="../admin/orders/download-load/{{ $order->barcode }}">{{ QrCode::size(200)->generate($order->barcode) }}</a></h6>
+                                        <p class="text-slate-500 dark:text-zink-200">Tải Xuống Nếu Cần</p>
+                                    </div>
+                                </div>
+                            </div><!--end col-->
+                        </div>
                     </div><!--end col-->
                 </div><!--end grid-->
 
@@ -273,8 +294,8 @@
                         @method('PUT')
                         <textarea name="cancel_8" class="mt-4 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Reason for Cancellation" rows="5" style="height: 80px;"></textarea>
                         <div class="flex justify-center gap-2 mt-6">
-                            <button type="reset" data-modal-close="deleteModal" class="bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-600 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10">Cancel</button>
-                            <button type="submit" class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Giao Thất Bại!</button>
+                            <button type="reset" data-modal-close="deleteModal" class="bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-600 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10">Thoát</button>
+                            <button type="submit" class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Lưu</button>
                         </div>
                     </form>
                 </div>

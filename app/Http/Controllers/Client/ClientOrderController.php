@@ -55,7 +55,9 @@ class ClientOrderController extends Controller
         $address = Address::where('user_id', $user->id)
             ->where('is_default', 1)
             ->first();
-
+        $addressSelect = Address::where('user_id', $user->id)
+            ->whereNot('is_default', 1)
+            ->get();
         $usedCouponIds = Coupon_user::where('user_id', $user->id)->pluck('coupon_id');
         $coupons = Coupon::whereNotIn('id', $usedCouponIds)
             ->where('expiration_date', '>=', now())
@@ -69,7 +71,7 @@ class ClientOrderController extends Controller
             return $detail->product_variant->price_sale * $detail->quantity;
         });
         return view('client.order.index', compact('cartDetails', 'address', 'user',
-            'hasDeletedProduct', 'coupons', 'totalAmount'));
+            'hasDeletedProduct', 'coupons', 'totalAmount', 'addressSelect'));
     }
 
     public function checkBox(Request $request)
@@ -134,7 +136,43 @@ class ClientOrderController extends Controller
                     'address_detail' => $request->address_detail,
                     'phone_number' => $request->phone_number,
                     'coupon' => $request->coupon,
+                    'total_discount' => $request->total_discount,
                 ]);
+                $userId = session('user_id');
+                $totalAmount = session('total_amount');
+                $email = session('email');
+                $status = 'pending';
+                $province = session('province');
+                $district = session('district');
+                $ward = session('ward');
+                $addressDetail = session('address_detail');
+                $phoneNumber = session('phone_number');
+                $coupon = session('coupon');
+                $discount = session('total_discount');
+
+                $data = [
+                    'user_id' => $userId,
+                    'total_amount' => $totalAmount,
+                    'email' => $email,
+                    'status' => $status,
+                    'province' => $province,
+                    'district' => $district,
+                    'ward' => $ward,
+                    'address_detail' => $addressDetail,
+                    'phone_number' => $phoneNumber,
+                    'coupon' => $coupon,
+                ];
+                $coupon = Coupon::where('code', $data['coupon'])
+                    ->where('start_end', '<=', now())
+                    ->where('expiration_date', '>=', now())
+                    ->first();
+
+                if ($coupon){
+                    if ($coupon->number <= 0){
+                        return redirect()->back()->with('error', 'Mã Đã Hết số lượng vui lòng chọn mã khác');
+                    }
+
+                }
                 $session = \Stripe\Checkout\Session::create([
                     'customer_email' => Auth::user()->email,
                     'line_items'  => [
@@ -170,9 +208,15 @@ class ClientOrderController extends Controller
         $data = [
             'user_id' => Auth::id(),
             'total_amount' => $request->total_amount,
-            'email' => Auth::user()->email,
-            'status' => 0,
-            'payment_status' => 0,
+            'email' => $request->email,
+            'status' => 'pending',
+            'province' => $request->province,
+            'district' => $request->district,
+            'ward' => $request->ward,
+            'address_detail' => $request->address_detail,
+            'phone_number' => $request->phone_number,
+            'coupon' => $request->coupon,
+            'total_discount' => $request->total_discount,
         ];
         $coupon = Coupon::where('code', $data['coupon'])
             ->where('start_end', '<=', now())
@@ -215,6 +259,7 @@ class ClientOrderController extends Controller
             if (in_array($list->id, $selectedProducts)) {
                 $productVariant = ProductVariant::find($list->product_variant_id);
                 if ($productVariant && $productVariant->quantity < $list->quantity) {
+                    $order->delete();
                     return redirect()->back()->with('error', 'Sản phẩm ' . $list->product->name . ' không đủ số lượng để đặt hàng.');
                 }
                 OrderItem::create([
@@ -270,7 +315,7 @@ class ClientOrderController extends Controller
             $addressDetail = session('address_detail');
             $phoneNumber = session('phone_number');
             $coupon = session('coupon');
-
+            $discount = session('total_discount');
             $data = [
                 'user_id' => $userId,
                 'total_amount' => $totalAmount,
@@ -282,6 +327,7 @@ class ClientOrderController extends Controller
                 'address_detail' => $addressDetail,
                 'phone_number' => $phoneNumber,
                 'coupon' => $coupon,
+                'total_discount' => $discount,
             ];
             $coupon = Coupon::where('code', $data['coupon'])
                 ->where('start_end', '<=', now())
@@ -292,17 +338,7 @@ class ClientOrderController extends Controller
                 if ($coupon->number <= 0){
                     return redirect()->back()->with('error', 'Mã Đã Hết số lượng vui lòng chọn mã khác');
                 }
-                $couponUsed = Coupon_user::where('user_id', Auth::id())
-                    ->where('coupon_id', $coupon->id)
-                    ->first();
 
-                if (!$couponUsed) {
-                    Coupon_user::create([
-                        'user_id' => Auth::id(),
-                        'coupon_id' => $coupon->id,
-                    ]);
-                    $coupon->decrement('number', 1);
-                }
             }
             $number = mt_rand(1000000000, 9999999999);
             $data['barcode'] = $number;
@@ -327,6 +363,7 @@ class ClientOrderController extends Controller
                 if (in_array($list->id, $selectedProducts)) {
                     $productVariant = ProductVariant::find($list->product_variant_id);
                     if ($productVariant && $productVariant->quantity < $list->quantity) {
+                        $order->delete();
                         return redirect()->back()->with('error', 'Sản phẩm ' . $list->product->name . ' không đủ số lượng để đặt hàng.');
                     }
                     OrderItem::create([
@@ -346,7 +383,19 @@ class ClientOrderController extends Controller
                 }
             }
 
+            if ($coupon){
+                $couponUsed = Coupon_user::where('user_id', Auth::id())
+                    ->where('coupon_id', $coupon->id)
+                    ->first();
 
+                if (!$couponUsed) {
+                    Coupon_user::create([
+                        'user_id' => Auth::id(),
+                        'coupon_id' => $coupon->id,
+                    ]);
+                    $coupon->decrement('number', 1);
+                }
+            }
             Payment::create([
                 'order_id' => $order->id,
                 'payment_method' => $paymentMethodType,
@@ -376,6 +425,7 @@ class ClientOrderController extends Controller
                 'address_detail',
                 'phone_number',
                 'coupon',
+                'total_discount',
             ]);
             session()->forget('selected_carts');
             return view('client.order.success' ,compact('order'));
