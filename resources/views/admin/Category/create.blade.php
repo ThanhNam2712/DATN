@@ -19,8 +19,7 @@
                         <h6 class="mb-4 text-15">Form Thêm Danh Mục</h6>
 
                         <div class="mx-auto md:max-w-lg">
-                            <form action="{{ route('admin.categories.store') }}" method="POST"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-4">
                                     <label for="nameInput" class="inline-block mb-2 text-base font-medium">Tên Danh Mục
@@ -78,7 +77,6 @@
                             });
                         </script>
                     </div>
-
                 </div>
             </div>
         </footer>

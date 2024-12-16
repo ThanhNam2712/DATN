@@ -22,7 +22,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4 text-15">Create Image: {{ $variant->color->name }}</h6>
-                            <form action="../admin/gallery/product/{{ $product->id }}/create/" method="post" enctype="multipart/form-data">
+                            <form action="../admin/gallery/product/{{ $product->id }}/create/" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     <div class="lg:col-span-2 xl:col-span-12">

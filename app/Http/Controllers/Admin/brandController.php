@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Utilities\Common;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -15,14 +16,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::query()->latest('id')->paginate(5);
-
-        // Kiểm tra nếu yêu cầu là dạng JSON (thường dùng cho API)
-        if (request()->wantsJson()) {
-            return response()->json($brands);
-        }
-
-        // Nếu không phải yêu cầu JSON, trả về view với dữ liệu 'brands'
+        $brands = Brand::orderByDesc('id')->paginate(5);
         return view('admin.brands.index', compact('brands'));
 
     }
@@ -51,7 +45,7 @@ class BrandController extends Controller
 
         ];
         if ($request->hasFile('image')) {
-            $dataBrand['image'] = Storage::put('brands', $request->file('image'));
+            $dataBrand['image'] = Common::uploadFile($request->file('image'), 'admin/img/brands');
         }
         Brand::query()->create($dataBrand);
         return redirect()->route('brands.index')
@@ -98,21 +92,18 @@ class BrandController extends Controller
         ]);
         $brand = Brand::findOrFail($id);
         if ($request->hasFile('image')) {
-            // Xóa ảnh cũ nếu có
-            if ($brand->image) {
-                Storage::delete($brand->image);
+            $data['image'] = Common::uploadFile($request->file('image'), 'admin/img/brands');
+
+            $file_old = $brand->image;
+            if ($file_old && Storage::disk('public')->exists($file_old)) {
+                Storage::disk('public')->delete($file_old);
             }
-            // Lưu ảnh mới
-            $data['image'] = Storage::put('brands', $request->file('image'));
+
         } else {
-            // Giữ nguyên ảnh cũ nếu không có ảnh mới
             $data['image'] = $brand->image;
         }
-
-        // Cập nhật thông tin brand
         $brand->update($data);
-
-        return redirect()->route('brands.index')
+        return redirect()->back()
             ->with('success', 'Sửa thành công');
     }
 
@@ -122,11 +113,25 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         //
-        $brand = Brand::findOrFail($id);
+        $brand = Brand::find($id);
         $brand->delete();
-        if ($brand->image && $brand->image && file_exists(public_path($brand->image))) {
-            unlink(public_path($brand->image));
-        }
-        return redirect()->route('brands.index');
+        return redirect()->back()->with([
+            'message' => 'Ẩn Thương Hiệu Thành Công'
+        ]);
+    }
+
+    public function soft()
+    {
+        $brands = Brand::onlyTrashed()->paginate(5);
+        return view('admin.brands.soft', compact('brands'));
+    }
+
+    public function restore($id)
+    {
+        $brands = Brand::onlyTrashed()->find($id);
+        $brands->restore();
+        return back()->with([
+            'message' => 'Xóa ẩn Thương Hiệu Thành Công'
+        ]);
     }
 }

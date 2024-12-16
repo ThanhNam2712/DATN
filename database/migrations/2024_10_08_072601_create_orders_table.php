@@ -18,6 +18,11 @@ return new class extends Migration
             $table->double('total_amount');
             $table->boolean('status');
             $table->boolean('payment_status');
+            $table->string('Province')->nullable();;
+            $table->string('district')->nullable();;
+            $table->string('Neighborhood')->nullable();;
+            $table->string('Apartment')->nullable();;
+            $table->string('phone_number')->nullable();;
             $table->timestamps();
         });
     }

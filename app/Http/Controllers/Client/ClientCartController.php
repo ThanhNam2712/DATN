@@ -14,9 +14,22 @@ class ClientCartController extends Controller
     public function index()
     {
         $cart = Cart::where('user_id', Auth::id())
-            ->with('cartDetail:cart_id,id,product_id,product_variant_id,color_id,size_id,quantity')
+            ->with([
+                'cartDetail' => function ($query) {
+                    $query->with(['product' => function ($productQuery) {
+                        $productQuery->withTrashed();
+                    }, 'cart' ,'product_variant', 'color', 'size']);
+                }
+            ])
             ->first();
-        return view('client.cart.index', compact('cart'));
+        $hasDeletedProduct = false;
+        foreach ($cart->cartDetail as $detail) {
+            if ($detail->product && $detail->product->trashed()) {
+                $hasDeletedProduct = true;
+                break;
+            }
+        }
+        return view('client.cart.index', compact('cart', 'hasDeletedProduct'));
     }
 
     public function add(Request $request)
@@ -69,7 +82,7 @@ class ClientCartController extends Controller
 
         // trả về thông báo
         return redirect()->back()->with([
-            'message' => 'Add Cart Success'
+            'message' => 'Thêm Sản Phẩm Vào Giỏ Hàng Thành Công'
         ]);
     }
 

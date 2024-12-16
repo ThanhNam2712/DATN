@@ -4,96 +4,152 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\ChangeEmail;
+use App\Models\Coupon;
+use App\Models\Coupon_user;
 use App\Models\User;
+use App\Utilities\Common;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class UserEditController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
-        $address = $user->addresses;
+        $id = Auth::id();
+        $address = Address::where('user_id', $id)->get();
 
-        return view('client.account.index', compact('user', 'address'));
+        $usedCouponIds = Coupon_user::where('user_id', $id)->pluck('coupon_id');
+        $coupon = Coupon::whereNotIn('id', $usedCouponIds)
+            ->where('expiration_date', '>=', now())
+            ->where(function ($query) use ($id) {
+                $query->whereNull('user_id')
+                ->orWhere('user_id', $id);
+            })
+            ->get();
+
+        $total = User::where('users.id', $id)
+            ->join('orders', 'users.id', '=' , 'orders.user_id')
+            ->where('orders.status', 'completed')
+            ->sum('orders.total_amount');
+
+        $countOrder = User::where('users.id', $id)
+        ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->where('orders.status', 'completed')
+            ->count('orders.id');
+
+        return view('client.profile.index', compact('address', 'coupon', 'total', 'countOrder'));
     }
 
-    public function editProfile()
+    private function location($endpoint)
     {
-        $user = Auth::user();
-        return view('client.account.edit', compact('user'));
+        return Http::withHeaders([
+            'token' => '33d38975-8f97-11ef-b065-1e41f6c66bec',
+        ])->withoutVerifying()->timeout(120)->get('https://provinces.open-api.vn/api/' . $endpoint)->json();
     }
 
-    public function updateProfile(Request $request)
+    public function update(Request $request, $id)
     {
-        $user = Auth::user();
-
-        // Xác thực dữ liệu đầu vào
+        $user = User::find($id);
         $data = $request->validate([
             'name' => 'required|min:6|max:100',
-            'email' => 'required|email|unique:users,email,' . $user->id,
             'sdt' => 'nullable|numeric', // Nếu có số điện thoại
-            'password' => 'nullable|min:4|max:100',
         ]);
+        if ($request->hasFile('avatar')) {
+            $data['avatar'] = Common::uploadFile($request->file('avatar'), 'client/img/avatar');
 
-        // Băm mật khẩu nếu có thay đổi
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($data['password']);
+            $file_old = $request->input('file_old');
+            if ($file_old && Storage::disk('public')->exists($file_old)) {
+                Storage::disk('public')->delete($file_old);
+            }
         }
 
         $user->update($data);
-        return redirect()->route('auth.user.account')->with('success', 'Thông tin người dùng đã được cập nhật.');
-    }
-    public function addAddresses()
-    {
-        return view('client.account.add_address');
-    }
-
-    public function storeAddAddress(Request $request)
-    {
-        $data = $request->validate([
-            'Province' => 'required|string|max:100',
-            'district' => 'required|string|max:100',
-            'Neighborhood' => 'nullable|string|max:100',
-            'Apartment' => 'nullable|string|max:100',
+        return redirect()->back()->with([
+            'message' => 'Update Profile Success'
         ]);
-        $data['status'] = $data['status'] ?? 0;
-
-
-        auth()->user()->addresses()->create($data);
-
-        return redirect()->route('auth.user.account')->with('success', 'Địa chỉ đã được thêm thành công.');
     }
 
-    public function editAddress($id)
+    public function changePass(Request $request)
     {
-        $address = auth()->user()->addresses()->findOrFail($id);
-        return view('client.account.edit_address', compact('address'));
-    }
+        if (!Hash::check($request->passOld, Auth::user()->password)) {
+            return redirect()->back()->with(['message' => 'The current password is incorrect']);
+        } elseif ($request->pass_confirm != $request->passNew) {
+            return redirect()->back()->with(['message' => 'The current password is incorrect']);
+        }
 
-    public function updateAddress(Request $request, $id)
-    {
-        $address = auth()->user()->addresses()->findOrFail($id);
-        $data = $request->validate([
-            'Province' => 'required|string|max:100',
-            'district' => 'required|string|max:100',
-            'Neighborhood' => 'nullable|string|max:100',
-            'Apartment' => 'nullable|string|max:100',
+        Auth::user()->update([
+            'password' => Hash::make($request->pass_confirm),
         ]);
 
+        return redirect()->back()->with([
+            'message' => 'Update Password Success',
+        ]);
+    }
+
+    public function changeAddress(Request $request, $id)
+    {
+        $address = Address::find($id);
+        $data = $request->all();
+
+        if ($request->has('is_default') && $request->input('is_default') == 1) {
+            Address::where('user_id', Auth::id())
+                ->where('id', '!=', $id)
+                ->update(['is_default' => 0]);
+        }
         $address->update($data);
-
-        return redirect()->route('auth.user.account')->with('success', 'Địa chỉ đã được cập nhật thành công.');
+        return redirect()->back()->with([
+            'message' => 'Update Address Success',
+        ]);
     }
 
-    public function destroy($id)
+    public function store(Request $request)
     {
-        $address = auth()->user()->addresses()->findOrFail($id);
+        $data = $request->all();
+        $data['is_default'] = $request->has('is_default') ? 1 : 0;
 
+        $address = Address::create($data);
+
+        if ($data['is_default'] == 1) {
+            Address::where('user_id', Auth::id())
+                ->where('id', '!=', $address->id)
+                ->update(['is_default' => 0]);
+        }
+        return redirect()->back()->with([
+            'message' => 'Create Address Success',
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $address = Address::find($id);
         $address->delete();
+        return redirect()->back()->with([
+            'message' => 'Delete Address Success'
+        ]);
+    }
 
-        return redirect()->route('auth.user.account')->with('success', 'Địa chỉ đã được xóa thành công.');
+    public function changeEmail()
+    {
+        return view('client.change.email');
+    }
+
+    public function postEmail(Request $request)
+    {
+
+        $request->validate([
+            'change_email' => 'required|email|unique:users,email',
+        ]);
+        $userId = Auth::id();
+        $data = $request->all();
+        $data['processed_by'] = $userId;
+        ChangeEmail::create($data);
+
+        return back()->with([
+            'message' => 'Yêu Cầu Thay Đổi Email Thành Công, Vui Lòng Đợi Email Từ Admin'
+        ]);
     }
 }

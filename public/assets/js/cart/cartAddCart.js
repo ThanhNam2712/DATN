@@ -14,15 +14,17 @@ function updateCart(cartDetail, quantity){
         },
 
         success: function (response){
-            $('.cart-total').text('$' +response.total_amuont);
-            $('.products-line-price').text(response.totalResponse);
+            var cart_body = $('.products-cart');
+            var cart_exitsItem = cart_body.find("div[data-cartDetail='" + cartDetail +"']");
+            $('.cart-total').text( numberFormat(response.total_amuont) + 'VND');
+            cart_exitsItem.find('.products-line-price').text( numberFormat(response.totalResponse));
             $('.sumQuantity').text('Shopping Cart (' + response.sumQuantity + ')');
-            alert('Update Cart Success!');
+            alert('Cập Nhật Số Lượng Thành Công!');
         },
 
         error: function (response){
             console.log(response)
-            alert('Update Cart Fail!, ');
+            alert('Cập Nhật Thất Bại!, ');
         }
     });
 
@@ -40,18 +42,33 @@ function deleteCart(cartDetail){
         success: function (response){
             var cart_body = $('.products-cart');
             var cart_exitsItem = cart_body.find("div[data-cartDetail='" + cartDetail +"']");
-            $('.cart-total').text('$' +response.total_amuont);
+            $('.cart-total').text(numberFormat(response.total_amuont) + 'VND');
+            $('.hidden_response_total').text(numberFormat(response.total_amuont) + 'VND');
+            $('.response_discount_value').text(numberFormat(response.total_amuont) + 'VND');
             $('.products-line-price').text(response.totalResponse);
             $('.sumQuantity').text('Shopping Cart (' + response.sumQuantity + ')');
             cart_exitsItem.remove();
-            alert('Delete Cart Success!');
+
+            var cart_master = $('.product-trashed');
+            var cart_body_mas = cart_master.find("div[data-cartDetail='" + cartDetail +"']");
+            cart_body_mas.remove();
+
+            var cartOrder = $('.deleteOrder');
+            var cartOrder_exits = cartOrder.find("tr[data-cartDetail='" + cartDetail +"']");
+            cartOrder_exits.remove();
+            alert('Xóa Sản Phẩm Khỏi Giỏ Hàng Thành Công!');
         },
 
         error: function (response){
             console.log(response)
-            alert('Update Cart Fail!, ');
+            alert('Xóa Sản Phẩm Khỏi Giỏ Hàng Không Thành Công!, ');
         }
     });
 
     return false;
+}
+
+
+function numberFormat(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }

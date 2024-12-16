@@ -33,9 +33,16 @@ class AuthenController extends Controller
 
         if (Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return redirect()->route('admin.statistic.index')->with([
-                'message' => 'Login Success'
-            ]);
+            if (Auth::user()->role_id == 2){
+                return redirect()->route('admin.statistic.index')->with([
+                    'message' => 'Login Success'
+                ]);
+            }else{
+                return redirect()->route('admin.shipment.index')->with([
+                    'message' => 'Login Success'
+                ]);
+            }
+
         }
         else{
             return redirect()->back()->with([
@@ -53,7 +60,7 @@ class AuthenController extends Controller
         $roles = Roles::where('name', 'Admin')->first();
         $data = $request->all();
         $data['password'] = Hash::make($request->password);
-        $data['role_id'] = $roles->id;
+        $data['role_id'] = 2;
         $data['sdt'] = " ";
         $data['status'] = " ";
 
@@ -61,4 +68,5 @@ class AuthenController extends Controller
 
         return redirect('login/login')->with('message', "Thành Công Rồi Hahahha");
     }
+    
 }

@@ -51,7 +51,9 @@ class ShopController extends Controller
             'Hồng' => 'bg-pink-500',
             'Hồng Tím' => 'bg-sky-500',
         ];
-        $products = Category::where('name', $name)->first()->products;
+        $categoryList = Category::where('name', $name)->first();
+        $products = $categoryList->products();
+        $products = $this->sortAndPagination($products, $request);
         $category = Category::all();
         $brand = Brand::all();
         $colors = ProductColor::all();
@@ -73,7 +75,7 @@ class ShopController extends Controller
     private function sortAndPagination($products, Request $request)
     {
         $perPage = $request->show ?? 3;
-        $sortBy = $request->sort_by ?? 'latest';
+        $sortBy = $request->sort_by ?? 'oldest';
 
         switch ($sortBy)
         {
@@ -153,5 +155,13 @@ class ShopController extends Controller
         return $products;
     }
 
+    public function introduce()
+    {
+        return view('client.profileShop.index');
+    }
 
+    public function map()
+    {
+        return view('client.profileShop.map');
+    }
 }

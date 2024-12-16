@@ -11,7 +11,10 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "laravel/ui": "^4.5"
+        "laravel/ui": "^4.5",
+        "milon/barcode": "^11.0",
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "stripe/stripe-php": "^16.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",
@@ -65,5 +68,6 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "milon/barcode": "^2.0"
 }

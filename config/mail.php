@@ -94,6 +94,13 @@ return [
                 'postmark',
             ],
         ],
+        'stream' => [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ],
+        ],
     ],
 
     /*
@@ -108,7 +115,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'tuancdph43313@fpt.edu.vn'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    public function index() 
+    public function index()
     {
         $tag = Tag::all();
         return view('admin.tag.index', compact('tag'));
@@ -24,7 +24,7 @@ class TagController extends Controller
         Tag::create($data);
 
         return redirect()->back()->with([
-            'message' => 'Create Tag Success'
+            'success' => 'Thêm thành công'
         ]);
     }
 
@@ -40,7 +40,7 @@ class TagController extends Controller
         }
 
         return redirect()->back()->with([
-            'message' => 'Update Tag Success'
+            'success' => 'Cập nhật thành công'
         ]);
     }
 
@@ -48,7 +48,7 @@ class TagController extends Controller
         $tag = Tag::find($id);
         $tag->delete();
         return redirect()->back()->with([
-            'message' => 'Delete Tag Success'
+            'success' => 'Xóa thành công'
         ]);
     }
 }

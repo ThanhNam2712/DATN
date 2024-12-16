@@ -24,7 +24,7 @@ class ProductTagController extends Controller
         Product_tag::create($data);
 
         return redirect()->back()->with([
-            'message' => 'Create Success Product Tag'
+            'success' => 'Thêm thành công'
         ]);
     }
 
@@ -34,7 +34,7 @@ class ProductTagController extends Controller
         $data = $request->all();
         $product_tag->update($data);
         return redirect()->back()->with([
-            'message' => 'Update Success Product Tag'
+            'success' => 'Cập nhật thành công'
         ]);
     }
 
@@ -43,7 +43,7 @@ class ProductTagController extends Controller
         $product_tag = Product_tag::find($id);
         $product_tag->delete();
         return redirect()->back()->with([
-            'message' => 'Delete Success Product Tag'
+            'success' => 'Xóa thành công'
         ]);
     }
 }

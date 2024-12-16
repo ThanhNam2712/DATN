@@ -3,31 +3,31 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Address;
-use App\Models\Cart;
-use App\Models\Coupon;
 use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\ProductVariant;
+use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class OrderController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $cart = Cart::where('user_id', Auth::id())
-            ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
-            ->first();
-        $totalAmount = 0;
-        $user = auth()->user();
-        $address = $user->addresses;
+        $search = $request->search;
+        $orders = Order::select('orders.*')
+                        ->join('users', 'orders.user_id', 'users.id')
+                        ->where(function($check) use ($search) {
+                            $check->where('orders.barcode', 'like', '%' . $search . '%')
+                                ->orWhere('users.name', 'like', '%' . $search . '%')
+                                ->orWhere('users.email', 'like', '%' . $search . '%');
+                        })
+                        ->whereIn('orders.status', ['pending', 'processing', 'delivery person'])
+                        ->orderBy('orders.id', 'desc')
+                        ->paginate(5);
 
-        // dd($address);
-        // return view('client.order');
-        return view('client.order', compact('cart', 'user', 'address'));
+        return view('admin.orders.index', compact('orders'));
     }
 
     public function detail($id)
@@ -36,130 +36,126 @@ class OrderController extends Controller
         return view('admin.orders.detail', compact('order'));
     }
 
-    public function create(Request $request)
+    public function viewCompleted(Request $request)
     {
-        try {
-            DB::transaction(function () use ($request) {
-                // Lấy giỏ hàng của người dùng hiện tại
-                $cart = Cart::where('user_id', auth()->id())->first();
-                if (!$cart) {
-                    return response()->json(['message' => 'Giỏ hàng trống!'], 404);
-                }
-                $cartItems = $cart->cartDetail;
-                if (!$cartItems || $cartItems->isEmpty()) {
-                    return response()->json(['message' => 'Giỏ hàng không có sản phẩm!'], 404);
-                }
-
-                // Tính tổng tiền từ các mục trong giỏ
-                $totalAmount = $cartItems->sum(function ($cartItem) {
-                    return $cartItem->quantity * $cartItem->product_variant->price_sale;
-                });
-                // Lưu hoặc cập nhật thông tin địa chỉ
-                $address = Address::updateOrCreate(
-                    ['user_id' => auth()->id()],
-                    [
-                        'Province' => $request->Province ?? 'Giá trị mặc định', // Thay thế bằng giá trị mặc định
-                        'district' => $request->district ?? 'Giá trị mặc định',
-                        'Neighborhood' => $request->Neighborhood ?? 'Giá trị mặc định',
-                        'Apartment' => $request->Apartment ?? 'Giá trị mặc định',
-                        'status' => $request->status ?? 0,
-                    ]
-                );
-                // dd($address);
-                // Tạo đơn hàng
-                $order = Order::create([
-                    'user_id' => auth()->id(),
-                    'total_amount' => $request->total_amount,
-                    'status' => 0, // 0: chưa giao hàng
-                    'payment_status' => 0, // 0: chưa thanh toán
-                ]);
-
-                // Lưu từng mục trong giỏ hàng vào order_items và trừ số lượng của biến thể
-                foreach ($cartItems as $cartItem) {
-                    OrderItem::create([
-                        'order_id' => $order->id,
-                        'product_variant_id' => $cartItem->product_variant_id,
-                        'quantity' => $cartItem->quantity,
-                        'price' => $cartItem->product_variant->price_sale,
-                    ]);
-
-                    // Cập nhật số lượng biến thể sản phẩm
-                    $productVariant = ProductVariant::find($cartItem->product_variant_id);
-                    if ($productVariant) {
-                        $productVariant->decrement('quantity', $cartItem->quantity);
-                    }
-                }
-
-                // Xóa các mục trong giỏ hàng
-                $cart->cartDetail()->delete();
-                $cart->delete();
-
-                return redirect()->route('admin.order.show', ['id' => $order->id])
-                ->with('success', 'Đơn hàng được tạo thành công!');
-            });
-
-        } catch (\Throwable $th) {
-            dd($th->getMessage());
-            return response()->json(['error' => 'Lỗi đặt hàng: ' . $th->getMessage()], 500);
-        }
-    }
-
-    public function listOrders()
-    {
-        $orders = auth()->user()->Orders()->with('Order_Items.product_variants')->get();
-        // dd($orders);
-        return view('client.list', compact('orders'));
-
-    }
-    public function show($id)
-    {
-        $order = Order::where('user_id', auth()->id())
-            ->with(['Order_Items.product_variants', 'user'])
-            ->findOrFail($id);
-            $user = auth()->user();
-            $address = $user->addresses;
-        return view('client.chitietorder', compact('order','user', 'address'));
+        $search = $request->search;
+        $orders = Order::select('orders.*')
+                        ->join('users', 'orders.user_id', 'users.id')
+                        ->where(function($check) use ($search) {
+                            $check->where('orders.barcode', 'like', '%' . $search . '%')
+                                ->orWhere('users.name', 'like', '%' . $search . '%')
+                                ->orWhere('users.email', 'like', '%' . $search . '%');
+                        })
+                        ->where('orders.status', 'completed')
+                        ->orderBy('orders.id', 'desc')
+                        ->paginate(5);
+        $sumOrder = Order::where('status','completed')->sum('total_amount');
+        return view('admin.orders.completed', compact('orders', 'sumOrder'));
     }
 
 
-    public function coupon(Request $request)
+    public function cancelled()
     {
-        $couponCode = $request->input('coupon');
+        $orders = Order::where('status', '=' , 'cancelled')
+                        ->orderBy('id', 'desc')
+                        ->paginate(4);
+        return view('admin.orders.cancelled', compact('orders'));
+    }
 
-        $cart = Cart::where('user_id', Auth::id())
-            ->with('cartDetail:cart_id,id,product_id,product_variant_id,quantity')
-            ->first();
+    public function shipmentCom(Request $request)
+    {
+        $search = $request->search;
+        $orders = Order::select('orders.*')
+            ->join('users', 'orders.user_id', 'users.id')
+            ->where(function($check) use ($search) {
+                $check->where('orders.barcode', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->orWhere('users.email', 'like', '%' . $search . '%');
+            })
+            ->where('orders.status', 'Giao Thành công')
+            ->orderBy('orders.id', 'desc')
+            ->paginate(5);
+        return view('admin.orders.shipmentComplate', compact('orders'));
+    }
 
-        $coupon = Coupon::where('code', $couponCode)
-            ->where('start_end', '<=', now())
-            ->where('expiration_date', '>=', now())
-            ->first();
-
-        if (!$coupon) {
-            return response()->json([
-                'error' => 'Thằng ranh này nhập không đúng mã voucher'
-            ]);
+    public function updateStatus(Request $request, $id)
+    {
+        $orders = Order::findOrFail($id);
+        if ($orders->status == "cancelled") {
+            return back()->with('error', 'Đơn hàng đã được hủy, vui lòng xem lý do.');
         }
 
-        $discount = 0;
-        $total = $cart->total_amuont;
-
-        if ($total > $coupon->minimum_order_amount) {
-            if ($coupon->discount_type == 'Phần Trăm') {
-                $discount = $total * ($coupon->discount_value / 100);
-            } elseif ($coupon->discount_type == 'Giá Tiền') {
-                $discount = $coupon->discount_value;
-            }
-        } else {
-            return response()->json([
-                'error' => 'Thằng ranh con này đơn hàng không đủ điều kiện'
-            ]);
+        if ($orders->status == 'delivery person' && in_array($request->status, ['pending', 'processing'])) {
+            return back()->with('error', 'Không thể chuyển về trạng thái trước đó');
         }
-        $final_total = $total - $discount;
-        return response()->json([
-            'success' => true,
-            'discount' => $discount,
-            'final_total' => $final_total,
+
+        if ($orders->status == 'processing' && $request->status == 'pending') {
+            return back()->with('error', 'Không thể chuyển về trạng thái trước đó.');
+        }
+        $orders->status = $request->status;
+        $orders->save();
+
+        return redirect()->back()->with([
+            'success' => 'Cập nhật trạng thái thành công.'
         ]);
+    }
+
+    public function cancel(Request $request,$id)
+    {
+        $request->validate([
+            'cancel_8' => 'required|string|min:5',
+        ], [
+            'cancel_8.required' => 'Vui lòng nhập lý do hủy.',
+            'cancel_8.min' => 'Lý do hủy phải có ít nhất 5 ký tự.'
+        ]);
+
+        $order = Order::find($id);
+        $shipment = ShipmentOrder::where('order_id' ,$order->id)->first();
+        if ($order->status != "completed" && $shipment->shipments_5 != "completed" && $shipment->shipments_1 != "Đã Nhận Đơn"){
+            $order->status = 'cancelled';
+            $shipment->cancel = $request->input('cancel_8');
+            $order->save();
+            $shipment->save();
+            return back()->with('message', 'Hủy Đơn Thành Công');
+        }else{
+            return back()->with('message', 'Hủy Đơn Thất Bại');
+        }
+    }
+
+    public function getById(Request $request)
+    {
+        $barcode = $request->get('barcode');
+        $order = Order::where('barcode', $barcode)->first();
+        if ($order){
+            return response()->json([
+                'success' => true,
+                'id' => $order->id,
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Thằng ranh lấy mã tài xỉu à',
+            ]);
+        }
+    }
+
+    public function download($barcode)
+    {
+        // Generate the QR code
+        $qrCode = QrCode::size(200)->generate($barcode);
+
+        // Create a temporary file to save the QR code
+        $path = public_path('qr_codes');
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true); // Create folder if it doesn't exist
+        }
+
+        $filename = 'qr_code_' . $barcode . '.png';
+        $filePath = $path . '/' . $filename;
+
+        // Save the QR code image to a file
+        QrCode::format('png')->size(500)->backgroundColor(255, 255, 255)->color(0, 0, 0)->generate($barcode, $filePath);
+        // Download the file
+        return response()->download($filePath, $filename)->deleteFileAfterSend(true);
     }
 }

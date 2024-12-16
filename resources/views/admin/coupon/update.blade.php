@@ -6,14 +6,14 @@
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Add New</h5>
+                    <h5 class="text-16">Cập nhật mã</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="#!" class="text-slate-400 dark:text-zink-200">Products</a>
+                        <a href="#!" class="text-slate-400 dark:text-zink-200">Mã giảm giá</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Add New
+                        Cập nhật
                     </li>
                 </ul>
             </div>
@@ -21,43 +21,47 @@
                 <div class="xl:col-span-12">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Update Coupon</h6>
+                            {{-- <h6 class="mb-4 text-15">Update Coupon</h6> --}}
                             @if(session('message'))
                                 <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                     <span class="font-bold">{{ session('message') }}</span>
                                 </div>
                             @endif
-                            <form action="../admin/coupon/update/{{ $coupon->id }}" method="post">
+                            <form action="../admin/coupon/update/{{ $coupon->id }}" method="post" id="form-coupon">
                                 @csrf
                                 @method('PUT')
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     {{-- Product creare --}}
                                     <div class="xl:col-span-12">
-                                        <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Coupon Name</label>
+                                        <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Tên Mã Giảm Giá</label>
                                         <input type="text" id="productNameInput" name="code" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $coupon->code }}">
-                                        <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
+                                        {{-- <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p> --}}
                                     </div><!--end col-->
 
 
                                     <div class="xl:col-span-4">
-                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Discount Type</label>
-                                        <input type="text" name="discount_type" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $coupon->discount_type }}">
+                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Loại Giảm Giá</label>
+                                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="discount_type" id="selectValue">
+                                            <option value="">Chọn loại giảm giá</option>
+                                            <option value="Phần Trăm" {{ $coupon->discount_type == 'Phần Trăm' ? 'selected' : '' }}>Phần Trăm</option>
+                                            <option value="Giá Tiền" {{ $coupon->discount_type == 'Giá Tiền' ? 'selected' : '' }}>Giá Tiền</option>
+                                        </select>
+                                    </div><!--end col-->
+
+                                    <div class="xl:col-span-4">
+                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Giá Trị Giảm Giá</label>
+                                        <input type="number" name="discount_value" id="valueDiscount" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $coupon->discount_value }}">
                                     </div>
 
                                     <div class="xl:col-span-4">
-                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Discount Type</label>
-                                        <input type="number" name="discount_value" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $coupon->discount_value }}">
-                                    </div>
-
-                                    <div class="xl:col-span-4">
-                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Minimum amount</label>
+                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Giá Trị Tối Thiểu</label>
                                         <input type="number" name="minimum_order_amount" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $coupon->minimum_order_amount }}">
                                     </div>
 
                                     <div class="xl:col-span-4">
-                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Users (Nếu cần)</label>
+                                        <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Chọn tài khoản (Nếu cần)</label>
                                         <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="user_id" id="categorySelect">
-                                            <option value="">Select Users</option>
+                                            <option value="">Chọn tài khoản</option>
                                             @foreach($user as $list)
                                                 <option value="{{ $list->id }}" {{ $list->id == $coupon->user_id ? 'selected' : ''}}>{{ $list->email }} {{ $list->id }}</option>
                                             @endforeach
@@ -65,17 +69,17 @@
                                     </div><!--end col-->
 
                                     <div class="xl:col-span-4">
-                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Date Start</label>
-                                        <input type="date" name="start_end" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $coupon->start_end }}">
+                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Ngày Bắt Đầu</label>
+                                        <input type="date" name="start_end" id="dateCouponSt" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $coupon->start_end }}">
                                     </div>
 
                                     <div class="xl:col-span-4">
-                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Date End</label>
-                                        <input type="date" name="expiration_date" id="productPrice" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $coupon->expiration_date }}">
+                                        <label for="productPrice" class="inline-block mb-2 text-base font-medium">Ngày Kết Thúc</label>
+                                        <input type="date" name="expiration_date" id="dateCouponEn" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" value="{{ $coupon->expiration_date }}">
                                     </div>
                                 </div>
                                 <div class="xl:col-span-4">
-                                    <label for="productQuantity" class="inline-block mb-2 text-base font-medium">Quantity</label>
+                                    <label for="productQuantity" class="inline-block mb-2 text-base font-medium">Số Lượng</label>
                                     <input type="number" value="{{ $coupon->number }}" name="number" id="productQuantity" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                     @error('number')
                                     <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
@@ -84,8 +88,8 @@
                                     @enderror
                                 </div>
                                 <div class="flex justify-end gap-2 mt-4">
-                                    <button type="reset" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Reset</button>
-                                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Create Product</button>
+                                    {{-- <button type="reset" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Quay Lại</button> --}}
+                                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Lưu thay đổi</button>
                                 </div>
                             </form>
                         </div>
@@ -94,5 +98,32 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('form-coupon').addEventListener('submit', function(e) {
+            // Lấy giá trị ngày bắt đầu và ngày kết thúc từ input
+            const dateStart = new Date(document.getElementById('dateCouponSt').value);
+            const dateEnd = new Date(document.getElementById('dateCouponEn').value);
 
+            const selectedValue = document.getElementById('selectValue').value;
+            const discountValue = document.getElementById('valueDiscount').value;
+
+            // Kiểm tra điều kiện ngày bắt đầu phải nhỏ hơn ngày kết thúc
+            if (dateStart >= dateEnd) {
+                e.preventDefault(); // Ngăn form gửi đi nếu điều kiện không thỏa mãn
+                alert('Ngày bắt đầu không được lớn hơn ngày kết thúc');
+            }
+
+            if (selectedValue.includes('Phần Trăm')){
+                if (discountValue > 50){
+                    e.preventDefault();
+                    alert('Giá Trị Phần Trăm Không Được Lớn Hơn 50');
+                }
+            }else {
+                if (discountValue > 500000){
+                    e.preventDefault();
+                    alert('Giá Trị fix money Không Được Lớn Hơn 500000');
+                }
+            }
+        });
+    </script>
 @endsection

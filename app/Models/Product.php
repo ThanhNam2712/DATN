@@ -36,12 +36,12 @@ class Product extends Model
     }
     public function brand()
     {
-        return $this->belongsTo(Brand::class, 'brand_id');
+        return $this->belongsTo(Brand::class, 'brand_id')->withTrashed();
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id')->withTrashed();
     }
 
     public function variant()
@@ -54,10 +54,10 @@ class Product extends Model
         return $this->hasMany(Review::class, 'product_id');
     }
 
-    // public function variants()
-    // {
-    //     return $this->belongsToMany(ProductVariant::class, 'product_variants', 'product_id', 'variant_id');
-    // }
+    public function averageRating()
+    {
+        return $this->review()->avg('rating');
+    }
 
     public function sizes()
     {

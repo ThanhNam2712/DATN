@@ -9,13 +9,18 @@ function couponApply(){
 
         success: function (response){
             if (response.success){
-                $('.response_discount').text('-$' + response.discount);
-                $('.hidden_response_total').text('$' + response.final_total);
+                $('.response_discount').text('-' + numberFormat(response.discount) + 'VND');
+                $('.hidden_response_total').text(numberFormat(response.final_total) + ' VND');
                 $('input[name="total_amount"]').val(response.final_total);
-                alert('Apply Coupon Success')
+                $('input[name="total_discount"]').val(response.discount);
+                alert('Áp Mã Giảm Giá Thành Công')
             }else {
                 alert(response.error);
             }
         }
     });
+}
+
+function numberFormat(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }

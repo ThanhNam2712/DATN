@@ -27,17 +27,23 @@ class CouponController extends Controller
         $request->validate([
             'code' => 'required|max:30',
             'discount_type' => 'required',
-            'discount_value' => 'required|numeric|max:50',
             'expiration_date' => 'required',
             'start_end' => 'required',
             'minimum_order_amount' => 'required',
-            'number' => 'required',
+            'number' => 'required|numeric|min:1',
         ]);
         $data = $request->all();
-        Coupon::create($data);
+        $coupon = Coupon::create($data);
+
+        if ($request->user_id){
+            $user = User::find($request->user_id);
+            if ($user){
+                $this->sendmail($user, $coupon, $user->email);
+            }
+        }
 
         return redirect('admin/coupon/')->with([
-            'message' => 'Create Coupon Success'
+            'success' => 'Tạo thành công'
         ]);
     }
 
@@ -46,7 +52,7 @@ class CouponController extends Controller
         Mail::send('client.mail.coupon', compact('user', 'coupon'), function ($message) use ($email_to) {
             $message->from('tuancdph43313@fpt.adu.vn', 'Tuan Clothing');
             $message->to($email_to, $email_to);
-            $message->subject("Forgot Notification");
+            $message->subject("New Coupon Available!");
         });
     }
 
@@ -71,7 +77,7 @@ class CouponController extends Controller
         }
         $coupon->update($data);
         return redirect()->back()->with([
-            'message' => 'Update Coupon Success',
+            'success' => 'Cập nhật thành công'
         ]);
     }
 
@@ -81,7 +87,7 @@ class CouponController extends Controller
 
         $coupon->delete();
         return redirect()->back()->with([
-            'message' => 'Update Coupon Success',
+            'success' => 'Xóa thành công'
         ]);
     }
 }
