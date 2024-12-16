@@ -6,11 +6,11 @@
             <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Update Product : {{$product->name}}</h5>
+                        <h5 class="text-16">Update Product Variant : {{$product->name}}</h5>
                     </div>
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                            <a href="#!" class="text-slate-400 dark:text-zink-200">Products</a>
+                            <a class="text-slate-400 dark:text-zink-200">Products</a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
                             Update
@@ -40,7 +40,10 @@
                                     @csrf
                                     @method('PUT')
                                     @foreach($product->variant as $index => $list)
-                                        <div style="margin-top: 38px" class="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
+                                        <div style="margin-top: 35px" class="mb-0 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                                            <span class="font-bold">Biến Thể {{ $product->name }}: 00{{ $index + 1 }}</span>
+                                        </div>
+                                        <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                             <input type="hidden" name="id[]" value="{{ $list->id }}">
                                             <div class="xl:col-span-4">
                                                 <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
@@ -94,8 +97,8 @@
                                     @endforeach
                                     <div class="flex justify-end gap-2 mt-4">
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <button type="reset" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Reset</button>
-                                        <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Product</button>
+                                        <a href="../admin/products" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Quay Lại</a>
+                                        <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Cập Nhật Biến Thể</button>
                                     </div>
                                 </form>
                             </div>
@@ -113,18 +116,18 @@
                 <button data-modal-close="addVariantProduct" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
             </div>
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                <form action="../admin/variant/create" method="post">
+                <form action="../admin/variant/create" method="post" id="newVariantPost">
                     @csrf
                      {{-- Products variants --}}
                     <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                             <div class="xl:col-span-6">
                                 <label for="productPrice" class="inline-block mb-2 text-base font-medium">Price</label>
-                                <input type="number" name="price" id="productPrice" class="form-input ...">
+                                <input type="number" name="price" id="variantPriceNew" class="form-input ...">
                             </div>
 
                             <div class="xl:col-span-6">
                                 <label for="productDiscounts" class="inline-block mb-2 text-base font-medium">Discounts</label>
-                                <input type="number" name="price_sale" id="productDiscounts" class="form-input ..." >
+                                <input type="number" name="price_sale" id="variantDiscountsNew" class="form-input ..." >
 
                             </div>
 
@@ -167,4 +170,33 @@
         </div>
     </div><!--end add user-->
 
+    <script>
+        document.getElementById('variants').addEventListener('submit', function(e){
+            const priceInputs = document.querySelectorAll(`input[name="price[]"]`);
+            const priceSaleInputs = document.querySelectorAll(`input[name="price_sale[]"]`);
+
+            priceInputs.forEach((priceInput, index) => {
+                const priceSaleInput = priceSaleInputs[index];
+
+                if (parseFloat(priceSaleInput.value) > parseFloat(priceInput.value)) {
+                    e.preventDefault(); // Ngăn form gửi đi
+                    alert(`Giá giảm không được lớn hơn giá gốc ở hàng ${index + 1}.`);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.getElementById('newVariantPost').addEventListener('submit', function(e){
+            const variantPriceNew = document.getElementById('variantPriceNew').value;
+            const variantDiscountsNew = document.getElementById('variantDiscountsNew').value;
+
+
+            if (variantDiscountsNew > variantPriceNew) {
+                e.preventDefault(); // Ngăn form gửi đi
+                alert(`Giá giảm không được lớn hơn giá gốc`);
+            }
+
+        });
+    </script>
 @endsection

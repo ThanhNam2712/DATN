@@ -18,4 +18,9 @@ class Coupon extends Model
         'minimum_order_amount',
         'number',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'coupon_user', 'coupon_id', 'user_id');
+    }
 }

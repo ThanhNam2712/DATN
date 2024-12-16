@@ -4,7 +4,15 @@
     <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
             <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
-
+                @if(Session::has('error'))
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                    <script>
+                        swal("Error", "{{ Session::get("error") }}", "error", {
+                            button:true,
+                            button:"OK",
+                        })
+                    </script>
+                @endif
                 <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
                     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
 
@@ -41,6 +49,11 @@
                                             <div class="card products products-cart" id="product{{ $key }}">
                                                 <div class="card-body" data-cartDetail="{{ $list->id }}">
                                                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
+                                                        <div class="px-3.5 py-2.5 first:pl-5 last:pr-5">
+                                                            <div class="flex items-center h-full">
+                                                                <input id="Checkbox" class="size-4 bg-white border cart-checkbox" name="selected_carts[]" value="{{ $list->id }}" type="checkbox">
+                                                            </div>
+                                                        </div>
                                                         <div class="p-4 rounded-md lg:col-span-2 bg-slate-100 dark:bg-zink-600" style="width: 130px; height: 130px">
                                                             <img src="{{ Storage::url($list->product->image) }}" alt="">
                                                         </div><!--end col-->
@@ -48,8 +61,9 @@
                                                             <div>
                                                                 <h5 class="mb-1 text-16"><a href="../client/home/detail/{{ $list->product->id }}/color/{{ $list->product_variant_id }}">{{ $list->product->name }}</a></h5>
                                                                 <p class="mb-2 text-slate-500 dark:text-zink-200"><a >Danh Mục : {{ $list->product->category->name }}</a></p>
-                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Size: <span class="text-slate-800 dark:text-zink-50">{{ $list->color->name }}</span></p>
-                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Size: <span class="text-slate-800 dark:text-zink-50">{{ $list->size->name }}</span></p>
+                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Màu: <span class="text-slate-800 dark:text-zink-50">{{ $list->color->name }}</span></p>
+                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Kích Thước: <span class="text-slate-800 dark:text-zink-50">{{ $list->size->name }}</span></p>
+                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Sản Phẩm Còn: <span class="text-slate-800 dark:text-zink-50">{{ $list->product_variant->quantity }} sản phẩm</span></p>
                                                             </div>
                                                             <div class="flex items-center gap-2 mt-auto">
                                                                 <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
@@ -62,9 +76,9 @@
                                                         </div><!--end col-->
                                                         <div class="flex justify-between w-full lg:flex-col lg:col-end-13 lg:col-span-2">
                                                             <div class="mb-auto ltr:lg:text-right rtl:lg:text-left">
-                                                                <h6 class="text-16 products-price">$<span>{{ $list->product_variant->price_sale }}</span> <small class="font-normal line-through text-slate-500 dark:text-zink-200">${{ $list->product_variant->price }}</small></h6>
+                                                                <h6 class="text-16 products-price"><span>{{ number_format($list->product_variant->price_sale) }}</span>VND <small class="font-normal line-through text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price) }}VND</small></h6>
                                                             </div>
-                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left">$<span class="products-line-price">{{ $list->product_variant->price_sale * $list->quantity }}</span></h6>
+                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left"><span class="products-line-price">{{ number_format($list->product_variant->price_sale * $list->quantity) }}</span>VND</h6>
                                                         </div><!--end col-->
                                                     </div><!--end grid-->
                                                 </div>
@@ -83,8 +97,8 @@
                                                             <div>
                                                                 <h5 class="mb-1 text-16 text-red-500"><a href="../client/home/detail/{{ $list->product->id }}/color/{{ $list->product_variant_id }}">{{ $list->product->name }}</a></h5>
                                                                 <p class="mb-2 text-slate-500 text-red-500"><a href="#!">Danh Mục : {{ $list->product->category->name }}</a></p>
-                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Size: <span class="text-slate-800 dark:text-zink-50">{{ $list->color->name }}</span></p>
-                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Size: <span class="text-slate-800 dark:text-zink-50">{{ $list->size->name }}</span></p>
+                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Màu: <span class="text-slate-800 dark:text-zink-50">{{ $list->color->name }}</span></p>
+                                                                <p class="mb-3 text-slate-500 dark:text-zink-200">Kích Thước: <span class="text-slate-800 dark:text-zink-50">{{ $list->size->name }}</span></p>
                                                             </div>
                                                             <div class="flex items-center gap-2 mt-auto">
                                                                 <div class="inline-flex p-2 text-center border rounded input-step border-slate-200 dark:border-zink-500">
@@ -97,9 +111,9 @@
                                                         </div><!--end col-->
                                                         <div class="flex justify-between w-full lg:flex-col lg:col-end-13 lg:col-span-2">
                                                             <div class="mb-auto ltr:lg:text-right rtl:lg:text-left">
-                                                                <h6 class="text-16 products-price">$<span>{{ $list->product_variant->price_sale }}</span> <small class="font-normal line-through text-slate-500 dark:text-zink-200">${{ $list->product_variant->price }}</small></h6>
+                                                                <h6 class="text-16 products-price"><span>{{ number_format($list->product_variant->price_sale) }}</span>VND <small class="font-normal line-through text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price) }}</small>VND</h6>
                                                             </div>
-                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left">$<span class="products-line-price">{{ $list->product_variant->price_sale * $list->quantity }}</span></h6>
+                                                            <h6 class="mt-auto text-16 ltr:lg:text-right rtl:lg:text-left"><span class="products-line-price">{{ number_format($list->product_variant->price_sale * $list->quantity) }}</span>VND</h6>
                                                         </div><!--end col-->
                                                     </div><!--end grid-->
                                                 </div>
@@ -112,16 +126,16 @@
                                 <div class="sticky top-[calc(theme('spacing.header')_*_1.3)] mb-5">
                                     <div class="card ">
                                         <div class="card-body">
-                                            <h6 class="mb-4 text-15">Order Summary</h6>
+                                            <h6 class="mb-4 text-15">Số Tiền</h6>
                                             <div class="overflow-x-auto">
                                                 <table class="w-full">
                                                     <tbody class="table-total">
                                                     <tr class="font-semibold">
                                                         <td class="pt-2">
-                                                            Tổng Tiền
+                                                            Tổng Tiền Các Sản Phẩm
                                                         </td>
                                                         <td class="pt-2 cart-total">
-                                                            ${{ $cart->total_amuont }}
+                                                            {{ number_format($cart->total_amuont) }} VND
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -131,7 +145,7 @@
                                     </div>
                                     <div class="flex gap-2 mt-5 shrink-0">
                                         <a href="../client/shop/" class="w-full text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20">Tiếp Tục Mua Hàng</a>
-                                        <a href="../client/order/" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20" @if($hasDeletedProduct) style="display: none" @else style="display: block"  @endif>Đặt Hàng</a>
+                                        <a href="javascript:void(0);" id="submit-cart" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20" @if($hasDeletedProduct) style="display: none" @else style="display: block"  @endif>Đặt Hàng</a>
                                     </div>
 
                                     <div class="flex items-center gap-5 p-4 mt-5 card">
@@ -164,4 +178,41 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('submit-cart').addEventListener('click', function() {
+            // Lấy tất cả các checkbox đã chọn
+            let selectedCarts = [];
+            document.querySelectorAll('.cart-checkbox:checked').forEach(function(checkbox) {
+                selectedCarts.push(checkbox.value);
+            });
+
+            if (selectedCarts.length === 0) {
+                alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán.');
+                return;
+            }
+
+            fetch('{{ route('client.order.checkBox') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ selected_carts: selectedCarts })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '/client/order';
+                    } else {
+                        alert('Có lỗi xảy ra, vui lòng thử lại.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+    </script>
+
 @endsection

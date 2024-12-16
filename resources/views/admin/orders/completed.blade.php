@@ -91,7 +91,7 @@
                                             </td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->barcode }}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->email }}</td>
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">${{ $order->total_amount }}</td>
+                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ number_format($order->total_amount) }}VND</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->created_at ?? 'N/A' }}
                                             </td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
@@ -122,7 +122,7 @@
                                 <div class="noresult" style="display: block; margin-bottom: 10px; float: inline-end;">
                                     <table>
                                         <tr class="">
-                                            <td><span class="text-red-500">Tổng Tiền Đơn Hàng Thành Công: </span>${{ $sumOrder }}</td>
+                                            <td><span class="text-red-500">Tổng Tiền Đơn Hàng Thành Công: </span>{{ number_format($sumOrder) }}VND</td>
                                         </tr>
                                     </table>
                                 </div>

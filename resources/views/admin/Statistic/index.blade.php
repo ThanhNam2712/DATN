@@ -203,7 +203,7 @@
                         <div class="flex items-center justify-center mx-auto rounded-full size-14 bg-custom-100 text-custom-500 dark:bg-custom-500/20">
                             <i data-lucide="wallet-2"></i>
                         </div>
-                        <h5 class="mt-4 mb-2">$<span class="counter-value" data-target="{{ $order->sum('total_amount') }}">0</span></h5>
+                        <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ $order->sum('total_amount') }}">0</span>VND</h5>
                         <p class="text-slate-500 dark:text-zink-200">Doanh thu</p>
                     </div>
                 </div><!--end col-->
@@ -221,8 +221,8 @@
                         <div class="flex items-center justify-center mx-auto text-green-500 bg-green-100 rounded-full size-14 dark:bg-green-500/20">
                             <i data-lucide="truck"></i>
                         </div>
-                        <h5 class="mt-4 mb-2"><span class="counter-value" data-target="17150">0</span></h5>
-                        <p class="text-slate-500 dark:text-zink-200">Đã giao hàng </p>
+                        <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ $countShipment }}">0</span></h5>
+                        <p class="text-slate-500 dark:text-zink-200">Đã giao hàng</p>
                     </div>
                 </div><!--end col-->
                 <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
@@ -341,7 +341,7 @@
                     </div><!--end grid-->
                 </div><!--end col--> --}}
 
-                <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
+                <div class="col-span-12 card 2xl:col-span-4 2xl:row-span-2">
                     <div class="card-body">
                         <div class="flex items-center mb-3">
                             <h6 class="grow text-15">Khách hàng thân thiết</h6>
@@ -362,7 +362,7 @@
                                         <p class="text-slate-500 dark:text-zink-200">{{ $list->email }}</p>
                                     </div>
                                     <div class="shrink-0">
-                                        <h6>${{ $list->total_spent }}</h6>
+                                        <h6>{{ number_format($list->total_spent) }}VND</h6>
                                     </div>
                                 </li>
                             @empty
@@ -374,7 +374,12 @@
                         </ul>
                     </div>
                 </div><!--end col-->
-                <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
+
+                <div class="col-span-12 card lg:col-span-6 2xl:col-span-12">
+                    <div class="card-body">
+                    </div>
+                </div>
+                <div class="col-span-12 card 2xl:col-span-4 2xl:row-span-2">
                     <div class="card-body">
                         <div class="flex items-center mb-3">
                             <h6 class="grow text-15">Giá theo danh mục</h6>
@@ -392,10 +397,10 @@
                                     </div>
                                     <div class="grow">
                                         <h6 class="font-medium">{{ $list->name }}</h6>
-                                        <p class="text-slate-500 dark:text-zink-200">max price: ${{ $list->maxPrice ?? '0' }}</p>
-                                        <p class="text-slate-500 dark:text-zink-200">min price: ${{ $list->minPrice ?? '0'}}</p>
+                                        <p class="text-slate-500 dark:text-zink-200">max price: {{ number_format($list->maxPrice) ?? '0' }}VND</p>
+                                        <p class="text-slate-500 dark:text-zink-200">min price: {{ number_format($list->minPrice) ?? '0'}}VND</p>
                                     </div>
-                                    <h6 class="shrink-0">${{ $list->sumPrice ?? '0'}}</h6>
+                                    <h6 class="shrink-0">{{ number_format($list->sumPrice) ?? '0'}}VND</h6>
                                 </li>
                             @empty
                                 <h2>
@@ -406,7 +411,7 @@
                         </ul>
                     </div>
                 </div><!--end col-->
-                <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
+                <div class="col-span-12 card 2xl:col-span-4 2xl:row-span-2">
                     <div class="card-body">
                         <div class="flex items-center mb-3">
                             <h6 class="grow text-15">Sản phẩm bán chạy</h6>

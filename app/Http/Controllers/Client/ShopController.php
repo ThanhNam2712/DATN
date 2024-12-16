@@ -51,7 +51,9 @@ class ShopController extends Controller
             'Hồng' => 'bg-pink-500',
             'Hồng Tím' => 'bg-sky-500',
         ];
-        $products = Category::where('name', $name)->first()->products;
+        $categoryList = Category::where('name', $name)->first();
+        $products = $categoryList->products();
+        $products = $this->sortAndPagination($products, $request);
         $category = Category::all();
         $brand = Brand::all();
         $colors = ProductColor::all();

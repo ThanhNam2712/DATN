@@ -79,10 +79,6 @@
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="order-id">Mã đơn hàng</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="name">Tên khách hàng</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                                            data-sort="location">Code</th>
-                                        <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="email">Email</th>
                                         <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
                                             data-sort="phone-number">Số điện thoại</th>
@@ -103,13 +99,6 @@
                                                 </div>
                                             </td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->id }}</td>
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->name }}</td>
-                                            {{--                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">--}}
-                                            {{--                                                {{ $order->province ?? 'tỉnh chưa có' }} - {{ $order->district ?? 'huyện--}}
-                                            {{--                                            chưa có'}} - {{ $order->ward ?? 'xã chưa có' }} - {{ $order->address_detail--}}
-                                            {{--                                            ?? 'dchi ctiet chưa có' }}<br>--}}
-                                            {{--                                            </td>--}}
-                                            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{!! DNS2D::getBarcodeHTML("$order->barcode", 'QRCODE', 4, 4) !!}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->user->email }}</td>
                                             <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $order->phone_number ?? 'sđt
                                             đặt hàng chưa có' }}</td>
@@ -150,20 +139,6 @@
                                                                href="../admin/orders/detail/{{ $order->id }}">
                                                                 <i data-lucide="eye" class="inline-block size-3"></i> Xem
                                                             </a>
-                                                        </li>
-                                                        <li>
-                                                            <form
-                                                                action="{{-- {{ route('admin.orders.destroy', $order->id) }} --}}"
-                                                                method="POST"
-                                                                onsubmit="return confirm('Bạn có chắc muốn xóa?');">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit"
-                                                                        class="block px-4 py-1.5 text-base text-slate-600">
-                                                                    <i data-lucide="trash-2"
-                                                                       class="inline-block size-3"></i> Xóa
-                                                                </button>
-                                                            </form>
                                                         </li>
                                                     </ul>
                                                 </div>

@@ -58,12 +58,12 @@
                     alt="" class="mx-auto">
                 <div class="mt-3">
                     <p class="mb-3"><i data-lucide="star"
-                            class="inline-block text-yellow-500 align-middle size-4 ltr:mr-1 rtl:ml-1"></i> (4.8)</p>
+                            class="inline-block text-yellow-500 align-middle size-4 ltr:mr-1 rtl:ml-1"></i>{{ $list->category->name }}</p>
                     <h5><a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}">{{
                             $list->name }}</a></h5>
 
                     <div class="flex items-center gap-3 mt-3">
-                        <h6 class="text-16 grow">${{ $list->variant->first()->price_sale }}</h6>
+                        <h6 class="text-16 grow">{{ number_format($list->variant->first()->price_sale) }}VND</h6>
                         <div class="shrink-0">
                             <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}"
                                 class="px-2 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
@@ -100,7 +100,6 @@
                     style="width: 300px; height: auto; align-items: center">
                 <a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}"
                     class="text-xl font-bold mb-3">{{ $list->name }}</a>
-                <p class="text-slate-500 dark:text-zinc-400 mb-4">{{ $list->content }}.</p>
                 <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 mb-6">
                     <li>{{ $list->description }}</li>
                     <li>Category : {{ $list->category->name }}</li>

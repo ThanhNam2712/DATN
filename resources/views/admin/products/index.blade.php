@@ -66,7 +66,7 @@
                                     @foreach($product as $key => $list)
                                         <tr>
                                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                <a href="../dashboard/products/update/{{ $list->id }}" class="transition-all duration-150 ease-linear product_code text-custom-500 hover:text-custom-600">#TAD-2321000{{ $key + 1 }}</a>
+                                                <a href="../dashboard/products/update/{{ $list->id }}" class="transition-all duration-150 ease-linear product_code text-custom-500 hover:text-custom-600">00{{ $key + 1 }}</a>
                                             </td>
                                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 product_name">
                                                 <a href="" class="flex items-center gap-2">

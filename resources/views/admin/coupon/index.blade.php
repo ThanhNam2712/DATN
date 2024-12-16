@@ -45,7 +45,7 @@
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_code" data-sort="product_code">Code</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Tên mã</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Giảm giá theo</th>
-                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">Phần trăm</th>
+                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">Giá Trị</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort stock" data-sort="stock">Ngày bắt đầu</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort revenue" data-sort="revenue">Ngày kết thúc</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Thao tác</th>
@@ -67,7 +67,7 @@
                                                    {{ $list->discount_type }}
                                                 </span>
                                         </td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 price">{{ $list->discount_value }}%</td>
+                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 price">{{ number_format($list->discount_value) }} {{ $list->discount_type == 'Phần Trăm' ? '%' : 'VND'}}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 price">{{ $list->start_end }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 price">{{ $list->expiration_date }}</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 action">

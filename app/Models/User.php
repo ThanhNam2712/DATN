@@ -84,4 +84,9 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    public function assignedCoupons()
+    {
+        return $this->belongsToMany(Coupon::class, 'coupon_user', 'user_id', 'coupon_id');
+    }
 }

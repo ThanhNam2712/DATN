@@ -14,8 +14,8 @@ function updateCart(cartDetail, quantity){
         },
 
         success: function (response){
-            $('.cart-total').text('$' +response.total_amuont);
-            $('.products-line-price').text(response.totalResponse);
+            $('.cart-total').text( numberFormat(response.total_amuont) + 'VND');
+            $('.products-line-price').text( numberFormat(response.totalResponse));
             $('.sumQuantity').text('Shopping Cart (' + response.sumQuantity + ')');
             alert('Update Cart Success!');
         },
@@ -40,7 +40,7 @@ function deleteCart(cartDetail){
         success: function (response){
             var cart_body = $('.products-cart');
             var cart_exitsItem = cart_body.find("div[data-cartDetail='" + cartDetail +"']");
-            $('.cart-total').text('$' +response.total_amuont);
+            $('.cart-total').text(response.total_amuont + 'VND');
             $('.products-line-price').text(response.totalResponse);
             $('.sumQuantity').text('Shopping Cart (' + response.sumQuantity + ')');
             cart_exitsItem.remove();
@@ -58,4 +58,9 @@ function deleteCart(cartDetail){
     });
 
     return false;
+}
+
+
+function numberFormat(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }

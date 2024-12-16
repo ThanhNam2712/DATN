@@ -3,7 +3,24 @@
 @section('body')
     <div class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
-
+            @if(Session::has('message'))
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                <script>
+                    swal("Message", "{{ Session::get("message") }}", "success", {
+                        button:true,
+                        button:"OK",
+                    })
+                </script>
+            @endif
+                @if(Session::has('error'))
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                    <script>
+                        swal("Error", "{{ Session::get("error") }}", "error", {
+                            button:true,
+                            button:"OK",
+                        })
+                    </script>
+                @endif
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
                     <h5 class="text-16">Mua Hàng</h5>
@@ -21,9 +38,16 @@
                 @csrf
                 <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
                 <div class="xl:col-span-12">
-                    <div class="flex gap-1 px-4 py-3 mb-5 text-sm text-green-500 border border-green-200 rounded-md md:items-center bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
-                        <i data-lucide="shopping-bag" class="h-4 shrink-0"></i> <p>The minimum order requirement is <b>$1,800</b>. To meet this threshold, please add additional products with a combined value of <b>$300</b>.</p>
-                    </div>
+                    @if($hasDeletedProduct)
+                        <div style="width: auto" class="px-4 py-3 mb-4 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
+                            <span class="font-bold">Đã Có Một Số Sản phẩm Đang Thay Đổi, Vui Lòng Xóa Các Sản Phẩm Được Chỉ Định Ra Khỏi Giỏ Hàng và tải lại trang</span>
+                        </div>
+                    @else
+                        <div class="flex gap-1 px-4 py-3 mb-5 text-sm text-green-500 border border-green-200 rounded-md md:items-center bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
+                            <i data-lucide="shopping-bag" class="h-4 shrink-0"></i> <p>Vui Lòng Điền Đầy Đủ thông tin nhận hàng trước khi mua hàng.</p>
+                        </div>
+                    @endif
+
                 </div><!--end col-->
 
                     <div class="xl:col-span-8">
@@ -106,7 +130,6 @@
                                     </div><!--end grid-->
                             </div>
                         </div><!--end card-->
-
                     </div><!--end col-->
                     <div class="xl:col-span-4">
                     <div class="card">
@@ -117,7 +140,7 @@
 
                                 <table class="w-full">
                                     <tbody>
-                                        @foreach($cart->cartDetail as $key => $list)
+                                        @foreach($cartDetails as $key => $list)
                                             @if($list->product && !$list->product->trashed())
                                                 <tr>
                                                     <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500">
@@ -127,11 +150,11 @@
                                                             </div>
                                                             <div class="grow">
                                                                 <h6 class="mb-1 text-15"><a href="../client/home/detail/{{ $list->product_id }}/color/{{ $list->product_variant_id }}" class="transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
-                                                                <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variant->price_sale }} x {{$list->quantity}}</p>
+                                                                <p class="text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price_sale) }} VND x {{$list->quantity}}</p>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
+                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">{{ number_format($list->product_variant->price_sale * $list->quantity) }} VND</td>
                                                 </tr>
                                             @else
                                                 <tr>
@@ -145,12 +168,12 @@
                                                             </div>
                                                             <div class="grow">
                                                                 <h6 class="mb-1 text-15"><a class="text-red-500 transition-all duration-300 ease-linear hover:text-custom-500">{{ $list->product->name }}</a></h6>
-                                                                <p class="text-slate-500 dark:text-zink-200">${{ $list->product_variant->price_sale }} x {{$list->quantity}}</p>
+                                                                <p class="text-slate-500 dark:text-zink-200">{{ number_format($list->product_variant->price_sale) }}VND x {{$list->quantity}}</p>
                                                                 <a data-cartDetail="{{ $list->id }}" onclick="if (confirm('Bạn có muốn xóa không?')) deleteCart('{{ $list->id }}')" class="flex items-center justify-center size-[37.5px] p-0 text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20 remove-button"><i data-lucide="trash-2" class="w-4 h-4"></i></a>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">${{ number_format($list->product_variant->price_sale * $list->quantity) }}</td>
+                                                    <td class="px-3.5 py-4 border-b border-dashed first:pl-0 last:pr-0 border-slate-200 dark:border-zink-500 ltr:text-right rtl:text-left">{{ number_format($list->product_variant->price_sale * $list->quantity) }}VND</td>
                                                 </tr>
                                             @endif
 
@@ -161,14 +184,14 @@
                                                 Giá
                                             </td>
                                             {{--  @dd($cart);  --}}
-                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">${{ $cart->total_amuont}}</td>
+                                            <td class="px-3.5 pt-4 pb-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">{{ number_format($totalAmount) }}VND</td>
                                         </tr>
                                     </div>
                                         <tr>
                                             <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
-                                                Estimated Tax
+                                                Tiền Được Giảm
                                             </td>
-                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left response_discount">$0</td>
+                                            <td class="px-3.5 py-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left response_discount">0VND</td>
                                         </tr>
                                         <tr>
                                             <td class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
@@ -177,16 +200,21 @@
 
                                             <td class="px-4.5 py-4 first:pl-0 last:pr-0 ltr:text-right rtl:text-left">
                                                 <a href="javascript:couponApply()">
-                                                    <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Thêm mã giảm giá</span></button>
+                                                    <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><span class="align-middle">Place Order</span></button>
                                                 </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="cursor: pointer" data-modal-target="addressModal" class="px-3.5 py-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
+                                                Chọn mã giảm giá
                                             </td>
                                         </tr>
                                         <tr class="font-semibold">
                                         <td class="px-3.5 pt-3 first:pl-0 last:pr-0 text-slate-500 dark:text-zink-200">
                                             Tổng Tiền Cần Trả
                                         </td>
-                                        <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">${{ $cart->total_amuont}}</td>
-                                        <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $cart->total_amuont }}">
+                                        <td class="px-3.5 pt-3 first:pl-0 last:pr-0 ltr:text-right rtl:text-left hidden_response_total">{{ number_format($totalAmount) }}VND</td>
+                                        <input type="hidden" class="order_total_amount" name="order_total_amount" value="{{ $totalAmount }}">
                                     </tr>
                                     </tbody>
                                 </table>
@@ -217,15 +245,15 @@
 
                                 <input type="hidden" class="order_total_amount" name="total_amount" value="{{ $cart->total_amuont }}">
                                 <input type="hidden" name="allQuantity" value="{{ $cart->cartDetail->sum('quantity') }}">
-                                {{--  @if()
+                                @if(!$hasDeletedProduct)
                                     <button type="submit" class="mt-3 w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
-                                        Place Order
+                                        Xác Nhận Đặt Hàng
                                     </button>
                                 @else
                                     <div style="width: auto; text-align: center" class="px-4 py-3 mb-4 text-sm border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
                                         <span class="font-bold">Bạn Vui Lòng Thực Hiện Thao Tác Yêu Cầu Trên</span>
                                     </div>
-                                @endif  --}}
+                                @endif
 
                             </div>
                         </div>
@@ -237,5 +265,44 @@
         </div>
         <!-- container-fluid -->
     </div>
+
+    <div id="addressModal" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
+        <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+            <div class="flex items-center justify-between p-4 border-b dark:border-zink-300/20">
+                <h5 class="text-16">Danh Sách Mã Giảm Giá</h5>
+                <button data-modal-close="addressModal" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+            </div>
+            <div class="max-h-[calc(theme('height.screen')_-_380px)] p-4 overflow-y-auto">
+                    <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
+                        <div class="xl:col-span-12">
+                            @foreach($coupons as $key => $coupon)
+                                <p>Phiếu Giảm Giá 0{{ $key + 1 }}.</p>
+                                <a class="px-4 py-3 mb-5 block transition-all duration-150 ease-linear border-t card-body border-slate-200 hover:bg-slate-50 [&.active]:bg-slate-100 dark:border-zink-500 dark:hover:bg-zink-600 dark:[&.active]:bg-zink-600 active">
+                                    <div class="float-right">
+                                        <span class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">Chưa Dùng</span>
+                                        <input type="hidden" id="clipboard{{ $key }}" value="{{ $coupon->code }}" aria-describedby="button-addon2" placeholder="">
+                                        <button style="float: right" type="button" id="copyButton" data-clipboard-action="copy" data-clipboard-target="#clipboard{{ $key }}" class="flex items-center justify-center w-[39px] h-[39px] ltr:rounded-l-none rtl:rounded-r-none p-0 text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100 active:text-slate-600 active:bg-slate-300 active:border-slate-300 active:ring active:ring-slate-100 dark:bg-zink-600 dark:hover:bg-zink-500 dark:border-zink-600 dark:hover:border-zink-500 dark:text-zink-200 dark:ring-zink-400/50">
+                                            <i data-lucide="clipboard-list" class="inline-block size-4"></i>
+                                        </button>
+                                    </div>
+                                    <h6>Hình Thức Giảm: {{ $coupon->discount_type }}</h6>
+                                    <div class="flex">
+                                        <div class="grow">
+                                            <h6 class="mt-3 mb-1 text-16">{{ $coupon->code }}</h6>
+                                            <p class="text-slate-500 dark:text-zink-200">{{ number_format($coupon->discount_value) }} {{ $coupon->discount_type == 'Phần Trăm' ? '%' : 'VND'}}</p>
+                                        </div>
+                                        <p class="self-end mb-0 text-slate-500 dark:text-zink-200 shrink-0"><i data-lucide="calendar-clock" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i>
+                                            <span class="align-middle">{{ $coupon->expiration_date }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div><!--end add user-->
+
 @endsection
 

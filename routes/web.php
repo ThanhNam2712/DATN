@@ -88,11 +88,12 @@ Route::get('/blocked', function () {
     Route::group([
         'prefix' => 'order',
         'as' => 'order.',
-    ], function () {
+    ], function (){
+        Route::post('checkBox', [ClientOrderController::class, 'checkBox'])->name('checkBox');
         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
         Route::get('coupon', [ClientOrderController::class, 'coupon'])->name('coupon');
         Route::post('create', [ClientOrderController::class, 'create'])->name('create');
-        Route::get('confirm/{id}', [ClientOrderController::class, 'confirm'])->name('confirm');
+        Route::get('confirm', [ClientOrderController::class, 'confirm'])->name('confirm');
         Route::get('view', [OrderControllerClient::class, 'index'])->name('index');
         Route::get('detail/{id}', [OrderControllerClient::class, 'detail'])->name('detail');
         Route::put('cancel/{id}', [OrderControllerClient::class, 'cancel'])->name('cancel');
@@ -153,10 +154,6 @@ Route::get('/blocked', function () {
 Route::get('/admin/dashboard', function () {
     return view('admin.layouts.master');
 });
-
-
-Route::resource('admin/brands', BrandController::class);
-
 
 
 Route::middleware(['auth', 'check.status'])->group(function () {
@@ -247,6 +244,23 @@ Route::group([
         Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
         Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+        Route::get('softDelete', [CategoryController::class, 'soft'])->name('soft');
+        Route::delete('softDelete/{id}', [CategoryController::class, 'restore'])->name('restore');
+
+    });
+
+    Route::group([
+        'prefix' => 'brands',
+        'as' => 'brands.',
+    ], function (){
+        Route::get('/', [BrandController::class, 'index'])->name('index');
+        Route::get('create', [BrandController::class, 'create'])->name('create');
+        Route::get('update/{id}', [BrandController::class, 'edit'])->name('edit');
+        Route::post('store', [BrandController::class, 'store'])->name('store');
+        Route::put('update/{id}', [BrandController::class, 'update'])->name('update');
+        Route::delete('destroy/{id}', [BrandController::class, 'destroy'])->name('destroy');
+        Route::get('softDelete', [BrandController::class, 'soft'])->name('soft');
+        Route::delete('softDelete/{id}', [BrandController::class, 'restore'])->name('restore');
     });
 
     Route::group(

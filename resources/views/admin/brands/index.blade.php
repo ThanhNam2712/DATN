@@ -12,7 +12,7 @@ Danh mục sản phẩm
                 <div class="grow">
                     <h5 class="text-16">Danh sách</h5>
                 </div>
-                <a href="{{route('brands.create')}}" data-modal-target="addCustomerModal" class="btn bg-custom-500 text-white">Thêm mới</a>
+                <a href="../admin/brands/create" data-modal-target="addCustomerModal" class="btn bg-custom-500 text-white">Thêm mới</a>
             </div>
 
             <div class="overflow-x-auto">
@@ -43,10 +43,10 @@ Danh mục sản phẩm
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                 <div class="flex gap-2">
                                     <div class="edit">
-                                        <a href="{{route('brands.edit',$brand)}}" data-modal-target="showModal" class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn">Sửa</a>
+                                        <a href="../admin/brands/update/{{ $brand->id }}" data-modal-target="showModal" class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn">Sửa</a>
                                     </div>
                                     <div class="remove">
-                                        <form action="{{route('brands.destroy',$brand)}}" method="POST">
+                                        <form action="../admin/brands/destroy/{{ $brand->id }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" data-modal-target="deleteRecordModal" id="delete-record" class="py-1 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20 remove-item-btn"

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\ProductVariant;
 use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -74,14 +76,21 @@ class OrderControllerClient extends Controller
 
         $order = Order::find($id);
         $shipment = ShipmentOrder::where('order_id' ,$order->id)->first();
-        if ($order->status != "completed" && $shipment->shipments_5 != "completed"){
+        if ($order->status != "completed" && $shipment->shipments_5 != "completed" && $shipment->shipments_1 != "Đã Nhận Đơn"){
+            $orderItems = OrderItem::where('order_id', $order->id)->get();
+            foreach ($orderItems as $item) {
+                $productVariant = ProductVariant::find($item->product_variant_id);
+                if ($productVariant) {
+                    $productVariant->increment('quantity', $item->quantity);
+                }
+            }
             $order->status = 'cancelled';
             $shipment->cancel = $request->input('cancel_8');
             $order->save();
             $shipment->save();
-            return back()->with('message', 'Hủy Đơn Thành Công');
+            return back()->with('message', 'Hủy Đơn Hàng Thành Công');
         }else{
-            return back()->with('message', 'Hủy Đơn Thất Bại');
+            return back()->with('error', 'Đơn Hàng Đang Được Giao Bạn Không Thể Hủy Đơn!');
         }
     }
 }

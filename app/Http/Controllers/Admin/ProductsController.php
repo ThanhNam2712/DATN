@@ -90,7 +90,7 @@ class ProductsController extends Controller
         $product->tags()->attach($request->tags);
 
         return redirect('admin/products/')->with([
-            'message' => 'Create Products Success'
+            'message' => 'Thêm Mới Sản Phẩm Thành Công'
         ]);
     }
 
@@ -148,7 +148,7 @@ class ProductsController extends Controller
         }
         $product->update($data);
         $product->tags()->sync($request->tags);
-        return redirect()->back()->with('message', 'Update Success');
+        return redirect()->back()->with('message', 'Cập Nhật Sản Phẩm Thành Công');
     }
 
 
@@ -160,7 +160,7 @@ class ProductsController extends Controller
         $product = Product::find($id);
         $product->delete();
         return redirect()->back()->with([
-            'message' => 'Destroy Products Success'
+            'message' => 'Ẩn thành công'
         ]);
     }
 
@@ -177,7 +177,7 @@ class ProductsController extends Controller
         $product->restore();
 
         return redirect()->back()->with([
-            'message' => 'Connect Success'
+            'message' => 'Bỏ ẩn thành công'
         ]);
     }
 }

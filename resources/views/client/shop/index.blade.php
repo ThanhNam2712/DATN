@@ -269,16 +269,8 @@
                                             <h6 class="mb-1 truncate transition-all duration-200 ease-linear text-15 hover:text-custom-500"><a href="../client/home/detail/{{ $list->id }}/color/{{ $list->variant->first()->id }}">{{ $list->name }}</a></h6>
 
                                             <div class="flex items-center text-slate-500 dark:text-zink-200">
-{{--                                                <div class="mr-1 text-yellow-500 shrink-0 text-15">--}}
-{{--                                                    <i class="ri-star-fill"></i>--}}
-{{--                                                    <i class="ri-star-fill"></i>--}}
-{{--                                                    <i class="ri-star-fill"></i>--}}
-{{--                                                    <i class="ri-star-fill"></i>--}}
-{{--                                                    <i class="ri-star-half-line"></i>--}}
-{{--                                                </div>--}}
-{{--                                                ({{ $list->comment->count() }})--}}
                                             </div>
-                                            <h5 class="mt-4 text-16">${{ $list->variant->first()->price_sale }} <small class="font-normal line-through text-slate-500 dark:text-zink-200">${{ $list->variant->first()->price }}</small></h5>
+                                            <h5 class="mt-4 text-16">{{ number_format($list->variant->first()->price_sale) }} VND<small class="font-normal line-through text-slate-500 dark:text-zink-200">{{ number_format($list->variant->first()->price) }}VND</small></h5>
                                         </div>
 
                                         <div class="flex items-center gap-2 mt-4 group-[.gridView]:mt-0 group-[.gridView]:self-end">
