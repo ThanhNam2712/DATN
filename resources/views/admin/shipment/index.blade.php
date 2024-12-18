@@ -56,7 +56,7 @@
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                     <div class="flex gap-2">
                                         <div class="edit">
-                                            <form action="../admin/shipment/" method="post">
+                                            <form action="{{ route('admin.shipment.index') }}" method="post">
                                                 @csrf
                                                 <input type="hidden" name="order_id" value="{{ $order->id }}">
                                                 <input type="hidden" name="shiper_id" value="{{ Auth::user()->id }}">

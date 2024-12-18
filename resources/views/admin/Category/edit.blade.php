@@ -27,9 +27,10 @@ Chỉnh Sửa Danh Mục Sản Phẩm
 
                             <div class="mb-4">
                                 <label for="nameInput" class="inline-block mb-2 text-base font-medium">Tên Danh Mục <span class="text-red-500">*</span></label>
-                                <input type="text" id="nameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Nhập tên danh mục" value="{{ old('name', $category->name) }}" required>
-                                <p id="nameError" class="mt-1 text-sm text-red-500"></p>
-                            </div>
+                                <input type="text" id="nameInput" name="name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Nhập tên danh mục" value="{{ old('name', $category->name) }}" >
+                                @error('name')
+                                <p id="nameError" class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror                            </div>
 
                             <div class="mb-4">
                                 <label for="imageInput" class="inline-block mb-2 text-base font-medium">Hình Ảnh <span class="text-red-500">*</span></label>

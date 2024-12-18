@@ -38,17 +38,20 @@ class BrandController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:brands,name',
+            'image' => 'required',
+
         ]);
         $dataBrand = [
             'name' => $request->name,
+            'image' => $request->image,
 
         ];
         if ($request->hasFile('image')) {
             $dataBrand['image'] = Common::uploadFile($request->file('image'), 'admin/img/brands');
         }
         Brand::query()->create($dataBrand);
-        return redirect()->route('brands.index')
+        return redirect('admin/brands')
             ->with('success', 'Thêm mới Thành công');
     }
 
@@ -116,7 +119,7 @@ class BrandController extends Controller
         $brand = Brand::find($id);
         $brand->delete();
         return redirect()->back()->with([
-            'message' => 'Ẩn Thương Hiệu Thành Công'
+            'success' => 'Ẩn Thương Hiệu Thành Công'
         ]);
     }
 
@@ -131,7 +134,7 @@ class BrandController extends Controller
         $brands = Brand::onlyTrashed()->find($id);
         $brands->restore();
         return back()->with([
-            'message' => 'Xóa ẩn Thương Hiệu Thành Công'
+            'success' => 'Bỏ Ẩn Thương Hiệu Thành Công'
         ]);
     }
 }

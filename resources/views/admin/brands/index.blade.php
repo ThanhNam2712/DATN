@@ -20,7 +20,6 @@ Danh mục sản phẩm
                     <thead class="bg-slate-100 dark:bg-zink-600">
                         <tr>
                             <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500" scope="col" style="width: 50px;">
-                                <input class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" id="checkAll" value="option">
                             </th>
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="customer_name">STT</th>
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="email">Tên</th>
@@ -32,7 +31,6 @@ Danh mục sản phẩm
                         @foreach ($brands as $key => $brand)
                         <tr>
                             <th class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500" scope="row">
-                                <input class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" name="chk_child">
                             </th>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary id">#VZ2101</a></td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">{{ $key + 1 }}</td>
@@ -81,13 +79,10 @@ Danh mục sản phẩm
             <div
                 class="grid items-center grid-cols-1 text-center lg:grid-cols-2 text-slate-400 dark:text-zink-200 ltr:lg:text-left rtl:lg:text-right">
                 <div>
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script> StarCode Kh
+                  
                 </div>
                 <div class="hidden lg:block">
                     <div class="ltr:text-right rtl:text-left">
-                        Design & Develop by StarCode Kh
                     </div>
                 </div>
             </div>

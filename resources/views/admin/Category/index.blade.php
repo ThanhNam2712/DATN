@@ -57,7 +57,7 @@ Danh mục sản phẩm
                                     <a href="#!" class="transition-all duration-150 ease-linear product_code text-custom-500 hover:text-custom-600">#TAD-2321000{{ $index + 1 }}</a>
                                 </td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 product_name">
-                                    <a href="apps-ecommerce-product-overview.html" class="flex items-center gap-2">
+                                    <a href="" class="flex items-center gap-2">
                                         <img src="{{ Storage::url($category->image) }}" alt="Product images" style="width: 60px; height: 100%" class="h-6">
                                         <h6 class="ms-3 product_name">{{ $category->name }}</h6>
                                     </a>

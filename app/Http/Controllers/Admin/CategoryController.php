@@ -25,12 +25,10 @@ class CategoryController extends Controller
     }
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255|unique:categories,name',
-        //     'image' => 'nullable',
-        // ]);
-        $data = $request->all();
-
+        $data = $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name',
+            'image' => 'required',
+        ]);
 
         if ($request->hasFile('image')) {
             $data['image']  = Common::uploadFile($request->file('image'), 'admin/img/brands');

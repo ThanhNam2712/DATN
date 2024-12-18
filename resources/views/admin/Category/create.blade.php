@@ -24,10 +24,12 @@
                                 <div class="mb-4">
                                     <label for="nameInput" class="inline-block mb-2 text-base font-medium">Tên Danh Mục
                                         <span class="text-red-500">*</span></label>
-                                    <input type="text" id="nameInput" name="name"
+                                    <input type="text" id="nameInput" name="name"   @error('name') border-red-500 @enderror
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
-                                        placeholder="Nhập tên danh mục" required>
-                                    <p id="nameError" class="mt-1 text-sm text-red-500"></p>
+                                        placeholder="Nhập tên danh mục" >
+                                        @error('name')
+                                        <p id="nameError" class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-4">
@@ -35,9 +37,10 @@
                                             class="text-red-500">*</span></label>
                                     <input type="file" id="imageInput" name="image"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
-                                        required>
-                                    <p id="imageError" class="mt-1 text-sm text-red-500"></p>
-                                    <img id="imagePreview" class="mt-2 w-48 h-48 object-cover" style="display: none;">
+                                        >
+                                        @error('image')
+                                        <p id="nameError" class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                                    @enderror                                    <img id="imagePreview" class="mt-2 w-48 h-48 object-cover" style="display: none;">
                                 </div>
                                 <div class="flex justify-end gap-2 mt-5">
                                     <button type="button"

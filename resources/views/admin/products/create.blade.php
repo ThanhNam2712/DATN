@@ -83,7 +83,7 @@
                                                 <option value="{{$id}}">{{$name}}</option>
                                             @endforeach
                                         </select>
-                                        @error('category_id')
+                                        @error('tags')
                                             <div class="mb-3 px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
                                                 <span class="font-bold">{{ $message }}</span>
                                             </div>

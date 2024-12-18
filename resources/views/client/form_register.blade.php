@@ -100,19 +100,41 @@ register
                     </div>
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Mật khẩu</label>
-                        <input type="password" name="password" id="password"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="Mật khẩu">
+                        <div class="relative">
+                            <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                placeholder="Mật khẩu">
+                            <button
+                                type="button"
+                                id="togglePassword"
+                                class="absolute inset-y-0 right-3 flex items-center text-gray-500 dark:text-gray-300">
+                                Hiện
+                            </button>
+                        </div>
                         @error('password')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+
                     <div class="mb-3">
-                        <label for="confirm-password" class="inline-block mb-2 text-base font-medium">Nhập lại mật
-                            khẩu</label>
-                        <input type="password" name="password_confirmation" id="password_confirmation"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="Nhập lại mật khẩu">
+                        <label for="password_confirmation" class="inline-block mb-2 text-base font-medium">Nhập lại mật khẩu</label>
+                        <div class="relative">
+                            <input
+                                type="password"
+                                name="password_confirmation"
+                                id="password_confirmation"
+                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                placeholder="Nhập lại mật khẩu">
+                            <button
+                                type="button"
+                                id="toggleConfirmPassword"
+                                class="absolute inset-y-0 right-3 flex items-center text-gray-500 dark:text-gray-300">
+                                Hiện
+                            </button>
+                        </div>
                     </div>
 
                     <div class="mt-10">
@@ -130,5 +152,18 @@ register
         </div>
     </div>
 </div>
+<script>document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordInput = document.getElementById('password');
+    const type = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = type;
 
+    this.textContent = type === 'password' ? 'Hiện' : 'Ẩn';
+});
+document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+    const confirmPasswordInput = document.getElementById('password_confirmation');
+    const type = confirmPasswordInput.type === 'password' ? 'text' : 'password';
+    confirmPasswordInput.type = type;
+    this.textContent = type === 'password' ? 'Hiện' : 'Ẩn';
+});
+</script>
 @endsection

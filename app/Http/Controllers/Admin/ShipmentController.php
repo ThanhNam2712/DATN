@@ -92,6 +92,7 @@ class ShipmentController extends Controller
         return back()->with('message', 'Xác Nhận Đơn Thành Công');
     }
 
+
     public function cancel(Request $request,$id)
     {
         $request->validate([
