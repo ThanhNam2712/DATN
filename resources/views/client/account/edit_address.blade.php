@@ -8,7 +8,7 @@
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
         <div class="card">
             <div class="card-body">
-                <h6 class="mb-4 text-15">Sửa Địa Chỉ</h6>
+                <h6 class="mb-4 text-15">Sửa Địa Chỉ </h6>
 
                 <div class="mx-auto md:max-w-lg">
                     <form action="{{ route('auth.address.update', $address->id) }}" method="POST">
