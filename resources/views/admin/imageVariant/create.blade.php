@@ -5,14 +5,14 @@
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Add New</h5>
+                    <h5 class="text-16">Thêm Mới</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="#!" class="text-slate-400 dark:text-zink-200">Image Color</a>
+                        <a href="#!" class="text-slate-400 dark:text-zink-200">Ảnh Sản Phẩm</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Add New
+                        Thêm Mới
                     </li>
                 </ul>
             </div>
@@ -21,12 +21,12 @@
                 <div class="xl:col-span-12">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Create Image: {{ $variant->color->name }}</h6>
+                            <h6 class="mb-4 text-15">Thêm Mới Ảnh Màu: {{ $variant->color->name }}</h6>
                             <form action="../admin/gallery/product/{{ $product->id }}/create/" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     <div class="lg:col-span-2 xl:col-span-12">
-                                        <label for="genderSelect" class="inline-block mb-2 text-base font-medium">Images Color</label>
+                                        <label for="genderSelect" class="inline-block mb-2 text-base font-medium">Nhập Ảnh</label>
                                         <div class="flex items-center justify-center bg-white border border-dashed rounded-md cursor-pointer dropzone border-slate-300 dark:bg-zink-700 dark:border-zink-500">
                                             <div class="w-full py-5 text-lg text-center ">
                                                 <div class="dropzone needsclick p-0 dz-clickable" id="dropzone-basic">
@@ -45,8 +45,8 @@
                                         <div id="previewContainer" class="flex flex-wrap gap-4 mt-4"></div>
                                     </div>
                                 </div>
-                                <a href="../admin/gallery/product/{{ $product->id }}" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Back</a>
-                                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Create Product</button>
+                                <a href="../admin/gallery/product/{{ $product->id }}" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Quay Lại</a>
+                                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Thêm Mới Ảnh</button>
                             </form>
 
                         </div>

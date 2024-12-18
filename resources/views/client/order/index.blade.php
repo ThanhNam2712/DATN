@@ -34,7 +34,7 @@
                     </li>
                 </ul>
             </div>
-            <form action="{{ route('client.order.create') }}" method="POST">
+            <form action="{{ route('client.order.create') }}" method="POST" id="postOrderCreate">
                 @csrf
                 <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
                 <div class="xl:col-span-12">
@@ -352,6 +352,17 @@
             </div>
         </div>
     </div><!--end add user-->
+    <script>
+        document.getElementById('postOrderCreate').addEventListener('submit', function (e) {
+            const seleted1 = document.getElementById('deliveryOption1');
+            const seleted2 = document.getElementById('deliveryOption2');
+
+            if (!seleted1.checked && !seleted2.checked){
+                e.preventDefault();
+                alert('Vui Lòng Chọn Phương Thức Thanh Toán Cho Đơn Hàng');
+            }
+        });
+    </script>
 
 @endsection
 

@@ -69,4 +69,16 @@ class GalleryController extends Controller
         ]);
     }
 
+    public function delete($id)
+    {
+        $image = Gallery::find($id);
+        if ($image && $image->file_path != ''){
+            Storage::disk('public')->delete($image->file_path);
+        }
+
+        $image->delete();
+        return redirect()->back()->with([
+            'message' => 'Xóa Ảnh Thành Công'
+        ]);
+    }
 }

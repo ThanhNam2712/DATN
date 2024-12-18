@@ -48,7 +48,7 @@ class BrandController extends Controller
             $dataBrand['image'] = Common::uploadFile($request->file('image'), 'admin/img/brands');
         }
         Brand::query()->create($dataBrand);
-        return redirect()->route('brands.index')
+        return redirect('admin/brands')
             ->with('success', 'Thêm mới Thành công');
     }
 

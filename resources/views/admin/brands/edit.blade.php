@@ -45,6 +45,25 @@ class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-
                              @if ($brand->image && \Storage::exists($brand->image))
                              <img src="{{\Storage::url($brand->image)}}" width="100px" alt="">
                              @endif
+
+                    </div>
+                    <div class="mb-4">
+                        <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete"
+                             style="width: 200px; height: 200px">
+                            <div class="border rounded border-slate-200 dark:border-zink-500">
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail">
+                                        <img src="{{ Storage::url($brand->image) }}" alt="Image Preview">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-primary" role="progressbar"
+                                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="dz-size" id="fileSize"><strong>0.8</strong> MB</div> --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="flex justify-end gap-2">

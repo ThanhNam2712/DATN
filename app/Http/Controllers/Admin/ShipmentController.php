@@ -15,7 +15,7 @@ class ShipmentController extends Controller
 {
     public function index()
     {
-        $orders = Order::whereDoesntHave('shipments')->where('status', '=', 'delivery person')->get();
+        $orders = Order::whereDoesntHave('shipments')->where('status', '=', 'delivery person')->orderByDesc('id')->paginate(10);
         return view('admin.shipment.index', compact('orders'));
     }
 
@@ -23,7 +23,7 @@ class ShipmentController extends Controller
     {
         $shipment = Shipment::where('shiper_id', Auth::id())->whereHas('order', function ($query) {
             $query->whereNotIn('status', ['cancelled', 'completed', 'return order', 'Giao Thành công']);
-        })->get();
+        })->orderByDesc('id')->get();
 
         return view('admin.shipment.detail', compact('shipment'));
     }
@@ -32,7 +32,7 @@ class ShipmentController extends Controller
     {
         $shipment = Shipment::where('shiper_id', Auth::id())->whereHas('order', function ($query) {
             $query->whereIn('status', ['Giao Thành công', 'completed']);
-        })->paginate(4);
+        })->orderByDesc('id')->paginate(8);
 
         return view('admin.shipment.success', compact('shipment'));
     }

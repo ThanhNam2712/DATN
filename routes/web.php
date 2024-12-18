@@ -343,6 +343,7 @@ Route::group([
         Route::get('/product/{id}/create/{idVariant}', [GalleryController::class, 'create'])->name('create');
         Route::post('/product/{id}/create/', [GalleryController::class, 'store'])->name('store');
         Route::put('/update/{id}', [GalleryController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [GalleryController::class, 'delete'])->name('delete');
     });
 
     Route::group([
