@@ -211,8 +211,9 @@
                     <a href="#!"><img src="../assets/images/aeboutique.png" alt="" class="block h-7 dark:hidden"></a>
                 </div>
                 <p class="mb-5 text-slate-500 dark:text-zinc-400">Chúng tôi là nơi bạn tìm thấy phong cách thời trang độc đáo, đa dạng từ trang phục dạo phố năng động, công sở thanh lịch đến những bộ đồ thời thượng phù hợp với mọi xu hướng hiện đại.</p>
-              
+        
             </div>
+
 
         </div><!--end grid-->
 

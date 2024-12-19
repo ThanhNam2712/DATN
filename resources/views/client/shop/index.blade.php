@@ -17,28 +17,21 @@
                     <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-1">
                         <div class="card">
                             <div class="card-body">
-                                <h6 class="mb-4 text-15" style="text-align: center">Simple Image Gallery</h6>
-                                <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
-                                    <div>
-                                        <a href="assets/images/small/img-2.jpg" class="glightbox">
-                                            <img src="assets/images/img-2.jpg" alt="image" class="rounded-md">
-                                        </a>
-                                    </div>
-                                </div>
+                                <h3 class="mb-4 text-21" style="text-align: center">Các sản phẩm của AE Boutique</h3>
+
                             </div>
                         </div><!--end card-->
                     </div><!--end grid-->
                 </div>
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Xem Dạng Lướt</h5>
+                        <h5 class="text-16"></h5>
                     </div>
                     <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                         <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                            <a href="#!" class="text-slate-400 dark:text-zink-200">Products</a>
+                            <a href="#!" class="text-slate-400 dark:text-zink-200"></a>
                         </li>
                         <li class="text-slate-700 dark:text-zink-100">
-                            Xem Dạng Lướt
                         </li>
                     </ul>
                 </div>
@@ -47,15 +40,15 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="flex items-center gap-3">
-                                    <h6 class="text-15 grow">Filter</h6>
+                                    <h6 class="text-15 grow">Bộ lọc</h6>
                                     <div class="shrink-0">
-                                        <a href="../client/shop/" class="underline transition-all duration-200 ease-linear hover:text-custom-500">Clear All</a>
+                                        <a href="../client/shop/" class="underline transition-all duration-200 ease-linear hover:text-custom-500">Khôi phục</a>
                                     </div>
                                 </div>
 
                                 <div class="relative mt-4">
                                     <form action="../client/shop">
-                                        <input type="text" name="search" value="{{ request('search') }}" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search for ..." autocomplete="off">
+                                        <input type="text" name="search" value="{{ request('search') }}" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nhập tên sản phẩm..." autocomplete="off">
                                         <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
                                     </form>
                                 </div>
@@ -210,7 +203,7 @@
                     </div><!--end col-->
                     <div class="2xl:col-span-9">
                         <div class="flex flex-wrap items-center gap-2">
-                            <p class="grow">Showing all <b>{{ $products->count() }}</b> items results</p>
+                            <p class="grow">Hiện tất cả <b>{{ $products->count() }}</b> kết quả mục</p>
                             <div class="flex gap-2 shrink-0 items-cente">
 
                                 <form action="" style="display: flex">
@@ -239,8 +232,8 @@
                                         </div>
                                     </div>
                                 </form>
-                                <a href="../client/cart/cart-Detail" class="flex items-center justify-center w-[37.5px] h-[37.5px] p-0 text-sky-500 btn bg-sky-100 hover:text-white hover:bg-sky-600 focus:text-white focus:bg-sky-600 [&.active]:text-white [&.active]:bg-sky-600 dark:bg-sky-500/20 dark:text-sky-400 dark:hover:bg-sky-500 dark:hover:text-white dark:focus:bg-sky-500 dark:focus:text-white dark:[&.active]:bg-sky-500 dark:[&.active]:text-white dark:ring-sky-400/20"><i data-lucide="list" class="size-4"></i></a>
-                                <button type="button" id="gridView" class="flex items-center justify-center w-[37.5px] h-[37.5px] p-0 text-sky-500 btn bg-sky-100 hover:text-white hover:bg-sky-600 focus:text-white focus:bg-sky-600 [&.active]:text-white [&.active]:bg-sky-600 dark:bg-sky-500/20 dark:text-sky-400 dark:hover:bg-sky-500 dark:hover:text-white dark:focus:bg-sky-500 dark:focus:text-white dark:[&.active]:bg-sky-500 dark:[&.active]:text-white dark:ring-sky-400/20 active"><i data-lucide="layout-grid" class="size-4"></i></button>
+                                {{-- <a href="../client/cart/cart-Detail" class="flex items-center justify-center w-[37.5px] h-[37.5px] p-0 text-sky-500 btn bg-sky-100 hover:text-white hover:bg-sky-600 focus:text-white focus:bg-sky-600 [&.active]:text-white [&.active]:bg-sky-600 dark:bg-sky-500/20 dark:text-sky-400 dark:hover:bg-sky-500 dark:hover:text-white dark:focus:bg-sky-500 dark:focus:text-white dark:[&.active]:bg-sky-500 dark:[&.active]:text-white dark:ring-sky-400/20"><i data-lucide="list" class="size-4"></i></a> --}}
+                                {{-- <button type="button" id="gridView" class="flex items-center justify-center w-[37.5px] h-[37.5px] p-0 text-sky-500 btn bg-sky-100 hover:text-white hover:bg-sky-600 focus:text-white focus:bg-sky-600 [&.active]:text-white [&.active]:bg-sky-600 dark:bg-sky-500/20 dark:text-sky-400 dark:hover:bg-sky-500 dark:hover:text-white dark:focus:bg-sky-500 dark:focus:text-white dark:[&.active]:bg-sky-500 dark:[&.active]:text-white dark:ring-sky-400/20 active"><i data-lucide="layout-grid" class="size-4"></i></button> --}}
                             </div>
                         </div>
 
