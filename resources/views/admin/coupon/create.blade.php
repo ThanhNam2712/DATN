@@ -132,18 +132,23 @@
             // Lấy giá trị ngày bắt đầu và ngày kết thúc từ input
             const dateStart = new Date(document.getElementById('dateCouponSt').value);
             const dateEnd = new Date(document.getElementById('dateCouponEn').value);
+            const d = new Date();
 
             const selectedValue = document.getElementById('selectValue').value;
             const discountValue = document.getElementById('valueDiscount').value;
 
             // Kiểm tra điều kiện ngày bắt đầu phải nhỏ hơn ngày kết thúc
             if (dateStart >= dateEnd) {
-                e.preventDefault(); // Ngăn form gửi đi nếu điều kiện không thỏa mãn
+                e.preventDefault();
                 alert('Ngày bắt đầu không được lớn hơn ngày kết thúc');
             }
 
+            if (dateStart > d){
+                e.preventDefault();
+                alert('Ngày bắt đầu Phải Bằng Ngày Hiện Tại');
+            }
             if (selectedValue.includes('Phần Trăm')){
-                if (discountValue > 50){
+                if (discountValue > 30){
                     e.preventDefault();
                     alert('Giá Trị Phần Trăm Không Được Lớn Hơn 50');
                 }

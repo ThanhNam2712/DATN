@@ -12,7 +12,7 @@ class CouponController extends Controller
 {
     public function index()
     {
-        $coupon = Coupon::all();
+        $coupon = Coupon::orderByDesc('id')->paginate(5);
         return view('admin.coupon.index', compact('coupon'));
     }
 

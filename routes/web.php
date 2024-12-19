@@ -48,14 +48,14 @@ Route::get('/blocked', function () {
     'middleware' => 'checkUser'
  ], function (){
 
-     Route::group([
-         'prefix' => 'home',
-         'as' => 'home.'
-     ], function (){
-         Route::get('/', [HomeController::class, 'index'])->name('home');
-         Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
-         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
-     });
+//     Route::group([
+//         'prefix' => 'home',
+//         'as' => 'home.'
+//     ], function (){
+//         Route::get('/', [HomeController::class, 'index'])->name('home');
+//         Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
+//         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+//     });
 
      Route::group([
          'prefix' => 'home',
@@ -63,7 +63,7 @@ Route::get('/blocked', function () {
      ], function (){
          Route::get('/', [HomeController::class, 'index'])->name('home');
          Route::get('detail/{id}/color/{idColor}', [HomeController::class, 'detail'])->name('detail');
-         Route::post('post', [HomeController::class, 'postReview'])->name('postReview');
+
      });
      Route::group([
         'prefix' => 'wishlist',
@@ -100,6 +100,7 @@ Route::get('/blocked', function () {
         Route::put('cancel/{id}', [OrderControllerClient::class, 'cancel'])->name('cancel');
         Route::put('submit/{id}', [OrderControllerClient::class, 'submit'])->name('submit');
         Route::put('address/{id}', [OrderControllerClient::class, 'address'])->name('address');
+        Route::post('post/{id}', [OrderControllerClient::class, 'postReview'])->name('postReview');
         Route::get('download-load/{barcode}', [OrderControllerClient::class, 'download'])->name('download');
         Route::get('get-id-by-barcode', [OrderControllerClient::class, 'getById'])->name('getById');
     });

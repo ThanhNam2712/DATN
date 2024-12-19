@@ -198,7 +198,7 @@ class StatisticController extends Controller
     private function getOrderChartByYear()
     {
         $ordersSuccess = Order::selectRaw('MONTH(created_at) as month, SUM(total_amount) as total')
-            ->whereIn('status', ['completed', 'Giao Thành công'])
+            ->where('status', 'completed')
             ->whereYear('created_at', now()->year)
             ->groupBy('month')
             ->orderBy('month')

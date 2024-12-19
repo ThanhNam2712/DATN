@@ -16,6 +16,7 @@ function couponApply(){
                 alert('Áp Mã Giảm Giá Thành Công')
             }else {
                 alert(response.error);
+                $('input[id="couponApply"]').val('');
             }
         }
     });

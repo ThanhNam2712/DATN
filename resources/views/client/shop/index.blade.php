@@ -233,8 +233,8 @@
                                                 <option {{ request('sort_by') == 'oldest' ? 'selected' : ''}} value="oldest">Sorting: Oldest</option>
                                                 <option {{ request('sort_by') == 'name-ascending' ? 'selected' : ''}} value="name-ascending">Sorting: Name Ascending</option>
                                                 <option {{ request('sort_by') == 'name-descending' ? 'selected' : ''}} value="name-descending">Sorting: Name Descending</option>
-                                                <option {{ request('sort_by') == 'discount-ascending' ? 'selected' : ''}} value="discount-ascending">Sorting: Discount Ascending</option>
-                                                <option {{ request('sort_by') == 'discount-descending' ? 'selected' : ''}} value="discount-descending">Sorting: Discount Descending</option>
+{{--                                                <option {{ request('sort_by') == 'discount-ascending' ? 'selected' : ''}} value="discount-ascending">Sorting: Discount Ascending</option>--}}
+{{--                                                <option {{ request('sort_by') == 'discount-descending' ? 'selected' : ''}} value="discount-descending">Sorting: Discount Descending</option>--}}
                                             </select>
                                         </div>
                                     </div>

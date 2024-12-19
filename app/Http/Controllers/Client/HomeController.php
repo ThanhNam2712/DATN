@@ -45,6 +45,9 @@ class HomeController extends Controller
         ];
 
         $product = Product::find($id);
+        if (!$product){
+            return view('client/notFound');
+        }
         if ($product){
             $product->view = $product->view + 1;
             $product->save();
@@ -67,44 +70,7 @@ class HomeController extends Controller
             'colorClasses', 'variant', 'priceVariant', 'productRelated', 'imageFirst', 'ratingDistribution'));
     }
 
-    public function postReview(Request $request)
-    {
-        $data = $request->all();
-        $data['user_id'] = Auth::id();
 
-        // Lấy đơn hàng liên quan đến sản phẩm
-        $order = OrderItem::join('orders', 'order_items.order_id', '=', 'orders.id')
-            ->where('orders.user_id', Auth::id())
-            ->where('order_items.product_id', $request->product_id)
-            ->whereIn('orders.status', ['completed', 'Giao Thành công'])
-            ->select('orders.id', 'order_items.order_id')
-            ->first();
-
-        if (!$order) {
-            return redirect()->back()->with([
-                'error' => 'Bạn phải mua sản phẩm này trước khi đánh giá.',
-            ]);
-        }
-
-//        $existingReview = Review::where('user_id', Auth::id())
-//            ->where('product_id', $request->product_id)
-//            ->where('order_id', $order->id) // Kiểm tra dựa trên đơn hàng
-//            ->first();
-//
-//        if ($existingReview) {
-//            return redirect()->back()->with([
-//                'error' => 'Bạn đã đánh giá sản phẩm này cho đơn hàng này. Vui lòng mua thêm sản phẩm để đánh giá lại.',
-//            ]);
-//        }
-//
-//        $data['order_id'] = $order->id;
-
-        Review::create($data);
-
-        return redirect()->back()->with([
-            'message' => 'Đánh giá sản phẩm thành công!',
-        ]);
-    }
 
     private function countAvgRating($product)
     {

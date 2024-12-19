@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductVariant;
+use App\Models\Review;
 use App\Models\ShipmentOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -135,5 +136,23 @@ class OrderControllerClient extends Controller
                 'message' => 'Thằng ranh lấy mã tài xỉu à',
             ]);
         }
+    }
+
+    public function postReview(Request $request, $id)
+    {
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
+
+        $order = Order::find($id);
+
+        foreach ($order->orderDetail as $key => $list){
+            $id_product = $list->product_id;
+            $data['product_id'] = $id_product;
+            Review::create($data);
+        }
+
+        return redirect()->back()->with([
+            'message' => 'Đánh giá sản phẩm thành công!',
+        ]);
     }
 }

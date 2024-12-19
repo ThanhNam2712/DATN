@@ -35,7 +35,7 @@
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="email">Tên Sản Phẩm</th>
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="phone">Nội dung đánh giá</th>
                             <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="phone">Số sao</th>
-                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="action">Action</th>
+                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right" data-sort="action">Thao Tác</th>
                         </tr>
                         </thead>
                         <tbody class="list form-check-all">
@@ -66,7 +66,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="py-1 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20 remove-item-btn"
-                                                        onclick="return confirm('bạn có muốn xóa')">Delete</button>
+                                                        onclick="return confirm('bạn có muốn xóa')">Xóa Bình Luận</button>
                                             </form>
 
                                         </div>
@@ -85,6 +85,11 @@
                 </div>
             </div>
             <!-- container-fluid -->
+            <nav aria-label="..." style="margin-top: 10px">
+                <ul class="pagination pagination-sm">
+                    {{ $reviews->links() }}
+                </ul>
+            </nav>
         </div>
         <!-- End Page-content -->
     </div>

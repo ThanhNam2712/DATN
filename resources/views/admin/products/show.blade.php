@@ -214,14 +214,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="lg:col-span-2 xl:col-span-12">
+                            <div style="margin-top: 110px" class="lg:col-span-2 xl:col-span-12">
                                 <div>
                                     <label for="productDescription"
                                         class="inline-block mb-2 text-base font-medium">Nội dung</label>
-                                    <textarea disabled name="content"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        id="productDescription" placeholder="Nội dung..."
-                                        rows="5">{{$product->content}}</textarea>
+                                    <textarea class="ckeditor-classic text-slate-800" name="content">
+                                                {{$product->content}}
+                                    </textarea>
                                 </div>
                             </div>
                             @error('content')

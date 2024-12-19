@@ -300,7 +300,7 @@
                                                 <div class="flex items-center gap-3 mb-4">
                                                     <h5 class="text-16 grow">Đánh Giá</h5>
                                                     @if(Auth::check())
-                                                        <button type="button" data-modal-target="addReviewsModal" class="px-2 shrink-0 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Đánh Giá</button>
+
                                                     @else
                                                         <h5 class="text-16 grow">Vui Lòng Đăng Nhập Để Bình Luận</h5>
                                                         <a href="" class="px-2 shrink-0 py-1.5 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Đăng Nhập</a>
@@ -311,20 +311,10 @@
                                                 @else
                                                     @foreach($product->review as $list)
                                                         <div class="pt-3 mt-3 border-t border-slate-200 dark:border-zink-500">
-                                                        <div class="relative ltr:float-right rtl:float-left dropdown">
-                                                            <button class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20" id="reviews4" data-bs-toggle="dropdown"><i data-lucide="more-horizontal" class="size-3"></i></button>
-                                                            <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="reviews4">
-                                                                <li>
-                                                                    <a data-modal-target="addReviewsModal" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!"><i data-lucide="file-edit" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Edit</span></a>
-                                                                </li>
-                                                                <li>
-                                                                    <a data-modal-target="deleteModal" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!"><i data-lucide="trash-2" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Delete</span></a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+
                                                         <div class="flex items-center gap-3">
                                                             <div class="w-10 h-10 bg-green-100 rounded-full shrink-0 dark:bg-green-500/20">
-                                                                <img src="assets/images/avatar-8.png" alt="" class="h-10 rounded-full">
+                                                                <img src="{{ Storage::url($list->user->avatar) }}" alt="" class="">
                                                             </div>
                                                             <div class="grow">
                                                                 <h6 class="text-15"><a href="#!">{{ $list->user->name }}</a></h6>
@@ -340,8 +330,8 @@
                                                         </div>
                                                         <p class="text-slate-500 dark:text-zink-200">"{{ $list->comment }}."</p>
                                                         <div class="flex items-center gap-3 mt-3">
-                                                            <a href="#!" class="text-slate-500 shrink-0 count-button [&.active]:text-green-500 active"><i data-lucide="thumbs-up" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle count-number">49</span></a>
-                                                            <a href="#!" class="text-slate-500 shrink-0 count-button [&.active]:text-red-500 active"><i data-lucide="thumbs-down" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle count-number">17</span></a>
+                                                            <a class="text-slate-500 shrink-0 count-button [&.active]:text-green-500 active"><i data-lucide="thumbs-up" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle count-number">0</span></a>
+                                                            <a class="text-slate-500 shrink-0 count-button [&.active]:text-red-500 active"><i data-lucide="thumbs-down" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle count-number">0</span></a>
                                                         </div>
                                                     </div>
                                                     @endforeach
@@ -387,45 +377,7 @@
         </div>
     </div>
 
-    <div id="addReviewsModal" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
-        <div class="w-screen lg:xl:w-[55rem] bg-white shadow rounded-md dark:bg-zink-600">
-            <div class="flex items-center justify-between p-5 border-b dark:border-zink-500">
-                <h5 class="text-16">Add Review</h5>
-                <button data-modal-close="addReviewsModal" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
-            </div>
-            <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                <form action="../client/home/post" method="post">
-                    <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
-                        @csrf
-                        <div class="xl:col-span-4">
-                            <div>
-                                <label for="categorySelect" class="inline-block mb-2 text-base font-medium">Rating</label>
-                                <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices="" data-choices-search-false="" name="rating" id="statusSelect">
-                                    <option value="">Select Rating</option>
-                                    <option value="5">5 Star</option>
-                                    <option value="4">4 Star</option>
-                                    <option value="3">3 Star</option>
-                                    <option value="2">2 Star</option>
-                                    <option value="1">1 Star</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="xl:col-span-12">
-                            <div>
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Your review</label>
-                                <textarea name="comment" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" placeholder="Enter Description" rows="6"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex justify-end gap-2 mt-4">
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <button data-modal-close="addReviewsModal" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-600 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Cancel</button>
-                        <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Add Review</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div><!--end modal-->
+
     <div id="sizePostCart" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
         <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600" style="width: 800px">
             <div class="flex items-center justify-between p-4 border-b dark:border-zink-300/20">

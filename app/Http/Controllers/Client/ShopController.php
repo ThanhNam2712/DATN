@@ -91,12 +91,12 @@ class ShopController extends Controller
             case 'name-descending':
                 $products = $products->orderByDesc('name');
                 break;
-            case 'discount-ascending':
-                $products = $products->orderBy('discount');
-                break;
-            case 'discount-descending':
-                $products = $products->orderByDesc('discount');
-                break;
+//            case 'discount-ascending':
+//                $products = $products->orderBy('discount');
+//                break;
+//            case 'discount-descending':
+//                $products = $products->orderByDesc('discount');
+//                break;
             default:
                 $products = $products->orderBy('id');
         }
